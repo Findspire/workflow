@@ -13,7 +13,7 @@
     {% endif %}
 
     <h1 class="item_action">
-	<a id="button_back_workflow" href="{% url workflow-workflowinstance-show workflowinstanceitem.workflowinstance.id all %}" title="Go back to workflow">Go back to workflow</a>
+	<a id="button_back_workflow" href="{% url 'workflow-workflowinstance-show' workflowinstanceitem.workflowinstance.id all %}" title="Go back to workflow">Go back to workflow</a>
 	<span class="title_item">
 		{{ workflowinstanceitem }}
 	</span>
@@ -21,12 +21,12 @@
 		<tr>
 		{% ifequal workflowinstanceitem.assigned_to None %}
 			<td class="take-item owner-{{ workflowinstanceitem.assigned_to_id }}" id="take-item-{{ workflowinstanceitem.id }}">
-				<a href="{% url workflow-workflowinstanceitem-take workflowinstanceitem.id %}" title="Take item">take</a>
+				<a href="{% url 'workflow-workflowinstanceitem-take' workflowinstanceitem.id %}" title="Take item">take</a>
 			</td>
 		{% else %}
 			<td class="untake-item owner-{{ workflowinstanceitem.assigned_to_id }}" id="untake-item-{{ workflowinstanceitem.id }}">
 				{{ workflowinstanceitem.assigned_to }}
-				<a href="{% url workflow-workflowinstanceitem-untake workflowinstanceitem.id %}" title="Reset owner of item">
+				<a href="{% url 'workflow-workflowinstanceitem-untake' workflowinstanceitem.id %}" title="Reset owner of item">
 				<img src="/static/workflow/img/untake.png" />
 				</a>
 			</td>
@@ -39,7 +39,7 @@
 			</a>
 		{% else %}
 			<a class="shortcut-disabled-OK shortcut" title="Click to validate"
-			href="{% url workflow-workflowinstanceitem-validate workflowinstanceitem.id validations.0.label %}">
+			href="{% url 'workflow-workflowinstanceitem-validate' workflowinstanceitem.id validations.0.label %}">
 			<img src="/static/workflow/img/validation_OK_disabled.png" alt="enabled" />
 			</a>
 		{% endifequal %}
@@ -47,7 +47,7 @@
 		{% if validations.1.label == workflowinstanceitem.validation.label or validations.2.label == workflowinstanceitem.validation.label%}
 			<a title="Item is untested"> ? </a>
 		{% else %}
-			<a class="shortcut-disabled-None shortcut" href="{% url workflow-workflowinstanceitem-nostate workflowinstanceitem.id %}"
+			<a class="shortcut-disabled-None shortcut" href="{% url 'workflow-workflowinstanceitem-nostate' workflowinstanceitem.id %}"
 			title="Reset item validation"> ? </a>
 		{% endif %}
 
@@ -57,7 +57,7 @@
 			</a>
 		{% else %}
 			<a class="shortcut-disabled-KO shortcut" title="Click to mark as broken"
-			href="{% url workflow-workflowinstanceitem-validate workflowinstanceitem.id validations.1.label %}">
+			href="{% url 'workflow-workflowinstanceitem-validate' workflowinstanceitem.id validations.1.label %}">
 			<img src="/static/workflow/img/validation_KO_disabled.png" alt="enabled" />
 			</a>
 			{% endifequal %}
@@ -97,7 +97,7 @@
     </div>
     {% endif %}
 
-    
+
     <div class="add_comment">
 	<form action='.' method=POST>
 	    <h2>Add comment</h2>

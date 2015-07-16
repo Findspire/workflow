@@ -6,4 +6,3 @@ cd workflow/
 /usr/bin/env python ../manage.py makemessages -d djangojs -e js -a
 
 /usr/bin/env python ../manage.py compilemessages
-

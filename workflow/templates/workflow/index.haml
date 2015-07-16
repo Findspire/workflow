@@ -6,8 +6,11 @@
             Workflow management
         %ul
             %li
-                %a{href: "{% url workflow-workflowinstance-list %}"}List workflows
+                %a{href: "{% url 'workflow-workflowinstance-list' %}"}
+                    List workflows
             %li
-                %a{href: "{% url workflow-workflowinstance-new %}"} Create a new workflow
+                %a{href: "{% url 'workflow-workflowinstance-new' %}"}
+                    Create a new workflow
             %li
-                %a{href: "{% url workflow-item-new %}"} Create items
+                %a{href: "{% url 'workflow-item-new' %}"}
+                    Create items

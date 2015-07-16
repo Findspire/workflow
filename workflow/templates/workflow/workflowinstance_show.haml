@@ -33,12 +33,12 @@ var gl_mine = {{ counter.Mine }};
 </div>
 
 <div class="filters_workflow">
-	<label><input type="radio" id="filters-all" onClick="$(location).attr('href','{% url workflow-workflowinstance-show workflowinstance.id display.all %}');" /></label>
-	<label><input type="radio" id="filters-mine" onClick="$(location).attr('href','{% url workflow-workflowinstance-show workflowinstance.id display.mine %}');" /></label>
-	<label><input type="radio" id="filters-untaken" onClick="$(location).attr('href','{% url workflow-workflowinstance-show workflowinstance.id display.untaken %}');" /></label>
-	<label><input type="radio" id="filters-taken" onClick="$(location).attr('href','{% url workflow-workflowinstance-show workflowinstance.id display.taken %}');" /></label>
-	<label><input type="radio" id="filters-successful" onClick="$(location).attr('href','{% url workflow-workflowinstance-show workflowinstance.id display.successful %}');" /></label>
-	<label><input type="radio" id="filters-failed" onClick="$(location).attr('href','{% url workflow-workflowinstance-show workflowinstance.id display.failed %}');" /></label>
+	<label><input type="radio" id="filters-all" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.all %}');" /></label>
+	<label><input type="radio" id="filters-mine" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.mine %}');" /></label>
+	<label><input type="radio" id="filters-untaken" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.untaken %}');" /></label>
+	<label><input type="radio" id="filters-taken" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.taken %}');" /></label>
+	<label><input type="radio" id="filters-successful" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.successful %}');" /></label>
+	<label><input type="radio" id="filters-failed" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.failed %}');" /></label>
 </div>
 
 <div class="categories_table_workflow">
@@ -50,9 +50,9 @@ var gl_mine = {{ counter.Mine }};
 	<tr>
 		<th> {{ category.name }} </th>
 		<td class="take_untake_group">
-			<a class="take-group" href="{% url workflow-workflowinstance-take_category workflowinstance.id category.id %}"
+			<a class="take-group" href="{% url 'workflow-workflowinstance-take_category' workflowinstance.id category.id %}"
 			title="Take all items of the category">take</a>&nbsp;/&nbsp;
-			<a class="untake-group" href="{% url workflow-workflowinstance-untake_category workflowinstance.id category.id %}"
+			<a class="untake-group" href="{% url 'workflow-workflowinstance-untake_category' workflowinstance.id category.id %}"
 			title="Untake all items of the category">untake</a>
 		</td>
 	</tr>
@@ -60,7 +60,7 @@ var gl_mine = {{ counter.Mine }};
 
 	<tr class="highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}">
 	<td>
-		<a class="item_workflow" href="{% url workflow-workflowinstanceitem-show workflowinstanceitem.id %}"
+		<a class="item_workflow" href="{% url 'workflow-workflowinstanceitem-show' workflowinstanceitem.id %}"
 		title="Label item"> {{ workflowinstanceitem.item.label }}</a>
 		{% for URL in workflowinstanceitem.item.label|link_ticket %}
 			{% ifequal forloop.counter 1 %}|&nbsp;{% endifequal %}
@@ -71,12 +71,12 @@ var gl_mine = {{ counter.Mine }};
 
 	{% ifequal workflowinstanceitem.assigned_to None %}
 		<td class="take-item owner-{{ workflowinstanceitem.assigned_to_id }}" id="take-item-{{ workflowinstanceitem.id }}">
-			<a href="{% url workflow-workflowinstanceitem-take workflowinstanceitem.id %}" title="Take item">take</a>
+			<a href="{% url 'workflow-workflowinstanceitem-take' workflowinstanceitem.id %}" title="Take item">take</a>
 		</td>
 	{% else %}
 		<td class="untake-item owner-{{ workflowinstanceitem.assigned_to_id }}" id="untake-item-{{ workflowinstanceitem.id }}">
 			{{ workflowinstanceitem.assigned_to }}
-			<a href="{% url workflow-workflowinstanceitem-untake workflowinstanceitem.id %}" title="Reset owner of item">
+			<a href="{% url 'workflow-workflowinstanceitem-untake' workflowinstanceitem.id %}" title="Reset owner of item">
 			<img src="/static/workflow/img/untake.png" />
 			</a>
 		</td>
@@ -89,7 +89,7 @@ var gl_mine = {{ counter.Mine }};
 			</a>
 		{% else %}
 			<a class="shortcut-disabled-OK shortcut" title="Click to validate"
-			href="{% url workflow-workflowinstanceitem-validate workflowinstanceitem.id validations.0.label %}">
+			href="{% url 'workflow-workflowinstanceitem-validate' workflowinstanceitem.id validations.0.label %}">
 			<img src="/static/workflow/img/validation_OK_disabled.png" alt="enabled" />
 			</a>
 		{% endifequal %}
@@ -97,7 +97,7 @@ var gl_mine = {{ counter.Mine }};
 		{% if validations.1.label == workflowinstanceitem.validation.label or validations.2.label == workflowinstanceitem.validation.label%}
 			<a title="Item is untested"> ? </a>
 		{% else %}
-			<a class="shortcut-disabled-None shortcut" href="{% url workflow-workflowinstanceitem-nostate workflowinstanceitem.id %}"
+			<a class="shortcut-disabled-None shortcut" href="{% url 'workflow-workflowinstanceitem-nostate' workflowinstanceitem.id %}"
 			title="Reset item validation"> ? </a>
 		{% endif %}
 
@@ -107,7 +107,7 @@ var gl_mine = {{ counter.Mine }};
 			</a>
 		{% else %}
 			<a class="shortcut-disabled-KO shortcut" title="Click to mark as broken"
-			href="{% url workflow-workflowinstanceitem-validate workflowinstanceitem.id validations.1.label %}">
+			href="{% url 'workflow-workflowinstanceitem-validate' workflowinstanceitem.id validations.1.label %}">
 			<img src="/static/workflow/img/validation_KO_disabled.png" alt="enabled" />
 			 </a>
 		{% endifequal %}

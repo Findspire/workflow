@@ -1,4 +1,3 @@
-from django.conf.urls.defaults import *
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns('workflow.apps.workflow',
@@ -17,10 +16,3 @@ urlpatterns = patterns('workflow.apps.workflow',
     url(r'^workflow/item/new/$',                                                                        'views.item_new',                           name='workflow-item-new'),
     url(r'^workflowinstance/check/(?P<item_id>\d+)/(?P<category_id>\d+)/$',                                   'views.check_state_before_change',          name='workflow-check-state'),
 )
-
-menus = {
-    'title' : 'Workflow',
-    'url': '/workflow/',
-    'position': 1
-}
-

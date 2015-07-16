@@ -4,6 +4,9 @@ import optparse
 import os
 import sys
 
+print('I bet this wont work, please check the script')
+exit(1)
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'workflow.settings'
 from django.contrib.auth.models import User
 

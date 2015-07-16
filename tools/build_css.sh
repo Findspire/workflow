@@ -3,4 +3,3 @@
 cd workflow/
 
 compass compile static/workflow
-

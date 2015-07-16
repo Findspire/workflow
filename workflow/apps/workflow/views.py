@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template.response import TemplateResponse
 
-from workflow.team import Person
 from workflow.apps.workflow.forms import *
 from workflow.apps.workflow.models import *
 
@@ -10,8 +9,9 @@ from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404
 import json
 
+
 def index(request):
-    return TemplateResponse(request, 'workflow/index.haml', {})
+    return render(request, 'workflow/index.haml')
 
 def workflowinstance_new(request):
     if request.method == 'POST':
@@ -49,7 +49,7 @@ def workflowinstance_list(request):
         ret.update({'display' : display})
     return TemplateResponse(request, 'workflow/workflowinstance_list.haml', ret)
 
-#@render(output='json')
+
 def check_state_before_change(request, item_id, category_id):
     """ Check if @item_id@ or @category_id@ have changed before change anything
     """
@@ -126,7 +126,7 @@ def workflowinstanceitem_assign_to_person(workflowinstanceitem, person):
     workflowinstanceitem.assigned_to = person
     workflowinstanceitem.save()
 
-#@render(output='json')
+
 def workflowinstanceitem_take(request, workflowinstanceitem_id):
     """ Output JSON for AJAX interaction
         Set owner on @workflowinstanceitem_id@
@@ -137,7 +137,7 @@ def workflowinstanceitem_take(request, workflowinstanceitem_id):
     workflowinstanceitem_assign_to_person(workflowinstanceitem, person)
     return JsonResponse({"item_id" : workflowinstanceitem_id, "assigned_to_firstname" : str(person.firstname), "assigned_to_lastname" : str(person.lastname), "assigned_to" : person.id or "None"})
 
-#@render(output='json')
+
 def workflowinstanceitem_untake(request, workflowinstanceitem_id):
     """ Output JSON for AJAX interaction
         Reset owner one @workflowinstanceitem_id@
@@ -148,7 +148,7 @@ def workflowinstanceitem_untake(request, workflowinstanceitem_id):
     workflowinstanceitem.save()
     return JsonResponse({"item_id" : workflowinstanceitem_id, "assigned_to" : workflowinstanceitem.assigned_to_id or "None"})
 
-#@render(output='json')
+
 def workflowinstance_take_category(request, workflowinstance_id, category_id):
     """ Output JSON for AJAX interaction
         Set owner on concerned items
@@ -161,7 +161,7 @@ def workflowinstance_take_category(request, workflowinstance_id, category_id):
             workflowinstanceitem_assign_to_person(item, person)
     return JsonResponse({"category_id" : category_id, "assigned_to_firstname" : str(person.firstname), "assigned_to_lastname" : str(person.lastname), "assigned_to" : person.id})
 
-#@render(output='json')
+
 def workflowinstance_untake_category(request, workflowinstance_id, category_id):
     """ Output JSON for AJAX interaction
         Reset owner on concerned items
@@ -174,7 +174,7 @@ def workflowinstance_untake_category(request, workflowinstance_id, category_id):
             workflowinstanceitem_assign_to_person(item, None)
     return JsonResponse({"category_id" : category_id, "person_id" : person.id})
 
-#@render(output='json')
+
 def workflowinstanceitem_validate(request, workflowinstanceitem_id, validation_label):
     """ Output JSON for AJAX interaction
         Change item state: Validate/Invalidate
@@ -185,7 +185,7 @@ def workflowinstanceitem_validate(request, workflowinstanceitem_id, validation_l
     workflowinstanceitem.save()
     return JsonResponse({"item_id" : workflowinstanceitem_id})
 
-#@render(output='json')
+
 def workflowinstanceitem_no_state(request, workflowinstanceitem_id):
     """ Reset item state
         Return @item_id@
@@ -234,7 +234,7 @@ def workflowinstanceitem_comments(request, workflowinstanceitem_id):
 
 def workflowinstanceitem_details(request, workflowinstanceitem_id):
     """ Return form for details on specific item """
-    workflowinstanceitem = WorkflowInstanceItems.objects.filter(id=workflowinstanceitem_id)[0]
+    workflowinstanceitem = get_object_or_404(WorkflowInstanceItems, id=workflowinstanceitem_id)
     initial_value = workflowinstanceitem.item.details
     if request.method == 'POST' and "_post" in request.POST:
         form = DetailItemForm(request, initialValue='', data=request.POST)

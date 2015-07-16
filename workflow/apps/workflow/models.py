@@ -1,7 +1,10 @@
-from django.db import models
-from django.contrib.auth import models as AuthModels
-from workflow import team as teammodels
+
 import datetime
+
+from django.contrib.auth import models as AuthModels
+from django.db import models
+from django.utils import timezone
+
 
 class ContractType(models.Model):
     id = models.AutoField(primary_key = True)
@@ -102,8 +105,8 @@ class Competence(models.Model):
 class Workflow(models.Model):
     id = models.AutoField(primary_key = True)
     name = models.CharField(max_length=32, null=False)
-    teams = models.ManyToManyField(teammodels.Team, null=False, blank=False)
-    leaders = models.ManyToManyField(teammodels.Person, null=False, blank=False)
+    teams = models.ManyToManyField(Team, null=False, blank=False)
+    leaders = models.ManyToManyField(Person, null=False, blank=False)
 
     def __unicode__(self):
         return self.name
@@ -113,7 +116,7 @@ class WorkflowInstance(models.Model):
     workflow = models.ForeignKey(Workflow, null=False)
     creation_date = models.DateField(null=False, auto_now=True)
     version = models.CharField(max_length=128, null=False)
-    
+
     def __unicode__(self):
         return "%s - %s" % ( self.workflow, self.version )
 
@@ -146,7 +149,7 @@ class WorkflowInstanceItems(models.Model):
     workflowinstance = models.ForeignKey(WorkflowInstance, null=False)
     item = models.ForeignKey(Item, null=False)
     validation = models.ForeignKey(Validation, null=True)
-    assigned_to = models.ForeignKey(teammodels.Person, null=True, blank=True)
+    assigned_to = models.ForeignKey(Person, null=True, blank=True)
 
     def __unicode__(self):
         return "%s - %s - %s" %(self.workflowinstance, self.item.workflow_category.name, self.item.label)
@@ -154,8 +157,8 @@ class WorkflowInstanceItems(models.Model):
 class CommentInstanceItem(models.Model):
     id = models.AutoField(primary_key=True)
     item = models.ForeignKey(WorkflowInstanceItems, null=False)
-    person = models.ForeignKey(teammodels.Person, null=True, blank=True)
-    date = models.DateField(default=datetime.datetime.now())
+    person = models.ForeignKey(Person, null=True, blank=True)
+    date = models.DateField(default=timezone.now)
     comments = models.TextField(max_length=1000, null=True, blank=True)
 
     def __unicode__(self):
