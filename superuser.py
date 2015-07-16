@@ -4,7 +4,7 @@ import optparse
 import os
 import sys
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'findspire.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'workflow.settings'
 from django.contrib.auth.models import User
 
 parser = optparse.OptionParser()

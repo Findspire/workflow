@@ -1,10 +1,11 @@
-/node_modules
-/static
-/.sass-cache
-/.vagrant
-findspire.db
-GeoIP.dat
+# Basic
 *.pyc
-*.swp
-src
+*.mo
+workflow/.sass-cache/
+workflow/static/workflow/css/
+
+# Dev
+workflow.db
+
+# OSX
 .DS_Store

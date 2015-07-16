@@ -6,14 +6,9 @@ from workflow.team import Person
 from workflow.apps.workflow.forms import *
 from workflow.apps.workflow.models import *
 
-from django.http import HttpResponse
+from django.http.response import JsonResponse
+from django.shortcuts import render, get_object_or_404
 import json
-
-class JsonResponse(HttpResponse):
-    def __init__(self, content={}, mimetype=None, status=None,
-                 content_type='application/json'):
-        super(JsonResponse, self).__init__(json.dumps(content), mimetype=mimetype,
-                                           status=status, content_type=content_type)
 
 def index(request):
     return TemplateResponse(request, 'workflow/index.haml', {})
