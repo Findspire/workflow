@@ -1,0 +1,10 @@
+/node_modules
+/static
+/.sass-cache
+/.vagrant
+findspire.db
+GeoIP.dat
+*.pyc
+*.swp
+src
+.DS_Store

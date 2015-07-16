@@ -1,0 +1,4477 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Findspire\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-03 19:40+0000\n"
+"PO-Revision-Date: 2014-05-22 13:12+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: prod_settings.py:96 confstreaming/dev_settings.py:79
+msgid "English"
+msgstr "Anglais"
+
+#: prod_settings.py:97 confstreaming/dev_settings.py:80
+msgid "Francais"
+msgstr "Français"
+
+#: apps/frontend/auth.py:136
+msgid ""
+"Something went wrong. Please reload this page and try again in a few seconds."
+msgstr ""
+"Quelque chose s'est mal passé. Merci de recharger la page et de réessayer "
+"dans quelques secondes."
+
+#: apps/frontend/auth.py:166
+#, python-format
+msgid "An email has been sent to %s with further instructions."
+msgstr "Un email a été envoyé à %s avec de plus amples instructions."
+
+#: apps/frontend/auth.py:171
+msgid "There is no account with this email address."
+msgstr "Il n'y a aucun compte associé à cette adresse."
+
+#: apps/frontend/auth.py:177
+msgid "Please provide a password."
+msgstr "Veuillez entrer un mot de passe"
+
+#: apps/frontend/auth.py:180
+msgid "Password too short."
+msgstr "Mot de passe trop court."
+
+#: apps/frontend/auth.py:184
+msgid "Invalid token."
+msgstr "Coupon invalide."
+
+#: apps/frontend/auth.py:203
+msgid ""
+"Password successfuly changed. You will now be redirected to the signin page."
+msgstr ""
+"Votre mot de passe a été modifié. Vous allez maintenant être redirigé sur la "
+"page d'authentification"
+
+#: apps/frontend/embed.py:212
+msgid "An invitation to join Findspire"
+msgstr "Invitation à rejoindre Findspire"
+
+#: apps/frontend/home.py:88 apps/frontend/utils.py:219
+#: apps/restws/media.py:307 apps/restws/profilepage.py:65
+#: apps/restws/profilepage.py:72 apps/restws/publication.py:33
+#: apps/restws/publication.py:57 apps/restws/security.py:15
+#: apps/restws/utils.py:45 apps/restws/utils.py:65 apps/restws/utils.py:77
+msgid "Permission denied"
+msgstr "Permission refusée"
+
+#: apps/frontend/signup.py:47
+msgid "Invitation code is empty"
+msgstr "Ce code d'invitation n'existe pas"
+
+#: apps/frontend/signup.py:50
+msgid "Invitation code malformed"
+msgstr "Code d'invitation invalide"
+
+#: apps/frontend/signup.py:57
+msgid "Invitation code does not exist"
+msgstr "Ce code d'invitation n'existe pas"
+
+#: apps/frontend/signup.py:60
+msgid "This coupon has already been used"
+msgstr "Ce coupon a déjà été utilisé"
+
+#: apps/frontend/signup.py:164
+msgid "There's already an user with that address"
+msgstr "Il y a déjà un compte associé à cette adresse."
+
+#: apps/frontend/signup.py:364 common/accounts.py:253
+msgid "Not an valid number"
+msgstr "Pas un nombre valide"
+
+#: apps/frontend/signup.py:378 common/accounts.py:272
+msgid "Out of range value"
+msgstr "Valeur hors limites"
+
+#: apps/frontend/signup.py:385 common/accounts.py:279
+msgid "Sorry but you must be at least 13 years old to register"
+msgstr "Désolé mais vous devez être agé d'au moins 13 ans pour créer un compte"
+
+#: apps/frontend/signup.py:393 common/accounts.py:287
+msgid "Password is too short"
+msgstr "Le mot de passe est trop court"
+
+#: apps/frontend/signup.py:594
+msgid "Could not sign up with Facebook."
+msgstr "Inscription avec Facebook impossible."
+
+#: apps/frontend/signup.py:599
+msgid "Could not sign in with Facebook."
+msgstr "Connexion avec Facebook impossible."
+
+#: apps/frontend/signup.py:623 apps/frontend/signup.py:739
+#: common/accounts.py:96
+msgid "No profile associated to this user"
+msgstr "Aucun profil associé à ce média"
+
+#: apps/frontend/signup.py:658 apps/frontend/signup.py:761
+msgid ""
+"Welcome to FINDSPIRE. In order to connect, you must first create and account."
+msgstr ""
+"Bienvenue sur FINDSPIRE. Vous devez créer un compte afin de pouvoir vous "
+"connecter"
+
+#: apps/frontend/signup.py:700
+msgid "You are not allowed to view this page right now"
+msgstr "Vous n'êtes pas autorisé à voir cette page"
+
+#: apps/frontend/signup.py:709
+msgid "Could not sign up with Twitter."
+msgstr "Inscription avec Twitter impossible."
+
+#: apps/frontend/signup.py:714
+msgid "Could not sign in with Twitter."
+msgstr "Connexion avec Twitter impossible."
+
+#: apps/frontend/signup.py:768
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:167
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:16
+msgid "January"
+msgstr "Janvier"
+
+#: apps/frontend/signup.py:768
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:169
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:18
+msgid "February"
+msgstr "Février"
+
+#: apps/frontend/signup.py:768
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:171
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:20
+msgid "March"
+msgstr "Mars"
+
+#: apps/frontend/signup.py:768
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:173
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:22
+msgid "April"
+msgstr "Avril"
+
+#: apps/frontend/signup.py:768
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:175
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:24
+msgid "May"
+msgstr "Mai"
+
+#: apps/frontend/signup.py:768
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:177
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:26
+msgid "June"
+msgstr "Juin"
+
+#: apps/frontend/signup.py:769
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:179
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:28
+msgid "July"
+msgstr "Juillet"
+
+#: apps/frontend/signup.py:769
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:181
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:30
+msgid "August"
+msgstr "Août"
+
+#: apps/frontend/signup.py:769
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:183
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:32
+msgid "September"
+msgstr "Septembre"
+
+#: apps/frontend/signup.py:769
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:185
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:34
+msgid "October"
+msgstr "Octobre"
+
+#: apps/frontend/signup.py:769
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:187
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:36
+msgid "November"
+msgstr "Novembre"
+
+#: apps/frontend/signup.py:769
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:189
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:38
+msgid "December"
+msgstr "Décembre"
+
+#: apps/frontend/tracks.py:69 apps/restws/playback.py:228
+#: common/profile.py:100
+msgid "Inspirations"
+msgstr "Inspirations"
+
+#: apps/frontend/templatetags/custom_filters.py:95 common/profile.py:34
+#: common/profile.py:70 templates/frontend/search/popup_listsearch.haml:70
+#: templates/frontend/search/results.haml:76
+#: templates/mobile/popup/search.haml:68
+#: templates/mobile/profile/content_inspirations.haml:13
+msgid "Images"
+msgstr "Images"
+
+#: apps/frontend/templatetags/custom_filters.py:96 common/profile.py:54
+#: common/profile.py:78 templates/frontend/search/popup_listsearch.haml:58
+#: templates/frontend/search/results.haml:65
+#: templates/mobile/popup/search.haml:50
+#: templates/mobile/profile/content_inspirations.haml:17
+msgid "Videos"
+msgstr "Vidéos"
+
+#: apps/frontend/templatetags/custom_filters.py:97
+#: templates/frontend/common/music.haml:28
+#: templates/frontend/search/popup_listsearch.haml:34
+#: templates/frontend/search/results.haml:42
+#: templates/frontend/viewer/content_image_media.haml:36
+#: templates/mobile/popup/search.haml:21
+#: templates/mobile/profile/content_home.haml:10
+#: templates/mobile/profile/content_music.haml:12
+#: templates/mobile/profile/content_playlist.haml:10
+#: templates/mobile/profile/content_tags.haml:11
+#: templates/mobile/profile/template.haml:68
+#: templates/mobile/profile/template_music.haml:13
+msgid "Albums"
+msgstr "Albums"
+
+#: apps/restws/accounts.py:43
+msgid "The provided access token is not valid."
+msgstr "Le jeton d'accès est invalide."
+
+#: apps/restws/accounts.py:47
+msgid "Invalid field."
+msgstr "Champ invalide."
+
+#: apps/restws/accounts.py:53
+msgid "User already exists."
+msgstr "L'utilisateur éxiste déjà"
+
+#: apps/restws/accounts.py:123 apps/restws/embed.py:62
+#, python-format
+msgid "Missing parameter: %s"
+msgstr "Paramètre manquant: %s"
+
+#: apps/restws/accounts.py:130
+#, python-format
+msgid "Unknown field: %s"
+msgstr "Champ inconnu&#8239;: %s"
+
+#: apps/restws/accounts.py:238 apps/restws/accounts.py:365
+msgid "This token does not belong to Facebook's Findspire app."
+msgstr "Ce jeton n'appartient à l'application Facebook de FINDSPIRE."
+
+#: apps/restws/accounts.py:243
+msgid "There's already an user registered with this facebook account."
+msgstr "Il y a déjà un utilisateur associé à ce compte Facebook."
+
+#: apps/restws/accounts.py:329
+msgid "There's already an user registered with that address."
+msgstr "Il y a déjà un compte associé à cette adresse."
+
+#: apps/restws/accounts.py:335
+msgid "Account Created"
+msgstr "Compte créé"
+
+#: apps/restws/accounts.py:359
+msgid "There's already an user with this email address."
+msgstr "Il y a déjà un compte associé à cette adresse."
+
+#: apps/restws/accounts.py:372
+#, python-format
+msgid "There's already an user with this facebook account %s."
+msgstr "Il y a déjà un utilisateur associé au compte Facebook %s."
+
+#: apps/restws/accounts.py:383
+msgid "Something went wrong with twitter's tokens."
+msgstr "Une erreur s'est produite pendant l'authentification Twitter."
+
+#: apps/restws/admin.py:39 apps/restws/admin.py:111 apps/restws/admin.py:137
+msgid "Delegated profile not found"
+msgstr "Profil non trouvé"
+
+#: apps/restws/admin.py:48 apps/restws/admin.py:62
+msgid "Delegation not found"
+msgstr "Delegation non trouvée"
+
+#: apps/restws/admin.py:87
+msgid "Delegated profile not found "
+msgstr "Profil non trouvé"
+
+#: apps/restws/admin.py:92
+msgid "Missing delegation_type argument"
+msgstr "Type de delegation manquant"
+
+#: apps/restws/admin.py:95
+msgid "Invalid role"
+msgstr "Rôle invalide"
+
+#: apps/restws/admin.py:132
+msgid "Delegated profile uuid not specified"
+msgstr "UUID du profil non spécifié"
+
+#: apps/restws/collections.py:41 apps/restws/collections.py:138
+#: apps/restws/collections.py:157 apps/restws/media.py:146
+msgid "Collection not found"
+msgstr "Collection non trouvée"
+
+#: apps/restws/collections.py:63 apps/restws/collections.py:89
+#: apps/restws/moodboards.py:38
+msgid "Missing profile UUID"
+msgstr "UUID du profil manquant"
+
+#: apps/restws/collections.py:67 apps/restws/collections.py:93
+#: apps/restws/moodboards.py:44
+msgid "Profile does not exist"
+msgstr "Ce profil n'existe pas"
+
+#: apps/restws/collections.py:86
+msgid "Invalid collection type"
+msgstr "Type de collection invalide"
+
+#: apps/restws/collections.py:146
+msgid "Collection updated"
+msgstr "Collection mise à jour"
+
+#: apps/restws/collections.py:165
+msgid "Collection deleted"
+msgstr "Collection supprimée"
+
+#: apps/restws/create.py:29
+msgid "Parent profile not specified"
+msgstr "Profil parent non spécifié"
+
+#: apps/restws/create.py:30
+msgid "Profile type not specified"
+msgstr "Type de profil non spécifié"
+
+#: apps/restws/create.py:31
+msgid "Type the profile name"
+msgstr "Entrez le nom du profil"
+
+#: apps/restws/create.py:60
+msgid "Bad request."
+msgstr "Requête invalide"
+
+#: apps/restws/crop.py:46
+msgid "Missing width or height"
+msgstr "Largeur ou hauteur manquante"
+
+#: apps/restws/crop.py:74
+msgid "Target not found"
+msgstr "Cible non trouvée."
+
+#: apps/restws/crop.py:115
+#, python-format
+msgid "Invalid object: %s"
+msgstr "Objet invalide&#8239;: %s"
+
+#: apps/restws/crop.py:151
+#, python-format
+msgid "Invalid object name: %s"
+msgstr "Nom d'objet invalide&#8239;: %s"
+
+#: apps/restws/crop.py:155
+msgid "Invalid objects"
+msgstr "Objets invalides"
+
+#: apps/restws/crop.py:174
+msgid "Invalid coordinates"
+msgstr "Coordonnées invalides"
+
+#: apps/restws/embed.py:67
+#, python-format
+msgid "Invalid value for parameter: %s"
+msgstr "Valeur du paramètre invalide&#8239;: %s"
+
+#: apps/restws/inspirations.py:43 apps/restws/network.py:38
+#: apps/restws/profilepage.py:38 apps/restws/tags.py:41
+msgid "Profile not found."
+msgstr "Profil non trouvé."
+
+#: apps/restws/inspirations.py:66 apps/restws/inspirations.py:272
+msgid "No active profile set"
+msgstr "Profil actif non défini"
+
+#: apps/restws/inspirations.py:70
+msgid "Session error, please logout and login"
+msgstr "Erreur de session, veuillez vous reconnecter"
+
+#: apps/restws/inspirations.py:76
+msgid "Model not supported"
+msgstr "Modèle non supporté"
+
+#: apps/restws/inspirations.py:80
+msgid "Object does not exist"
+msgstr "L'objet n'existe pas"
+
+#: apps/restws/inspirations.py:86
+msgid "Not allowed"
+msgstr "Non autorisé"
+
+#: apps/restws/inspirations.py:178
+#, python-format
+msgid ""
+"Movie '%(movie_name)s' has been added to your moodboard '%(moodboard_name)s'."
+msgstr ""
+"Le film '%(movie_name)s' a été ajouté à votre moodboard '%(moodboard_name)s'."
+
+#: apps/restws/inspirations.py:180
+#, python-format
+msgid "Movie '%s' has been added to your inspirations."
+msgstr "Le film '%s' a été ajouté à vos inspirations."
+
+#: apps/restws/inspirations.py:184
+#, python-format
+msgid "You now follow '%s'. Check his news on your personal space"
+msgstr ""
+"Vous suivez maintenant '%s'. Découvrez ses actualités dans votre espace "
+"personel."
+
+#: apps/restws/inspirations.py:188
+#, python-format
+msgid "You now follow '%s'. Check their news on your personal space"
+msgstr ""
+"Vous suivez maintenant '%s'. Découvrez leur activité dans votre espace "
+"personel."
+
+#: apps/restws/inspirations.py:193
+#, python-format
+msgid "Image has been added to your moodboard '%s'."
+msgstr "L'image a été ajoutée à votre moodboard '%s'."
+
+#: apps/restws/inspirations.py:194
+#, python-format
+msgid "Video has been added to your moodboard '%s'."
+msgstr "La vidéo a été ajoutée à votre moodboard '%s'."
+
+#: apps/restws/inspirations.py:195
+#, python-format
+msgid "Album has been added to your moodboard '%s'."
+msgstr "L'album a été ajouté à votre moodboard '%s'."
+
+#: apps/restws/inspirations.py:196
+#, python-format
+msgid "Track has been added to your moodboard '%s'."
+msgstr "La piste a été ajoutée à votre moodboard '%s'."
+
+#: apps/restws/inspirations.py:198
+msgid "Image has been added to your inspirations."
+msgstr "L'image a été ajoutée à vos inspirations."
+
+#: apps/restws/inspirations.py:199
+msgid "Video has been added to your inspirations."
+msgstr "La vidéo a été ajoutée à vos inspirations."
+
+#: apps/restws/inspirations.py:200
+msgid "Album has been added to your inspirations."
+msgstr "L'album a été ajouté à vos inspirations."
+
+#: apps/restws/inspirations.py:201
+msgid "Track has been added to your inspirations."
+msgstr "La piste a été ajoutée à vos inspirations."
+
+#: apps/restws/inspirations.py:205
+msgid "Playlist has been added to your inspirations."
+msgstr "La playlist a été ajoutée à vos inspirations."
+
+#: apps/restws/inspirations.py:209
+msgid "Collection has been added to your inspirations."
+msgstr "La collection a été ajoutée à vos inspirations."
+
+#: apps/restws/inspirations.py:213
+msgid "Moodboard has been added to your inspirations."
+msgstr "Le moodboard a été ajouté à vos inspirations."
+
+#: apps/restws/inspirations.py:276
+msgid "Unknown profile"
+msgstr "Profil inconnu"
+
+#: apps/restws/inspirations.py:335
+#, python-format
+msgid "You don't follow %s anymore."
+msgstr "Vous ne suivez plus %s."
+
+#: apps/restws/inspirations.py:335
+msgid "Inspiration deleted."
+msgstr "Inspiration supprimée."
+
+#: apps/restws/media.py:59 apps/restws/media.py:159 apps/restws/media.py:232
+#: apps/restws/media.py:266
+msgid "Invalid input type"
+msgstr "Type d'entrée invalide"
+
+#: apps/restws/media.py:64
+#, python-format
+msgid "Invalid date for country %s"
+msgstr "Date invalide pour le pay %s"
+
+#: apps/restws/media.py:70
+#, python-format
+msgid "Invalid country code: %s"
+msgstr "Code pays invalide: %s"
+
+#: apps/restws/media.py:78 apps/restws/media.py:85
+msgid "Invalid field for this media type"
+msgstr "Champs invalide pour ce type de media"
+
+#: apps/restws/media.py:91
+#, python-format
+msgid "Invalid type for %s"
+msgstr "Type invalide pour %s"
+
+#: apps/restws/media.py:107 apps/restws/profile.py:183
+msgid "Parent profile not found"
+msgstr "Profil parent non trouvé"
+
+#: apps/restws/media.py:112
+msgid "Missing type on request"
+msgstr "Type manquant dans la requête"
+
+#: apps/restws/media.py:114 apps/restws/media.py:245
+msgid "Invalid media type"
+msgstr "Type de média invalide"
+
+#: apps/restws/media.py:118
+msgid "Missing collection_uuid or parent_media_uuid"
+msgstr "Collection ou profil parent manquant"
+
+#: apps/restws/media.py:135
+msgid "Parent media not found"
+msgstr "Média parent non trouvé"
+
+#: apps/restws/media.py:148
+msgid "Collection is owned by another profile"
+msgstr "La collection appartient à un autre profil"
+
+#: apps/restws/media.py:207 apps/restws/media.py:432
+msgid "Missing media UUID"
+msgstr "UUID du média manquant"
+
+#: apps/restws/media.py:211 apps/restws/media.py:401
+msgid "Media not found"
+msgstr "Média non trouvé"
+
+#: apps/restws/media.py:215
+msgid "Active profile not set"
+msgstr "Profil actif non défini"
+
+#: apps/restws/media.py:240 common/collections.py:163 common/moodboards.py:129
+#, python-format
+msgid "Invalid key: %s"
+msgstr "Clef invalide&#8239;: %s"
+
+#: apps/restws/media.py:249
+msgid "Can't change the type of a parent media"
+msgstr "Impossible de changer le type d'un média parent"
+
+#: apps/restws/media.py:289 apps/restws/profile.py:250
+msgid "Too much modes"
+msgstr "Trop de modes configurés"
+
+#: apps/restws/media.py:291 apps/restws/profile.py:252
+msgid "Too much genres"
+msgstr "Trop de genres configurés"
+
+#: apps/restws/media.py:298
+msgid "Can't set a collection for a media without type"
+msgstr "Impossible de créer une collection sans type"
+
+#: apps/restws/media.py:304
+msgid "Collection does not exist"
+msgstr "La collection n'existe pas"
+
+#: apps/restws/media.py:352
+#, python-format
+msgid "Bad publication status %s."
+msgstr "Mauvais statut de publications %s"
+
+#: apps/restws/media.py:360 apps/restws/media.py:379
+msgid "Target profile not found"
+msgstr "Profil cible non trouvé"
+
+#: apps/restws/media.py:370
+msgid "Target user not found"
+msgstr "Utilisateur cible non trouvé."
+
+#: apps/restws/media.py:436
+msgid "Media already deleted"
+msgstr "Média déjà supprimé"
+
+#: apps/restws/media.py:464
+msgid "Media deleted"
+msgstr "Média supprimé"
+
+#: apps/restws/metadata.py:78 apps/restws/metadata.py:337
+msgid "Unsupported object type"
+msgstr "Type d'objet non supporté"
+
+#: apps/restws/metadata.py:80 apps/restws/metadata.py:272
+#, python-format
+msgid "%s does not exist"
+msgstr "%s n'existe pas"
+
+#: apps/restws/metadata.py:96 apps/restws/metadata.py:113
+#, python-format
+msgid "Metadata field %s does not exist"
+msgstr "Le champ %s n'existe pas"
+
+#: apps/restws/metadata.py:173
+msgid "Suggestions not supported for this field"
+msgstr "Suggestions non supportées pour ce champ"
+
+#: apps/restws/metadata.py:184
+msgid "Search not supported for this field"
+msgstr "Recherche non supportée pour ce champ"
+
+#: apps/restws/metadata.py:270
+msgid "Invalid object model"
+msgstr "Model d'objet invalide"
+
+#: apps/restws/metadata.py:339 apps/restws/moodboards.py:71
+#: models/models.py:1426 models/models.py:1462
+msgid "Profile not found"
+msgstr "Profil non trouvé"
+
+#: apps/restws/moodboards.py:61
+msgid "Missing moodboard type"
+msgstr "Type du moodboard manquant"
+
+#: apps/restws/moodboards.py:64
+msgid "Missing moodboard name"
+msgstr "Nom du moodboard manquant"
+
+#: apps/restws/moodboards.py:67
+msgid "Missing profile_uuid"
+msgstr "UUID du profil manquant"
+
+#: apps/restws/moodboards.py:109 apps/restws/moodboards.py:143
+msgid "Moodboard not found"
+msgstr "Moodboard non trouvé"
+
+#: apps/restws/moodboards.py:117
+msgid "Moodboard updated"
+msgstr "Moodboard mis à jour"
+
+#: apps/restws/moodboards.py:148
+msgid "Moodboard deleted"
+msgstr "Moodboard supprimé"
+
+#: apps/restws/network.py:75 apps/restws/network.py:99
+msgid "Unamed"
+msgstr "Sans nom"
+
+#: apps/restws/newsletter.py:29
+msgid "Newsletter does not exist"
+msgstr "Cette liste de diffusion n'existe pas"
+
+#: apps/restws/newsletter.py:32 common/accounts.py:204
+msgid "Wrong email address"
+msgstr "Adresse email incorrecte"
+
+#: apps/restws/newsletter.py:41
+msgid "Email saved"
+msgstr "Email sauvegardé"
+
+#: apps/restws/notifications.py:35
+msgid "Notification dismissed"
+msgstr "Notification supprimée"
+
+#: apps/restws/playback.py:189 apps/restws/playlist.py:95
+#: apps/restws/playlist.py:110 apps/restws/playlist.py:132
+msgid "Playlist not found"
+msgstr "Playlist non trouvée"
+
+#: apps/restws/playlist.py:55
+msgid "Profile not found: "
+msgstr "Profil non trouvé: "
+
+#: apps/restws/playlist.py:70 apps/restws/playlist.py:142
+msgid "Media not found: "
+msgstr "Média non trouvé: "
+
+#: apps/restws/profile.py:79
+msgid "Unnamed mood"
+msgstr "Mood sans nom"
+
+#: apps/restws/profile.py:276
+msgid "Cannot find parent profile"
+msgstr "Profil parent non trouvé"
+
+#: apps/restws/profile.py:324
+msgid "Artist not found"
+msgstr "Artist non trouvé"
+
+#: apps/restws/tag.py:67
+msgid "Tag request not found"
+msgstr "Demande d'identification non trouvée"
+
+#: apps/restws/tag.py:72 apps/restws/tag.py:81
+msgid "Profile has been deleted"
+msgstr "Le profil a été supprimé"
+
+#: apps/restws/tag.py:76 apps/restws/tag.py:85
+msgid "Media has been deleted"
+msgstr "Le media a été supprimé"
+
+#: apps/restws/tag.py:99
+msgid "Tag request accepted:"
+msgstr "Demande d'identification acceptée:"
+
+#: apps/restws/tag.py:106
+msgid "Tag request rejected"
+msgstr "Demande d'identification rejetée"
+
+#: apps/restws/tag.py:112
+msgid "Tag request cancel"
+msgstr "Requête d'identification annulée"
+
+#: apps/restws/tags.py:78 apps/restws/tags.py:171 apps/restws/user.py:39
+#, python-format
+msgid "Missing \"%s\" field."
+msgstr "Champs \"%s\" manquant."
+
+#: apps/restws/tags.py:83
+msgid "Source profile has been deleted"
+msgstr "Le profil source a été supprimé"
+
+#: apps/restws/tags.py:90
+msgid "Target profile has been deleted"
+msgstr "Le profil destination a été supprimé"
+
+#: apps/restws/tags.py:96
+#, python-format
+msgid "Uknown tag type: \"%s\"."
+msgstr "Type de tag inconnu: \"%s\"."
+
+#: apps/restws/tags.py:101
+#, python-format
+msgid "Uknown field: \"%s\"."
+msgstr "Champs inconnu&#8239;: %s"
+
+#: apps/restws/tags.py:167
+#, python-format
+msgid "Profile not found %s."
+msgstr "Profil non trouvé %s."
+
+#: apps/restws/tags.py:190
+msgid "Tag not found."
+msgstr "Tag non trouvé."
+
+#: apps/restws/upload.py:62 apps/restws/upload.py:208
+#: apps/restws/upload.py:285 apps/restws/upload.py:344
+msgid "Object not found"
+msgstr "Objet non trouvé"
+
+#: apps/restws/upload.py:85 apps/restws/upload.py:296
+#, python-format
+msgid "Invalid value: %s"
+msgstr "Valeur invalide&#8239;: %s"
+
+#: apps/restws/upload.py:88
+msgid "File size out of range"
+msgstr "Taille du fichier hors limites"
+
+#: apps/restws/upload.py:172
+msgid "Upload initialized"
+msgstr "Envoi initialisé"
+
+#: apps/restws/upload.py:196
+msgid "Download started"
+msgstr "Téléchargement en cours"
+
+#: apps/restws/upload.py:212 apps/restws/upload.py:289
+#: apps/restws/upload.py:348
+msgid "No upload started for this object"
+msgstr "Pas d'envoi commencé pour ce média"
+
+#: apps/restws/upload.py:216
+msgid "Invalid data"
+msgstr "Données invalides"
+
+#: apps/restws/upload.py:237
+msgid "Missing ETag"
+msgstr "ETag manquant"
+
+#: apps/restws/upload.py:239
+msgid "Missing part size"
+msgstr "UUID du média manquant"
+
+#: apps/restws/upload.py:251
+#, python-format
+msgid "Invalid status: %s"
+msgstr "État invalide&#8239;: %s"
+
+#: apps/restws/upload.py:273
+msgid "Upload updated"
+msgstr "Envoi mis à jour"
+
+#: apps/restws/upload.py:299
+#, python-format
+msgid "Value not in range: %d"
+msgstr "Valeur hors limites&#8239;: %d"
+
+#: apps/restws/upload.py:335
+msgid "Upload URLs renewed"
+msgstr "URLs d'envoi renouvelées"
+
+#: apps/restws/upload.py:360
+msgid "Upload deleted"
+msgstr "Envoi supprimé"
+
+#: apps/restws/user.py:43
+msgid "Password does not match."
+msgstr "Le mot de passe ne correspond pas."
+
+#: apps/restws/viewer.py:32
+msgid "Media unavailable"
+msgstr "Media non disponible"
+
+#: common/accounts.py:50
+msgid "Bad password"
+msgstr "Mauvais mot de passe"
+
+#: common/accounts.py:54
+#, python-format
+msgid "Password too short. %d characters minimum."
+msgstr "Mot de passe trop court. %d caractères mininum."
+
+#: common/accounts.py:77
+msgid "Email address is already used"
+msgstr "L'adresse est déjà utilisée"
+
+#: common/accounts.py:101
+msgid "Invalid email or password"
+msgstr "Adresse email ou mot de passe invalide"
+
+#: common/accounts.py:205
+msgid "Wrong email confirmation"
+msgstr "Confirmation d'email incorrecte"
+
+#: common/accounts.py:206
+msgid "Type your first name"
+msgstr "Entrez votre prénom"
+
+#: common/accounts.py:207
+msgid "Type your last name"
+msgstr "Entrez votre nom"
+
+#: common/accounts.py:208
+msgid "Invalid day"
+msgstr "Jour invalide"
+
+#: common/accounts.py:209
+msgid "Invalid month"
+msgstr "Mois invalide"
+
+#: common/accounts.py:210
+msgid "Invalid year"
+msgstr "Année invalide"
+
+#: common/accounts.py:211
+msgid "You have to choose a gender"
+msgstr "Choisissez un sexe"
+
+#: common/accounts.py:212
+msgid "Choose a password"
+msgstr "Choisissez un mot de passe"
+
+#: common/accounts.py:213
+msgid "Invitation code invalid"
+msgstr "Code d'invitation invalide"
+
+#: common/accounts.py:214
+msgid "Type your profile name"
+msgstr "Entrez le nom de votre profil"
+
+#: common/accounts.py:235 common/accounts.py:256
+msgid "The value is too large for this field."
+msgstr "La valeur est trop large pour ce champ."
+
+#: common/collections.py:57 common/moodboards.py:52
+#: templates/frontend/collections/advice.haml:11
+#: templates/frontend/collections/collections.haml:43
+#: templates/frontend/inspirations/moodboards.haml:42
+#: templates/mobile/collections/collections.haml:24
+#: templates/mobile/inspirations/moodboards.haml:24
+msgid "All images"
+msgstr "Toutes les images"
+
+#: common/collections.py:167 common/collections.py:171
+#: common/moodboards.py:133
+#, python-format
+msgid "Invalid type for key %s"
+msgstr "Type invalide pour la clef %s"
+
+#: common/collections.py:177
+#, python-format
+msgid "Invalid media UUID: %s"
+msgstr "UUID de média invalide&#8239;: %s"
+
+#: common/collections.py:183
+#, python-format
+msgid "Invalid media type for %s"
+msgstr "Type de média invalide pour %s"
+
+#: common/collections.py:185
+#, python-format
+msgid "Invalid profile for media %s"
+msgstr "Profil invalide pour le média %s"
+
+#: common/moodboards.py:145
+#, python-format
+msgid "Invalid moodboard type %s"
+msgstr "Type de moodboard invalide %s"
+
+#: common/profile.py:42
+msgid "News"
+msgstr "Actualités"
+
+#: common/profile.py:48 templates/mobile/popup/menu.haml:36
+msgid "Network"
+msgstr "Réseau"
+
+#: common/profile.py:62 common/profile.py:86
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:23
+#: templates/frontend/search/popup_listsearch.haml:109
+#: templates/mobile/popup/menu.haml:19
+#: templates/mobile/profile/content_inspirations.haml:21
+msgid "Music"
+msgstr "Musique"
+
+#: common/profile.py:92 common/profile.py:106
+#: templates/frontend/search/popup_listsearch.haml:46
+#: templates/frontend/search/results.haml:53
+#: templates/mobile/profile/content_inspirations.haml:25
+msgid "Movies"
+msgstr "Films"
+
+#: common/profile.py:119
+msgid "Team"
+msgstr "Équipe"
+
+#: common/profile.py:132
+#: templates/frontend/profile/content_home_infos_profile.haml:55
+msgid "Collaborations"
+msgstr "Collaborations"
+
+#: common/profile.py:143 templates/mobile/popup/search.haml:6
+msgid "Artists"
+msgstr "Artistes"
+
+#: common/profile.py:159
+msgid "Models"
+msgstr "Mannequins"
+
+#: common/profile.py:172
+msgid "Directors"
+msgstr "Réalisateurs"
+
+#: common/profile.py:460 models/models.py:1399
+msgid "Page"
+msgstr "Page"
+
+#: common/profile.py:461 models/models.py:1400
+msgid "Passionate"
+msgstr "Passionné"
+
+#: models/interfaces.py:380
+msgid "Invalid metadata format, should be a dictionnary"
+msgstr "Type de média invalide, devrait être un dictionnaire"
+
+#: models/interfaces.py:399
+msgid "Invalid metadata, field does not exist"
+msgstr "Métadonnée invalide, le champ n'existe pas"
+
+#: models/interfaces.py:404
+msgid "Invalid metadata type, field class should be unicode"
+msgstr "Type de métadonnée invalide, le champ devrait être une chaîne unicode"
+
+#: models/interfaces.py:412
+msgid "Invalid email format"
+msgstr "Format d'email invalide"
+
+#: models/interfaces.py:419
+msgid "Invalid website format"
+msgstr "Format de site web invalide"
+
+#: models/interfaces.py:425
+msgid "Invalid date format, should be iso date format"
+msgstr "Format de date invalide, devrait être au format ISO"
+
+#: models/interfaces.py:434 models/interfaces.py:447
+msgid "Invalid date"
+msgstr "Date invalide"
+
+#: models/interfaces.py:440
+msgid "Invalid date format, should be YYYY, YYYY-MM or YYYY-MM-DD"
+msgstr "Format de date invalide, devrait être AAAA, AAAA-MM ou AAAA-MM-JJ"
+
+#: models/interfaces.py:451
+msgid "Invalid duration format, should be int"
+msgstr "Format de durée invalide, devrait être un entier"
+
+#: models/interfaces.py:456
+msgid "Invalid metadata type, field class should be dict"
+msgstr "Type de métadonnée invalide, devrait être un dictionnaire"
+
+#: models/interfaces.py:469
+msgid "Invalid metadata type, field class should be float"
+msgstr "Type de métadonnée invalide, devrait être un float"
+
+#: models/interfaces.py:474
+msgid "Invalid metadata type, field class should be int"
+msgstr "Type de métadonnée invalide, devrait être un entier"
+
+#: models/interfaces.py:479
+msgid "Invalid metadata type, field class should be list"
+msgstr "Type de métadonnée invalide, devrait être une liste"
+
+#: models/interfaces.py:813
+#, python-format
+msgid "Invalid field: %s"
+msgstr "Clef invalide&#8239;: %s"
+
+#: models/interfaces.py:817 models/interfaces.py:842
+#, python-format
+msgid "Invalid field group %(group)s for field %(name)s"
+msgstr "Groupe %(group)s invalide pour le champ %(name)s"
+
+#: models/models.py:354
+#, python-format
+msgid "%(godfather)s and %(issuer)s invite you to join Findspire."
+msgstr "%(godfather)s et %(issuer)s vous invitent à rejoindre Findspire."
+
+#: models/models.py:356
+#, python-format
+msgid "%(issuer)s invites you to join Findspire."
+msgstr "%(issuer)s vous invite à rejoindre Findspire."
+
+#: models/models.py:358
+msgid "Here is an invitation to join Findspire."
+msgstr "Voici une invitation à rejoindre Findspire."
+
+#: models/models.py:693
+msgid "Error"
+msgstr "Erreur"
+
+#: models/models.py:694
+msgid "An unknown fatal error has occured."
+msgstr "Une erreur fatale inconnue est survenue."
+
+#: models/models.py:695
+msgid "Resolution too low"
+msgstr "Résolution trop faible"
+
+#: models/models.py:697
+#, python-format
+msgid ""
+"The video could not be encoded because its resolution (%(width)dx%(height)d) "
+"is too low.\n"
+"To ensure an adequate quality and a pleasant watching experience, please "
+"upload videos with a minimal resolution of %(min_w)dx%(min_h)d."
+msgstr ""
+"La vidéo n'a pas pu être encodée car sa résolution (%(width)dx%(height)d) "
+"est trop faible.\n"
+"Afin d'assurer une qualité suffisante et un visionnage agréable, veuillez "
+"charger des vidéos d'une résolution minimale de %(min_w)dx%(min_h)d."
+
+#: models/models.py:1430 models/models.py:1466
+msgid "Cannot find profile parent user"
+msgstr "Impossible de trouver le profil parent"
+
+#: templates/base_singlepage.haml:154
+#: templates/frontend/base_comingsoon.haml:46
+#: templates/frontend/base_comingsoon.haml:57
+#: templates/frontend/base_comingsoon.haml:68
+#: templates/frontend/base_comingsoon.haml:79
+msgid "Picture by"
+msgstr "Image de"
+
+#: templates/devicenotsupported.haml:5 templates/devicenotsupported.haml:11
+msgid "Findspire is not yet available on mobile and tablets"
+msgstr "Findspire sera bientôt disponible pour mobile et tablette"
+
+#: templates/email/delegation_notif.haml:7
+#: templates/email/delegation_notif.haml:16
+#, python-format
+msgid "%(initiator_name)s named you administrator of their page"
+msgstr "%(initiator_name)s vous a nommé administrateur de sa page"
+
+#: templates/email/delegation_notif.haml:9
+#: templates/email/delegation_notif.haml:18
+#, python-format
+msgid ""
+"%(initiator_name)s named you administrator of the page \"%(profile_name)s\""
+msgstr ""
+"%(initiator_name)s vous a nommé administrateur de la page \"%(profile_name)s"
+"\""
+
+#: templates/email/delegation_notif.haml:21
+#: templates/email/delegation_notif.haml:65
+msgid "Start to manage this profile now"
+msgstr "Commencer à gérer ce profil maintenant"
+
+#: templates/email/delegation_notif.haml:34
+msgid "You have been named administrator of a page"
+msgstr "Vous avez été nommé administrateur d'une page"
+
+#: templates/email/delegation_notif.haml:51
+msgid "named you administrator of their page"
+msgstr "vous a nommé administrateur de sa page"
+
+#: templates/email/delegation_notif.haml:54
+msgid "named you administrator of the page"
+msgstr "vous a nommé administrateur de la page"
+
+#: templates/email/delegation_notif.haml:71
+msgid "Visit FINDSPIRE"
+msgstr "Visitez FINDSPIRE"
+
+#: templates/email/invitation_code.haml:5
+msgid "An invitation for you"
+msgstr "Vous êtes invité"
+
+#: templates/email/invitation_code.haml:7
+#, python-format
+msgid ""
+"\n"
+"%(profile_name)s sent you an invitation to connect on Findspire:\n"
+"\n"
+"%(url)s\n"
+msgstr ""
+"\n"
+"%(profile_name)s vous invite à vous connecter sur FINDSPIRE:\n"
+"\n"
+"%(url)s\n"
+
+#: templates/email/invitation_code.haml:16
+#: templates/email/invitation_code_with_delegation.haml:8
+#: templates/email/invitation_code_with_delegation.haml:29
+msgid "invites you to join FINDSPIRE"
+msgstr "vous invite à rejoindre FINDSPIRE"
+
+#: templates/email/invitation_code.haml:31
+msgid "sent you an invitation to connect on FINDSPIRE."
+msgstr "vous invite à vous connecter sur FINDSPIRE."
+
+#: templates/email/invitation_code.haml:38
+#: templates/email/invitation_code_with_delegation.haml:55
+msgid "Accept invitation"
+msgstr "Accepter l'invitation"
+
+#: templates/email/invitation_code_with_delegation.haml:5
+#, python-format
+msgid "%(initiator_name)s invites you to join FINDSPIRE"
+msgstr "%(initiator_name)s vous invite à rejoindre FINDSPIRE"
+
+#: templates/email/invitation_code_with_delegation.haml:10
+msgid "has also named you administrator of the page"
+msgstr "vous a aussi nommé administrateur de la page"
+
+#: templates/email/invitation_code_with_delegation.haml:12
+#: templates/email/invitation_code_with_delegation.haml:59
+msgid ""
+"Be sure to use this link to create your account in order to become "
+"administrator of the page"
+msgstr ""
+"Assurez vous d'utiliser ce lien pour créer votre compte afin de devenir "
+"administrateur de la page"
+
+#: templates/email/invitation_code_with_delegation.haml:35
+msgid "has also named you administrator of the following page"
+msgstr "vous a aussi nommé administrateur de la page"
+
+#: templates/email/notification_allow_see_private_media.haml:7
+#: templates/email/notification_allow_see_private_media.haml:28
+msgid "Media sharing"
+msgstr "Partage du média"
+
+#: templates/email/notification_allow_see_private_media.haml:12
+msgid "has allowed you to see a media"
+msgstr "vous a autorisé à accéder au média"
+
+#: templates/email/notification_allow_see_private_media.haml:14
+#: templates/email/tag_request.haml:16
+msgid "See all notifications here: "
+msgstr "Voir toutes les notifications ici:"
+
+#: templates/email/notification_allow_see_private_media.haml:43
+msgid "has shared a media with you."
+msgstr "a partagé un média avec vous."
+
+#: templates/email/notification_allow_see_private_media.haml:45
+msgid "You can access it here"
+msgstr "Vous pouvez y accéder ici"
+
+#: templates/email/notification_base.haml:5
+msgid "Quick update from Findspire"
+msgstr "Du nouveau sur Findspire"
+
+#: templates/email/notification_base.haml:7
+#, python-format
+msgid "Hello %(user_name)s,"
+msgstr "Bonjour %(user_name)s,"
+
+#: templates/email/notification_base.haml:9
+#, python-format
+msgid ""
+"Kind regards,\n"
+"The Findspire team.\n"
+"\n"
+"\\--\n"
+"This mail has been sent to %(email)s.\n"
+"This is an automated email, please do not reply."
+msgstr ""
+"Cordialement,\n"
+"L'équipe Findspire.\n"
+"\n"
+"\\--\n"
+"Ce message a été envoyé à %(email)s.\n"
+"Cet email est automatisé, merci de ne pas y répondre."
+
+#: templates/email/notification_base.haml:72
+msgid "Find your inspiration"
+msgstr "Find your inspiration"
+
+#: templates/email/notification_base.haml:92
+msgid ""
+"is the perfect place to discover, save and share new artistic inspirations "
+"around the world."
+msgstr ""
+"est l'endroit parfait pour découvrir, sauvegarder et partager vos "
+"inspirations artistiques."
+
+#: templates/email/notification_base.haml:110
+msgid "This mail has been sent to "
+msgstr "Cet email a été envoyé à "
+
+#: templates/email/notification_base.haml:114
+#: templates/email/password_recovery.haml:40
+msgid "This is an automated email, please do not reply."
+msgstr "Ceci est un message automatique, veuillez ne pas y répondre"
+
+#: templates/email/notification_inspired_profile.haml:20
+msgid "has a new follower"
+msgid_plural "has new followers"
+msgstr[0] "a un nouvel abonné"
+msgstr[1] "a de nouveaux abonnés"
+
+#: templates/email/notification_inspired_profile.haml:25
+msgid "of your profiles have new followers"
+msgstr "de vos profils ont de nouveaux abonnés"
+
+#: templates/email/notification_inspired_profile.haml:33
+msgid "follows"
+msgstr "suit"
+
+#: templates/email/notification_inspired_profile.haml:35
+msgid "profiles have new followers"
+msgstr "profils ont de nouveaux abonnés"
+
+#: templates/email/notification_inspired_profile.haml:44
+msgid "has new followers:"
+msgstr "a de nouveaux abonnés:"
+
+#: templates/email/notification_inspired_profile.haml:45
+msgid "of your profiles have new followers."
+msgstr "de vos profils ont de nouveaux abonnés."
+
+#: templates/email/notification_inspired_profile.haml:48
+#: templates/email/notification_inspired_profile.haml:78
+#, python-format
+msgid "one new follower"
+msgid_plural "%(counter)s new followers"
+msgstr[0] "un nouvel abonné"
+msgstr[1] "%(counter)s nouveaux abonnés"
+
+#: templates/email/notification_inspired_profile.haml:111
+#: templates/email/tag_notif.haml:9 templates/email/tag_request.haml:123
+msgid "View all notifications"
+msgstr "Voir toutes les notifications"
+
+#: templates/email/password_recovery.haml:4
+msgid "Recover your Findspire account"
+msgstr "Récupérer votre compte Findspire"
+
+#: templates/email/password_recovery.haml:6
+#, python-format
+msgid ""
+"Hello %(first_name)s,\n"
+"\n"
+"Someone (probably you) has requested your password to be reset. To do so,\n"
+"please click on the following link:\n"
+"\n"
+"%(url)s\n"
+"\n"
+"If this link isn't highlighted, please copy-paste it in your web browser.\n"
+"\n"
+"If you didn't request this, if you're not sure what to do, or if you\n"
+"changed your mind, you don't have to do annything: the link above will\n"
+"expire in 24 hours.\n"
+"\n"
+"Kind regards,\n"
+"The Findspire team.\n"
+"\n"
+"\\--\n"
+"This is an automated email, please do not reply.\n"
+msgstr ""
+"Bonjour %(first_name)s,\n"
+"\n"
+"Quelqu'un (probablement vous) a demandé à réinitialiser votre mot de passe.\n"
+"Pour ce faire, veuillez cliquer sur le lien suivant&#8239;:\n"
+"\n"
+"%(url)s\n"
+"\n"
+"Si ce lien n'est pas cliquable, veuillez le copier-coller dans votre\n"
+"navigateur.\n"
+"\n"
+"Si vous n'avez pas demandé ceci, si vous ne savez pas quoi faire, ou si "
+"vous\n"
+"avez simplement changé d'avis, vous n'avez rien à faire&#8239;: le lien ci-"
+"dessus\n"
+"expirera dans 24 heures.\n"
+"\n"
+"Amicalement,\n"
+"L'équipe Findspire.\n"
+"\n"
+"\\--\n"
+"Ceci est un email automatisé, merci de ne pas y répondre.\n"
+
+#: templates/email/password_recovery.haml:29
+#, python-format
+msgid "Hello %(first_name)s,"
+msgstr "Bonjour %(first_name)s,"
+
+#: templates/email/password_recovery.haml:31
+msgid ""
+"Someone (probably you) has requested your password to be reset. To do so, "
+"please click on the following link:"
+msgstr ""
+"Quelqu'un (probablement vous) a demandé à réinitialiser votre mot de passe. "
+"Pour ce faire, veuillez cliquer sur le lient suivant&#8239;:"
+
+#: templates/email/password_recovery.haml:32
+#: templates/frontend/auth/password_recovery.haml:12
+msgid "Reset your password"
+msgstr "Réinitialiser votre mot de passe"
+
+#: templates/email/password_recovery.haml:34
+msgid ""
+"If you didn't request this, if you're not sure what to do, or if you changed "
+"your mind, you don't have to do annything: the link above will expire in 24 "
+"hours."
+msgstr ""
+"Si vous n'avez pas demandé ceci, si vous ne savez pas quoi faire, ou si vous "
+"avez simplement changé d'avis, vous n'avez rien à faire&#8239;: le lien ci-"
+"dessus expirera dans 24 heures"
+
+#: templates/email/password_recovery.haml:36
+msgid "Kind regards,<br/>The Findspire team."
+msgstr "Amicalement,<br/>L'équipe Findspire."
+
+#: templates/email/tag_request.haml:7
+msgid "New collaboration"
+msgstr "Nouvelle collaboration"
+
+#: templates/email/tag_request.haml:13
+#: templates/frontend/notifications/item_tagrequest_title.haml:9
+#: templates/frontend/notifications/item_tagrequest_title.haml:21
+msgid "identified "
+msgstr "a identifié "
+
+#: templates/email/tag_request.haml:32
+msgid "New collaboration from "
+msgstr "Nouvelle collaboration de "
+
+#: templates/email/tag_request.haml:55 templates/email/tag_request.haml:63
+#: templates/email/tag_request.haml:73
+#: templates/frontend/notifications/item_tagrequest_title.haml:30
+msgid "identified"
+msgstr "a identifié"
+
+#: templates/email/tag_request.haml:58
+#: templates/frontend/notifications/item_tagrequest_title.haml:11
+msgid "on"
+msgstr "sur"
+
+#: templates/email/tag_request.haml:66 templates/email/tag_request.haml:76
+#: templates/frontend/notifications/item_tagrequest_title.haml:23
+#: templates/frontend/notifications/item_tagrequest_title.haml:32
+msgid "as"
+msgstr "en tant que"
+
+#: templates/email/tag_request.haml:107
+msgid "Confirm or reject collaboration on "
+msgstr "Confirmer ou rejeter la collaboration sur "
+
+#: templates/email/tag_request_obj.haml:8
+#: templates/frontend/profile/content_home.haml:132
+msgid "an image"
+msgstr "une image"
+
+#: templates/email/tag_request_obj.haml:9
+#: templates/frontend/profile/content_home.haml:135
+msgid "a video"
+msgstr "une vidéo"
+
+#: templates/email/tag_request_obj.haml:10
+msgid "an album"
+msgstr "un album"
+
+#: templates/email/tag_request_obj.haml:11
+msgid "a track"
+msgstr "une piste"
+
+#: templates/email/tag_request_obj.haml:12
+msgid "a movie"
+msgstr "un film"
+
+#: templates/email/tag_request_obj.haml:15
+#: templates/frontend/notifications/item_tagrequest_obj.haml:4
+msgid "the image"
+msgstr "l'image"
+
+#: templates/email/tag_request_obj.haml:16
+#: templates/frontend/notifications/item_tagrequest_obj.haml:5
+msgid "the video"
+msgstr "la vidéo"
+
+#: templates/email/tag_request_obj.haml:17
+#: templates/frontend/notifications/item_tagrequest_obj.haml:6
+msgid "the album"
+msgstr "l'album"
+
+#: templates/email/tag_request_obj.haml:18
+#: templates/frontend/notifications/item_tagrequest_obj.haml:7
+msgid "the track"
+msgstr "la piste"
+
+#: templates/email/tag_request_obj.haml:19
+#: templates/frontend/notifications/item_tagrequest_obj.haml:8
+msgid "the movie"
+msgstr "le film"
+
+#: templates/frontend/403.haml:5 templates/frontend/403.haml.py:10
+#: templates/mobile/403.haml:5 templates/mobile/403.haml.py:10
+msgid "Access forbidden"
+msgstr "Accès refusé"
+
+#: templates/frontend/403.haml:15 templates/frontend/404.haml:15
+#: templates/mobile/403.haml:15 templates/mobile/404.haml:15
+msgid "Go to home page"
+msgstr "Retour à la page d'accueil"
+
+#: templates/frontend/404.haml:5 templates/frontend/404.haml.py:10
+#: templates/mobile/404.haml:5 templates/mobile/404.haml.py:10
+msgid "Page not found"
+msgstr "Page non trouvée"
+
+#: templates/frontend/500.haml:5
+msgid "Maintenance"
+msgstr "Maintenance"
+
+#: templates/frontend/500.haml:10 templates/mobile/500.haml:10
+msgid "Due to an unexpected traffic, the service is temporarly not available"
+msgstr ""
+"En raison d'un trafic important, le service est momentanément indisponible"
+
+#: templates/frontend/500.haml:14 templates/mobile/500.haml:14
+msgid "Our technical team is working on it to fix this problem really shortly"
+msgstr ""
+"Notre équipe technique travaille sur ce problème pour le résoudre rapidement"
+
+#: templates/frontend/base_comingsoon.haml:21
+msgid "You'll receive an email to inform you about Findspire opening."
+msgstr "Vous recevrez un email pour vous prévenir de l'ouverture de Findspire."
+
+#: templates/frontend/base_comingsoon.haml:24
+msgid "Enter your email and subscribe to our newsletter"
+msgstr "Entrez votre adresse email pour vous inscrire à la newsletter"
+
+#: templates/frontend/base_comingsoon.haml:25
+#: templates/frontend/base_comingsoon.haml:94
+#: templates/frontend/signup/common.haml:27
+msgid "Email"
+msgstr "Adresse email"
+
+#: templates/frontend/base_comingsoon.haml:40
+msgid "BE INSPIRED"
+msgstr "UNE SOURCE D'INSPIRATION"
+
+#: templates/frontend/base_comingsoon.haml:42
+msgid "Discover the best of artistic creation worldwide"
+msgstr "Découvrez le meilleur de la création artistique internationale"
+
+#: templates/frontend/base_comingsoon.haml:44
+msgid "all in one place."
+msgstr "sur une seule plateforme."
+
+#: templates/frontend/base_comingsoon.haml:51
+msgid "SMARTLY CONNECTED"
+msgstr "INTELLIGEMMENT CONNECTÉ"
+
+#: templates/frontend/base_comingsoon.haml:53
+msgid "Explore, save and share all your inspirations"
+msgstr "Explorez, sauvegardez et partagez à l’infini toutes vos inspirations"
+
+#: templates/frontend/base_comingsoon.haml:55
+msgid "with a unique navigation system."
+msgstr "grâce à une navigation réinventée."
+
+#: templates/frontend/base_comingsoon.haml:62
+msgid "DAILY RECOMMANDATIONS"
+msgstr ""
+
+#: templates/frontend/base_comingsoon.haml:64
+msgid "Enjoy FINDSPIRE staff picks"
+msgstr "Laissez-vous guider par les sélections FINDSPIRE"
+
+#: templates/frontend/base_comingsoon.haml:66
+msgid "and access to exclusive contents."
+msgstr "et accédez à des contenus exclusifs de qualité."
+
+#: templates/frontend/base_comingsoon.haml:73
+msgid "INSPIRING SOON"
+msgstr "INSPIRING SOON"
+
+#: templates/frontend/base_comingsoon.haml:75
+msgid "Experience FINDSPIRE soon."
+msgstr "Retrouvez prochainement tout l'univers FINDSPIRE."
+
+#: templates/frontend/base_comingsoon.haml:77
+msgid "Everywhere. Anytime."
+msgstr " "
+
+#: templates/frontend/base_comingsoon.haml:87
+msgid "More information about opening:"
+msgstr "Plus d'informations sur l'ouverture&#8239;:"
+
+#: templates/frontend/browsernotsupported.haml:5
+#: templates/frontend/browsernotsupported.haml:10
+#: templates/mobile/browsernotsupported.haml:5
+#: templates/mobile/browsernotsupported.haml:10
+#: templates/mobile/devicenotsupported.haml:5
+#: templates/mobile/devicenotsupported.haml:10
+msgid "Your browser is too old to run Findspire"
+msgstr "Votre navigateur est trop ancien pour exécuter Findspire"
+
+#: templates/frontend/browsernotsupported.haml:14
+#: templates/mobile/browsernotsupported.haml:14
+#: templates/mobile/devicenotsupported.haml:14
+msgid "Please consider using a modern web browser such as Google Chrome"
+msgstr "Veuillez utiliser un navigateur web moderne tel que Google Chrome"
+
+#: templates/frontend/browsernotsupported.haml:18
+#: templates/mobile/browsernotsupported.haml:18
+#: templates/mobile/devicenotsupported.haml:18
+msgid "Install it now"
+msgstr "Installez-le maintenant"
+
+#: templates/frontend/cookies.haml:9
+msgid ""
+"We use cookies to track usage and preferences. By continuing to browse this "
+"site, you agree with our"
+msgstr ""
+"En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de "
+"cookies et nos"
+
+#: templates/frontend/cookies.haml:11
+msgid "terms of use."
+msgstr "conditions générales d'utilisation."
+
+#: templates/frontend/cookies.haml:14
+msgid "I understand"
+msgstr "Je comprends"
+
+#: templates/frontend/devicenotsupported.haml:5
+msgid "FINDSPIRE - Device not supported"
+msgstr "FINDSPIRE - Appareil non supporté"
+
+#: templates/frontend/devicenotsupported.haml:10
+msgid "FINDSPIRE does not run on your device"
+msgstr "FINDSPIRE ne peut pas s'exécuter sur cet appareil"
+
+#: templates/frontend/dropdown.haml:8
+msgid "Add to a mood"
+msgstr "Ajouter à un mood"
+
+#: templates/frontend/dropdown.haml:12
+msgid "back"
+msgstr "retour"
+
+#: templates/frontend/dropdown.haml:17 templates/frontend/dropdown.haml:88
+msgid "Add to a playlist"
+msgstr "Ajouter à une playlist"
+
+#: templates/frontend/dropdown.haml:24
+msgid "Add to recommandations"
+msgstr "Ajouter aux recommandations"
+
+#: templates/frontend/dropdown.haml:29
+msgid "Unpublish"
+msgstr "Dépublier"
+
+#: templates/frontend/dropdown.haml:37
+msgid "Edit media"
+msgstr "Editer le média"
+
+#: templates/frontend/dropdown.haml:42
+#: templates/frontend/dashboard/template_playlistedit.haml:23
+msgid "Edit playlist"
+msgstr "Editer la playlist"
+
+#: templates/frontend/dropdown.haml:47
+msgid "Promote on your page"
+msgstr "Mettre en avant sur votre page"
+
+#: templates/frontend/dropdown.haml:52
+msgid "Rename moodboard"
+msgstr "Renommer le moodboard"
+
+#: templates/frontend/dropdown.haml:57
+msgid "Delete moodboard"
+msgstr "Supprimer le moodboard"
+
+#: templates/frontend/dropdown.haml:62
+msgid "Delete media"
+msgstr "Supprimer le média"
+
+#: templates/frontend/dropdown.haml:67
+msgid "Edit collection"
+msgstr "Éditer la collection"
+
+#: templates/frontend/dropdown.haml:72
+msgid "Delete collection"
+msgstr "Supprimer la collection"
+
+#: templates/frontend/dropdown.haml:78
+msgid "New playlist"
+msgstr "Nouvelle playlist"
+
+#: templates/frontend/dropdown.haml:83
+msgid "Add to moods"
+msgstr "Ajouter au moods"
+
+#: templates/frontend/dropdown.haml:93
+msgid "Remove from playlist"
+msgstr "Enlever de la playlist"
+
+#: templates/frontend/dropdown.haml:98
+msgid "Share on Facebook"
+msgstr "Partager sur Facebook"
+
+#: templates/frontend/dropdown.haml:103
+msgid "Share on Twitter"
+msgstr "Partager sur Twitter"
+
+#: templates/frontend/dropdown.haml:108
+msgid "Rename playlist"
+msgstr "Renommer la playlist"
+
+#: templates/frontend/dropdown.haml:113
+msgid "Delete playlist"
+msgstr "Supprimer la playlist"
+
+#: templates/frontend/dropdown.haml:118
+msgid "Copy the FINDSPIRE URL"
+msgstr "Copier l'url FINDSPIRE"
+
+#: templates/frontend/dropdown.haml:122 templates/frontend/dropdown.haml:126
+#: templates/frontend/dashboard/subtemplates/block_delegation_autocomplete_item.haml:14
+msgid "Visit page"
+msgstr "Voir la page"
+
+#: templates/frontend/dropdown.haml:130
+#: templates/frontend/profile/base.haml:47
+msgid "Edit page"
+msgstr "Editer la page"
+
+#: templates/frontend/dropdown.haml:134
+msgid "Remove page"
+msgstr "Enlever la page"
+
+#: templates/frontend/dropdown.haml:140
+msgid "Delete tag"
+msgstr "Supprimer le tag"
+
+#: templates/frontend/embed_iframe.haml:7
+#: templates/frontend/embed_iframe.haml:16
+msgid "FINDSPIRE Player"
+msgstr "Lecteur FINDSPIRE"
+
+#: templates/frontend/field.haml:56
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:113
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:120
+#: templates/frontend/profile/content_home_infos_movie.haml:18
+msgid "minutes"
+msgstr "minutes"
+
+#: templates/frontend/inspire.haml:7
+#, python-format
+msgid "Follow %(name)s"
+msgstr "Suivre %(name)s"
+
+#: templates/frontend/inspire.haml:7
+msgid "Get inspired"
+msgstr "S'inspirer"
+
+#: templates/frontend/inspire.haml:17
+msgid "Follow page"
+msgstr "Suivre la page"
+
+#: templates/frontend/inspire.haml:19 templates/frontend/templates.haml:23
+#: templates/frontend/music/profile.haml:38 templates/mobile/inspire.haml:12
+msgid "Follow"
+msgstr "Suivre"
+
+#: templates/frontend/inspire.haml:23
+msgid "Following page"
+msgstr "Page suivie"
+
+#: templates/frontend/inspire.haml:25 templates/frontend/templates.haml:25
+#: templates/mobile/inspire.haml:14
+msgid "Following"
+msgstr "Suivi "
+
+#: templates/frontend/inspire.haml:31 templates/frontend/inspire.haml.py:42
+#: templates/frontend/templates/tracks_item.haml:43
+#: templates/mobile/inspire.haml:22
+msgid "Inspired"
+msgstr "Inspiré"
+
+#: templates/frontend/inspire.haml:33 templates/frontend/inspire.haml.py:44
+#: templates/frontend/templates/tracks_item.haml:45
+#: templates/mobile/inspire.haml:20
+msgid "Be inspired"
+msgstr "S'inspirer"
+
+#: templates/frontend/invitation.haml:4
+msgid "Stay informed about"
+msgstr "Tenez-vous informé des actualités de "
+
+#: templates/frontend/invitation.haml:10
+msgid "Enter your email address"
+msgstr "Entrez votre adresse email"
+
+#: templates/frontend/invitation.haml:11
+msgid "Keep me informed"
+msgstr "Tenez-moi au courant"
+
+#: templates/frontend/invitation.haml:16
+msgid "Account creation for artists/companies/bloggers:"
+msgstr "Création de compte pour artistes/sociétés/blogueurs&#8239;:"
+
+#: templates/frontend/invitation.haml:20
+msgid "Partnership/press:"
+msgstr "Partenariats/presse&#8239;:"
+
+#: templates/frontend/meta.haml:41 templates/frontend/meta.haml.py:42
+msgid ""
+"On a single universe, Findspire reinvents discovery, save and sharing of "
+"music, images, photos, videos and movies of artists coming from all around "
+"the world"
+msgstr ""
+"Findspire réinvente la découverte, la sauvegarde et le partage de musique, "
+"images, vidéos et films d'artistes du monde entier dans un seul et même "
+"univers"
+
+#: templates/frontend/restrained.haml:7
+msgid "Restrained access"
+msgstr "Accès limité"
+
+#: templates/frontend/restrained.haml:10
+msgid "Sign up on "
+msgstr "Créez un compte sur "
+
+#: templates/frontend/restrained.haml:13
+#: templates/frontend/signup/invitation.haml:30
+#: templates/frontend/welcome/side.haml:15
+msgid "Sign up"
+msgstr "Créer un compte"
+
+#: templates/frontend/restrained.haml:17
+#: templates/frontend/splashscreen.haml:29
+#: templates/frontend/footer/disconnected.haml:6
+#: templates/frontend/signup/invitation.haml:36
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/frontend/restrained.haml:19
+msgid " or "
+msgstr " ou "
+
+#: templates/frontend/restrained.haml:21
+msgid "Continue discovery"
+msgstr "Rester sur la version Beta"
+
+#: templates/frontend/restrained.haml:23
+msgid "Discover and access a unique catalog of music, movies, photos. "
+msgstr "Découvrez et accédez à un catalogue unique de musique, films, photos. "
+
+#: templates/frontend/restrained.haml:25
+msgid "Create your own playlists, channels and share them with your friends."
+msgstr "Créez vos propres playlists, chaînes et partagez-les avec vos amis."
+
+#: templates/frontend/share_social.haml:6
+msgctxt "social"
+msgid "Share"
+msgstr "Partager"
+
+#: templates/frontend/splashscreen.haml:10
+msgid "Free registration"
+msgstr "Inscription gratuite"
+
+#: templates/frontend/splashscreen.haml:12
+msgid "Listening is limited to 30 seconds. Sign up to unlock this limitation!"
+msgstr ""
+"L'écoute est limitée à 30 secondes. Inscrivez vous pour supprimer cette "
+"limitation!"
+
+#: templates/frontend/splashscreen.haml:15
+#: templates/frontend/signup/type.haml:18
+msgid "Sign up with Facebook"
+msgstr "Créer un compte avec Facebook"
+
+#: templates/frontend/splashscreen.haml:17
+#: templates/frontend/signup/type.haml:21
+msgid "Sign up with Twitter"
+msgstr "Créer un compte avec Twitter"
+
+#: templates/frontend/splashscreen.haml:19
+#: templates/frontend/signup/type.haml:24
+msgid "Sign up with your email"
+msgstr "Créez un compte avec votre email"
+
+#: templates/frontend/splashscreen.haml:23
+msgid "Already registered on"
+msgstr "Déjà inscrit sur"
+
+#: templates/frontend/splashscreen.haml:26
+msgid "?"
+msgstr "?"
+
+#: templates/frontend/templates.haml:12
+#: templates/frontend/boxes/movie_discover.haml:34
+#: templates/frontend/boxes/video_discover.haml:31
+#: templates/frontend/find/welcome/moviefullsize.haml:41
+#: templates/frontend/find/welcome/soundtracks.haml:40
+#: templates/frontend/find/welcome/soundtracks.haml:47
+#: templates/frontend/find/welcome/soundtracks.haml:77
+#: templates/frontend/find/welcome/soundtracks.haml:83
+#: templates/frontend/music/album_details.haml:28
+#: templates/frontend/music/side.haml:40
+#: templates/frontend/search/search_album.haml:31
+#: templates/frontend/search/search_image.haml:28
+#: templates/frontend/search/search_track.haml:28
+#: templates/frontend/search/search_video.haml:32
+#: templates/frontend/welcome/content.haml:10
+#: templates/mobile/boxes/movie.haml:20
+#: templates/mobile/boxes/playlist.haml:11
+#: templates/mobile/boxes/video.haml:13 templates/mobile/popup/get_app.haml:22
+#: templates/mobile/viewer/content.haml:23
+msgid "By"
+msgstr "Par"
+
+#: templates/frontend/auth/forgot.haml:12
+msgid "Recover your password"
+msgstr "Récupérer votre mot de passe"
+
+#: templates/frontend/auth/forgot.haml:17
+#: templates/frontend/auth/signin.haml:29
+msgid "Mail"
+msgstr "Adresse email"
+
+#: templates/frontend/auth/forgot.haml:20
+#: templates/frontend/auth/password_recovery.haml:21
+#: templates/frontend/boxes/page.haml:21
+#: templates/frontend/create/page.haml:25
+#: templates/frontend/dashboard/template_collectionedit.haml:36
+#: templates/frontend/dashboard/template_create.haml:34
+#: templates/frontend/dashboard/template_create_tag.haml:37
+#: templates/frontend/dashboard/template_mediaedit.haml:102
+#: templates/frontend/dashboard/template_settings.haml:41
+#: templates/frontend/dashboard/template_settings.haml:63
+#: templates/frontend/dashboard/template_settings.haml:84
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:27
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:103
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:125
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:145
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:202
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:236
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:256
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:24
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:45
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:64
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:48
+#: templates/frontend/inspire/content.haml:56
+#: templates/frontend/profile/content_home.haml:92
+#: templates/frontend/signup/common.haml:108
+#: templates/frontend/signup/page.haml:28
+#: templates/frontend/upload/upload.haml:27
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/frontend/auth/forgot.haml:22
+msgid "Send"
+msgstr "Envoyer"
+
+#: templates/frontend/auth/forgot.haml:25
+msgid ""
+"An email containing instructions to reset your password will be sent to your "
+"mailbox."
+msgstr ""
+"Un email contenant des instructions pour réinitialiser votre mot de passe "
+"vous sera envoyé."
+
+#: templates/frontend/auth/password_recovery.haml:18
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#: templates/frontend/auth/password_recovery.haml:23
+msgid "Reset password"
+msgstr "Réinitialiser le mot de passe"
+
+#: templates/frontend/auth/password_recovery.haml:26
+#, python-format
+msgid "Enter the new password for %(email)s below."
+msgstr "Entrez le nouveau mot de passe pour %(email)s ci-dessous."
+
+#: templates/frontend/auth/signin.haml:12
+#: templates/frontend/welcome/side.haml:11
+msgid "Welcome to"
+msgstr "Bienvenue sur"
+
+#: templates/frontend/auth/signin.haml:19
+msgid "Sign in with Facebook"
+msgstr "Connexion Facebook"
+
+#: templates/frontend/auth/signin.haml:22
+msgid "Sign in with Twitter"
+msgstr "Connexion Twitter"
+
+#: templates/frontend/auth/signin.haml:26
+msgid "Or sign in with your email"
+msgstr "Ou connectez-vous avec votre adresse email"
+
+#: templates/frontend/auth/signin.haml:31
+#: templates/frontend/dashboard/template_settings.haml:45
+#: templates/frontend/dashboard/template_settings.haml:73
+#: templates/frontend/signup/common.haml:31
+msgid "Password"
+msgstr "Mot de passe"
+
+#: templates/frontend/auth/signin.haml:34
+#: templates/frontend/welcome/side.haml:17
+msgid "Sign in"
+msgstr "Connexion"
+
+#: templates/frontend/auth/signin.haml:38
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+#: templates/frontend/auth/signin.haml:42
+msgid "No account?"
+msgstr "Pas de compte ?"
+
+#: templates/frontend/auth/signin.haml:44
+msgid "Sign up here"
+msgstr "Créez un compte"
+
+#: templates/frontend/boxes/album.haml:45
+#: templates/frontend/boxes/image.haml:39
+#: templates/frontend/boxes/movie.haml:41
+#: templates/frontend/boxes/playlist.haml:36
+#: templates/frontend/boxes/playlist.haml:42
+#: templates/frontend/boxes/product.haml:15
+#: templates/frontend/boxes/video.haml:39
+#: templates/frontend/find/recoboxes/album.haml:60
+#: templates/frontend/find/recoboxes/image.haml:34
+#: templates/frontend/find/recoboxes/video.haml:52
+#: templates/frontend/footer/player.haml:52
+#: templates/frontend/inspirations/moodboards.haml:57
+#: templates/frontend/templates/playlists_item.haml:29
+#: templates/mobile/popup/search.haml:60
+msgid "by"
+msgstr "par"
+
+#: templates/frontend/boxes/album.haml:58
+#: templates/frontend/find/recoboxes/album.haml:75
+#: templates/frontend/templates/playlists_item.haml:44
+msgid "The album"
+msgstr "L'album"
+
+#: templates/frontend/boxes/album.haml:66
+#: templates/frontend/find/recoboxes/album.haml:79
+#: templates/frontend/templates/playlists_item.haml:48
+msgid "is not currently available for your country."
+msgstr "n'est pas encore disponible dans votre pays"
+
+#: templates/frontend/boxes/album.haml:68
+#: templates/frontend/find/recoboxes/album.haml:81
+#: templates/frontend/templates/playlists_item.haml:50
+msgid "More infos"
+msgstr "Plus d'infos"
+
+#: templates/frontend/boxes/album.haml:71
+#: templates/frontend/boxes/image.haml:44
+#: templates/frontend/boxes/movie.haml:56
+#: templates/frontend/boxes/video.haml:16
+#: templates/frontend/common/controls_container.haml:5
+#: templates/frontend/find/recoboxes/album.haml:14
+#: templates/frontend/find/recoboxes/image.haml:13
+#: templates/frontend/find/recoboxes/movie.haml:31
+#: templates/frontend/find/recoboxes/page.haml:9
+#: templates/frontend/find/recoboxes/playlist.haml:27
+#: templates/frontend/find/recoboxes/video.haml:31
+#: templates/frontend/footer/player.haml:37
+msgid "More options"
+msgstr "Plus d'infos"
+
+#: templates/frontend/boxes/event_album.haml:22
+#: templates/mobile/boxes/event_album.haml:15
+msgid "has been tagged on an album"
+msgstr "a été identifié sur un album"
+
+#: templates/frontend/boxes/event_album.haml:24
+#: templates/frontend/boxes/event_image.haml:28
+#: templates/frontend/boxes/event_movie.haml:16
+#: templates/frontend/boxes/event_video.haml:15
+#: templates/mobile/boxes/event_album.haml:17
+#: templates/mobile/boxes/event_image.haml:26
+#: templates/mobile/boxes/event_movie.haml:17
+#: templates/mobile/boxes/event_video.haml:16
+msgid "New inspiration"
+msgstr "Nouvelle inspiration"
+
+#: templates/frontend/boxes/event_album.haml:26
+#: templates/mobile/boxes/event_album.haml:19
+msgid "New album"
+msgstr "Nouvel album"
+
+#: templates/frontend/boxes/event_album.haml:45
+#: templates/mobile/boxes/event_album.haml:27
+msgid "Album by "
+msgstr "Album par "
+
+#: templates/frontend/boxes/event_album.haml:75
+#: templates/frontend/boxes/event_movie.haml:71
+#: templates/frontend/boxes/event_video.haml:65
+#, python-format
+msgid "(%(counter)s from your network)"
+msgstr "%(counter)s de votre réseau"
+
+#: templates/frontend/boxes/event_base.haml:28
+#, python-format
+msgid "%(value)s %(unit)s"
+msgstr "%(value)s %(unit)s"
+
+#: templates/frontend/boxes/event_image.haml:16
+#: templates/mobile/boxes/event_image.haml:17
+#, python-format
+msgid "has been tagged on %(count)s images "
+msgstr "a été identifié sur %(count)s images "
+
+#: templates/frontend/boxes/event_image.haml:18
+#: templates/mobile/boxes/event_image.haml:19
+#, python-format
+msgid "%(count)s new inspirations"
+msgstr "%(count)s nouvelles inspirations"
+
+#: templates/frontend/boxes/event_image.haml:20
+#: templates/mobile/boxes/event_image.haml:21
+#, python-format
+msgid "%(count)s new images"
+msgstr "%(count)s nouvelles images"
+
+#: templates/frontend/boxes/event_image.haml:26
+#: templates/mobile/boxes/event_image.haml:24
+msgid "has been tagged on an image"
+msgstr "a été identifié sur une image"
+
+#: templates/frontend/boxes/event_image.haml:30
+#: templates/mobile/boxes/event_image.haml:28
+msgid "New image"
+msgstr "Nouvelle image"
+
+#: templates/frontend/boxes/event_image.haml:44
+#: templates/mobile/boxes/event_image.haml:37
+msgid "Images by "
+msgstr "Images par "
+
+#: templates/frontend/boxes/event_image.haml:46
+#: templates/mobile/boxes/event_image.haml:39
+msgid "Image by "
+msgstr "Image par "
+
+#: templates/frontend/boxes/event_movie.haml:14
+#: templates/mobile/boxes/event_movie.haml:15
+msgid "has been tagged on a movie"
+msgstr "a été identifié sur un film"
+
+#: templates/frontend/boxes/event_movie.haml:18
+#: templates/mobile/boxes/event_movie.haml:19
+msgid "New movie"
+msgstr "Nouveau film"
+
+#: templates/frontend/boxes/event_movie.haml:33
+msgid "Directed by "
+msgstr "Réalisé par "
+
+#: templates/frontend/boxes/event_movie.haml:53
+msgid "Released on "
+msgstr "Sorti en "
+
+#: templates/frontend/boxes/event_movie.haml:56
+#: templates/frontend/find/recoboxes/movie.haml:47
+msgid "Release on "
+msgstr "Sortie le "
+
+#: templates/frontend/boxes/event_movie.haml:82
+#: templates/frontend/boxes/movie.haml:13
+#: templates/mobile/boxes/event_movie.haml:58
+#: templates/mobile/boxes/movie.haml:36
+msgid "Watch trailer"
+msgstr "Voir la bande annonce"
+
+#: templates/frontend/boxes/event_movie.haml:88
+msgid "See movie page"
+msgstr "Voir la page du film"
+
+#: templates/frontend/boxes/event_profile.haml:20
+msgid "has collaborated on"
+msgstr "a collaboré sur"
+
+#: templates/frontend/boxes/event_profile.haml:34
+#: templates/mobile/boxes/event_profile.haml:24
+msgid "have started a collaboration"
+msgstr "ont démarré une collaboration"
+
+#: templates/frontend/boxes/event_profile.haml:41
+#: templates/mobile/boxes/event_profile.haml:31
+msgid "Collaboration"
+msgstr "Collaboration"
+
+#: templates/frontend/boxes/event_video.haml:13
+#: templates/mobile/boxes/event_video.haml:14
+msgid "has been tagged on a video"
+msgstr "a été identifié sur une vidéo"
+
+#: templates/frontend/boxes/event_video.haml:17
+#: templates/mobile/boxes/event_video.haml:18
+msgid "New video"
+msgstr "Nouvelle vidéo"
+
+#: templates/frontend/boxes/event_video.haml:37
+#: templates/mobile/boxes/event_video.haml:26
+msgid "Video by "
+msgstr "Vidéo par "
+
+#: templates/frontend/boxes/movie_discover.haml:26
+#: templates/frontend/boxes/video_discover.haml:23
+#: templates/frontend/find/recoboxes/video.haml:15
+#: templates/frontend/find/welcome/moviefullsize.haml:33
+msgid "Release on"
+msgstr "Sortie le"
+
+#: templates/frontend/boxes/page.haml:11
+msgid "Awaiting validation"
+msgstr "En attente de confirmation"
+
+#: templates/frontend/boxes/page.haml:25
+msgid "Validate collaboration with"
+msgstr "Valider la collaboration avec"
+
+#: templates/frontend/boxes/page.haml:35
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: templates/frontend/boxes/page.haml:37
+msgid "Later"
+msgstr "Plus tard"
+
+#: templates/frontend/boxes/playlist-discover.haml:29
+#: templates/frontend/boxes/playlist.haml:28
+#, python-format
+msgid "%(counter)s track"
+msgid_plural "%(counter)s tracks"
+msgstr[0] "%(counter)s piste"
+msgstr[1] "%(counter)s pistes"
+
+#: templates/frontend/boxes/publication.haml:6
+msgid "Reject"
+msgstr "Rejeter"
+
+#: templates/frontend/boxes/publication.haml:9
+#: templates/frontend/notifications/item_tagrequest.haml:27
+msgid "Accept"
+msgstr "Accepter"
+
+#: templates/frontend/boxes/video.haml:57
+msgid "Video not found"
+msgstr "Vidéo non trouvée"
+
+#: templates/frontend/boxes/video.haml:61
+msgid "Processing video"
+msgstr "Traitement de la vidéo"
+
+#: templates/frontend/collections/advice.haml:14
+msgid ""
+"You will find here all images that you have uploaded and all images on which "
+"you have been identified. You can upload your own images by creating a "
+"collection."
+msgstr ""
+"Vous trouverez ici toutes les images que vous avez mises en ligne et toutes "
+"les images sur lesquelles vous avez été identifié. Vous pouvez mettre en "
+"ligne vos propres images en créant une collection."
+
+#: templates/frontend/collections/advice.haml:16
+msgid "There are no images to display"
+msgstr "Il n'y a pas d'images à afficher"
+
+#: templates/frontend/collections/advice.haml:22
+#: templates/frontend/collections/advice.haml:41
+#: templates/frontend/collections/collections.haml:12
+msgid "Create a collection"
+msgstr "Créer une collection"
+
+#: templates/frontend/collections/advice.haml:29
+#: templates/frontend/collections/collections.haml:45
+#: templates/frontend/inspirations/moodboards.haml:46
+#: templates/mobile/collections/collections.haml:26
+#: templates/mobile/inspirations/moodboards.haml:28
+msgid "All videos"
+msgstr "Toutes les vidéos"
+
+#: templates/frontend/collections/advice.haml:32
+msgid ""
+"You will find here all videos that you have uploaded and all videos on which "
+"you have been identified. You can upload your own videos by creating a "
+"collection."
+msgstr ""
+"Vous trouverez ici toutes les vidéos que vous avez mises en ligne et toutes "
+"les images sur lesquelles vous avez été identifié. Vous pouvez mettre en "
+"ligne vos propres videos en créant une collection."
+
+#: templates/frontend/collections/advice.haml:34
+msgid "There are no videos to display"
+msgstr "Il n'y a pas de vidéos à afficher"
+
+#: templates/frontend/collections/advice.haml:52
+msgid ""
+"Your collection is empty. Start publishing content by uploading one or "
+"several images."
+msgstr ""
+"Votre collection est vide. Commencez à publier du contenu en mettant en "
+"ligne une ou plusieurs images."
+
+#: templates/frontend/collections/advice.haml:54
+#: templates/frontend/collections/advice.haml:74
+msgid "This collection is empty."
+msgstr "Cette collection est vide."
+
+#: templates/frontend/collections/advice.haml:61
+#: templates/frontend/collections/advice.haml:81
+#: templates/frontend/collections/items.haml:20
+msgid "Upload new item"
+msgstr "Mettre en ligne un nouvel élément"
+
+#: templates/frontend/collections/advice.haml:72
+msgid ""
+"Your collection is empty. Start publishing content by uploading one or "
+"several videos."
+msgstr ""
+"Votre collection est vide. Commencez à publier du contenu en mettant en "
+"ligne une ou plusieurs vidéos."
+
+#: templates/frontend/collections/collections.haml:49
+#: templates/mobile/collections/collections.haml:29
+msgid "Untitled collection"
+msgstr "Collection sans nom"
+
+#: templates/frontend/collections/collections.haml:54
+#: templates/frontend/collections/collections.haml:57
+#: templates/mobile/collections/collections.haml:34
+#: templates/mobile/inspirations/moodboards.haml:36
+#, python-format
+msgid "%(counter)s item"
+msgid_plural "%(counter)s items"
+msgstr[0] "%(counter)s élément"
+msgstr[1] "%(counter)s éléments"
+
+#: templates/frontend/collections/items.haml:22
+msgid "You can upload several files simultaneously"
+msgstr "Vous pouvez mettre en ligne plusieurs fichiers à la fois"
+
+#: templates/frontend/collections/items.haml:24
+msgid "Image size / Copyright"
+msgstr "Taille de l'image / Copyright"
+
+#: templates/frontend/common/beartist.haml:9
+msgid ""
+"You must create an artist/professional page to upload content on FINDSPIRE."
+msgstr ""
+"Vous devez créer une page artiste/professionel pour mettre en ligne votre "
+"contenu sur FINDSPIRE."
+
+#: templates/frontend/common/beartist.haml:16
+#: templates/frontend/footer/menu.haml:45
+#: templates/frontend/profile/content_tags.haml:18
+#: templates/frontend/profile/content_tags_advice.haml:45
+msgid "Create a page"
+msgstr "Créer une page"
+
+#: templates/frontend/common/beartist.haml:20
+#: templates/frontend/search/popup_albums.haml:11
+msgid "Back"
+msgstr "Retour"
+
+#: templates/frontend/common/load_more.haml:8
+msgid "Load more"
+msgstr "Voir plus"
+
+#: templates/frontend/common/media_list.haml:9
+msgid "You don't have any playlist yet, start creating one now"
+msgstr "Vous n'avez pas encore de playlist, créez-en une maintenant"
+
+#: templates/frontend/common/media_list.haml:15
+#: templates/frontend/common/media_list.haml:28
+#: templates/frontend/inspirations/items.haml:17
+msgid "Create a playlist"
+msgstr "Créer une playlist"
+
+#: templates/frontend/common/media_list.haml:18
+msgid "Create your own playlists"
+msgstr "Créer vos propres playlists"
+
+#: templates/frontend/common/media_list.haml:41
+#: templates/frontend/common/playlist_tracks.haml:31
+msgid "You did not save any album on your library"
+msgstr "Vous n'avez pas encore sauvegardé d'album dans votre bibliothèque"
+
+#: templates/frontend/common/media_list.haml:44
+msgid "Start music discover now "
+msgstr "Démarrez la découverte"
+
+#: templates/frontend/common/music.haml:39
+#: templates/mobile/profile/template_music.haml:8
+msgid "Playlists"
+msgstr "Playlists"
+
+#: templates/frontend/common/music.haml:49
+#: templates/frontend/search/popup_listsearch.haml:22
+#: templates/frontend/search/results.haml:9
+#: templates/mobile/popup/search.haml:36
+#: templates/mobile/profile/template_music.haml:18
+msgid "Tracks"
+msgstr "Pistes"
+
+#: templates/frontend/common/playlist_infos.haml:8
+msgid "Album infos"
+msgstr "Informations sur l'album"
+
+#: templates/frontend/common/playlist_infos.haml:18
+#: templates/frontend/common/playlist_infos.haml:51
+msgid "By:"
+msgstr "Par&#8239;:"
+
+#: templates/frontend/common/playlist_infos.haml:26
+#: templates/frontend/profile/content_home_infos_movie.haml:23
+msgid "Genres:"
+msgstr "Genres&#8239;:"
+
+#: templates/frontend/common/playlist_infos.haml:41
+msgid "Track infos"
+msgstr "Informations sur la piste"
+
+#: templates/frontend/common/playlist_tracks.haml:10
+msgid "You don't have any inspirations yet"
+msgstr "Vous n'avez pas encore d'inspiration"
+
+#: templates/frontend/common/playlist_tracks.haml:13
+msgid "+ Discover last musical tendences"
+msgstr "+ Découvrez les dernières nouveautés musicales"
+
+#: templates/frontend/common/playlist_tracks.haml:27
+msgid "Create your playlists and share it with friends"
+msgstr "Créez vos propres playlists et partagez-les avec vos amis."
+
+#: templates/frontend/common/playlist_tracks.haml:29
+msgid "This playlist is empty"
+msgstr "Cette playlist est vide"
+
+#: templates/frontend/common/playlist_tracks.haml:33
+msgid "Add you favorite tracks using the INSPIRATION button"
+msgstr "Ajoutez vos titres favoris en utilisant le bouton INSPIRATION"
+
+#: templates/frontend/common/playlist_tracks.haml:36
+msgid ""
+"Avec plusieurs millions de titres disponibles et une navigation intuitive "
+"découvrer et créer facilement des playlists exclusives."
+msgstr ""
+
+#: templates/frontend/common/playlist_tracks.haml:38
+msgid "Save it in your private space in one click"
+msgstr "Sauvegardez-le dans votre espace personel en un clic"
+
+#: templates/frontend/common/playlist_tracks.haml:98
+#: templates/frontend/search/search_album.haml:13
+#: templates/frontend/templates/tracks_item.haml:7
+msgid "This track is not available for your country."
+msgstr "Ce titre n'est pas disponible dans votre pays."
+
+#: templates/frontend/common/playlist_tracks.haml:117
+#: templates/frontend/templates/tracks_item.haml:27
+msgid "See music video"
+msgstr "voir le clip vidéo"
+
+#: templates/frontend/common/welcome_footer.haml:10
+#: templates/frontend/dashboard/template_params.haml:79
+#: templates/frontend/dashboard/template_settings.haml:96
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/frontend/common/welcome_footer.haml:13
+msgid "Terms & Conditions"
+msgstr "Conditions d'utilisation"
+
+#: templates/frontend/contact/content.haml:7
+msgid "Contacts"
+msgstr "Contacts"
+
+#: templates/frontend/contact/content.haml:10
+msgid "General Inquiries"
+msgstr "Informations générales "
+
+#: templates/frontend/contact/content.haml:15
+msgid "Partnerships"
+msgstr "Partenariats/presse "
+
+#: templates/frontend/contact/content.haml:20
+msgid "Presse"
+msgstr "Presse "
+
+#: templates/frontend/contact/content.haml:25
+msgid "Advertising"
+msgstr "Publicité "
+
+#: templates/frontend/contact/content.haml:30
+msgid "Website Support"
+msgstr "Support du site "
+
+#: templates/frontend/contact/content.haml:35
+msgid "Careers"
+msgstr "Emplois "
+
+#: templates/frontend/contact/content.haml:42
+#: templates/frontend/terms/en.haml:266 templates/frontend/terms/fr.haml:266
+msgid "Close"
+msgstr "Fermer"
+
+#: templates/frontend/create/page.haml:27
+#: templates/frontend/dashboard/template_create.haml:36
+#: templates/frontend/dashboard/template_profilecreation.haml:28
+msgid "Create page"
+msgstr "Créer une page"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:27
+msgid "Create a collection for your videos"
+msgstr "Créer une collection pour vos vidéos"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:30
+msgid "Create a collection for your images"
+msgstr "Créer une collection pour vos images"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:31
+msgid "Configure collection"
+msgstr "Configurer une collection"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:35
+#: templates/frontend/dashboard/template_settings.haml:82
+msgid "Submit"
+msgstr "Valider"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:40
+msgid "Configure default referencing, title, description..."
+msgstr "Configurer le référencement, la description, le titre des éléments..."
+
+#: templates/frontend/dashboard/template_collectionedit.haml:43
+msgid ""
+"Collections allow you to organize your media. Create different collections "
+"depending on what you need and share it to professionals or people"
+msgstr ""
+"Les collections vous permettent d'organiser votre contenu. Créez des "
+"collections selon vos besoins et partagez-les aux professionels ou au public."
+
+#: templates/frontend/dashboard/template_collectionedit.haml:47
+msgid "Modify media default configuration."
+msgstr "Modifier la configuration par défaut des médias."
+
+#: templates/frontend/dashboard/template_collectionedit.haml:50
+msgid "Apply settings to all media"
+msgstr "Appliquer à tous les médias"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:50
+msgid "Apply settings to all images"
+msgstr "Appliquer ces paramètres à toutes les images"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:50
+msgid "Apply settings to all videos"
+msgstr "Appliquer ces paramètres à toutes les vidéos"
+
+#: templates/frontend/dashboard/template_collectionedit.haml:57
+msgid ""
+"FINDSPIRE wants to improve its service, feel free to send us your feedback at"
+msgstr ""
+"FINDSPIRE veut améliorer son service, n'hésitez pas à nous faire part de vos "
+"remarques à l'adresse"
+
+#: templates/frontend/dashboard/template_create.haml:25
+msgid "Create an artist page"
+msgstr "Créer une page artiste"
+
+#: templates/frontend/dashboard/template_create_tag.haml:27
+msgid "Start a collaboration"
+msgstr "Démarrer une collaboration"
+
+#: templates/frontend/dashboard/template_create_tag.haml:29
+msgid "Search for a page"
+msgstr "Rechercher un profil"
+
+#: templates/frontend/dashboard/template_create_tag.haml:39
+#: templates/frontend/signup/picture.haml:43
+#: templates/frontend/upload/upload.haml:28
+msgid "Validate"
+msgstr "Valider"
+
+#: templates/frontend/dashboard/template_create_tag.haml:41
+msgid "A collaboration request needs a genuine collaboration."
+msgstr "Une demande de collaboration requiert une collaboration authentique."
+
+#: templates/frontend/dashboard/template_mediaedit.haml:56
+msgid "Drag'n drop album cover or click here"
+msgstr "Déposez une couverture ou cliquez ici"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:60
+msgid "Delete this album"
+msgstr "Supprimer l'album"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:66
+msgid "Create a new track or drag and drop audio files here"
+msgstr "Créer une nouvelle piste ou glisser des fichiers audio ici"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:79
+msgid "Preparing file for transcode"
+msgstr "Préparation du fichier pour l'encodage"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:84
+msgid "Standard definition encoding"
+msgstr "Encodage - Définition standard"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:86
+msgid "High definition encoding"
+msgstr "Encodage - Haute définition"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:88
+msgid ""
+"Encoding may take some time. Once you will have choose a cover, your video "
+"will be published automatically when encoding will be done."
+msgstr ""
+"L'encodage peut prendre un certain temps. Une fois l'encodage terminé, si "
+"vous avez choisi une couverture, votre vidéo sera automatiquement publiée."
+
+#: templates/frontend/dashboard/template_mediaedit.haml:97
+msgid "Drag and drop your video cover here"
+msgstr "Glissez votre couverture ici"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:106
+#: templates/frontend/dashboard/template_profileconf.haml:20
+#: templates/frontend/dashboard/template_settings.haml:39
+#: templates/frontend/dashboard/template_settings.haml:61
+#: templates/frontend/dashboard/subtemplates/block_crop.haml:12
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:23
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:101
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:123
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:143
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:200
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:234
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:254
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:22
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:43
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:62
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:46
+msgid "Save"
+msgstr "Enregistrer"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:109
+msgid "Choose a cover"
+msgstr "Choisissez une couverture"
+
+#: templates/frontend/dashboard/template_mediaedit.haml:127
+msgid "Upload a media"
+msgstr "Mettre en ligne un média"
+
+#: templates/frontend/dashboard/template_params.haml:50
+msgid "General informations"
+msgstr "Informations générales"
+
+#: templates/frontend/dashboard/template_params.haml:53
+msgid "Referencing"
+msgstr "Référencement"
+
+#: templates/frontend/dashboard/template_params.haml:56
+msgid "Delegation"
+msgstr "Délégation"
+
+#: templates/frontend/dashboard/template_params.haml:70
+msgid "Save referencing options"
+msgstr "Sauvegarder les options de référencement"
+
+#: templates/frontend/dashboard/template_params.haml:76
+#: templates/frontend/dashboard/template_settings.haml:93
+msgid "Terms and Privacy"
+msgstr "Conditions d'utilisation"
+
+#: templates/frontend/dashboard/template_playlistedit.haml:35
+msgid "Drag'n drop cover or click here"
+msgstr "Déposez une couverture ou cliquez ici"
+
+#: templates/frontend/dashboard/template_profilecreation.haml:25
+msgid "Page name"
+msgstr "Nom de la page"
+
+#: templates/frontend/dashboard/template_settings.haml:12
+#: templates/frontend/dashboard/template_settings.haml:21
+msgid "Account settings"
+msgstr "Paramètres du compte"
+
+#: templates/frontend/dashboard/template_settings.haml:26
+msgid "Email address"
+msgstr "Adresse email "
+
+#: templates/frontend/dashboard/template_settings.haml:31
+msgid "New email address"
+msgstr "Nouvelle adresse email"
+
+#: templates/frontend/dashboard/template_settings.haml:33
+msgid "Confirm email address"
+msgstr "Confirmer l'adresse email"
+
+#: templates/frontend/dashboard/template_settings.haml:36
+#: templates/frontend/dashboard/template_settings.haml:58
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:12
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:19
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:95
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:116
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:137
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:158
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:224
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:248
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:50
+msgid "Modify"
+msgstr "Modifier"
+
+#: templates/frontend/dashboard/template_settings.haml:51
+#: templates/frontend/dashboard/template_settings.haml:79
+msgid "Current Password"
+msgstr "Mot de passe actuel"
+
+#: templates/frontend/dashboard/template_settings.haml:53
+msgid "New Password"
+msgstr "Nouveau mot de passe"
+
+#: templates/frontend/dashboard/template_settings.haml:55
+msgid "Confirm Password"
+msgstr "Confirmer le mot de passe"
+
+#: templates/frontend/dashboard/template_settings.haml:68
+msgid "Account deletion"
+msgstr "Suppression de compte"
+
+#: templates/frontend/dashboard/template_settings.haml:87
+msgid "Delete my account"
+msgstr "Supprimer mon compte"
+
+#: templates/frontend/dashboard/subtemplates/block_album_track.haml:13
+msgid "Processing track"
+msgstr "Encodage en cours"
+
+#: templates/frontend/dashboard/subtemplates/block_album_track.haml:15
+msgid "Error occured"
+msgstr "Une erreur est survenue"
+
+#: templates/frontend/dashboard/subtemplates/block_album_track.haml:20
+msgid " of "
+msgstr " sur "
+
+#: templates/frontend/dashboard/subtemplates/block_album_track.haml:28
+msgid "Delete track"
+msgstr "Supprimer la piste"
+
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:14
+msgid "Referencing and categories"
+msgstr "Référencement et catégories"
+
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:22
+#: templates/frontend/search/popup_listsearch.haml:127
+#: templates/mobile/popup/menu.haml:31
+msgid "Visual arts"
+msgstr "Arts visuels"
+
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:24
+#: templates/frontend/search/popup_listsearch.haml:115
+#: templates/mobile/popup/menu.haml:23
+msgid "Cinema"
+msgstr "Cinéma"
+
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:25
+#: templates/frontend/search/popup_listsearch.haml:121
+msgid "Fashion"
+msgstr "Mode"
+
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:26
+msgid "Sport"
+msgstr "Sport"
+
+#: templates/frontend/dashboard/subtemplates/block_communities.haml:31
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:91
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:111
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:133
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:154
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:220
+msgid "Complete"
+msgstr "Compléter"
+
+#: templates/frontend/dashboard/subtemplates/block_crop.haml:8
+msgid "Reset"
+msgstr "Restaurer"
+
+#: templates/frontend/dashboard/subtemplates/block_delegation.haml:7
+msgid "Page administrators"
+msgstr "Administrateurs de la page"
+
+#: templates/frontend/dashboard/subtemplates/block_delegation.haml:10
+msgid ""
+"You can delegate the administration of your FINDSPIRE page to another user "
+"already registered on the platform. This administrator will receive all "
+"rights to manage your page."
+msgstr ""
+"Vous avez la possibilité de déléguer l'administration de votre page à un "
+"utilisateur déjà présent sur la plateforme. L'administrateur se verra "
+"attribuer tous les accès nécessaires à la gestion de votre compte."
+
+#: templates/frontend/dashboard/subtemplates/block_delegation.haml:13
+msgid ""
+"If the administrator is not registered on FINDSPIRE, you can enter his/her "
+"email address. An invitation to join the platform will be sent and he/she "
+"will automatically have access to your page, once he/she will have created "
+"his/her account."
+msgstr ""
+"Dans le cas où l'administrateur souhaité n'est pas encore inscrit sur "
+"FINDSPIRE, il vous est possible de renseigner son adresse email. Une "
+"invitation à rejoindre la plateforme lui sera envoyée et il obtiendra "
+"automatiquement les droits d'administration de votre page une fois son "
+"compte créé."
+
+#: templates/frontend/dashboard/subtemplates/block_delegation.haml:18
+msgid "Search pages or enter email address"
+msgstr "Recherchez des pages ou entrez une adresse email"
+
+#: templates/frontend/dashboard/subtemplates/block_delegation.haml:20
+msgid "Invite"
+msgstr "Inviter"
+
+#: templates/frontend/dashboard/subtemplates/block_delegation_item.haml:17
+msgid "Administrator"
+msgstr "Administrateur"
+
+#: templates/frontend/dashboard/subtemplates/block_delegation_item.haml:19
+#: templates/frontend/dashboard/subtemplates/block_privacy_allowed_profile.haml:11
+msgid "Remove"
+msgstr "Supprimer"
+
+#: templates/frontend/dashboard/subtemplates/block_drop_media.haml:6
+msgid "Select file to import"
+msgstr "Sélectionner le fichier à importer"
+
+#: templates/frontend/dashboard/subtemplates/block_drop_media.haml:7
+#, python-format
+msgid "Or drag and drop the %(tpl_media_type)s file"
+msgstr "Ou glisser le fichier %(tpl_media_type)s"
+
+#: templates/frontend/dashboard/subtemplates/block_infos.haml:7
+#: templates/frontend/dashboard/subtemplates/block_infos.haml:10
+msgid "Delete page"
+msgstr "Supprimer la page"
+
+#: templates/frontend/dashboard/subtemplates/block_metadata_addfield.haml:5
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:32
+msgid "Add new field"
+msgstr "Ajouter un nouveau champ"
+
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:50
+msgid "(Waiting confirmation)"
+msgstr "(En attente de confirmation)"
+
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:165
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:14
+#: templates/frontend/signup/common.haml:52
+msgid "Month"
+msgstr "Mois"
+
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:211
+msgid "Add"
+msgstr "Ajouter"
+
+#: templates/frontend/dashboard/subtemplates/block_metadata_elements.haml:245
+msgid "No"
+msgstr "Non"
+
+#: templates/frontend/dashboard/subtemplates/block_modes.haml:8
+msgid "Referencing options"
+msgstr "Options de référencement"
+
+#: templates/frontend/dashboard/subtemplates/block_modes.haml:14
+#: templates/frontend/dashboard/subtemplates/block_modes_signup.haml:12
+msgid "Add a new category"
+msgstr "Ajouter une nouvelle catégorie"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_genres.haml:6
+msgid "Genre"
+msgstr "Genre"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_genres.haml:8
+#: templates/frontend/dashboard/subtemplates/block_modes_genres_signup.haml:6
+msgid "Select a genre"
+msgstr "Choisir un genre"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_genres.haml:12
+#: templates/frontend/dashboard/subtemplates/block_modes_genres.haml:18
+msgid "Specify"
+msgstr "Spécifiez"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_genres.haml:14
+#: templates/frontend/dashboard/subtemplates/block_modes_genres_signup.haml:10
+msgid "Select a subgenre"
+msgstr "Choisir un sous-genre"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_genres.haml:20
+#: templates/frontend/dashboard/subtemplates/block_modes_genres_signup.haml:14
+msgid "Be more specific"
+msgstr "Soyez plus précis"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_mode.haml:7
+msgid "Category"
+msgstr "Catégorie"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_mode.haml:10
+#: templates/frontend/dashboard/subtemplates/block_modes_mode_signup.haml:7
+msgid "Select a category"
+msgstr "Choisir une catégorie"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_mode.haml:12
+#: templates/frontend/dashboard/subtemplates/block_modes_mode_signup.haml:9
+msgid "Select category"
+msgstr "Selectionnez une catégorie"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_mode.haml:18
+#: templates/frontend/dashboard/subtemplates/block_modes_mode_signup.haml:14
+msgid "Add a new genre"
+msgstr "Ajouter un nouveau genre"
+
+#: templates/frontend/dashboard/subtemplates/block_modes_signup.haml:10
+msgid "You can select up to three categories. "
+msgstr "Vous pouvez selectionner jusqu'à trois catégories."
+
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:7
+msgid "Account Parameters"
+msgstr "Paramètres du compte"
+
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:11
+msgid "Username:"
+msgstr "Nom d'utilisateur&#8239;:"
+
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:27
+msgid "Password:"
+msgstr "Mot de passe&#8239;:"
+
+#: templates/frontend/dashboard/subtemplates/block_parameters.haml:48
+msgid "Email Adress:"
+msgstr "Adresse email&#8239;:"
+
+#: templates/frontend/dashboard/subtemplates/block_privacy.haml:7
+msgid "Privacy options"
+msgstr "Options de confidentialité"
+
+#: templates/frontend/dashboard/subtemplates/block_privacy.haml:11
+msgid "Public"
+msgstr "Public"
+
+#: templates/frontend/dashboard/subtemplates/block_privacy.haml:13
+msgid "Private"
+msgstr "Privé"
+
+#: templates/frontend/dashboard/subtemplates/block_privacy.haml:17
+msgid "Share with"
+msgstr "Partager avec"
+
+#: templates/frontend/dashboard/subtemplates/block_privacy.haml:19
+msgid "Add a user or a page"
+msgstr "Ajouter un utilisateur ou une page"
+
+#: templates/frontend/dashboard/subtemplates/block_profileconf.haml:7
+msgid "Enter page name"
+msgstr "Entrez le nom de la page"
+
+#: templates/frontend/dashboard/subtemplates/block_profileconf.haml:15
+msgid "Choose your categories"
+msgstr "Choisissez vos catégories"
+
+#: templates/frontend/dashboard/subtemplates/block_profileconf.haml:17
+msgid "Categories allow you to use adapted tools"
+msgstr "Les catégories vous permettent d'accéder à des outils adaptés"
+
+#: templates/frontend/dashboard/subtemplates/block_profileconf_mode.haml:13
+msgid "OK"
+msgstr "OK"
+
+#: templates/frontend/dashboard/subtemplates/block_profileconf_mode.haml:17
+msgid "Select genres:"
+msgstr "Choisir les genres:"
+
+#: templates/frontend/dashboard/subtemplates/block_profileconf_mode.haml:28
+msgid "Add genre"
+msgstr "Ajouter un genre"
+
+#: templates/frontend/dashboard/subtemplates/block_progress_bar.haml:6
+msgid "uploading"
+msgstr "envoi en cours"
+
+#: templates/frontend/dashboard/subtemplates/block_progress_bar.haml:15
+msgid "of"
+msgstr "sur"
+
+#: templates/frontend/dashboard/subtemplates/block_progress_bar.haml:18
+msgid "minutes remaining"
+msgstr "minutes restantes"
+
+#: templates/frontend/dashboard/subtemplates/block_restrictions.haml:6
+msgid "Restrictions"
+msgstr "Restrictions"
+
+#: templates/frontend/dashboard/subtemplates/block_restrictions.haml:10
+msgid "Activate restrictions"
+msgstr "Activer les restrictions"
+
+#: templates/frontend/dashboard/subtemplates/block_restrictions.haml:15
+msgid "Add a country"
+msgstr "Ajouter un pays"
+
+#: templates/frontend/dashboard/subtemplates/block_restrictions.haml:18
+msgid "Worldwide"
+msgstr "Monde entier"
+
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:9
+msgid "Publication date"
+msgstr "Date de publication"
+
+#: templates/frontend/dashboard/subtemplates/block_restrictions_country.haml:52
+msgid "Delete"
+msgstr "Supprimer"
+
+#: templates/frontend/find/content_tracks_header.haml:19
+#: templates/frontend/footer/player.haml:27
+msgid "Play"
+msgstr "Jouer"
+
+#: templates/frontend/find/content_tracks_header.haml:23
+msgid "Random play"
+msgstr "Lecture aléatoire"
+
+#: templates/frontend/find/content_tracks_header.haml:38
+msgid "Voir le profil"
+msgstr "Voir le profil"
+
+#: templates/frontend/find/content_tracks_header.haml:41
+msgid "Ecouter l'album"
+msgstr "fermer l'album"
+
+#: templates/frontend/find/headers.haml:12
+msgid "FINDSPIRE Music"
+msgstr "FINDSPIRE Musique"
+
+#: templates/frontend/find/headers.haml:16
+msgid "FINDSPIRE Visual Arts"
+msgstr "FINDSPIRE Arts Visuels"
+
+#: templates/frontend/find/headers.haml:20
+msgid "FINDSPIRE Cinema"
+msgstr "FINDSPIRE Cinéma"
+
+#: templates/frontend/find/headers.haml:24
+msgid "FINDSPIRE Fashion"
+msgstr "FINDSPIRE Mode"
+
+#: templates/frontend/find/headers.haml:31
+msgid "Coming soon"
+msgstr "Bientôt disponible"
+
+#: templates/frontend/find/recoboxes/album.haml:31
+#: templates/frontend/find/welcome/soundtracks.haml:28
+msgid "Listen the album"
+msgstr "Écouter l'album"
+
+#: templates/frontend/find/recoboxes/playlist.haml:22
+msgid "Playlist"
+msgstr "Playlist"
+
+#: templates/frontend/find/recoboxes/video.haml:26
+msgid "Trailer"
+msgstr "Bande-annonce"
+
+#: templates/frontend/footer/connected.haml:18
+msgid "More settings"
+msgstr "Plus de paramètres"
+
+#: templates/frontend/footer/find.haml:11
+msgid "Publish"
+msgstr "Publier"
+
+#: templates/frontend/footer/find.haml:16
+msgid "My space"
+msgstr "Mon espace"
+
+#: templates/frontend/footer/footer.haml:17
+msgid "Search..."
+msgstr "Rechercher..."
+
+#: templates/frontend/footer/menu.haml:31
+#, python-format
+msgid "%(counter)s following"
+msgid_plural "%(counter)s Followings"
+msgstr[0] "%(counter)s abonnement"
+msgstr[1] "%(counter)s abonnements"
+
+#: templates/frontend/footer/menu.haml:33
+#: templates/frontend/profile/base.haml:40
+#: templates/frontend/profile/base.haml:42
+#: templates/mobile/profile/base.haml:16
+#, python-format
+msgid "%(counter)s follower"
+msgid_plural "%(counter)s Followers"
+msgstr[0] "%(counter)s abonné"
+msgstr[1] "%(counter)s abonnés"
+
+#: templates/frontend/footer/menu.haml:40 templates/mobile/popup/menu.haml:40
+msgid "Settings"
+msgstr "Paramètres"
+
+#: templates/frontend/footer/menu.haml:51
+msgid "Manage your pages"
+msgstr "Gérer vos pages"
+
+#: templates/frontend/footer/menu.haml:55
+#, python-format
+msgid "Search %(counter)s page"
+msgid_plural "Search %(counter)s pages"
+msgstr[0] "Rechercher %(counter)s page"
+msgstr[1] "Rechercher %(counter)s pages"
+
+#: templates/frontend/footer/menu.haml:77
+msgid "Sign out"
+msgstr "Déconnexion"
+
+#: templates/frontend/footer/player.haml:23
+msgid "Previous track"
+msgstr "Précédent"
+
+#: templates/frontend/footer/player.haml:29
+msgid "Pause"
+msgstr "Pause"
+
+#: templates/frontend/footer/player.haml:32
+msgid "Next track"
+msgstr "Suivant"
+
+#: templates/frontend/home/content_network.haml:31
+msgid "Find your friends and favourite artists."
+msgstr "Retrouvez vos amis et vos artistes favoris."
+
+#: templates/frontend/home/content_network.haml:49
+#: templates/frontend/profile/content_network.haml:24
+msgid "Followers"
+msgstr "Abonnés"
+
+#: templates/frontend/home/content_network.haml:53
+#: templates/frontend/profile/content_network.haml:28
+msgid "Subscriptions"
+msgstr "Abonnements"
+
+#: templates/frontend/home/content_network_advice.haml:11
+#: templates/frontend/home/content_network_advice.haml:21
+msgid "Your network"
+msgstr "Votre réseau"
+
+#: templates/frontend/home/content_network_advice.haml:13
+msgid ""
+"You don't follow anyone. Follow someone by clicking on the follow icon and "
+"keep you up to date."
+msgstr ""
+"Vous ne suivez personne. Suivez quelqu'un en cliquant sur l’icone suivre "
+"pour être sûr de ne rien rater."
+
+#: templates/frontend/home/content_network_advice.haml:24
+msgid ""
+"Nobody is following you, for now. Upload media from your personal space and "
+"share them on social networks to get new fans."
+msgstr ""
+"Personne ne vous suit pour le moment, mettez des médias en ligne depuis "
+"votre espace personnel et partagez-les sur les réseaux sociaux pour acquérir "
+"de nouveaux fans. "
+
+#: templates/frontend/home/content_network_advice.haml:26
+msgid ""
+"Nobody is following you, for now. Take inspiration from your favorites "
+"images, movies and music and share them on social networks to get new fans."
+msgstr ""
+"Personne ne vous suit. Inspirez-vous de vos médias favoris, images, films, "
+"musiques et partagez-les sur les réseaux sociaux pour acquérir de nouveaux "
+"fans."
+
+#: templates/frontend/home/content_network_advice.haml:36
+#: templates/frontend/home/content_network_advice.haml:49
+msgid "Empty list"
+msgstr "Liste vide"
+
+#: templates/frontend/home/content_network_advice.haml:39
+msgid "This artist inspires you? Follow him/her to see his/her next works."
+msgstr ""
+"Cet artist vous inspire&#8239;? Suivez-le/la pour voir ses prochains travaux."
+
+#: templates/frontend/home/content_network_advice.haml:41
+msgid "This user inspires you? Follow him/her to see his/her inspirations."
+msgstr ""
+"Cet utilisateur vous inspire&#8239;? Suivez-le/la pour voir ses inspirations."
+
+#: templates/frontend/home/content_network_advice.haml:52
+msgid "This artist has no follower yet."
+msgstr "Cet artite n'a pas encore d'abonnés."
+
+#: templates/frontend/home/content_network_advice.haml:54
+msgid "This user has no follower yet."
+msgstr "Cet utilisateur n'a pas encore d'abonnés."
+
+#: templates/frontend/home/content_news.haml:15
+msgid ""
+"Your <span>news feed</span> allows you to follow the artistic news of your "
+"network"
+msgstr ""
+"Votre <span>fil d'actualité</span> vous permet de suivre les actualités "
+"artistiques de votre réseau"
+
+#: templates/frontend/home/content_news.haml:21
+msgid "Find friends"
+msgstr "Trouver des amis"
+
+#: templates/frontend/home/content_news.haml:24
+msgid "Hide this message"
+msgstr "Cacher ce message"
+
+#: templates/frontend/home/content_news.haml:40
+msgid "Your news feed"
+msgstr "Votre fil d'actualité"
+
+#: templates/frontend/home/content_news.haml:42
+msgid "You will find here the artistic news of your network."
+msgstr "Vous retrouverez ici les actualités artistiques de votre réseau."
+
+#: templates/frontend/home/content_news.haml:47
+msgid "Discover fantastic artists to follow"
+msgstr "Découvrez et suivez les meilleurs artistes"
+
+#: templates/frontend/home/headers.haml:7
+msgid "My feed"
+msgstr "Mon fil d'actualité"
+
+#: templates/frontend/home/headers.haml:12
+msgid "My Inspirations"
+msgstr "Mes inspirations"
+
+#: templates/frontend/home/headers.haml:16
+msgid "My Music"
+msgstr "Ma musique"
+
+#: templates/frontend/home/headers.haml:19
+msgid "My Images"
+msgstr "Mes images"
+
+#: templates/frontend/home/headers.haml:22
+msgid "My Videos"
+msgstr "Mes vidéos"
+
+#: templates/frontend/home/headers.haml:25
+msgid "My Movies"
+msgstr "Mes films"
+
+#: templates/frontend/home/headers.haml:29
+msgid "My Network"
+msgstr "Mon réseau"
+
+#: templates/frontend/inspirations/advice.haml:11
+msgid "All your images here"
+msgstr "Toutes vos images ici"
+
+#: templates/frontend/inspirations/advice.haml:13
+msgid ""
+"Save your inspiring images into your “images” space. Classify and organize "
+"them easily thanks to the moodboards tool and share them with your network."
+msgstr ""
+"Enregistrez les images qui vous inspirent dans votre espace «&#8239;Mes "
+"images&#8239;». Organisez-les facilement grâce aux moodboards et partagez-"
+"les avec votre réseau."
+
+#: templates/frontend/inspirations/advice.haml:17
+#: templates/frontend/inspirations/advice.haml:46
+#: templates/frontend/inspirations/advice.haml:73
+#: templates/frontend/inspirations/advice.haml:89
+#: templates/frontend/inspirations/advice.haml:118
+msgid "Click on button "
+msgstr "Cliquez sur l'icône "
+
+#: templates/frontend/inspirations/advice.haml:20
+msgid "to save and add an image to your own space."
+msgstr "pour sauvegarder une image dans votre espace personnel."
+
+#: templates/frontend/inspirations/advice.haml:25
+#: templates/frontend/inspirations/advice.haml:141
+msgid "Discover the best images here"
+msgstr "Découvrez les plus belles images ici"
+
+#: templates/frontend/inspirations/advice.haml:29
+msgid "Show off your images"
+msgstr "Exposez vos images"
+
+#: templates/frontend/inspirations/advice.haml:35
+msgid "All your albums here"
+msgstr "Tous vos albums ici"
+
+#: templates/frontend/inspirations/advice.haml:37
+msgid ""
+"Just one click and you will save inspiring music albums into your “music” "
+"space."
+msgstr ""
+"D’un simple clic, sauvegardez les albums musicaux qui vous inspirent dans "
+"votre espace «&#8239;Ma musique&#8239;»."
+
+#: templates/frontend/inspirations/advice.haml:42
+msgid "Discover our selection of the best albums"
+msgstr "Découvrez de nouveaux albums avec les FINDSPIRE Selection."
+
+#: templates/frontend/inspirations/advice.haml:49
+msgid "to save and add an album to your own space."
+msgstr "pour sauvegarder un album dans votre espace personnel."
+
+#: templates/frontend/inspirations/advice.haml:55
+msgid "All your playlists here"
+msgstr "Toutes vos playlists ici"
+
+#: templates/frontend/inspirations/advice.haml:57
+msgid ""
+"Easily create your own playlists, save and add FINDSPIRE playlists or any "
+"artist's, partner's or user’s playlists to your own space."
+msgstr ""
+"Créez facilement vos playlists, sauvegardez les playlists FINDSPIRE ou "
+"celles d'artistes, de partenaires ou d'utilisateurs dans votre espace "
+"personel."
+
+#: templates/frontend/inspirations/advice.haml:61
+msgid "Add a track to a playlist clicking on “...”"
+msgstr "Ajoutez une chanson à une playlist en cliquant sur «&#8239;...&#8239;»"
+
+#: templates/frontend/inspirations/advice.haml:67
+msgid "All your tracks here"
+msgstr "Tous vos morceaux ici"
+
+#: templates/frontend/inspirations/advice.haml:69
+msgid ""
+"Just one click and you will save inspiring music tracks into your “music” "
+"space."
+msgstr ""
+"D’un simple clic, sauvegardez les titres musicaux qui vous inspirent "
+"dansvotre espace «&#8239;musique&#8239;»."
+
+#: templates/frontend/inspirations/advice.haml:76
+msgid "to save and add a music track to your own space."
+msgstr "pour sauvegarder un morceau dans votre espace personnel."
+
+#: templates/frontend/inspirations/advice.haml:83
+msgid "All your videos here"
+msgstr "Toutes vos vidéos ici"
+
+#: templates/frontend/inspirations/advice.haml:85
+msgid ""
+"Thanks to the moodboards tool, save and classify all your favorite videos "
+"into your “videos” space, and share them with your network."
+msgstr ""
+"Grâce aux moodboards, enregistrez et organisez toutes vos vidéos préférées "
+"dans votre espace «&#8239;vidéos&#8239;» et partagez-les avec votre réseau."
+
+#: templates/frontend/inspirations/advice.haml:92
+msgid "to save and add a video to your own space."
+msgstr "pour sauvegarder une vidéo dans votre espace personnel."
+
+#: templates/frontend/inspirations/advice.haml:97
+#: templates/frontend/inspirations/advice.haml:158
+msgid "Discover the best videos here"
+msgstr "Découvrez les meilleures vidéos ici"
+
+#: templates/frontend/inspirations/advice.haml:101
+msgid "Show off your videos"
+msgstr "Diffusez vos videos"
+
+#: templates/frontend/inspirations/advice.haml:107
+msgid "All your movies here"
+msgstr "Tous vos films ici"
+
+#: templates/frontend/inspirations/advice.haml:109
+msgid ""
+"Save your inspiring movies in your own space and receive all fresh news "
+"about them (trailers, release dates, film extracts...)"
+msgstr ""
+"Enregistrez les films qui vous inspirent dans cet espace et recevez toute "
+"leurs actualités (bandes-annonces, extraits, dates de sortie...)"
+
+#: templates/frontend/inspirations/advice.haml:114
+msgid "Discover Findspire's selection here"
+msgstr "Découvrez la sélection Findspire ici"
+
+#: templates/frontend/inspirations/advice.haml:121
+msgid "to save and add a movie page to your own space."
+msgstr "pour sauvegarder une fiche film dans votre espace personnel."
+
+#: templates/frontend/inspirations/advice.haml:133
+#: templates/frontend/inspirations/advice.haml:150
+#: templates/frontend/inspirations/advice.haml:167
+msgid "This moodboard is empty"
+msgstr "Ce moodboard est vide"
+
+#: templates/frontend/inspirations/advice.haml:136
+#: templates/frontend/inspirations/advice.haml:153
+#: templates/frontend/inspirations/advice.haml:170
+msgid "Please, come back later."
+msgstr "Veuillez revenir plus tard."
+
+#: templates/frontend/inspirations/advice.haml:175
+msgid "Discover here the most anticipated movies"
+msgstr "Découvrez les films les plus attendus ici"
+
+#: templates/frontend/inspirations/advice.haml:183
+msgid "This user has no inspiration yet. Come back later!"
+msgstr ""
+"Cet utilisateur n'a pas encore d'inspirations. Revenez plus tard&#8239;!"
+
+#: templates/frontend/inspirations/moodboards.haml:12
+msgid "Create a moodboard"
+msgstr "Créer un moodboard"
+
+#: templates/frontend/inspirations/moodboards.haml:44
+#: templates/mobile/inspirations/moodboards.haml:26
+msgid "All movies"
+msgstr "Tous les films"
+
+#: templates/frontend/inspirations/moodboards.haml:50
+#: templates/mobile/inspirations/moodboards.haml:31
+msgid "Untitled moodboard"
+msgstr "Mood sans nom"
+
+#: templates/frontend/inspirations/moodboards.haml:63
+#, python-format
+msgid "%(counter)sitem"
+msgid_plural "%(counter)s items"
+msgstr[0] "%(counter)s élément"
+msgstr[1] "%(counter)s éléments"
+
+#: templates/frontend/inspire/content.haml:6
+msgid "Choose a moodboard"
+msgstr "Choisissez un moodboard"
+
+#: templates/frontend/inspire/content.haml:18
+#: templates/frontend/inspire/content.haml:26
+msgid "Add to &laquo; All images &raquo;"
+msgstr "Ajouter à &laquo; Toutes les images &raquo;"
+
+#: templates/frontend/inspire/content.haml:20
+#: templates/frontend/inspire/content.haml:28
+msgid "Add to &laquo; All videos &raquo;"
+msgstr "Ajouter à &laquo; Toutes les vidéos &raquo;"
+
+#: templates/frontend/inspire/content.haml:22
+#: templates/frontend/inspire/content.haml:30
+msgid "Add to &laquo; All movies &raquo;"
+msgstr "Ajouter à &laquo; Tous les films &raquo;"
+
+#: templates/frontend/inspire/content.haml:35
+#: templates/frontend/inspire/content.haml:38
+#, python-format
+msgid "Add to &laquo; %(moodname)s &raquo;"
+msgstr "Ajouter à &laquo; %(moodname)s &raquo;"
+
+#: templates/frontend/inspire/content.haml:41
+msgid "Create a Moodboard"
+msgstr "Créer un moodboard"
+
+#: templates/frontend/inspire/content.haml:52
+msgid "Enter moodboard name"
+msgstr "Entrez le nom du moodboard"
+
+#: templates/frontend/inspire/content.haml:58
+msgid "Save to my inspirations"
+msgstr "Ajouter à mes inspirations"
+
+#: templates/frontend/music/album_details.haml:38
+#, python-format
+msgid "%(count)s track"
+msgid_plural "%(count)s tracks"
+msgstr[0] "%(count)s piste"
+msgstr[1] "%(count)s pistes"
+
+#: templates/frontend/music/profile.haml:27
+#, python-format
+msgid "%(counter)s subscriber"
+msgid_plural "%(counter)s subscribers"
+msgstr[0] "%(counter)s abonné"
+msgstr[1] "%(counter)s abonnés"
+
+#: templates/frontend/music/profile.haml:47
+msgid "Followed"
+msgstr "Suivi"
+
+#: templates/frontend/music/side.haml:5
+msgid "Search"
+msgstr "Rechercher"
+
+#: templates/frontend/music/side.haml:12
+msgid "My playlists"
+msgstr "Mes playlists"
+
+#: templates/frontend/music/side.haml:16
+msgid "My tracks"
+msgstr "Mes titres"
+
+#: templates/frontend/music/side.haml:20
+msgid "My albums"
+msgstr "Mes albums"
+
+#: templates/frontend/music/side.haml:24
+msgid "Discover all the music"
+msgstr "Découvrez toute la musique"
+
+#: templates/frontend/notifications/content.haml:22
+msgid "There are no notifications to display."
+msgstr "Il n'y a pas de notifications à afficher."
+
+#: templates/frontend/notifications/item_delegation.haml:10
+#, python-format
+msgid "You have been named %(delegation_type)s of the page "
+msgstr "Vous avez été nommé %(delegation_type)s de la page "
+
+#: templates/frontend/notifications/item_delegation.haml:14
+#: templates/frontend/notifications/item_inspiration.haml:49
+#: templates/frontend/notifications/item_tagrequest.haml:32
+#, python-format
+msgid "%(value)s %(unit)s ago"
+msgstr "Il y a %(value)s %(unit)s"
+
+#: templates/frontend/notifications/item_inspiration.haml:14
+#: templates/frontend/signup/invitation.haml:14
+msgid "and"
+msgstr "et"
+
+#: templates/frontend/notifications/item_inspiration.haml:17
+#: templates/frontend/notifications/item_inspiration.haml:19
+#, python-format
+msgid "one other person"
+msgid_plural "%(counter)s other persons"
+msgstr[0] "une autre personne"
+msgstr[1] "%(counter)s autres personnes"
+
+#: templates/frontend/notifications/item_inspiration.haml:25
+msgid "now follow"
+msgstr "suivent désormais"
+
+#: templates/frontend/notifications/item_inspiration.haml:27
+msgid "now follows"
+msgstr "suit désormais"
+
+#: templates/frontend/notifications/item_inspiration.haml:33
+msgctxt "plural"
+msgid "added"
+msgstr "ont ajouté"
+
+#: templates/frontend/notifications/item_inspiration.haml:35
+msgctxt "single"
+msgid "added"
+msgstr "a ajouté"
+
+#: templates/frontend/notifications/item_inspiration.haml:40
+msgctxt "notifications"
+msgid "to his inspirations"
+msgid_plural "to their inspirations"
+msgstr[0] "à ses inspirations"
+msgstr[1] "à leurs inspirations"
+
+#: templates/frontend/notifications/item_tagrequest.haml:29
+msgid "Refuse"
+msgstr "Décliner"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:16
+msgid "started a collaboration with"
+msgstr "ont démarré une collaboration"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:45
+msgid "wants to start a collaboration with you."
+msgstr "veut démarrer une collaboration avec vous."
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:48
+msgid "identified you"
+msgstr "vous a identifié"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:50
+msgid "identified one of your"
+msgstr "a identifié and de vos"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:51
+msgid "images"
+msgstr "images"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:52
+msgid "videos"
+msgstr "vidéos"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:53
+msgid "album"
+msgstr "album"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:54
+msgid "track"
+msgstr "pistes"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:55
+msgid "movies"
+msgstr "films"
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:58
+msgid "on an image."
+msgstr "sur une image."
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:59
+msgid "on a video."
+msgstr "sur une vidéo."
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:60
+msgid "on an album."
+msgstr "sur un album."
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:61
+msgid "on a track."
+msgstr "sur une piste."
+
+#: templates/frontend/notifications/item_tagrequest_title.haml:62
+msgid "on a movie."
+msgstr "sur un film."
+
+#: templates/frontend/profile/base.haml:20
+msgid "Modify profile picture"
+msgstr "Modifier la photo"
+
+#: templates/frontend/profile/base.haml:66
+#: templates/frontend/viewer/content_generic_mediainfos.haml:9
+msgid "Infos"
+msgstr "Infos"
+
+#: templates/frontend/profile/content_home.haml:24
+msgid "Profile picture"
+msgstr "Photo de profil"
+
+#: templates/frontend/profile/content_home.haml:26
+msgid ""
+"Profile picture is your identity on FINDSPIRE. It is visible on your posts, "
+"medias ..."
+msgstr ""
+"L'image de profil est votre identité sur FINDSPIRE. Elle sera visible sur "
+"tous vos medias et toutes vos actualités"
+
+#: templates/frontend/profile/content_home.haml:30
+#: templates/frontend/signup/picture.haml:10
+msgid "Upload your profile picture"
+msgstr "Charger votre photo de profil"
+
+#: templates/frontend/profile/content_home.haml:33
+msgid "Profile picture size is 700 x 980 pixels"
+msgstr "Taille de l'image de profil: 700 x 980 pixels"
+
+#: templates/frontend/profile/content_home.haml:35
+msgid "Profile picture size is 1380 x 700 pixels"
+msgstr "Taille de l'image de profil: 1380 x 700"
+
+#: templates/frontend/profile/content_home.haml:41
+msgid "Background image"
+msgstr "Image de fond"
+
+#: templates/frontend/profile/content_home.haml:43
+msgid ""
+"Background image is very important. it is the first thing users will see by "
+"visiting your page"
+msgstr ""
+"L'image de fond est très importante. C'est la première chose que les "
+"visiteurs verront en visitant votre page"
+
+#: templates/frontend/profile/content_home.haml:47
+msgid "Upload your background image"
+msgstr "Mettez en ligne votre image de fond"
+
+#: templates/frontend/profile/content_home.haml:49
+msgid "Profile picture size is 1920 x 1080 pixels"
+msgstr "Taille de l'image de profil: 1920 x 1080"
+
+#: templates/frontend/profile/content_home.haml:55
+msgid "Complete your profile"
+msgstr "Compléter votre profil"
+
+#: templates/frontend/profile/content_home.haml:57
+msgid "Enter information about yourself, description, website, contact"
+msgstr "Completez vos informations, description, site web, contact"
+
+#: templates/frontend/profile/content_home.haml:60
+msgid "Update your information"
+msgstr "Completez vos informations"
+
+#: templates/frontend/profile/content_home.haml:62
+msgid "Please, update your information to make your page visible"
+msgstr "Veuillez mettre à jour votre page pour la rendre visible"
+
+#: templates/frontend/profile/content_home.haml:72
+msgid "Uploading"
+msgstr "Envoi en cours"
+
+#: templates/frontend/profile/content_home.haml:74
+msgid "Upload complete"
+msgstr "Envoi terminé"
+
+#: templates/frontend/profile/content_home.haml:81
+msgid "Upload"
+msgstr "Envoi"
+
+#: templates/frontend/profile/content_home.haml:85
+msgid "Processing"
+msgstr "Traitement"
+
+#: templates/frontend/profile/content_home.haml:90
+msgid "Validate image"
+msgstr "Valider l'image"
+
+#: templates/frontend/profile/content_home.haml:97
+msgid "Modify background picture"
+msgstr "Modifier l'image de fond"
+
+#: templates/frontend/profile/content_home.haml:127
+msgid "You do not have news yet on your page"
+msgstr "Vous n'avez pas encore d'actualités sur votre page"
+
+#: templates/frontend/profile/content_home.haml:130
+msgid "You can now upload"
+msgstr "Vous pouvez maintenant charger"
+
+#: templates/frontend/profile/content_home.haml:133
+#: templates/frontend/profile/content_tags.haml:20
+msgid "or"
+msgstr "ou"
+
+#: templates/frontend/profile/content_home.haml:138
+msgid "To add news, you must first"
+msgstr "Pour ajouter une actualité, vous devez d'abord"
+
+#: templates/frontend/profile/content_home.haml:142
+msgid "add a profile picture"
+msgstr "ajouter une photo de profil"
+
+#: templates/frontend/profile/content_home.haml:145
+msgid "add a background picture"
+msgstr "ajouter une image de fond"
+
+#: templates/frontend/profile/content_home.haml:148
+msgid "Complete your page information"
+msgstr "Completez les informations de votre page"
+
+#: templates/frontend/profile/content_home.haml:153
+msgid "This page has no news yet"
+msgstr "Cette page n'a pas encore d'actualité"
+
+#: templates/frontend/profile/content_home_infos_movie.haml:16
+msgid "Duration:"
+msgstr "Durée&#8239;:"
+
+#: templates/frontend/profile/content_home_infos_movie.haml:46
+msgid "Synopsis"
+msgstr "Synopsis"
+
+#: templates/frontend/profile/content_home_infos_movie.haml:78
+msgid "Movie Informations"
+msgstr "Informations sur le film"
+
+#: templates/frontend/profile/content_home_infos_profile.haml:14
+msgid "Community:"
+msgid_plural "Communities:"
+msgstr[0] "Communauté:"
+msgstr[1] "Communautés:"
+
+#: templates/frontend/profile/content_home_infos_profile.haml:59
+msgid "See all collaborations"
+msgstr "Voir toutes les collaborations"
+
+#: templates/frontend/profile/content_tags.haml:24
+msgid "Tag an existing page"
+msgstr "Ajouter une page existante"
+
+#: templates/frontend/profile/content_tags_advice.haml:13
+msgid ""
+"Collaborations allow artists to promote their work with other artists and "
+"increase your visibility on FINDSPIRE."
+msgstr ""
+"Les collaborations permettent aux artistes de promouvoir leur travail avec "
+"d'autres artistes et d'améliorer leur visibilité sur FINDSPIRE."
+
+#: templates/frontend/profile/content_tags_advice.haml:15
+msgid "Tag your directors to increase your visibility."
+msgstr "Idenifiez vos réalisateurs pour améliorer votre visibilité."
+
+#: templates/frontend/profile/content_tags_advice.haml:17
+msgid "Reference your artists to increase your visibility."
+msgstr "Identifiez vos artistes pour améliorer votre visibilité."
+
+#: templates/frontend/profile/content_tags_advice.haml:19
+msgid "Reference your movies to increase your visibility."
+msgstr "Identifiez vos films pour améliorer votre visibilité."
+
+#: templates/frontend/profile/content_tags_advice.haml:21
+msgid "Referencing your team helps you and your teammates to be more visible."
+msgstr "Identifiez votre équipe pour améliorer leur visibilité et la vôtre."
+
+#: templates/frontend/profile/content_tags_advice.haml:23
+msgid "This list is empty"
+msgstr "Cette liste est vide"
+
+#: templates/frontend/profile/content_tags_advice.haml:31
+msgid "Create a collaboration"
+msgstr "Démarrer une collaboration"
+
+#: templates/frontend/profile/content_tags_advice.haml:33
+msgid "Tag a director"
+msgstr "Ajouter un réalisateur"
+
+#: templates/frontend/profile/content_tags_advice.haml:35
+msgid "Tag an artist"
+msgstr "Ajouter un artiste"
+
+#: templates/frontend/profile/content_tags_advice.haml:37
+msgid "Tag a movie"
+msgstr "Ajouter un film"
+
+#: templates/frontend/profile/content_tags_advice.haml:39
+msgid "Tag a crew member"
+msgstr "Ajouter un membre du film"
+
+#: templates/frontend/search/popup_listsearch.haml:10
+#: templates/frontend/search/results.haml:20
+msgid "Pages"
+msgstr "Pages"
+
+#: templates/frontend/search/popup_listsearch.haml:14
+#: templates/frontend/search/popup_listsearch.haml:26
+#: templates/frontend/search/popup_listsearch.haml:38
+#: templates/frontend/search/popup_listsearch.haml:50
+#: templates/frontend/search/popup_listsearch.haml:62
+#: templates/frontend/search/popup_listsearch.haml:74
+#: templates/frontend/search/popup_listsearch.haml:86
+#: templates/frontend/search/results.haml:13
+#: templates/frontend/search/results.haml:24
+#: templates/frontend/search/results.haml:35
+#: templates/frontend/search/results.haml:46
+#: templates/frontend/search/results.haml:57
+#: templates/frontend/search/results.haml:69
+#: templates/frontend/search/results.haml:80
+msgid "Show more"
+msgstr "Voir plus"
+
+#: templates/frontend/search/popup_listsearch.haml:16
+#: templates/frontend/search/popup_listsearch.haml:28
+#: templates/frontend/search/popup_listsearch.haml:40
+#: templates/frontend/search/popup_listsearch.haml:52
+#: templates/frontend/search/popup_listsearch.haml:64
+#: templates/frontend/search/popup_listsearch.haml:76
+#: templates/frontend/search/popup_listsearch.haml:88
+msgid "Back to search"
+msgstr "Retour à la recherche"
+
+#: templates/frontend/search/popup_listsearch.haml:82
+#: templates/frontend/search/results.haml:31
+msgid "Passionates"
+msgstr "Passionnés"
+
+#: templates/frontend/search/popup_listsearch.haml:98
+msgid "Sorry, no results found for your search: "
+msgstr "Désolé, il n'y a pas de résultat pour votre recherche : "
+
+#: templates/frontend/search/popup_listsearch.haml:102
+msgid ""
+"Try another search or discover new inspirations by navigating the differents "
+"communities."
+msgstr ""
+"Veuillez essayer une autre recherche ou découvrir de nouvelles inspirations "
+"en navigant dans les différentes communautés."
+
+#: templates/frontend/signup/common.haml:9
+msgid "Informations about you"
+msgstr "Informations vous concernant"
+
+#: templates/frontend/signup/common.haml:18
+msgid "Profile name"
+msgstr "Nom du profil"
+
+#: templates/frontend/signup/common.haml:22
+msgid "First name"
+msgstr "Prénom"
+
+#: templates/frontend/signup/common.haml:24
+msgid "Last name"
+msgstr "Nom"
+
+#: templates/frontend/signup/common.haml:29
+msgid "Email confirmation"
+msgstr "Confirmation de l'email"
+
+#: templates/frontend/signup/common.haml:35
+msgid "characters remaining"
+msgstr "caractères restants"
+
+#: templates/frontend/signup/common.haml:39
+msgid "Day"
+msgstr "Jour"
+
+#: templates/frontend/signup/common.haml:65
+msgid "Year"
+msgstr "Année"
+
+#: templates/frontend/signup/common.haml:83
+msgid "Male"
+msgstr "Homme"
+
+#: templates/frontend/signup/common.haml:91
+msgid "Female"
+msgstr "Femme"
+
+#: templates/frontend/signup/common.haml:97
+msgid "Yes, send me email updates about FINDSPIRE"
+msgstr "Oui, envoyez-moi les actualités de FINDSPIRE par email"
+
+#: templates/frontend/signup/common.haml:101
+msgid "I agree to the"
+msgstr "J'accepte les"
+
+#: templates/frontend/signup/common.haml:103
+msgid "Terms of use and Privacy policy"
+msgstr "Conditions d'utilisation et la politique de confidentialité"
+
+#: templates/frontend/signup/common.haml:109
+msgid "Sign Up"
+msgstr "Créez un compte"
+
+#: templates/frontend/signup/invitation.haml:9
+msgid "invitation"
+msgstr "invitation"
+
+#: templates/frontend/signup/invitation.haml:18
+msgid "invite you to join"
+msgstr "vous invitent à rejoindre"
+
+#: templates/frontend/signup/invitation.haml:23
+msgid "invites you to join"
+msgstr "vous invite à rejoindre"
+
+#: templates/frontend/signup/invitation.haml:33
+msgid "You already have an account"
+msgstr "Vous avez déjà un compte"
+
+#: templates/frontend/signup/page.haml:30
+msgid "Next step"
+msgstr "Prochaine étape"
+
+#: templates/frontend/signup/picture.haml:17
+msgid "Finalizing..."
+msgstr "Finalisation..."
+
+#: templates/frontend/signup/picture.haml:21
+msgid "Upload another profile picture"
+msgstr "Charger une autre photo de profil"
+
+#: templates/frontend/signup/picture.haml:23
+#: templates/frontend/signup/picture.haml:33
+msgid "Optimal resolution: 1380x700 pixels"
+msgstr "Résolution optimale&#8239;: 1380x700 pixels"
+
+#: templates/frontend/signup/picture.haml:29
+msgid "Upload your profile picture by"
+msgstr "Charger une photo de profil en"
+
+#: templates/frontend/signup/picture.haml:31
+msgid "clicking here"
+msgstr "cliquant ici"
+
+#: templates/frontend/signup/picture.haml:38
+#: templates/frontend/signup/picture.haml:41
+msgid "Go to my page"
+msgstr "Accéder à ma page"
+
+#: templates/frontend/signup/type.haml:12
+msgid "Sign up on"
+msgstr "Créez un compte"
+
+#: templates/frontend/signup/type.haml:28
+msgid "Create a page for an"
+msgstr "Créer une page pour un"
+
+#: templates/frontend/signup/type.haml:30
+msgid "artist"
+msgstr "artiste"
+
+#: templates/frontend/signup/type.haml:32
+msgid "or a"
+msgstr "ou une"
+
+#: templates/frontend/signup/type.haml:34
+msgid "company"
+msgstr "société"
+
+#: templates/frontend/signup/type.haml:39
+msgid "Create a page Artist / Company"
+msgstr "Créer une page Artiste / Société"
+
+#: templates/frontend/upload/upload.haml:9
+msgid "File upload"
+msgstr "Envoi"
+
+#: templates/frontend/upload/upload.haml:13
+msgid "Modify crop"
+msgstr "Recadrez l'image"
+
+#: templates/frontend/upload/upload.haml:17
+msgid "Preparing"
+msgstr "Préparation"
+
+#: templates/frontend/upload/upload.haml:24
+msgid "Finalizing"
+msgstr "Finalisation"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:13
+msgid "Embed"
+msgstr "Intégrer"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:17
+msgid "Technical"
+msgstr "Technique"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:39
+msgid "Synopsis:"
+msgstr "Synopsis&#8239;:"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:41
+msgid "Description:"
+msgstr "Description&#8239;:"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:61
+msgid "Continue"
+msgstr "Continuer"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:63
+#: templates/frontend/viewer/content_generic_mediainfos.haml:75
+msgid "See page"
+msgstr "Voir la page"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:102
+msgid "Camera used"
+msgstr "Appareil photo"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:111
+msgid "ISO"
+msgstr "ISO"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:120
+msgid "Aperture"
+msgstr "Ouverture"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:130
+msgid "Shutter speed"
+msgstr "Durée d'exposition"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:140
+msgid "Focal length"
+msgstr "Focale"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:159
+msgid "Configure the embedded player:"
+msgstr "Configurer le lecteur embarqué:"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:164
+msgid "Autoplay"
+msgstr "Lecture automatique"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:169
+msgid "Show available resolutions"
+msgstr "Afficher les résolution disponibles"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:180
+msgid "Custom"
+msgstr "Choisir"
+
+#: templates/frontend/viewer/content_generic_mediainfos.haml:190
+msgid "Embed this HTML code:"
+msgstr "Intégrez ce code HTML"
+
+#: templates/frontend/viewer/content_image_media.haml:44
+msgid "comments"
+msgstr "commentaires"
+
+#: templates/frontend/viewer/content_image_media.haml:46
+msgid "comment"
+msgstr "commenter"
+
+#: templates/frontend/viewer/content_video_mediainfos.haml:9
+msgid "min"
+msgstr "min"
+
+#: templates/frontend/welcome/content.haml:20
+msgid "create account"
+msgstr "créer un compte"
+
+#: templates/frontend/welcome/content.haml:22
+msgid "login"
+msgstr "connexion"
+
+#: templates/frontend/welcome/content.haml:26
+#: templates/mobile/welcome/content.haml:23
+msgid "Listen"
+msgstr "Écouter"
+
+#: templates/frontend/welcome/content.haml:28
+msgid ""
+"Design personnal playlists and discover artists from around the world thanks "
+"to a genre ranking, all of this with optimal sound quality."
+msgstr ""
+"Elaborez des playlists personnelles, découvrez des artistes du monde entier "
+"grâce à un classement par genre et ce toujours avec une qualité sonore "
+"optimale."
+
+#: templates/frontend/welcome/content.haml:31
+msgid "Discover Findspire"
+msgstr "Découvrez Findspire"
+
+#: templates/frontend/welcome/side.haml:20 templates/mobile/popup/menu.haml:16
+msgid "Discover"
+msgstr "Découvrez"
+
+#: templates/frontend/welcome/side.haml:23
+msgid "BETA version"
+msgstr "en version BETA"
+
+#: templates/mobile/500.haml:5
+msgid "Mainenance"
+msgstr "Maintenance"
+
+#: templates/mobile/boxes/event_movie.haml:27
+msgid "Movie by "
+msgstr "Film par "
+
+#: templates/mobile/boxes/movie.haml:41
+msgid "Shows"
+msgstr "Voir plus"
+
+#: templates/mobile/popup/get_app.haml:6
+msgid "Go back to website"
+msgstr "Retourner sur la version mobile"
+
+#: templates/mobile/popup/get_app.haml:9
+msgid "FINDSPIRE mobile application will be available early 2015"
+msgstr "L'application mobile FINDSPIRE sera disponible en début d'année 2015"
+
+#: templates/mobile/popup/get_app.haml:13
+msgid "Until then, navigation is limited to profiles"
+msgstr "D'ici là, la navigation est limitée aux pages"
+
+#: templates/mobile/popup/get_app.haml:18
+msgid "Coming soon to Google Play"
+msgstr "Bientôt sur Google Play"
+
+#: templates/mobile/popup/menu.haml:11
+msgid "Newsfeed"
+msgstr "Fil d'actualité"
+
+#: templates/mobile/popup/menu.haml:15
+msgid "My inspirations"
+msgstr "Mes inspirations"
+
+#: templates/mobile/popup/menu.haml:27
+msgid "Mode"
+msgstr "Fashion"
+
+#: templates/mobile/popup/search.haml:17
+msgid "See all artists"
+msgstr "Tous les artistes"
+
+#: templates/mobile/popup/search.haml:32
+msgid "See all albums"
+msgstr "Tous les albums"
+
+#: templates/mobile/popup/search.haml:46
+msgid "See all tracks"
+msgstr "Toutes les pistes"
+
+#: templates/mobile/popup/search.haml:64
+msgid "See all videos"
+msgstr "Toutes les vidéos"
+
+#: templates/mobile/popup/search.haml:89
+msgid "See all images"
+msgstr "Toutes les images"
+
+#: templates/mobile/profile/content_home.haml:14
+#: templates/mobile/profile/content_music.haml:16
+#: templates/mobile/profile/content_playlist.haml:14
+#: templates/mobile/profile/content_tags.haml:15
+#: templates/mobile/profile/template.haml:23
+msgid "Shuffle"
+msgstr "Lecture aléatoire"
+
+#: templates/mobile/profile/template.haml:19
+msgid "Most listened tracks"
+msgstr "Titres les plus écoutés"
+
+#: templates/mobile/welcome/content.haml:18
+msgid "Mobile app available soon"
+msgstr "Application mobile bientôt disponible"
+
+#: templates/mobile/welcome/content.haml:25
+msgid "Create personal playlists and discover artists from around the world."
+msgstr ""
+"Elaborez des playlists personnelles et découvrez des artistes du monde "
+"entier."
+
+#: templates/mobile/welcome/content.haml:28
+msgid "Be Inspired"
+msgstr "Une source d'inspiration"
+
+#: templates/mobile/welcome/content.haml:30
+msgid "Discover the best of artistic creation worldwide all in one place."
+msgstr ""
+"Découvrez le meilleur de la création artistique internationale sur une seule "
+"plateforme."
+
+#: templates/mobile/welcome/content.haml:33
+msgid "Smartly connected"
+msgstr "Intelligement connecté"
+
+#: templates/mobile/welcome/content.haml:35
+msgid ""
+"Explore, save and share all your inspirations with a unique navigation "
+"system."
+msgstr ""
+"Explorez, sauvegardez et partagez à l’infini toutes vos inspirations grâce à "
+"une navigation réinventée."
+
+#: templates/mobile/welcome/content.haml:38
+msgid "Daily recommandations"
+msgstr "Des recommandations au coeur des nouvelles tendances"
+
+#: templates/mobile/welcome/content.haml:40
+msgid "Enjoy FINDSPIRE staff picks and access to exclusive contents."
+msgstr ""
+"Laissez-vous guider par les sélections FINDSPIRE et accédez à des contenus "
+"exclusifs de qualité."
+
+#: templates/mobile/welcome/content.haml:43
+msgid "Inspiring soon"
+msgstr "Inspiring soon"
+
+#: templates/mobile/welcome/content.haml:45
+msgid "Experience FINDSPIRE soon. Everywhere. Anytime."
+msgstr "Retrouvez prochainement tout l'univers FINDSPIRE."
+
+#: utils/utils.py:176
+msgctxt "publication age / short unit"
+msgid "sec"
+msgid_plural "sec"
+msgstr[0] "sec"
+msgstr[1] "sec"
+
+#: utils/utils.py:178
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "seconde"
+msgstr[1] "secondes"
+
+#: utils/utils.py:183
+msgctxt "publication age / short unit"
+msgid "min"
+msgid_plural "min"
+msgstr[0] "min"
+msgstr[1] "min"
+
+#: utils/utils.py:185
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minute"
+msgstr[1] "minutes"
+
+#: utils/utils.py:190
+msgctxt "publication age / short unit"
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "h"
+msgstr[1] "h"
+
+#: utils/utils.py:192
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "heure"
+msgstr[1] "heures"
+
+#: utils/utils.py:197
+msgctxt "publication age / short unit"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "jour"
+msgstr[1] "jours"
+
+#: utils/utils.py:199
+msgid "day"
+msgid_plural "days"
+msgstr[0] "jour"
+msgstr[1] "jours"
+
+#: utils/utils.py:204
+msgctxt "publication age / short unit"
+msgid "month"
+msgid_plural "months"
+msgstr[0] "mois"
+msgstr[1] "mois"
+
+#: utils/utils.py:206
+msgid "month"
+msgid_plural "months"
+msgstr[0] "mois"
+msgstr[1] "mois"
+
+#: utils/utils.py:211
+msgctxt "publication age / short unit"
+msgid "year"
+msgid_plural "years"
+msgstr[0] "an"
+msgstr[1] "ans"
+
+#: utils/utils.py:213
+msgid "year"
+msgid_plural "years"
+msgstr[0] "an"
+msgstr[1] "ans"
+
+#~ msgid "Discover Findspire’s playlists"
+#~ msgstr "Découvrez les playlists Findspire"
+
+#~ msgid "Discover our selection of the best tracks"
+#~ msgstr "Découvrez nos sélections des meilleurs titres"
+
+#~ msgid "You are using FINDSPIRE as a passionate."
+#~ msgstr "Vous utilisez FINDSPIRE en tant que passioné"
+
+#~ msgid "Create a page to show your artwork off on FINDSPIRE."
+#~ msgstr "Créez une page pour mettre en ligne votre contenu sur FINDSPIRE."
+
+#~ msgid "Diffuse images on FINDSPIRE"
+#~ msgstr "Écoutez toute la musique sur FINDSPIRE"
+
+#, fuzzy
+#~ msgid "Diffuse videos on FINDSPIRE"
+#~ msgstr "Écoutez toute la musique sur FINDSPIRE"
+
+#~ msgid "My profile"
+#~ msgstr "Mon profil"
+
+#~ msgid "Profile picture size is 250 x 350 pixels"
+#~ msgstr "Taille de l'image de profil: 250 x 350 pixels"
+
+#~ msgid "Discover all"
+#~ msgstr "Découvrez"
+
+#, fuzzy
+#~ msgid "albums"
+#~ msgstr "album"
+
+#~ msgid "Show less"
+#~ msgstr "Voir plus"
+
+#~ msgid "Search FINDSPIRE"
+#~ msgstr "Recherchez sur FINDSPIRE"
+
+#~ msgid "All"
+#~ msgstr "Tout"
+
+#~ msgid "Users"
+#~ msgstr "Utilisateurs"
+
+#~ msgid "Search all world artistic content in one space!"
+#~ msgstr "Recherchez tout le contenu artistique sur un seul espace&#8239;!"
+
+#~ msgid "All your music is here."
+#~ msgstr "Toute votre musique est ici."
+
+#~ msgid ""
+#~ "FINDSPIRE offers you millions of tracks: your favorite artists, last hits "
+#~ "and new discoveries."
+#~ msgstr ""
+#~ "FINDSPIRE met à votre disposition des millions de titres&#8239;: vos "
+#~ "artistes préférés, les derniers tubes et de nouvelles découvertes."
+
+#~ msgid ""
+#~ "We are adding over 100,000 tracks per day. If you cannot find what you "
+#~ "want to listen to, be sure it will be available soon on FINDSPIRE."
+#~ msgstr ""
+#~ "Nous intégrons actuellement plus de 100 000 titres musicaux par jour. Si "
+#~ "vous ne trouvez pas aujourd'hui la musique que vous souhaitez écouter, "
+#~ "nul doute que celle-ci sera disponible très prochainement sur FINDSPIRE."
+
+#~ msgid "You don't follow anyone yet"
+#~ msgstr "Vous ne suivez encore personne"
+
+#~ msgid "You have no follower yet"
+#~ msgstr "Personne ne vous suit"
+
+#~ msgid "Follow users or pages by clicking this button"
+#~ msgstr "Suivez des utilisateurs ou des pages en cliquant sur l'icône"
+
+#~ msgid "Upload an image"
+#~ msgstr "Mettre en ligne une image"
+
+#~ msgid "Upload videos"
+#~ msgstr "Mettre en ligne une vidéo"
+
+#~ msgid " has no "
+#~ msgstr " n'a pas"
+
+#~ msgid "in this moodboard."
+#~ msgstr "dans ce moodboard"
+
+#~ msgid "Come back later. Meanwhile, you can check awesome pictures "
+#~ msgstr ""
+#~ "Veuillez revenir plus tard. En attendant, vous pouvez découvrir des "
+#~ "images "
+
+#~ msgid "here"
+#~ msgstr "ici"
+
+#~ msgid "Come back later. Meanwhile, you can check new videos "
+#~ msgstr ""
+#~ "Veuillez revenir plus tard. En attendant, vous pouvez découvrir des "
+#~ "vidéos "
+
+#~ msgid "Come back later. Meanwhile, you can check great movies "
+#~ msgstr ""
+#~ "Veuillez revenir plus tard. En attendant, vous pouvez découvrir des films "
+
+#~ msgid "Inspire"
+#~ msgstr "Inspiré"
+
+#~ msgid "Create your first moodboard"
+#~ msgstr "Créer votre premier moodboard"
+
+#~ msgid "You can list the directors you are managing on this page."
+#~ msgstr "Vous pouvez lister les réalisateurs que vous gérez sur cette page."
+
+#~ msgid "You can list the artists you are managing on this page."
+#~ msgstr "Vous pouvez lister les artistes que vous gérez sur cette page."
+
+#~ msgid "No more news to display"
+#~ msgstr "Il n'y a plus d'actualités à afficher"
+
+#~ msgid "Page suggestions"
+#~ msgstr "Suggestions de pages"
+
+#~ msgid "Discover more page with the"
+#~ msgstr "Découvrez plus de pages avec le"
+
+#~ msgid "discovery engine"
+#~ msgstr "moteur de découverte"
+
+#~ msgid "News from people you follow"
+#~ msgstr "Actualités des personnes que vous suivez"
+
+#~ msgid "Mobile app will be"
+#~ msgstr "Sortie de l'application mobile"
+
+#~ msgid "on January, 15th 2015"
+#~ msgstr "le 15 Janvier 2015"
+
+#~ msgid "Edit page informations"
+#~ msgstr "Editer les informations de la page"
+
+#~ msgid "Display on profile homepage"
+#~ msgstr "Afficher sur la page du profil"
+
+#~ msgid "Follow profile"
+#~ msgstr "Suivre le profil"
+
+#~ msgid "Following profile"
+#~ msgstr "Profil suivi"
+
+#~ msgid "User profiles"
+#~ msgstr "Profils d'utilisateurs"
+
+#~ msgid "Create the profile"
+#~ msgstr "Créer le profil"
+
+#~ msgid "Add a profile"
+#~ msgstr "Ajouter un profil"
+
+#~ msgid "Create a profile"
+#~ msgstr "Créer un profil"
+
+#~ msgid ""
+#~ "\n"
+#~ "                  %(counter)s subscriber\n"
+#~ "                  "
+#~ msgid_plural ""
+#~ "\n"
+#~ "                  %(counter)s subscribers\n"
+#~ "                  "
+#~ msgstr[0] "%(counter)s abonnements"
+#~ msgstr[1] "%(counter)s abonnés"
+
+#~ msgid "You can now complete your profile by"
+#~ msgstr "Vous pouvez maintenant compléter votre profil en"
+
+#~ msgid "Inspiration not found."
+#~ msgstr "Inspiration non trouvée."
+
+#~ msgid "Server error"
+#~ msgstr "Erreur interne"

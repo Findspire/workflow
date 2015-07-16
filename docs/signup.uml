@@ -1,0 +1,67 @@
+' This is a PlantUML file. Use PlantUML to generate a PNG (or SVG).
+' http://plantuml.sourceforge.net/
+
+@startuml
+
+[*] --> SignupPassionateFacebook : Sign up with Facebook
+SignupPassionateFacebook --> CheckSocialID : Login Facebook
+SignupPassionateFacebook: URL: GET /login/facebook/ (popup)
+
+[*] --> SignupPassionateGoogle : Sign up with Google
+SignupPassionateGoogle --> CheckSocialID : Login Google
+SignupPassionateGoogle: URL: GET /login/google-oauth2/ (popup)
+
+CheckSocialID --> LoggedIn : Known social ID
+CheckSocialID --> SignupPassionateForm : New ID
+CheckSocialID: URL: GET /complete/(facebook|google-oauth2)/
+
+
+[*] --> SignupPassionateForm : Sign up with email
+SignupPassionateForm: URL: GET /signup/passionate/
+SignupPassionateForm: Visible URL: /signup/
+SignupPassionateForm: Email + confirmation
+SignupPassionateForm: First name, last name, gender, birthday
+SignupPassionateForm: City (+ region, country)
+SignupPassionateForm: Social ID in session
+SignupPassionateForm: Password (optional if social ID in session)
+SignupPassionateForm --> InputValidation : Sign Up
+
+InputValidation --> SignupPassionateForm : Incorrect data
+InputValidation --> CheckEmailRiak : Correct data
+InputValidation: URL: POST /signup/passionate/
+
+CheckEmailRiak --> SignupPassionateForm : Email already known
+CheckEmailRiak --> SaveUserInRiak : New email
+
+SaveUserInRiak --> LoggedIn
+LoggedIn --> [*]
+LoggedIn: URL: GET /home
+
+
+[*] --> SignupProCoupon : I am an artist/professional/journalist/blogger
+SignupProCoupon --> SignupProCoupon : Invalid invitation code
+SignupProCoupon --> SignupProForm : Valid invitation code
+SignupProCoupon: URL: GET /signup/coupon/
+SignupProCoupon: Visible URL: /signup/
+
+SignupProForm: URL: GET /signup/pro/
+SignupProForm: Visible URL: /signup/
+SignupProForm: Email + confirmation
+SignupProForm: Password
+SignupProForm: Artist / professional / journalist
+SignupProForm: Specific fields
+SignupProForm: Coupon in session
+SignupProForm --> ProInputValidation : Sign Up
+
+ProInputValidation --> SignupProForm : Incorrect data
+ProInputValidation --> ProCheckEmailRiak : Correct data
+ProInputValidation: URL: POST /signup/pro/
+
+ProCheckEmailRiak --> SignupProForm : Email already known
+ProCheckEmailRiak --> SaveUserInRiak : New email
+
+@enduml
+
+' Local Variables:
+' mode: plantuml
+' End:

@@ -1,0 +1,75 @@
+iTunes:
+	Composer:                 composer,
+	DJ:                       dj,
+	Featuring:                featuring,
+	Narrator
+	Performer:                performer,
+	Producer:                 producer,
+	Remixer:                  remixer,
+	Songwriter:               songwritter,
+	with: with
+
+Universal (ddex):
+	Actor:                    actor,
+	Architect:                architect,
+	Artist:
+	AssociatedPerformer:
+	Band:                     band,
+	Cartoonist:
+	Choir:
+	Choreographer;
+	ComputerGraphicCreator:
+	Conductor:
+	Contributor:
+	Designer:                 designer,
+	Ensemble:                 collective,
+	FeaturedArtist:           featuring,
+	FilmDirector:
+	GraphicArtist:            graphist,
+	GraphicDesigner:          graphic_designer,
+	Journalist:
+	MainArtist:               performer,
+	Orchestra:
+	Painter:                  painter,
+	Photographer:             photographer,
+	PhotographyDirector:      director_of_photography,
+	PrimaryMusician:
+	Producer:                 producer,
+	Programmer:
+	ScreenplayAuthor:
+	StudioPersonnel:
+	Adapter:
+	Arranger:
+	Author:
+	Composer:                 composer,
+	ComposerLyricist:
+	Dancer:
+	Director:                 director,
+	Librettist:
+	Lyricist:                 songwriter,
+	MusicPublisher:
+	NonLyricAuthor:
+	OriginalPublisher:
+	Playwright:
+	Soloist:
+	StudioMusician:
+	SubArranger:
+	SubPublisher:
+	SubstituedPublisher:
+	Translator:
+	BookPublisher:
+	CostumeDesigner:
+	Dubber:
+	Encoder:
+	FilmEditor:
+	FilmProducer:             producer,
+	FilmSoundEngineer:
+	NewspaperPublisher:
+	PeriodicalPublisher:
+	RightsControllerOnProduct:
+	SetDesigner:
+	StageDirector:
+	SubtitlesEditor:
+	SubtitlesTranslator:
+	SubLyricist:
+

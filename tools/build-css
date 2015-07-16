@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+function compile() {
+    echo $(basename "$1")
+    compass compile "$1"
+}
+
+function compile_all() {
+    for dir in "$projectdir/workflow"; do
+        cd "$dir" && echo ">>>" $(basename "$dir")
+        find "css" -type f -name 'base_*.scss' | while read file; do
+            compile "$file"
+         done
+        cd - >/dev/null
+    done
+    echo ">>> all done"
+}
+
+projectdir=$(dirname "$0")/../workflow/static
+toolsdir=../../..
+compile_all
+
+while inotifywait -q -r -e modify -e create --exclude '\.sass-cache|\.swp|\.#' \
+                  "$projectdir/workflow/css" "$projectdir/mobile/css"; do
+    compile_all
+done

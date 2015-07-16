@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cd $(dirname $0)
+
+FILES="frontend/inspire.haml frontend/base_items.haml frontend/boxes/event_album.haml frontend/boxes/event_base.haml frontend/boxes/event_image.haml frontend/boxes/event_movie.haml frontend/boxes/event_profile.haml frontend/boxes/event_video.haml frontend/boxes/events.haml frontend/boxes/genres.haml frontend/common/controls.haml"
+for file in $FILES ; do
+    hamlpy ../findspire/templates/$file | sed 's/\.haml/.html/g' > ../findspire/templates/${file/haml/html}
+done

@@ -1,0 +1,13 @@
+{
+    "name": "findspire-front",
+    "vesion": "1.0.0",
+    "repository": {
+        "type": "git",
+        "url": "https://bitbucket.org/Findspire/findspire-front/"
+    },
+    "dependencies": {
+        "csso": "latest",
+        "requirejs": "latest",
+        "uglify-js": "latest"
+    }
+}

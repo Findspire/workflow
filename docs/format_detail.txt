@@ -1,0 +1,145 @@
+// How to read this document:
+// all words between <> are actual values, possibly a list of values separated
+// by a comma
+// If a value is not between <>, then it's a reference to another part of the document
+
+// Root of the dictionary
+=========================================
+origin: <universal, itunes,...>,
+type: <album,single>
+batch_id: <id> // Optional
+url: <url>
+album
+=========================================
+
+==== album ====
+id
+upc
+vendor_id // Optional
+grid      // Optional
+catalog_number // Optional
+cds: [cd]
+cover: files: [file]
+metadata: album_metadata
+owner: {
+	name
+	id // Optional (Only for universal)
+}
+==== album ====
+
+==== cd ====
+title
+title_version // Optional
+tracks: {
+	<track_number>: track
+}
+==== cd ====
+
+==== track ====
+id
+isrc
+upc
+vendor_id // Optional
+grid      // Optional
+duration  // Optional
+owner: {
+	name
+	id // Optional (Only for universal)
+}
+type: <audio_track, video_track>
+metadata: track_metadata
+files: [file]
+==== track ====
+
+==== file ====
+file: {
+	filename
+	hash_method
+	hash_sum
+}
+type: <preview, source>
+metadata: file_metadata
+==== file ====
+
+==== artist ====
+name
+key_name              // Optional (used for alphabetical sorting)
+abbreviated_name      // Optional
+roles: [<>]
+unmatched_roles: [<>] // Optional
+apple_id: <>          // Optional
+==== artist ====
+
+==== locales ====
+<country/language_key>: {
+	parent block attributes (all optionals)
+}
+==== locales ====
+
+==== file_metadata ====
+bit_rate           // Optional
+bits_per_sample    // Optional
+sampling_rate      // Optional
+codec              // Optional
+duration           // Optional
+number_of_channels // Optional
+size               // Optional
+
+// Only relevant if file type is preview
+// Informative = This file is a preview
+// Instructive = You should make a preview matching these informations
+preview_expression: <Informative, Instructive>
+preview_start_point // Optional
+preview_end_point   // Optional
+==== file_metadata ====
+
+==== track_metadata ====
+title
+title_version          // Optional
+artists: [artist]
+contributors: [artist] // Optional
+legalinfos: legalinfos
+locales: locales
+genres: [<>]           // Optional
+unmatched_genres: [<>] // Optional
+label_names: [<>]      // Optional
+explicit: <True, False> // Optional
+gapless: <True, False> // Optional
+instrumental: <True, False> // Optional
+audio_language: ""     // Optional
+==== track_metadata ====
+
+==== album_metadata ====
+title
+title_version          // Optional
+artists: [artist]
+contributors: [artist] // Optional
+legalinfos: legalinfos
+locales: locales
+genres: [<>]           // Optional
+unmatched_genres: [<>] // Optional
+release_date           // Optional
+label_names: [<>]      // Optional
+explicit: <True, False> // Optional
+==== album_metadata ====
+
+==== legalinfos ====
+plines: [<>]               // Optional
+clines: [<>]               // Optional
+display_date               // Optional
+rights: [right...]
+rights_remove_missing: <True, False> // Defaults to False
+==== legalinfos ====
+
+==== right ====
+territories: [<>]
+usages: [<>]          // Optional if ended
+models: [<>]          // Optional if ended
+periods: [<period>]
+display_date: <date>  // Optional
+==== right ====
+
+==== period ====
+start_date: <date>    // Optional if ended
+end_date: <date>      // Optional if not ended
+==== period ====

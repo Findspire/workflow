@@ -1,0 +1,5 @@
+#!/bin/bash
+
+find $(dirname "$0")/../findspire/static/frontend/js -type f \
+    -name '*.js' -and -not \( -name 'app.build.js' -or -name 'parallax.js' \) \
+    -exec jshint "{}" +

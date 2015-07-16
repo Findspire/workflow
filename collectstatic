@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+
+rootdir=$(dirname "$0")
+staticdir=$rootdir/findspire/static
+
+# Install required Node modules
+cd "$rootdir"
+npm install .
+
+# Build CSS
+for dir in "$staticdir/frontend" "$staticdir/mobile"; do
+    cd "$dir"
+    find "css" -type f -name 'base_*.scss' -exec compass compile --force {} \;
+    cd - >/dev/null
+done
+cd "$rootdir"
+
+# "Normal" statics (for backoffice, REST Framework, etc.)
+./manage.py collectstatic --noinput --ignore '*.scss' --ignore '*.scssc'
+
+# Frontend and Mobile statics, with require.js
+for app in frontend mobile; do
+    ./node_modules/.bin/r.js -o findspire/static/$app/js/app.build.js dir=static/$app/js
+    find static/$app/css -name '*.css' -exec ./node_modules/.bin/r.js -o cssIn="{}" out="{}" \;
+done
+
+# Minify JS libs with Uglify
+find static/libs -name '*.js' -exec ./node_modules/.bin/uglifyjs --comments -o "{}" "{}" \;
+
+# Cleanup
+find static -\( -name '*.scss' -or -name '.sass-cache' -\) -exec rm -rf "{}" +
+for app in frontend mobile; do
+    rmdir static/$app/css/* 2>/dev/null || true
+done

@@ -1,0 +1,12 @@
+{
+    "browser": true,
+    "devel": true,
+    "freeze": true,
+    "predef": [
+        "define",
+        "require",
+        "requirejs"
+    ],
+    "undef": true,
+    "unused": true
+}

@@ -1,0 +1,82 @@
+digraph {
+        // Style du point d'entrée
+        "Start" [fontname="DejaVu Sans" shape=diamond style="filled" fillcolor=yellow]
+
+        // Styles par défaut
+        graph [fontname="DejaVu Sans Bold" fontcolor="red4" nodesep=2 ranksep=1]
+        node [fontname="DejaVu Sans Mono" shape=box style=rounded]
+        edge [color=navy]
+
+        // Définition des tâches (pour savoir dans quel cluster les lister)
+        subgraph cluster_common {
+                label="common"
+                "common.delete_media"
+                "common.update_media_profile_cache"
+                "common.update_record"
+        }
+        subgraph cluster_drm {
+                label="drm"
+                "drm.package_hls"
+        }
+        subgraph cluster_image {
+                label="image"
+                "image.media_crop_resize"
+                "image.media_crop_resize_one"
+
+        }
+        subgraph cluster_ingest {
+                label="ingest"
+                "ingest.common.add_album_cover"
+                "ingest.common.add_track_files"
+                "ingest.common.create_sample"
+                "ingest.common.ingest"
+                "ingest.common.ingest_finished"
+                "ingest.common.process_data"
+                "ingest.ddex.ingest_ddex"
+                "ingest.itmsp.ingest_itmsp"
+        }
+        subgraph cluster_media {
+                label="media"
+                "media.media_transcode"
+                "media.save_objects"
+                "media.transcode_and_upload"
+                "media.update_metadata"
+        }
+        subgraph cluster_upload {
+                label="upload"
+                "upload.abort_multipart_upload"
+                "upload.complete_multipart_upload"
+                "upload.delete_from_cache"
+                "upload.download_from_url"
+                "upload.file_cleanup"
+        }
+
+        // Points d'entrée
+        "Start" -> {
+                "common.update_media_profile_cache"
+                "drm.package_hls"
+                "image.media_crop_resize"
+                "ingest.common.ingest"
+                "media.media_transcode"
+                "upload.abort_multipart_upload"
+                "upload.complete_multipart_upload"
+                "upload.download_from_url"
+                "upload.file_cleanup"
+        } [style=bold]
+
+        // Liens entre les tâches
+        "drm.package_hls" -> { "media.update_metadata" } [style=dashed constraint=false]
+
+        "image.media_crop_resize" -> { "image.media_crop_resize_one" "common.update_record" }
+
+        "ingest.common.ingest" -> { "ingest.ddex.ingest_ddex" "ingest.itmsp.ingest_itmsp" "ingest.common.process_data" }
+        "ingest.common.process_data" -> { "ingest.common.add_album_cover" "ingest.common.add_track_files" }
+        "ingest.common.add_track_files" -> { "drm.package_hls" "ingest.common.create_sample" "common.update_record" }
+        "ingest.common.add_album_cover" -> { "image.media_crop_resize" }
+        "ingest.common.create_sample" -> { "media.save_objects" }
+        "ingest.common.create_sample" -> { "media.transcode_and_upload" } [style=dashed constraint=false]
+
+        "media.media_transcode" -> { "media.transcode_and_upload" "drm.package_hls" "common.update_record" "media.save_objects" "image.media_crop_resize" }
+
+        "upload.complete_multipart_upload" -> { "image.media_crop_resize" "media.media_transcode" }
+}
