@@ -10,26 +10,32 @@ var progressbar = function do_progressbar() {
     var colors = ["#73bd5a", "#dc5555", "#babdb6"];
 
     state = fill_array(values, colors, state);
-    
+
     var progress_bar = "<tr><table><tr>";
-		for (i = 0 ; i < state.length ; i++) {
-		    if (state[i][0]) {
-			progress_bar += "<td style='width: " + state[i][0] + "%; background-color: " + state[i][1] + ";'></td>";
-		    }
-		}
-		progress_bar += "<td style='width: auto; text-align: left; padding-left: 4px;'>" + size + "% tested</td></tr></table></tr>";
+	for (i = 0 ; i < state.length ; i++) {
+	    if (state[i][0]) {
+            progress_bar += "<td style='width: " + state[i][0] + "%; background-color: " + state[i][1] + ";'></td>";
+	    }
+	}
+	progress_bar += "<td style='width: auto; text-align: left; padding-left: 4px;'>" + size + "% tested</td></tr></table></tr>";
     return progress_bar;
-}
+};
 
 function get_percentage(value, total, ceil) {
 // @value is the number to evaluate
 // @total is the number which represent the 100%
 // @ceil is number for ceil the returned value or not (1 : ceil, 0 : nothing)
-if (ceil == 1) {
-    return Math.ceil((value * 100) / total);
-    } else {
-	return (value * 100) / total;
+    if (total === 0) {
+        return 100;
     }
+
+    var ret = (value * 100) / total;
+
+    if (ceil === 1) {
+        ret = Math.ceil(ret);
+    }
+
+   return ret;
 }
 
 function fill_array(values, colors, array_to_fill) {

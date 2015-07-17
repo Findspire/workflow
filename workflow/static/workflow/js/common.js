@@ -1,43 +1,63 @@
+
 function _check_if_has_changed(el, data, link, callback) {
+    var anchor;
+
     if ($("td#take-item-" + data["item_id"]).html()) {
-	var take_untake_cell_validation = $("td#take-item-" + data["item_id"]).attr("class").split(' ')[1].split('-')[1];
+        anchor = "#take-item-" + data["item_id"];
     } else {
-	var take_untake_cell_validation = $("td#untake-item-" + data["item_id"]).attr("class").split(' ')[1].split('-')[1];
+        anchor = "#untake-item-" + data["item_id"];
     }
+
+    var take_untake_cell_validation = $("td" + anchor).attr("class").split(' ')[1].split('-')[1];
+
     if ($("td#action-shortcuts-" + data["item_id"]).attr("class").split('-')[2] == data["validation"]
-	   && take_untake_cell_validation == data["assigned_to"]) {
-	$.ajax({
-	url: link,
-	type: "POST",
-	dataType: "json",
-	timeout: 3000,
-	success: function(data, textStatus, jqXHR) { callback(data, link, el); },
-	error: function(XMLHttpRequest, textStatus, errorThrown) { alert(error_message); },
-	});
+        && take_untake_cell_validation == data["assigned_to"]) {
+        $.ajax({
+            url: link,
+            type: "POST",
+            dataType: "json",
+            timeout: 3000,
+            success: function(data, textStatus, jqXHR) {
+                callback(data, link, el);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(error_message);
+            },
+        });
     } else {
-	confirm("Your current version is not up to date. Would you like to refresh the page ?") ? (location.reload()) : (_);
+        if (confirm("Your current version is not up to date. Would you like to refresh the page ?")) {
+            location.reload();
+        }
     }
 }
 
 function item_has_changed(el, link_callback, callback) {
+    var id, link;
+
     if ($(el).attr("id")) {
-	var id = $(el).attr("id").split('-')[2];
+       id = $(el).attr("id").split('-')[2];
     } else {
-	var id = $(el).parent().attr("id").split(' ')[0].split('-')[2];
+       id = $(el).parent().attr("id").split(' ')[0].split('-')[2];
     }
+
     if ($(el).attr("id").indexOf("group") > 0) {
-	var link = "/workflowinstance/check/0/" + id + "/";
+       link = "/workflowinstance/check/0/" + id + "/";
     } else {
-	var link = "/workflowinstance/check/" + id + "/0/";
+       link = "/workflowinstance/check/" + id + "/0/";
     }
+
     $.ajax({
-	url: link,
-	type: "POST",
-	dataType: "json",
-	timeout: 3000,
-	success: function(data, textStatus, jqXHR) { _check_if_has_changed(el, data, link_callback, callback); },
-	error: function(XMLHttpRequest, textStatus, errorThrown) { alert(error_message); },
-	});
+        url: link,
+        type: "POST",
+        dataType: "json",
+        timeout: 3000,
+        success: function(data, textStatus, jqXHR) {
+            _check_if_has_changed(el, data, link_callback, callback);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert(error_message);
+        },
+    });
 }
 
 function edit_details() {

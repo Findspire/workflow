@@ -25,7 +25,7 @@ def workflowinstance_new(request):
             persons = Person.objects.filter(django_user=request.user.id)
             if not len(persons):
                 return {"form" : form, "status" : "KO", "error" : "Your django user is not attached to a Team person"}
-            if len(Workflow.objects.filter(id=workflow_id)[0].leaders.filter(id=persons[0].id)):
+            if len(get_object_or_404(Workflow, id=workflow_id).leaders.filter(id=persons[0].id)):
                 new_workflowinstance = WorkflowInstance(workflow_id=form.cleaned_data['workflow'], version=form.cleaned_data['version'])
                 new_workflowinstance.save()
                 categories = WorkflowCategory.objects.filter(workflow=workflow_id)
@@ -34,7 +34,7 @@ def workflowinstance_new(request):
                     for item in items:
                         rt = WorkflowInstanceItem(validation=None, item_id=item.id, workflowinstance_id=new_workflowinstance.id)
                         rt.save()
-                return HttpResponseRedirect(reverse('workflow-workflowinstance-show', args=[new_workflowinstance.id, 'mine']))
+                return HttpResponseRedirect(reverse('workflow:workflowinstance-show', args=[new_workflowinstance.id, 'mine']))
             else:
                 return render(request, 'workflow/workflowinstance_new.haml', {"status" : "KO", "error" : "You are not leader on this workflow"})
         else:
@@ -51,20 +51,12 @@ def workflowinstance_list(request):
 
     ret = {
         'workflows' : [],
-        'display': {
-            'mine': 'mine',
-            'all': 'all',
-            'successful': 'successful',
-            'failed': 'failed',
-            'untaken': 'untaken',
-            'taken': 'taken',
-        },
     }
 
     for workflow in workflows:
         ret['workflows'].append({
             'name': workflow,
-            'workflowinstances': WorkflowInstance.objects.filter(workflow=workflow)
+            'workflowinstances': WorkflowInstance.objects.filter(workflow=workflow),
         })
 
     return render(request, 'workflow/workflowinstance_list.haml', ret)
@@ -89,7 +81,7 @@ def check_state_before_change(request, item_id, category_id):
 @login_required
 def workflowinstance_show(request, workflowinstance_id, which_display):
     workflowinstanceitems = WorkflowInstanceItem.objects.filter(workflowinstance=workflowinstance_id)
-    person_id = get_object_or_404(Person, django_user=request.user).id
+    person = get_object_or_404(Person, django_user=request.user)
 
     display = {
         'mine': 'mine',
@@ -119,33 +111,38 @@ def workflowinstance_show(request, workflowinstance_id, which_display):
 
     if not which_display in container.keys():
         which_display = "all"
+
     for workflowinstanceitem in workflowinstanceitems:
         category_id = workflowinstanceitem.item.workflow_category.id
-        container["all"].setdefault(category_id, {'id' : category_id, 'name' : workflowinstanceitem.item.workflow_category.name, 'workflowinstanceitems' : {}})
-        container["all"][category_id]['workflowinstanceitems'][workflowinstanceitem.id] = workflowinstanceitem
-        if workflowinstanceitem.assigned_to_id == person_id:
-            container["mine"].setdefault(category_id, {'id' : category_id, 'name' : workflowinstanceitem.item.workflow_category.name, 'workflowinstanceitems' : {}})
-            container["mine"][category_id]['workflowinstanceitems'][workflowinstanceitem.id] = workflowinstanceitem
-            counter['Mine'] += 1
-        if not workflowinstanceitem.validation_id == None:
-            if workflowinstanceitem.validation_id == 1:
-                container["successful"].setdefault(category_id, {'id' : category_id, 'name' : workflowinstanceitem.item.workflow_category.name, 'workflowinstanceitems' : {}})
-                container["successful"][category_id]['workflowinstanceitems'][workflowinstanceitem.id] = workflowinstanceitem
-                counter['Success'] += 1
-            elif workflowinstanceitem.validation_id == 2:
-                container["failed"].setdefault(category_id, {'id' : category_id, 'name' : workflowinstanceitem.item.workflow_category.name, 'workflowinstanceitems' : {}})
-                container["failed"][category_id]['workflowinstanceitems'][workflowinstanceitem.id] = workflowinstanceitem
-                counter['Failed'] += 1
-        else:
-            counter['NotSolved'] += 1
+        default_dic = {
+            'id' : category_id,
+            'name' : workflowinstanceitem.item.workflow_category.name,
+            'workflowinstanceitems': {
+                workflowinstanceitem.id: workflowinstanceitem
+            },
+        }
+
+        container["all"].setdefault(category_id, default_dic)
+
         if workflowinstanceitem.assigned_to == None:
-            container["untaken"].setdefault(category_id, {'id' : category_id, 'name' : workflowinstanceitem.item.workflow_category.name, 'workflowinstanceitems' : {}})
-            container["untaken"][category_id]['workflowinstanceitems'][workflowinstanceitem.id] = workflowinstanceitem
+            container["untaken"].setdefault(category_id, default_dic)
             counter['Free'] += 1
-        if not workflowinstanceitem.assigned_to == None:
-            container["taken"].setdefault(category_id, {'id' : category_id, 'name' : workflowinstanceitem.item.workflow_category.name, 'workflowinstanceitems' : {}})
-            container["taken"][category_id]['workflowinstanceitems'][workflowinstanceitem.id] = workflowinstanceitem
+        else:
+            container["taken"].setdefault(category_id, default_dic)
             counter['Taken'] += 1
+
+            if workflowinstanceitem.assigned_to == person:
+                container["mine"].setdefault(category_id, default_dic)
+                counter['Mine'] += 1
+
+        if workflowinstanceitem.validation_id == None:
+            counter['NotSolved'] += 1
+        elif workflowinstanceitem.validation_id == 1:
+            container["successful"].setdefault(category_id, default_dic)
+            counter['Success'] += 1
+        elif workflowinstanceitem.validation_id == 2:
+            container["failed"].setdefault(category_id, default_dic)
+            counter['Failed'] += 1
 
     for category in container[which_display]:
         container[which_display][category]['workflowinstanceitems'] = container[which_display][category]['workflowinstanceitems'].values()
@@ -165,7 +162,7 @@ def workflowinstance_show(request, workflowinstance_id, which_display):
 @login_required
 def workflowinstance_delete(request, workflowinstance_id):
     WorkflowInstance.objects.filter(id=workflowinstance_id).delete()
-    return HttpResponseRedirect(reverse('workflow-workflowinstance-list'))
+    return HttpResponseRedirect(reverse('workflow:workflowinstance-list'))
 
 
 def workflowinstanceitem_assign_to_person(workflowinstanceitem, person):
@@ -268,7 +265,7 @@ def workflowinstanceitem_show(request, workflowinstanceitem_id):
     comments = CommentInstanceItem.objects.filter(item=workflowinstanceitem_id)
     return_d.update({'workflowinstanceitem' : workflowinstanceitem, 'validations' : Validation.objects.all()})
     return_d.update({'from_item_details' : 'from_item_details', 'comments' : comments, "all" : "all"})
-    return render(request, 'workflow/workflowinstanceitem_show.html', return_d)
+    return render(request, 'workflow/workflowinstanceitem_show.haml', return_d)
 
 
 def workflowinstanceitem_comments(request, workflowinstanceitem_id):
@@ -326,23 +323,26 @@ def item_new(request):
             workflow = workflowcategory.workflow
 
             persons = get_object_or_404(Person, django_user=request.user)
-            if not len(persons):
-                return {"form" : form, "status" : "KO", "error" : "Your django user is not attached to a Team person"}
+            if not persons:
+                c = {"form" : form, "status" : "KO", "error" : "Your django user is not attached to a Team person"}
+                return render(request, 'workflow/item_new.haml', c)
 
-            if len(get_object_or_404(Workflow, id=workflow.id).leaders.filter(id=persons[0].id)):
-
+            if persons in workflow.leaders.all():
                 for label in form.cleaned_data['items'].splitlines():
                     label = label.strip()
                     if not label:
                         continue
                     item = Item(workflow_category_id=workflowcategory_id, label=label)
                     item.save()
-                return {"status" : "OK"}
+                c = {"status" : "OK"}
+                return render(request, 'workflow/item_new.haml', c)
             else:
-                return {"status" : "KO", "error" : "You are not leader on this workflow"}
+                c = {"status" : "KO", "error" : "You are not leader on this workflow"}
+                return render(request, 'workflow/item_new.haml', c)
 
         else:
-            return {"status" : "KO", "error" : str(form.errors)}
+            c = {"status" : "KO", "error" : str(form.errors)}
+            return render(request, 'workflow/item_new.haml', c)
     else:
         form = ItemNewForm(request)
 
