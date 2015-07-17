@@ -1,36 +1,33 @@
-{% extends "workflow/base.haml" %}
+- extends "workflow/base.haml"
 
-{% block content %}
-<div class="fullpage">
+- block content
+    %div
+        Workflow creation
 
-    <div class="idcard idtitle">Workflow creation</div>
+    - if status == "NEW"
+        %div
+            %form{action: "{% url 'workflow-item-new' %}", method: "POST"}
+                %table
+                    %tr
+                        %td
+                            {{ form.category.label }}
+                        %td
+                            {{ form.category }}
+                    %tr
+                        %td
+                            {{ form.items.label }}
+                        %td
+                            {{ form.items }}
 
-    {% ifequal status "NEW" %}
-        <div>
-            <form action="{% url 'workflow-item-new' %}" method="POST">
+            %input{type: "submit", title: "Create"}
 
-            <table>
-                <tr><td> {{ form.category.label }} </td><td> {{ form.category }} </td></tr>
-                <tr><td> {{ form.items.label }} </td><td> {{ form.items }} </td></tr>
-            </table>
+    - if status == "OK"
+        %div
+            %span
+                Items created
 
-            <input type=submit title="Create"></input>
-            </form>
-        </div>
-    {% endifequal %}
+    - if status == "KO"
+        %div
+            %span
+                Items not created : {{ error }}
 
-    {% ifequal status "OK" %}
-        <div>
-            <span> Items created </span>
-        </div>
-    {% endifequal %}
-
-    {% ifequal status "KO" %}
-        <div>
-            <span> Items not created : {{ error }} </span>
-        </div>
-    {% endifequal %}
-
-
-</div>
-{% endblock content %}

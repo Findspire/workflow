@@ -143,6 +143,8 @@ WSGI_APPLICATION = 'workflow.wsgi.application'
 
 HAMLPY_ATTR_WRAPPER = '"'
 
+LOGIN_URL='/admin/login'
+
 ############################################
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

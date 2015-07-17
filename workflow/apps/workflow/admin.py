@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.contrib import admin
 from workflow.apps.workflow import models
 
@@ -23,7 +26,7 @@ admin.site.register(models.Validation, ValidationAdmin)
 
 class WorkflowInstanceItemsAdmin(admin.ModelAdmin):
     pass
-admin.site.register(models.WorkflowInstanceItems, WorkflowInstanceItemsAdmin)
+admin.site.register(models.WorkflowInstanceItem, WorkflowInstanceItemsAdmin)
 
 class ContractTypeAdmin(admin.ModelAdmin):
     pass

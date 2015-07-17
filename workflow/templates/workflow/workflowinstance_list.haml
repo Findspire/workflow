@@ -1,15 +1,15 @@
-{% extends "workflow/base.haml" %}
+- extends "workflow/base.haml"
 
--block content
-  .fullpage
-
-      .idcard.idtitle Workflows list
-      %ul
-        -for workflow in workflows
-            <h2> {{ workflow.name }} </h2>
-              -for workflowinstance in workflow.workflowinstances
-                  %li
-                      %a{href: "{% url 'workflow-workflowinstance-show' workflowinstance.id display.all %}"}
-                          {{ workflowinstance.version }}
-                      %a{href: "{% url 'workflow-workflowinstance-delete' workflowinstance.id %}"}
-                          %img{src: "/static/workflow/img/untake.png", class: "untake"}
+- block content
+    %div
+        Workflows list
+    %ul
+        - for workflow in workflows
+            %h2
+                {{ workflow.name }}
+            - for workflowinstance in workflow.workflowinstances
+                %li
+                    %a{href: "{% url 'workflow-workflowinstance-show' workflowinstance.id display.all %}"}
+                        {{ workflowinstance.version }}
+                    %a{href: "{% url 'workflow-workflowinstance-delete' workflowinstance.id %}"}
+                        %img.untake{src: "/static/workflow/img/untake.png"}
