@@ -9,7 +9,7 @@
                 {{ workflow.name }}
             - for workflowinstance in workflow.workflowinstances
                 %li
-                    %a{href: "{% url 'workflow-workflowinstance-show' workflowinstance.id display.all %}"}
+                    %a{href: "{% url 'workflow:workflowinstance-show' workflowinstance.id display.all %}"}
                         {{ workflowinstance.version }}
-                    %a{href: "{% url 'workflow-workflowinstance-delete' workflowinstance.id %}"}
+                    %a{href: "{% url 'workflow:workflowinstance-delete' workflowinstance.id %}"}
                         %img.untake{src: "/static/workflow/img/untake.png"}

@@ -32,17 +32,17 @@
 
     .filters_workflow
         %label
-            <input type="radio" id="filters-all" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.all %}');">
+            <input type="radio" id="filters-all" onClick="$(location).attr('href','{% url 'workflow:workflowinstance-show' workflowinstance.id display.all %}');">
         %label
-            <input type="radio" id="filters-mine" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.mine %}');">
+            <input type="radio" id="filters-mine" onClick="$(location).attr('href','{% url 'workflow:workflowinstance-show' workflowinstance.id display.mine %}');">
         %label
-            <input type="radio" id="filters-untaken" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.untaken %}');">
+            <input type="radio" id="filters-untaken" onClick="$(location).attr('href','{% url 'workflow:workflowinstance-show' workflowinstance.id display.untaken %}');">
         %label
-            <input type="radio" id="filters-taken" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.taken %}');">
+            <input type="radio" id="filters-taken" onClick="$(location).attr('href','{% url 'workflow:workflowinstance-show' workflowinstance.id display.taken %}');">
         %label
-            <input type="radio" id="filters-successful" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.successful %}');">
+            <input type="radio" id="filters-successful" onClick="$(location).attr('href','{% url 'workflow:workflowinstance-show' workflowinstance.id display.successful %}');">
         %label
-            <input type="radio" id="filters-failed" onClick="$(location).attr('href','{% url 'workflow-workflowinstance-show' workflowinstance.id display.failed %}');">
+            <input type="radio" id="filters-failed" onClick="$(location).attr('href','{% url 'workflow:workflowinstance-show' workflowinstance.id display.failed %}');">
 
     .categories_table_workflow
         - for category in categories
