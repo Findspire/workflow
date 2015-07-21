@@ -6,18 +6,18 @@
             %th
                 {{ category.name }}
             %td.take_untake_group
-                %a.take-group{href:"{% url 'workflow:workflowinstance-take_category' workflowinstance.pk category.pk %}", title:"Take all items of the category"}
+                %a.take-group{href:"{% url 'workflow:workflowinstance-take_category' workflow.pk category.pk %}", title:"Take all items of the category"}
                     take all
                 \/
-                %a.untake-group{href:"{% url 'workflow:workflowinstance-untake_category' workflowinstance.pk category.pk %}", title:"Untake all items of the category"}
+                %a.untake-group{href:"{% url 'workflow:workflowinstance-untake_category' workflow.pk category.pk %}", title:"Untake all items of the category"}
                     untake all
 
-        - for workflowinstanceitem in category.workflowinstanceitems
+        - for item in items_list
             %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}"}
                 %td
-                    %a.item_workflow{href: "{% url 'workflow:workflowinstanceitem-show' workflowinstanceitem.pk %}", title:"Label item"}
-                        {{ workflowinstanceitem.item.label }}
-                    - for URL in workflowinstanceitem.item.label|link_ticket
+                    %a.item_workflow{href: "{% url 'workflow:workflowinstanceitem-show' item.pk %}", title:"Label item"}
+                        {{ item.item.label }}
+                    - for URL in item.item.label|link_ticket
                         - if forloop.counter == 1
                             |&nbsp;
                         %a.urls{href:"{{ URL }}", alt:"Ticket {{ URL }}"}
@@ -25,34 +25,34 @@
                         - if not forloop.last
                             ,
 
-                - if not workflowinstanceitem.assigned_to
-                    %td{class: "take-item owner-{{ workflowinstanceitem.assigned_to_id }}", id:"take-item-{{ workflowinstanceitem.pk }}"}
-                        %a{href: "{% url 'workflow:workflowinstanceitem-take' workflowinstanceitem.pk %}", title: "Take item"}
+                - if not item.assigned_to
+                    %td{class: "take-item owner-{{ item.assigned_to_id }}", id:"take-item-{{ item.pk }}"}
+                        %a{href: "{% url 'workflow:workflowinstanceitem-take' item.pk %}", title: "Take item"}
                             take
                 - else
-                    %td{class: "untake-item owner-{{ workflowinstanceitem.assigned_to_id }}", id: "untake-item-{{ workflowinstanceitem.pk }}"}
-                        {{ workflowinstanceitem.assigned_to }}
-                        %a{href: "{% url 'workflow:workflowinstanceitem-untake' workflowinstanceitem.pk %}", title: "Reset owner of item"}
+                    %td{class: "untake-item owner-{{ workflowinstanceitem.assigned_to_id }}", id: "untake-item-{{ item.pk }}"}
+                        {{ item.assigned_to }}
+                        %a{href: "{% url 'workflow:workflowinstanceitem-untake' item.pk %}", title: "Reset owner of item"}
                         %img{src: "/static/workflow/img/untake.png"}
 
-                %td{id: "action-shortcuts-{{ workflowinstanceitem.pk }}", class: "state-item-{{ workflowinstanceitem.validation }}"}
-                    - if validations.0 == workflowinstanceitem.validation
+                %td{id: "action-shortcuts-{{ item.pk }}", class: "state-item-{{ item.validation }}"}
+                    - if validations.0 == item.validation
                         %a{title: "Item is validated"}
                             %img{src: "/static/workflow/img/validation_OK.png", alt: "enabled"}
                     - else
-                        %a.shortcut.shortcut-disabled-OK{title: "Click to validate", href: "{% url 'workflow:workflowinstanceitem-validate' workflowinstanceitem.pk validations.0.label %}"}
+                        %a.shortcut.shortcut-disabled-OK{title: "Click to validate", href: "{% url 'workflow:workflowinstanceitem-validate' item.pk validations.0.label %}"}
                             %img{src: "/static/workflow/img/validation_OK_disabled.png", alt: "enabled"}
 
-                    - if validations.1.label == workflowinstanceitem.validation.label or validations.2.label == workflowinstanceitem.validation.label
+                    - if validations.1.label == item.validation.label or validations.2.label == item.validation.label
                         %a{title: "Item is untested"}
                             ?
                     - else
-                        %a.shortcut.shortcut-disabled-None{href: "{% url 'workflow:workflowinstanceitem-nostate' workflowinstanceitem.pk %}", title: "Reset item validation"}
+                        %a.shortcut.shortcut-disabled-None{href: "{% url 'workflow:workflowinstanceitem-nostate' item.pk %}", title: "Reset item validation"}
                             ?
 
-                    - if validations.1 == workflowinstanceitem.validation
+                    - if validations.1 == item.validation
                         %a{title: "Item is broken"}
                             %img{src: "/static/workflow/img/validation_KO.png", alt: "enabled"}
                     - else
-                        %a.shortcut.shortcut-disabled-KO{title: "Click to mark as broken", href: "{% url 'workflow:workflowinstanceitem-validate' workflowinstanceitem.pk validations.1.label %}"}
+                        %a.shortcut.shortcut-disabled-KO{title: "Click to mark as broken", href: "{% url 'workflow:workflowinstanceitem-validate' item.pk validations.1.label %}"}
                             %img{src: "/static/workflow/img/validation_KO_disabled.png", alt: "enabled"}
