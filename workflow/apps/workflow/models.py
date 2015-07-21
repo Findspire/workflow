@@ -8,6 +8,11 @@ from django.db import models
 from django.utils import timezone
 
 
+###############
+# TEAM
+###############
+
+
 class ContractType(models.Model):
     name = models.CharField(max_length=64)
 
@@ -16,9 +21,7 @@ class ContractType(models.Model):
 
 
 class Person(models.Model):
-    firstname = models.CharField(max_length=64)
-    lastname = models.CharField(max_length=64)
-    django_user = models.OneToOneField(AuthModels.User, null=True, blank=True)
+    user = models.OneToOneField(AuthModels.User)
     arrival_date = models.DateField()
     departure_date = models.DateField(null=True, blank=True)
     contract_type = models.ForeignKey(ContractType)
@@ -27,138 +30,110 @@ class Person(models.Model):
     phone_number = models.CharField(max_length=32, null=True, blank=True)
 
     def __unicode__(self):
-        return '%s %s' % (self.firstname, self.lastname.upper())
+        return '%s %s' % (self.user.first_name, self.user.last_name.upper())
 
 
 class Team(models.Model):
     name = models.CharField(max_length=64)
-    leader = models.ForeignKey(Person)
-
-    def __unicode__(self):
-        return '%s' % (self.name)
-
-    def save(self, *args, **kwargs):
-        super(Team, self).save(*args, **kwargs)
-        tp = TeamPerson(team=self, person=self.leader)
-        tp.save()
-
-
-class TeamPerson(models.Model):
-    person = models.ForeignKey(Person)
-    team = models.ForeignKey(Team)
-
-    def save(self, *args, **kwargs):
-        super(TeamPerson, self).save(*args, **kwargs)
-        categories = CompetencesSubjectCategory.objects.filter(part_of_team=self.team)
-        for category in categories:
-            competence_subjects = CompetencesSubject.objects.filter(competence_subject_category=category)
-            for competence_subject in competence_subjects:
-                new_comp = Competence(competence_subject_id=competence_subject.id, person=self.person)
-                new_comp.save()
-
-    def __unicode__(self):
-        return '%s - %s' % (self.team, self.person)
-
-
-class CompetencesSubjectCategory(models.Model):
-    name = models.CharField(max_length=255)
-    part_of_team = models.ForeignKey(Team)
+    leader = models.ForeignKey(Person, related_name='leader')
+    members = models.ManyToManyField(Person, related_name='members')
 
     def __unicode__(self):
         return '%s' % (self.name)
 
 
-class CompetencesSubject(models.Model):
+class CompetenceCategory(models.Model):
     name = models.CharField(max_length=255)
-    competence_subject_category = models.ForeignKey(CompetencesSubjectCategory)
+
+    def __unicode__(self):
+        return '%s' % (self.name)
+
+
+class CompetenceSubject(models.Model):
+    name = models.CharField(max_length=255)
+    category = models.ForeignKey(CompetenceCategory)
     description = models.CharField(max_length=1024, null=True, blank=True)
 
     def __unicode__(self):
-        return '%s - %s' % (self.competence_subject_category, self.name)
-
-    def save(self, *args, **kwargs):
-        super(CompetencesSubject, self).save(*args, **kwargs)
-        team_persons = TeamPerson.objects.filter(team=self.competence_subject_category.part_of_team)
-        for team_person in team_persons:
-            new_comp = Competence(person=team_person.person, competence_subject=self)
-            new_comp.save()
+        return '%s - %s' % (self.category, self.name)
 
 
-class CompetencesType(models.Model):
+class CompetenceInstance(models.Model):
+    techno = models.ForeignKey(CompetenceSubject)
+    person = models.ForeignKey(Person)
+    strength = models.IntegerField()
+    # status : want to use or not
+
+    def __unicode__(self):
+        return '%s - %s - %d' % (self.person, self.techno, self.strength)
+
+
+###############
+# WORKFLOW
+###############
+
+class ItemCategory(models.Model):
     name = models.CharField(max_length=64)
-    strength = models.IntegerField(null=False)
 
     def __unicode__(self):
         return '%s' % (self.name)
 
 
-class Competence(models.Model):
-    comptype = models.ForeignKey(CompetencesType, null=True, related_name='comptype')
-    target_comptype = models.ForeignKey(CompetencesType, null=True)
-    person = models.ForeignKey(Person)
-    competence_subject = models.ForeignKey(CompetencesSubject)
+class ItemModel(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.TextField(max_length=1000, blank=True, null=True)
+    category = models.ForeignKey(ItemCategory)
 
     def __unicode__(self):
-        return '%s - %s : %s -> %s' % (self.person, self.competence_subject, self.comptype, self.target_comptype)
+        return '%s - %s' % (self.category, self.name)
 
 
-class Workflow(models.Model):
+class Project(models.Model):
     name = models.CharField(max_length=32)
-    teams = models.ManyToManyField(Team)
-    leaders = models.ManyToManyField(Person)
+    team = models.ForeignKey(Team)
+    items = models.ManyToManyField(ItemModel, blank=True)
 
     def __unicode__(self):
         return '%s' % (self.name)
 
 
 class WorkflowInstance(models.Model):
-    workflow = models.ForeignKey(Workflow)
-    creation_date = models.DateField(null=False, auto_now=True)
+    project = models.ForeignKey(Project)
     version = models.CharField(max_length=128)
+    creation_date = models.DateField(auto_now=True)
 
     def __unicode__(self):
-        return '%s - %s' % (self.workflow, self.version)
+        return '%s - %s' % (self.project, self.version)
 
 
-class WorkflowCategory(models.Model):
-    workflow = models.ForeignKey(Workflow)
-    name = models.CharField(max_length=64)
+class ItemInstance(models.Model):
+    VALIDATION_UNTESTED = 0
+    VALIDATION_SUCCESS = 1
+    VALIDATION_FAILED = 2
 
-    def __unicode__(self):
-        return '%s - %s' % (self.workflow, self.name)
+    VALIDATION_CHOICES = (
+        (VALIDATION_UNTESTED, 'Untested'),  # default
+        (VALIDATION_SUCCESS, 'Success'),
+        (VALIDATION_FAILED, 'Failed'),
+    )
 
-
-class Item(models.Model):
-    workflow_category = models.ForeignKey(WorkflowCategory)
-    label = models.CharField(max_length=512)
-    details = models.TextField(max_length=1000, blank=True, null=True)
-
-    def __unicode__(self):
-        return '%s - %s' % (self.workflow_category, self.label)
-
-
-class Validation(models.Model):
-    label = models.CharField(max_length=32)
-
-    def __unicode__(self):
-        return '%s' % (self.label)
-
-
-class WorkflowInstanceItem(models.Model):
-    workflowinstance = models.ForeignKey(WorkflowInstance)
-    item = models.ForeignKey(Item)
-    validation = models.ForeignKey(Validation, null=True)
+    item_model = models.ForeignKey(ItemModel)
+    workflow = models.ForeignKey(WorkflowInstance)
     assigned_to = models.ForeignKey(Person, null=True, blank=True)
+    validation = models.SmallIntegerField(
+        choices=VALIDATION_CHOICES,
+        default=0,
+    )
 
     def __unicode__(self):
-        return '%s - %s - %s' % (self.workflowinstance, self.item.workflow_category.name, self.item.label)
+        return '%s' % (self.item_model)
 
 
-class CommentInstanceItem(models.Model):
-    item = models.ForeignKey(WorkflowInstanceItem)
-    person = models.ForeignKey(Person, null=True, blank=True)
+class Comment(models.Model):
+    item = models.ForeignKey(ItemInstance)
+    person = models.ForeignKey(Person)
     date = models.DateField(default=timezone.now)
-    comments = models.TextField(max_length=1000, null=True, blank=True)
+    text = models.TextField(max_length=1000)
 
     def __unicode__(self):
-        return '%s' % (self.comments)
+        return '%s' % (self.text)

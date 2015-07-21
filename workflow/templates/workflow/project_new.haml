@@ -1,0 +1,9 @@
+- extends "workflow/base.haml"
+
+- block content
+    %h2
+        Project creation
+
+    %form{action: "{% url 'workflow:project_new' %}", method: "POST"}
+        {{ form.as_p }}
+        %input{type: "submit", title: "Create"}

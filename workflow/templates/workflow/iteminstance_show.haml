@@ -1,0 +1,100 @@
+- extends "workflow/base.haml"
+- load static
+- load admin_urls
+
+- block content
+    %h2
+        {{ item.item_model.name }}
+        %span{style: "color:gray;"}
+            {{ item.item_model.category.name }}
+        %small
+            {{ item.workflow.project.name }} - {{ item.workflow.version }}
+
+    %div
+        %span.take_untake_item
+            - if item.assigned_to
+                {{ item.assigned_to }}
+                %a{href: "{% url 'workflow:update' 'untake' 'item' item.pk %}?next={{ request.path }}", title: "Reset owner of item"}
+                    %img{src: "/static/workflow/img/untake.png"}
+            - else
+                %a{href: "{% url 'workflow:update' 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item"}
+                    take
+        \-
+        %span.validate
+            - if item.validation == ItemInstance.VALIDATION_SUCCESS
+                %span{title: "Item is validated"}
+                    %img{src: "/static/workflow/img/validation_OK.png"}
+            - else
+                %a{href: "{% url 'workflow:update' 'success' 'validate' item.pk %}?next={{ request.path }}", title: "Click to validate"}
+                    %img{src: "/static/workflow/img/validation_OK_disabled.png"}
+
+            - if item.validation == ItemInstance.VALIDATION_UNTESTED
+                %span{title: "Item is untested"}
+                    ?
+            - else
+                %a{href: "{% url 'workflow:update' 'untested' 'validate' item.pk %}?next={{ request.path }}", title: "Reset item validation"}
+                    ?
+
+            - if item.validation == ItemInstance.VALIDATION_FAILED
+                %span{title: "Item is broken"}
+                    %img{src: "/static/workflow/img/validation_KO.png"}
+            - else
+                %a{href: "{% url 'workflow:update' 'failed' 'validate' item.pk %}?next={{ request.path }}", title: "Click to mark as broken"}
+                    %img{src: "/static/workflow/img/validation_KO_disabled.png"}
+
+    %hr
+
+    #details_see
+        %h3
+            Details (<a href="." onClick="details_edit(); return false;">Edit</a>)
+
+        - if item.item_model.description
+            %pre<
+                {{ item.item_model.description }}
+        - else
+            %pre<
+                ** No details. **
+
+    #details_edit
+        %h3
+            Edit details (<a href="." onClick="details_see(); return false;">Cancel</a>)
+
+        %form{action: ".",  method: "POST"}
+            {{ form_description.as_p }}
+            %input{type: "submit", value:"Post", name: "_description"}
+
+
+    #comments
+        %h3
+            Comments
+        - for comment in comments
+            .comment
+                %h4
+                    %a{href: "#{{ forloop.counter }}", name: "{{ forloop.counter }}", title: "Comment anchor - {{ forloop.counter }}"}
+                        \#{{ forloop.counter }}
+                    \- {{ comment.date }} - {{ comment.person }}
+                %p
+                    {{ comment }}
+        - empty
+            %em
+                No comments
+
+    #comment_new
+        %h3
+            Add comment
+        %form{action: '.', method:"POST"}
+            {{ form_comment.as_p }}
+            %input{type: "submit", value:"Post", name: "_comment"}
+
+- block optional_script
+    $('#details_edit').hide();
+
+    function details_edit() {
+        $('#details_see').hide();
+        $('#details_edit').show();
+    }
+
+    function details_see() {
+        $('#details_see').show();
+        $('#details_edit').hide();
+    }

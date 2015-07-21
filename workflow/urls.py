@@ -7,9 +7,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
-    url(r'^$', 'workflow.apps.workflow.views.index', name='workflowinstance'),
-    url(r'^workflow/item/new/$', 'workflow.apps.workflow.views.item_new', name='workflow-item-new'),
-
-    url(r'^workflowinstance/', include('workflow.apps.workflow.urls', namespace='workflow')),
+    url(r'^$', 'workflow.apps.workflow.views.welcome', name='welcome'),
+    url(r'^workflow/', include('workflow.apps.workflow.urls', namespace='workflow')),
 ]

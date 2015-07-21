@@ -6,11 +6,17 @@
     %head
         %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/base_all.css" %}'}
         %script{type: "text/javascript", src: '{% static "workflow/js/jquery-1.9.1.js" %}'}
-        %script{type: "text/javascript", src: '{% static "workflow/js/common.js" %}'}
-        %script{type: "text/javascript", src: '{% static "workflow/js/document_ready_detail_item.js" %}'}
-        %script{type: "text/javascript", src: '{% static "workflow/js/document_ready_workflow_instance.js" %}'}
-        %script{type: "text/javascript", src: '{% static "workflow/js/progressbar.js" %}'}
-        %script{type: "text/javascript", src: '{% static "workflow/js/shortcut.js" %}'}
+        %script{type: "text/javascript", src: '{% static "workflow/js/workflow.js" %}'}
 
     %body{class: "{% if request.user_agent.is_tablet %}touch{% endif %}"}
+
+        #warning_js
+            Your JavaScript seem to be disabled. Some functionalities needs it
+            and we advise you to enable it.
+
         - block content
+
+        %script{type: "text/javascript"}
+            $('#warning_js').hide();
+
+            - block optional_script

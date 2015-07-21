@@ -1,0 +1,21 @@
+- extends "workflow/base.haml"
+
+- block content
+    %h2
+        Projects list
+
+    - for project, workflows in projects.items
+            %h3
+                {{ project }}
+
+            - if workflows
+                %ul
+                    - for workflow in workflows
+                        %li
+                            %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
+                                {{ workflow.version }}
+                            %a{href: "{% url 'workflow:workflow_delete' workflow.pk %}"}
+                                %img.untake{src: "/static/workflow/img/untake.png"}
+            - else
+                %em
+                    No workflows in this project.

@@ -1,15 +1,19 @@
 - extends "workflow/base.haml"
 
 - block content
-    %div
+    %h2
         Workflow management
+
     %ul
         %li
-            %a{href: "{% url 'workflow:workflowinstance-list' %}"}
-                List workflows
+            %a{href: "{% url 'workflow:project_list' %}"}
+                List projects and workflows
         %li
-            %a{href: "{% url 'workflow:workflowinstance-new' %}"}
+            %a{href: "{% url 'workflow:project_new' %}"}
+                Create a new project
+        %li
+            %a{href: "{% url 'workflow:workflow_new' %}"}
                 Create a new workflow
         %li
-            %a{href: "{% url 'workflow-item-new' %}"}
-                Create items
+            %a{href: "{% url 'workflow:itemmodel_new' %}"}
+                Create items models

@@ -1,0 +1,42 @@
+- extends "workflow/base.haml"
+- load static
+
+- block content
+    #progressbar
+
+    #filters
+        %label.all
+            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'all' %}');">
+            %span
+        %label.mine
+            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'mine' %}');">
+            %span
+        %label.untaken
+            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'untaken' %}');">
+            %span
+        %label.taken
+            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'taken' %}');">
+            %span
+        %label.success
+            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'success' %}');">
+            %span
+        %label.failed
+            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'failed' %}');">
+            %span
+
+    #items
+        - include "workflow/workflow_show.table.part.haml"
+
+- block optional_script
+    $(document).ready(function() {
+        var counters = {
+            {% for k, v in counters.items %}'{{ k }}':{{ v }},{% endfor %}
+        };
+        var percent = {
+            {% for k, v in percent.items %}'{{ k }}':{{ v }},{% endfor %}
+        };
+
+        progressbar_update(counters, percent);
+        filters_update(counters);
+    });
+

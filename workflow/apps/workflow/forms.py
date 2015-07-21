@@ -2,48 +2,43 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 
-from workflow.apps.workflow.models import Workflow, WorkflowCategory
-
-
-def get_workflows():
-    return reduce(lambda all_workflows, workflow: all_workflows + [[workflow.id, workflow]], Workflow.objects.all(), [])
+from workflow.apps.workflow.models import Project, WorkflowInstance, ItemModel, ItemInstance, Comment, ItemModel
 
 
-def get_categories():
-    return reduce(lambda all_categories, category: all_categories + [[category.id, category]], WorkflowCategory.objects.all(), [])
+class ProjectNewForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name', 'team', 'items']
+    items = forms.ModelMultipleChoiceField(queryset=ItemModel.objects.order_by('category__name', 'name'), required=False)
 
 
-class WorkflowInstanceNewForm(forms.Form):
-    def __init__(self, request, *args, **kwargs):
-        super(WorkflowInstanceNewForm, self).__init__(*args, **kwargs)
-
-        self.request = request
-        self.fields['workflow'] = forms.ChoiceField(label=_("Workflow"), choices=get_workflows())
-        self.fields['version'] = forms.CharField(label="Major")
+class WorkflowInstanceNewForm(forms.ModelForm):
+    class Meta:
+        model = WorkflowInstance
+        fields = ['project', 'version', 'items']
+    items = forms.ModelMultipleChoiceField(queryset=ItemModel.objects.order_by('category__name', 'name'))
 
 
-class ItemNewForm(forms.Form):
-    def __init__(self, request, *args, **kwargs):
-        super(ItemNewForm, self).__init__(*args, **kwargs)
-
-        self.request = request
-        self.fields['category'] = forms.ChoiceField(label=_("Category"), choices=get_categories())
-        self.fields['items'] = forms.CharField(widget=forms.widgets.Textarea(), label="Items")
+class ItemModelNewForm(forms.ModelForm):
+    class Meta:
+        model = ItemModel
+        fields = ['name', 'description', 'category']
 
 
-class CommentItemNewForm(forms.Form):
-    def __init__(self, request, *args, **kwargs):
-        super(CommentItemNewForm, self).__init__(*args, **kwargs)
-
-        self.request = request
-        self.fields['comments'] = forms.CharField(widget=forms.widgets.Textarea(attrs={"style": "width: 100%;"}), label="Comments")
+class ItemInstanceNewForm(forms.ModelForm):
+    class Meta:
+        model = ItemInstance
+        fields = ['item_model', 'assigned_to', 'validation']
 
 
-class DetailItemForm(forms.Form):
-    def __init__(self, request, initialValue, *args, **kwargs):
-        super(DetailItemForm, self).__init__(*args, **kwargs)
+class CommentNewForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
 
-        self.request = request
-        self.fields['details'] = forms.CharField(widget=forms.widgets.Textarea(attrs={"style": "width: 100%;"}), label="Details", initial=initialValue)
+
+class ItemDetailForm(forms.ModelForm):
+    class Meta:
+        model = ItemModel
+        fields = ['description']

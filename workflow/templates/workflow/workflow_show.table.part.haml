@@ -1,0 +1,57 @@
+- load parse_ticket
+
+- for category, items_list in items
+    %table
+        %tr
+            %th
+                {{ category.name }}
+            %td.take_untake_category
+                %a{href:"{% url 'workflow:update' 'take' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Take all items of the category"}
+                    take all
+                \/
+                %a{href:"{% url 'workflow:update' 'untake' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Untake all items of the category"}
+                    untake all
+
+        - for item in items_list
+            %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}"}
+                %td.item
+                    %a{href: "{% url 'workflow:iteminstance_show' item.pk %}", title:"Label item"}
+                        {{ item.item_model.name }}
+                    - for URL in item.item_model.name|link_ticket
+                        - if forloop.counter == 1
+                            |&nbsp;
+                        %a.urls{href:"{{ URL }}", alt:"Ticket {{ URL }}"}
+                            {{ URL|get_ticket_name }}
+                        - if not forloop.last
+                            ,
+
+                %td.take_untake_item
+                    - if item.assigned_to
+                        {{ item.assigned_to }}
+                        %a{href: "{% url 'workflow:update' 'untake' 'item' item.pk %}?next={{ request.path }}", title: "Reset owner of item"}
+                            %img{src: "/static/workflow/img/untake.png"}
+                    - else
+                        %a{href: "{% url 'workflow:update' 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item"}
+                            take
+
+                %td.validate
+                    - if item.validation == ItemInstance.VALIDATION_SUCCESS
+                        %span{title: "Item is validated"}
+                            %img{src: "/static/workflow/img/validation_OK.png"}
+                    - else
+                        %a{href: "{% url 'workflow:update' 'success' 'validate' item.pk %}?next={{ request.path }}", title: "Click to validate"}
+                            %img{src: "/static/workflow/img/validation_OK_disabled.png"}
+
+                    - if item.validation == ItemInstance.VALIDATION_UNTESTED
+                        %span{title: "Item is untested"}
+                            ?
+                    - else
+                        %a{href: "{% url 'workflow:update' 'untested' 'validate' item.pk %}?next={{ request.path }}", title: "Reset item validation"}
+                            ?
+
+                    - if item.validation == ItemInstance.VALIDATION_FAILED
+                        %span{title: "Item is broken"}
+                            %img{src: "/static/workflow/img/validation_KO.png"}
+                    - else
+                        %a{href: "{% url 'workflow:update' 'failed' 'validate' item.pk %}?next={{ request.path }}", title: "Click to mark as broken"}
+                            %img{src: "/static/workflow/img/validation_KO_disabled.png"}

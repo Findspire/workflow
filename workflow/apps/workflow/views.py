@@ -3,347 +3,260 @@
 
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.http.response import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.forms.models import model_to_dict
+from django.http.response import HttpResponseRedirect, Http404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 
-from workflow.apps.workflow.models import Item, CommentInstanceItem, Person, Validation, Workflow, \
-    WorkflowCategory, WorkflowInstance, WorkflowInstanceItem
-from workflow.apps.workflow.forms import CommentItemNewForm, DetailItemForm, ItemNewForm, WorkflowInstanceNewForm
+from workflow.apps.workflow.models import Comment, ItemCategory, ItemInstance, ItemModel, Person, Project, WorkflowInstance
+from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm, WorkflowInstanceNewForm
+
+
+def welcome(request):
+    return HttpResponseRedirect(reverse('workflow:index'))
 
 
 @login_required
 def index(request):
     return render(request, 'workflow/index.haml')
 
+
 @login_required
-def workflowinstance_new(request):
+def project_new(request):
     if request.method == 'POST':
-        form = WorkflowInstanceNewForm(request, data=request.POST)
+        form = ProjectNewForm(request.POST)
         if form.is_valid():
-            workflow_id = form.cleaned_data['workflow']
-            persons = Person.objects.filter(django_user=request.user.id)
-            if not len(persons):
-                return {"form" : form, "status" : "KO", "error" : "Your django user is not attached to a Team person"}
-            if len(get_object_or_404(Workflow, id=workflow_id).leaders.filter(id=persons[0].id)):
-                new_workflowinstance = WorkflowInstance(workflow_id=form.cleaned_data['workflow'], version=form.cleaned_data['version'])
-                new_workflowinstance.save()
-                categories = WorkflowCategory.objects.filter(workflow=workflow_id)
-                for category in categories:
-                    items = Item.objects.filter(workflow_category=category.id)
-                    for item in items:
-                        rt = WorkflowInstanceItem(validation=None, item_id=item.id, workflowinstance_id=new_workflowinstance.id)
-                        rt.save()
-                return HttpResponseRedirect(reverse('workflow:workflowinstance-show', args=[new_workflowinstance.id, 'mine']))
-            else:
-                return render(request, 'workflow/workflowinstance_new.haml', {"status" : "KO", "error" : "You are not leader on this workflow"})
+            p = Project()
+            p.name = form.cleaned_data['name']
+            p.team = form.cleaned_data['team']
+            p.save()  # for the m2m below
+            p.items = form.cleaned_data['items']
+            p.save()
+
+            return HttpResponseRedirect(reverse('workflow:project_list'))
         else:
-            return render(request, 'workflow/workflowinstance_new.haml', {"status" : "KO", "error" : str(form.errors)})
+            return render(request, 'workflow/project_new.haml', {'form': form})
     else:
-        form = WorkflowInstanceNewForm(request)
+        form = ProjectNewForm()
 
-    return render(request, 'workflow/workflowinstance_new.haml', {'form' : form, "status" : "NEW"})
-
-
-@login_required
-def workflowinstance_list(request):
-    workflows = Workflow.objects.all()
-
-    ret = {
-        'workflows' : [],
-    }
-
-    for workflow in workflows:
-        ret['workflows'].append({
-            'name': workflow,
-            'workflowinstances': WorkflowInstance.objects.filter(workflow=workflow),
-        })
-
-    return render(request, 'workflow/workflowinstance_list.haml', ret)
+    return render(request, 'workflow/project_new.haml', {'form': form})
 
 
 @login_required
-def check_state_before_change(request, item_id, category_id):
-    """ Check if @item_id@ or @category_id@ have changed before change anything
-    """
-    if int(item_id):
-        item = get_object_or_404(WorkflowInstanceItem, id=item_id)
-        data = {
-            "assigned_to": item.assigned_to_id or "None",
-            "validation": (item.validation_id == 1) and "OK" or (item.validation_id == 2) and "KO" or "None",
-            "item_id": item_id,
-        }
-        return JsonResponse(data)
-    else:
-        return JsonResponse({"category_id" : category_id})
+def project_list(request):
+    projects = Project.objects.all()
+
+    context = {
+        'projects': {},
+    }
+
+    for project in projects:
+        context['projects'][project] = WorkflowInstance.objects.filter(project=project)
+
+    return render(request, 'workflow/project_list.haml', context)
 
 
 @login_required
-def workflowinstance_show(request, workflowinstance_id, which_display):
-    workflowinstanceitems = WorkflowInstanceItem.objects.filter(workflowinstance=workflowinstance_id)
-    person = get_object_or_404(Person, django_user=request.user)
+def workflow_new(request):
+    if request.method == 'POST':
+        form = WorkflowInstanceNewForm(request.POST)
+        if form.is_valid():
+            wi = WorkflowInstance()
+            wi.project = form.cleaned_data['project']
+            wi.version = form.cleaned_data['version']
+            wi.save()  # for the m2m below
+            wi.items = [ItemInstance.objects.create(item_model=i) for i in form.cleaned_data['items']]
+            wi.save()
 
-    display = {
-        'mine': 'mine',
-        'all': 'all',
-        'successful': 'successful',
-        'failed': 'failed',
-        'untaken': 'untaken',
-        'taken': 'taken',
-    }
-    counter = {
-        'Total': len(workflowinstanceitems),
-        'Success': 0,
-        'Failed': 0,
-        'Taken': 0,
-        'Free': 0,
-        'NotSolved': 0,
-        'Mine': 0,
-    }
-    container = {
-        'mine' : {},
-        'successful': {},
-        'failed': {},
-        'untaken': {},
-        'taken': {},
-        'all': {},
-    }
-
-    if not which_display in container.keys():
-        which_display = "all"
-
-    for workflowinstanceitem in workflowinstanceitems:
-        category_id = workflowinstanceitem.item.workflow_category.id
-        default_dic = {
-            'id' : category_id,
-            'name' : workflowinstanceitem.item.workflow_category.name,
-            'workflowinstanceitems': {
-                workflowinstanceitem.id: workflowinstanceitem
-            },
-        }
-
-        container["all"].setdefault(category_id, default_dic)
-
-        if workflowinstanceitem.assigned_to == None:
-            container["untaken"].setdefault(category_id, default_dic)
-            counter['Free'] += 1
+            return HttpResponseRedirect(reverse('workflow:workflow_show', args=[wi.pk, 'all']))
         else:
-            container["taken"].setdefault(category_id, default_dic)
-            counter['Taken'] += 1
+            return render(request, 'workflow/workflow_new.haml', {'form': form})
+    else:
+        form = WorkflowInstanceNewForm()
 
-            if workflowinstanceitem.assigned_to == person:
-                container["mine"].setdefault(category_id, default_dic)
-                counter['Mine'] += 1
+    return render(request, 'workflow/workflow_new.haml', {'form': form})
 
-        if workflowinstanceitem.validation_id == None:
-            counter['NotSolved'] += 1
-        elif workflowinstanceitem.validation_id == 1:
-            container["successful"].setdefault(category_id, default_dic)
-            counter['Success'] += 1
-        elif workflowinstanceitem.validation_id == 2:
-            container["failed"].setdefault(category_id, default_dic)
-            counter['Failed'] += 1
 
-    for category in container[which_display]:
-        container[which_display][category]['workflowinstanceitems'] = container[which_display][category]['workflowinstanceitems'].values()
+@login_required
+def workflowinstance_delete(request, workflow_pk):
+    WorkflowInstance.objects.filter(id=workflow_pk).delete()
+    return HttpResponseRedirect(reverse('workflow:project_list'))
 
-    return_d = {
-        'validations': Validation.objects.all(),
-        'categories': container["all"].values(),
-        'workflowinstance': get_object_or_404(WorkflowInstance, id=workflowinstance_id),
-        'display': display,
-        'counter': counter,
-        'categories' : len(container[which_display]) and container[which_display].values() or None,
+
+@login_required
+def workflow_show(request, workflow_pk, which_display):
+    request_person = get_object_or_404(Person, user=request.user)
+    workflow = get_object_or_404(WorkflowInstance, pk=workflow_pk)
+    items = ItemInstance.objects.filter(workflow=workflow)
+
+    if which_display not in ('all', 'mine', 'untested', 'success', 'failed', 'untaken', 'taken'):
+        raise Http404('Unexpected display "%s"' % which_display)
+
+    context = {
+        'workflow': workflow,
+        'counters': {
+            'all': items.count(),
+            'mine': 0,
+            'untested': 0,
+            'success': 0,
+            'failed': 0,
+            'untaken': 0,
+            'taken': 0,
+        },
+        'percent': {},
+        'items': [],
+        'ItemInstance': ItemInstance,
     }
 
-    return render(request, 'workflow/workflowinstance_show.haml', return_d)
+    # counters
 
-
-@login_required
-def workflowinstance_delete(request, workflowinstance_id):
-    WorkflowInstance.objects.filter(id=workflowinstance_id).delete()
-    return HttpResponseRedirect(reverse('workflow:workflowinstance-list'))
-
-
-def workflowinstanceitem_assign_to_person(workflowinstanceitem, person):
-    """ Change item assignation and save into db """
-    workflowinstanceitem.assigned_to = person
-    workflowinstanceitem.save()
-
-
-@login_required
-def workflowinstanceitem_take(request, workflowinstanceitem_id):
-    """ Output JSON for AJAX interaction
-        Set owner on @workflowinstanceitem_id@
-        Return @workflowinstanceitem_id@
-    """
-    workflowinstanceitem = get_object_or_404(WorkflowInstanceItem, id=workflowinstanceitem_id)
-    person = get_object_or_404(Person.objects, django_user=request.user)
-    workflowinstanceitem_assign_to_person(workflowinstanceitem, person)
-    return JsonResponse({"item_id" : workflowinstanceitem_id, "assigned_to_firstname" : str(person.firstname), "assigned_to_lastname" : str(person.lastname), "assigned_to" : person.id or "None"})
-
-
-@login_required
-def workflowinstanceitem_untake(request, workflowinstanceitem_id):
-    """ Output JSON for AJAX interaction
-        Reset owner one @workflowinstanceitem_id@
-        Return @workflowinstanceitem_id@
-    """
-    workflowinstanceitem = get_object_or_404(WorkflowInstanceItem, id=workflowinstanceitem_id)
-    workflowinstanceitem.assigned_to = None
-    workflowinstanceitem.save()
-    return JsonResponse({"item_id" : workflowinstanceitem_id, "assigned_to" : workflowinstanceitem.assigned_to_id or "None"})
-
-
-@login_required
-def workflowinstance_take_category(request, workflowinstance_id, category_id):
-    """ Output JSON for AJAX interaction
-        Set owner on concerned items
-        Return the category_id of item concerned and owner's lastname and firstname
-    """
-    items = WorkflowInstanceItem.objects.filter(workflowinstance__id=workflowinstance_id)
-    person = get_object_or_404(Person, django_user=request.user)
     for item in items:
-        if item.item.workflow_category.id == int(category_id) and not item.assigned_to_id:
-            workflowinstanceitem_assign_to_person(item, person)
-    return JsonResponse({"category_id" : category_id, "assigned_to_firstname" : str(person.firstname), "assigned_to_lastname" : str(person.lastname), "assigned_to" : person.id})
+        if item.assigned_to == None:
+            context['counters']['untaken'] += 1
+        else:
+            context['counters']['taken'] += 1
+            if item.assigned_to == request_person:
+                context['counters']['mine'] += 1
+
+        if item.validation == ItemInstance.VALIDATION_UNTESTED:
+            context['counters']['untested'] += 1
+        elif item.validation == ItemInstance.VALIDATION_SUCCESS:
+            context['counters']['success'] += 1
+        elif item.validation == ItemInstance.VALIDATION_FAILED:
+            context['counters']['failed'] += 1
+
+    for key, count in context['counters'].items():
+        context['percent'][key] = 100 * count / items.count()
+
+    # shown items
+
+    items_list = {
+        'all': items,
+        'mine': items.filter(assigned_to=request_person),
+        'untested': items.filter(validation=ItemInstance.VALIDATION_UNTESTED),
+        'success': items.filter(validation=ItemInstance.VALIDATION_SUCCESS),
+        'failed': items.filter(validation=ItemInstance.VALIDATION_FAILED),
+        'untaken': items.filter(assigned_to=None),
+        'taken': items.exclude(assigned_to=None),
+    }[which_display]
+
+    items_dic = {}
+
+    for item in items_list:
+        items_dic.setdefault(item.item_model.category.pk, [])
+        items_dic[item.item_model.category.pk].append(item)
+
+    for cat_pk, items in items_dic.items():
+        context['items'].append([get_object_or_404(ItemCategory, pk=cat_pk), items])
+
+    return render(request, 'workflow/workflow_show.haml', context)
 
 
 @login_required
-def workflowinstance_untake_category(request, workflowinstance_id, category_id):
-    """ Output JSON for AJAX interaction
-        Reset owner on concerned items
-        Return the category_id of item
-    """
-    items = WorkflowInstanceItem.objects.filter(workflowinstance__id=workflowinstance_id)
-    person = get_object_or_404(Person, django_user=request.user.id)
-    for item in items:
-        if item.item.workflow_category.id == int(category_id) and item.assigned_to_id == person.id:
-            workflowinstanceitem_assign_to_person(item, None)
-    return JsonResponse({"category_id" : category_id, "person_id" : person.id})
-
-
-@login_required
-def workflowinstanceitem_validate(request, workflowinstanceitem_id, validation_label):
-    """ Output JSON for AJAX interaction
-        Change item state: Validate/Invalidate
-        Return @workflowinstanceitem_id@ which is the item id
-    """
-    workflowinstanceitem = get_object_or_404(WorkflowInstanceItem, id=workflowinstanceitem_id)
-    workflowinstanceitem.validation_id = validation_label == "OK" and 1 or 2
-    workflowinstanceitem.save()
-    return JsonResponse({"item_id" : workflowinstanceitem_id})
-
-
-@login_required
-def workflowinstanceitem_no_state(request, workflowinstanceitem_id):
-    """ Reset item state
-        Return @item_id@
-    """
-    workflowinstanceitem = get_object_or_404(WorkflowInstanceItem, id=workflowinstanceitem_id)
-    workflowinstanceitem.validation_id = None
-    workflowinstanceitem.save()
-    return JsonResponse({"item_id" : workflowinstanceitem_id})
-
-
-@login_required
-def workflowinstanceitem_show(request, workflowinstanceitem_id):
-    """ Create form for comments
-        Create form for edit details
-        Get information about current item @workflowinstanceitem_id@
-
-        Return dictionnary with all of that
-    """
-    return_d = {}
-    return_d.update(workflowinstanceitem_comments(request, workflowinstanceitem_id))
-    return_d.update(workflowinstanceitem_details(request, workflowinstanceitem_id))
-    workflowinstanceitem = get_object_or_404(WorkflowInstanceItem, id=workflowinstanceitem_id)
-    if workflowinstanceitem.item.details:
-        workflowinstanceitem.item.details = workflowinstanceitem.item.details
-    else:
-        workflowinstanceitem.item.details = []
-    comments = CommentInstanceItem.objects.filter(item=workflowinstanceitem_id)
-    return_d.update({'workflowinstanceitem' : workflowinstanceitem, 'validations' : Validation.objects.all()})
-    return_d.update({'from_item_details' : 'from_item_details', 'comments' : comments, "all" : "all"})
-    return render(request, 'workflow/workflowinstanceitem_show.haml', return_d)
-
-
-def workflowinstanceitem_comments(request, workflowinstanceitem_id):
-    """ Return form for comments on specific item """
+def itemmodel_new(request):
     if request.method == 'POST':
-        person = get_object_or_404(Person, django_user=request.user)
-        form = CommentItemNewForm(request, data=request.POST)
+        form = ItemModelNewForm(request.POST)
         if form.is_valid():
-            comment = CommentInstanceItem(comments=form.cleaned_data['comments'], item_id=workflowinstanceitem_id, person=person)
-            comment.save()
-            form = CommentItemNewForm(request)
-            return {'status_comment' : 'OK', 'form_comment' : form}
-        else:
-            return {'status_comment' : 'KO', 'error' : str(form.errors), 'form_comment' : form}
-    else:
-        form = CommentItemNewForm(request)
-    return {'form_comment' : form}
+            im = ItemModel()
+            im.name = form.cleaned_data['name']
+            im.description = form.cleaned_data['description']
+            im.category = form.cleaned_data['category']
+            im.save()
 
-
-def workflowinstanceitem_details(request, workflowinstanceitem_id):
-    """ Return form for details on specific item """
-    workflowinstanceitem = get_object_or_404(WorkflowInstanceItem, id=workflowinstanceitem_id)
-    initial_value = workflowinstanceitem.item.details
-    if request.method == 'POST' and "_post" in request.POST:
-        form = DetailItemForm(request, initialValue='', data=request.POST)
-        if form.is_valid():
-            workflowcategory = get_object_or_404(WorkflowCategory, id=workflowinstanceitem.item.workflow_category_id)
-            detail = Item(id=workflowinstanceitem.item.id, workflow_category=workflowcategory, \
-                    label=workflowinstanceitem.item.label, details=form.cleaned_data['details'])
-            detail.save()
-            form = DetailItemForm(request, initialValue=form.cleaned_data['details'])
-            return {'status_detail' : 'OK', 'form_detail' : form}
+            return HttpResponseRedirect('/')
+            # todo responseredirect item model list
         else:
-            return {'status_detail' : 'KO', 'error' : str(form.errors), 'form_detail' : form}
-    elif "_reset" in request.POST:
-        workflowinstanceitem = get_object_or_404(WorkflowInstanceItem, id=workflowinstanceitem_id)
-        workflowcategory = get_object_or_404(WorkflowCategory, id=workflowinstanceitem.item.workflow_category_id)
-        detail = Item(id=workflowinstanceitem.item.id, workflow_category=workflowcategory, \
-                    label=workflowinstanceitem.item.label, details='')
-        detail.save()
-        form = DetailItemForm(request, initialValue='')
-        return {'form_detail' : form}
+            return render(request, 'workflow/itemmodel_new.haml', {'form': form})
     else:
-        form = DetailItemForm(request, initial_value)
-    return {'form_detail' : form}
+        form = ItemModelNewForm()
+
+    return render(request, 'workflow/itemmodel_new.haml', {'form': form})
 
 
 @login_required
-def item_new(request):
+def iteminstance_show(request, item_pk):
+    item = get_object_or_404(ItemInstance, id=item_pk)
+
+    # default
+    form_comment = CommentNewForm()
+    form_description = ItemDetailForm(initial=model_to_dict(item.item_model))
+
     if request.method == 'POST':
-        form = ItemNewForm(request, data=request.POST)
-        if form.is_valid():
-            workflowcategory_id = int(form.cleaned_data['category'])
-            workflowcategory = get_object_or_404(WorkflowCategory, id=workflowcategory_id)
-            workflow = workflowcategory.workflow
+        if '_comment' in request.POST:
+            form_comment = CommentNewForm(request.POST)
+            if form_comment.is_valid():
+                c = Comment()
+                c.item = item
+                c.person = get_object_or_404(Person, user=request.user)
+                c.text = form_comment.cleaned_data['text']
+                c.save()
+                return HttpResponseRedirect(reverse('workflow:iteminstance_show', args=[item.pk]))
+        elif '_description' in request.POST:
+            form_description = ItemDetailForm(request.POST, initial=model_to_dict(item.item_model))
+            if form_description.is_valid():
+                item.item_model.description = form_description.cleaned_data['description']
+                item.item_model.save()
+                return HttpResponseRedirect(reverse('workflow:iteminstance_show', args=[item.pk]))
 
-            persons = get_object_or_404(Person, django_user=request.user)
-            if not persons:
-                c = {"form" : form, "status" : "KO", "error" : "Your django user is not attached to a Team person"}
-                return render(request, 'workflow/item_new.haml', c)
+    context = {
+        'item': item,
+        'comments': Comment.objects.filter(item=item),
+        'form_comment': form_comment,
+        'form_description': form_description,
+        'ItemInstance': ItemInstance,
+    }
 
-            if persons in workflow.leaders.all():
-                for label in form.cleaned_data['items'].splitlines():
-                    label = label.strip()
-                    if not label:
-                        continue
-                    item = Item(workflow_category_id=workflowcategory_id, label=label)
-                    item.save()
-                c = {"status" : "OK"}
-                return render(request, 'workflow/item_new.haml', c)
-            else:
-                c = {"status" : "KO", "error" : "You are not leader on this workflow"}
-                return render(request, 'workflow/item_new.haml', c)
+    return render(request, 'workflow/iteminstance_show.haml', context)
 
-        else:
-            c = {"status" : "KO", "error" : str(form.errors)}
-            return render(request, 'workflow/item_new.haml', c)
-    else:
-        form = ItemNewForm(request)
 
-    return render(request, 'workflow/item_new.haml', {'form' : form, "status" : "NEW"})
+@login_required
+def update(request, action, model, pk, pk_other=None):
+    if model not in ('item', 'category', 'validate'):
+        raise Http404('Unexpected model "%s"' % model)
+
+    if model == 'item':
+        if action not in ('take', 'untake'):
+            raise Http404('Unexpected action "%s"' % action)
+
+        item = get_object_or_404(ItemInstance, pk=pk)
+        workflow_pk = item.workflow.pk
+
+        if action == 'take':
+            item.assigned_to = get_object_or_404(Person, user=request.user)
+        else:  # untake
+            item.assigned_to = None
+
+        item.save()
+    elif model == 'category':
+        if action not in ('take', 'untake'):
+            raise Http404('Unexpected action "%s"' % action)
+
+        if action == 'take':
+            assigned_to = get_object_or_404(Person, user=request.user)
+        else:  # untake
+            assigned_to = None
+
+        items = get_list_or_404(ItemInstance, workflow__pk=pk_other)
+        for item in items:
+            if item.item_model.category.pk == int(pk):
+                item.assigned_to = assigned_to
+                item.save()
+
+        workflow_pk = pk_other
+    elif model == 'validate':
+        if action not in ('untested', 'success', 'failed'):
+            raise Http404('Unexpected action "%s"' % action)
+
+        item = get_object_or_404(ItemInstance, pk=pk)
+        workflow_pk = item.workflow.pk
+
+        if action == 'untested':
+            item.validation = ItemInstance.VALIDATION_UNTESTED
+        elif action == 'success':
+            item.validation = ItemInstance.VALIDATION_SUCCESS
+        elif action == 'failed':
+            item.validation = ItemInstance.VALIDATION_FAILED
+
+        item.save()
+
+    default_url = reverse('workflow:workflow_show', args=[workflow_pk, 'all'])
+    return HttpResponseRedirect(request.GET.get('next', default_url))
