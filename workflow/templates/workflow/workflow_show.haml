@@ -1,8 +1,18 @@
 - extends "workflow/base.haml"
 - load static
 
+- block breadcrumbs
+    Show workflow
+
 - block content
+    %h1
+        Show workflow : {{ workflow.project.name }} - {{ workflow.version }}
+
+    %hr
+
     #progressbar
+
+    %hr
 
     #filters
         %label.all

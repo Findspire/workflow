@@ -10,8 +10,27 @@
     background-color: #FF4136;
 }
 
+#content {
+    width: 1000px;
+    margin: 10px auto ;
+}
+
 label {
     display: block;
+}
+
+form {
+    ul.category {
+        padding-left: 140px !important;
+
+        ul {
+            margin-left: 0;
+        }
+    }
+
+    li {
+        list-style-type: none;
+    }
 }
 
 /*
@@ -20,6 +39,16 @@ label {
 
 #progressbar
 {
+    table {
+        width: 100%;
+        margin: 10px 0;
+        height: 30px;
+
+        td {
+            padding: 1px;
+        }
+    }
+
     .success {
         background-color: #73bd5a;
     }
@@ -55,9 +84,8 @@ label {
 }
 
 #filters {
-   height: 10px;
-   text-align: center;
-   margin-bottom: 20px;
+    text-align: center;
+    margin: 10px;
 
     label {
         padding: 3px;
@@ -103,16 +131,6 @@ label {
 
     .validate {
         width: 10%;
-        font-size: 125%;
-        font-weight: bold;
-
-        a {
-            color: #babdb6;
-        }
-    }
-
-    .item, .take_untake_category {
-        font-size: 70%;
     }
 
     .item:hover {
@@ -135,13 +153,21 @@ label {
     }
 }
 
+.validate {
+    font-size: 150%;
+    font-weight: bold;
+
+    a {
+        color: #babdb6;
+    }
+}
+
 /*
     Item instance detail
 */
 
 #details_see, #details_edit, #comments {
     a {
-        font-size: 70%;
         color: #06D;
     }
 }

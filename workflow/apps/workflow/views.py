@@ -125,7 +125,7 @@ def workflow_show(request, workflow_pk, which_display):
             context['counters']['failed'] += 1
 
     for key, count in context['counters'].items():
-        context['percent'][key] = 100 * count / items.count()
+        context['percent'][key] = 100 * count / (items.count() or 1)
 
     # shown items
 

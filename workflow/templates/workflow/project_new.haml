@@ -1,9 +1,15 @@
 - extends "workflow/base.haml"
 
+- block breadcrumbs
+    Project creation
+
 - block content
-    %h2
+    %h1
         Project creation
 
     %form{action: "{% url 'workflow:project_new' %}", method: "POST"}
-        {{ form.as_p }}
-        %input{type: "submit", title: "Create"}
+        %fieldset.module.aligned
+            {{ form.as_p }}
+
+        .submit-row
+            %input{type: "submit", title: "Create"}

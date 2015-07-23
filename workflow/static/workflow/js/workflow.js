@@ -11,7 +11,6 @@ function progressbar_update(counters, percent) {
     for (index in items) {
         content += '<td class="'+items[index]+'" style="width: '+percent[items[index]]+'%"></td>';
     }
-    content += '<td style="width: auto; text-align: left; padding-left: 4px;">'+(percent['success']+percent['failed'])+'% tested</td>';
     content += '</tr>';
     content += '</table>';
 

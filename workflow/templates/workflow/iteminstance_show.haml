@@ -2,15 +2,16 @@
 - load static
 - load admin_urls
 
+- block breadcrumbs
+    Show item
+
 - block content
-    %h2
-        {{ item.item_model.name }}
-        %span{style: "color:gray;"}
-            {{ item.item_model.category.name }}
-        %small
+    %h1{style: "display:inline"}
+        {{ item.item_model.name }} ({{ item.item_model.category.name }})
+        %small{style: "color:gray;"}
             {{ item.workflow.project.name }} - {{ item.workflow.version }}
 
-    %div
+    %div{style: "display:inline; float:right;"}
         %span.take_untake_item
             - if item.assigned_to
                 {{ item.assigned_to }}
@@ -45,7 +46,7 @@
     %hr
 
     #details_see
-        %h3
+        %h2
             Details (<a href="." onClick="details_edit(); return false;">Edit</a>)
 
         - if item.item_model.description
@@ -56,7 +57,7 @@
                 ** No details. **
 
     #details_edit
-        %h3
+        %h2
             Edit details (<a href="." onClick="details_see(); return false;">Cancel</a>)
 
         %form{action: ".",  method: "POST"}
@@ -65,7 +66,7 @@
 
 
     #comments
-        %h3
+        %h2
             Comments
         - for comment in comments
             .comment
@@ -80,7 +81,7 @@
                 No comments
 
     #comment_new
-        %h3
+        %h2
             Add comment
         %form{action: '.', method:"POST"}
             {{ form_comment.as_p }}

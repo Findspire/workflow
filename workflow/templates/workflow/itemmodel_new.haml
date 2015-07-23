@@ -1,10 +1,15 @@
 - extends "workflow/base.haml"
 
-- block content
-    %h2
-        Item Model creation
+- block breadcrumbs
+    Item model creation
 
-    %div
-        %form{action: "{% url 'workflow:itemmodel_new' %}", method: "POST"}
+- block content
+    %h1
+        Item model creation
+
+    %form{action: "{% url 'workflow:itemmodel_new' %}", method: "POST"}
+        %fieldset.module.aligned
             {{ form.as_p }}
+
+        .submit-row
             %input{type: "submit", title: "Create"}

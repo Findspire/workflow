@@ -1,11 +1,14 @@
 - extends "workflow/base.haml"
 
+- block breadcrumbs
+    Project list
+
 - block content
-    %h2
+    %h1
         Projects list
 
     - for project, workflows in projects.items
-            %h3
+            %h2
                 {{ project }}
 
             - if workflows
