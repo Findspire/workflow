@@ -8,10 +8,16 @@ from django.db import models
 from django.utils import timezone
 
 
+def get_percentage(value, total):
+    if total == 0:
+        return 100
+    else:
+        return 100 * value / total
+
+
 ###############
 # TEAM
 ###############
-
 
 class ContractType(models.Model):
     name = models.CharField(max_length=64)
@@ -104,6 +110,28 @@ class WorkflowInstance(models.Model):
 
     def __unicode__(self):
         return '%s - %s' % (self.project, self.version)
+
+    def get_items(self, which_display, person=None):
+        qs = ItemInstance.objects.filter(workflow=self)
+
+        try:
+            return {
+                'all': qs,
+                'mine': qs.filter(assigned_to=person),
+                'untested': qs.filter(validation=ItemInstance.VALIDATION_UNTESTED),
+                'success': qs.filter(validation=ItemInstance.VALIDATION_SUCCESS),
+                'failed': qs.filter(validation=ItemInstance.VALIDATION_FAILED),
+                'untaken': qs.filter(assigned_to=None),
+                'taken': qs.exclude(assigned_to=None),
+            }[which_display]  # OMG this is awesome !
+        except KeyError:
+            raise ValueError('Unexpected param "%s"' % which_display)
+
+    def get_count(self, which_display, person=None):
+        return self.get_items(which_display, person).count()
+
+    def get_percent(self, which_display, person=None):
+        return get_percentage(self.get_count(which_display, person), self.get_count('all', person))
 
 
 class ItemInstance(models.Model):

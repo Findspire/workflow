@@ -1,4 +1,5 @@
 - extends "workflow/base.haml"
+- load workflow_tags
 
 - block breadcrumbs
     Project list
@@ -22,7 +23,7 @@
                                 %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
                                     {{ workflow.version }}
                                 \-
-                                Complete {{ workflow.get_success_percent }}% ({{ workflow.get_failed_count }} failed - {{ workflow.get_untested_count }} untested)
+                                Complete {{ workflow|get_percent:'success' }}% ({{ workflow|get_count:'failed' }} failed - {{ workflow|get_count:'untested' }} untested)
                 - else
                     %p
                         %em

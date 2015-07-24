@@ -7,7 +7,7 @@ from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
-from workflow.apps.workflow.models import Comment, ItemCategory, ItemInstance, ItemModel, Person, Project, WorkflowInstance
+from workflow.apps.workflow.models import Comment, ItemInstance, ItemModel, Person, Project, WorkflowInstance
 from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm, WorkflowInstanceNewForm
 
 
@@ -87,69 +87,28 @@ def workflow_new(request, project_pk=None):
 
 @login_required
 def workflow_show(request, workflow_pk, which_display):
+    displays = ('all', 'mine', 'untested', 'success', 'failed', 'untaken', 'taken')
+
+    if which_display not in displays:
+        raise Http404('Unexpected display "%s"' % which_display)
+
     request_person = get_object_or_404(Person, user=request.user)
     workflow = get_object_or_404(WorkflowInstance, pk=workflow_pk)
-    print workflow.iteminstance_set.all()
 
-    if which_display not in ('all', 'mine', 'untested', 'success', 'failed', 'untaken', 'taken'):
-        raise Http404('Unexpected display "%s"' % which_display)
+    # group by category
+    items_list = workflow.get_items(which_display, request_person).select_related('item_model__category', 'assigned_to__user')
+    items_dic = {}
+    for item in items_list:
+        items_dic.setdefault(item.item_model.category, [])
+        items_dic[item.item_model.category].append(item)
 
     context = {
         'workflow': workflow,
-        'counters': {
-            'all': items.count(),
-            'mine': 0,
-            'untested': 0,
-            'success': 0,
-            'failed': 0,
-            'untaken': 0,
-            'taken': 0,
-        },
-        'percent': {},
-        'items': [],
+        'counters': {display: workflow.get_count(display, request_person) for display in displays},
+        'percent': {display: workflow.get_percent(display, request_person) for display in displays},
+        'items': items_dic,
         'ItemInstance': ItemInstance,
     }
-
-    # counters
-
-    for item in items:
-        if item.assigned_to == None:
-            context['counters']['untaken'] += 1
-        else:
-            context['counters']['taken'] += 1
-            if item.assigned_to == request_person:
-                context['counters']['mine'] += 1
-
-        if item.validation == ItemInstance.VALIDATION_UNTESTED:
-            context['counters']['untested'] += 1
-        elif item.validation == ItemInstance.VALIDATION_SUCCESS:
-            context['counters']['success'] += 1
-        elif item.validation == ItemInstance.VALIDATION_FAILED:
-            context['counters']['failed'] += 1
-
-    for key, count in context['counters'].items():
-        context['percent'][key] = 100 * count / (items.count() or 1)
-
-    # shown items
-
-    items_list = {
-        'all': items,
-        'mine': items.filter(assigned_to=request_person),
-        'untested': items.filter(validation=ItemInstance.VALIDATION_UNTESTED),
-        'success': items.filter(validation=ItemInstance.VALIDATION_SUCCESS),
-        'failed': items.filter(validation=ItemInstance.VALIDATION_FAILED),
-        'untaken': items.filter(assigned_to=None),
-        'taken': items.exclude(assigned_to=None),
-    }[which_display]
-
-    items_dic = {}
-
-    for item in items_list:
-        items_dic.setdefault(item.item_model.category.pk, [])
-        items_dic[item.item_model.category.pk].append(item)
-
-    for cat_pk, items in items_dic.items():
-        context['items'].append([get_object_or_404(ItemCategory, pk=cat_pk), items])
 
     return render(request, 'workflow/workflow_show.haml', context)
 
