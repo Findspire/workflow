@@ -133,6 +133,10 @@ form {
         width: 10%;
     }
 
+    .item {
+        padding-left: 20px;
+    }
+
     .item:hover {
         a {
             text-decoration: underline;
@@ -173,15 +177,17 @@ form {
 }
 
 #comments {
-    .comment {
-        border-top: 1px solid black;
-    }
+    border-top: 1px solid black;
 
-    a {
-        text-decoration: none;
+    pre, p {
+        margin-left: 20px;
     }
 
     pre {
         font-family: "Monospace", serif;
+    }
+
+    a {
+        text-decoration: none;
     }
 }

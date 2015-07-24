@@ -167,6 +167,8 @@ HAMLPY_ATTR_WRAPPER = '"'
 
 LOGIN_URL='/admin/login'
 
+BUG_TRACKER_URL = 'https://redmine.findspire.com/issues/'
+
 ############################################
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

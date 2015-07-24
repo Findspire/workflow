@@ -17,13 +17,15 @@
                 %td.item
                     %a{href: "{% url 'workflow:iteminstance_show' item.pk %}", title:"Label item"}
                         {{ item.item_model.name }}
-                    - for URL in item.item_model.name|link_ticket
+
+                    - for url, ticket_id in item.item_model.name|get_tickets
                         - if forloop.counter == 1
-                            |&nbsp;
-                        %a.urls{href:"{{ URL }}", alt:"Ticket {{ URL }}"}
-                            {{ URL|get_ticket_name }}
+                            %strong{style:"margin-left:20px;"}
+                                Tickets:
+                        %a.urls{href:"{{ url }}", alt:"Ticket #{{ ticket_id }}"}
+                            \#{{ ticket_id }}
                         - if not forloop.last
-                            ,
+                            \-
 
                 %td.take_untake_item
                     - if item.assigned_to

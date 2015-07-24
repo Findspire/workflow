@@ -3,7 +3,9 @@
 - load admin_urls
 
 - block breadcrumbs
-    Show item
+    %a{href: "{% url 'workflow:workflow_show' item.workflow.pk 'all' %}"}
+        {{ item.workflow.project.name }} - {{ item.workflow.version }}
+    › Show item
 
 - block content
     %h1{style: "display:inline"}
@@ -58,12 +60,12 @@
 
     #details_edit
         %h2
-            Edit details (<a href="." onClick="details_see(); return false;">Cancel</a>)
+            Edit details
 
         %form{action: ".",  method: "POST"}
             {{ form_description.as_p }}
             %input{type: "submit", value:"Post", name: "_description"}
-
+            %input{type: "submit", value:"Cancel", onClick:"details_see(); return false;"}
 
     #comments
         %h2
@@ -76,6 +78,7 @@
                     \- {{ comment.date }} - {{ comment.person }}
                 %p
                     {{ comment }}
+                %hr
         - empty
             %em
                 No comments
