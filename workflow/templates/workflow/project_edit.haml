@@ -1,0 +1,15 @@
+- extends "workflow/base.haml"
+
+- block breadcrumbs
+    Project edition
+
+- block content
+    %h1
+        Project edition
+
+    %form{action: "{% url 'workflow:project_edit' project_pk %}", method: "POST"}
+        %fieldset.module.aligned
+            {{ form.as_p }}
+
+        .submit-row
+            %input{type: "submit", title: "Save"}

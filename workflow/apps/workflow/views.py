@@ -19,26 +19,34 @@ def welcome(request):
 def index(request):
     return render(request, 'workflow/index.haml')
 
-
 @login_required
-def project_new(request):
+def _project_handle_form(request, project, template):
     if request.method == 'POST':
         form = ProjectNewForm(request.POST)
         if form.is_valid():
-            p = Project()
-            p.name = form.cleaned_data['name']
-            p.team = form.cleaned_data['team']
-            p.save()  # for the m2m below
-            p.items = form.cleaned_data['items']
-            p.save()
+            project.name = form.cleaned_data['name']
+            project.team = form.cleaned_data['team']
+            project.save()  # for the m2m below
+            project.items = form.cleaned_data['items']
+            project.save()
 
             return HttpResponseRedirect(reverse('workflow:project_list'))
         else:
-            return render(request, 'workflow/project_new.haml', {'form': form})
+            return render(request, template, {'form': form})
     else:
-        form = ProjectNewForm()
+        form = ProjectNewForm(initial=model_to_dict(project))
 
-    return render(request, 'workflow/project_new.haml', {'form': form})
+    return render(request, template, {'form': form, 'project_pk': project.pk})
+
+
+@login_required
+def project_new(request):
+    return _project_handle_form(request, Project(), 'workflow/project_new.haml')
+
+
+@login_required
+def project_edit(request, project_pk):
+    return _project_handle_form(request, get_object_or_404(Project, pk=project_pk), 'workflow/project_edit.haml')
 
 
 @login_required
@@ -56,37 +64,32 @@ def project_list(request):
 
 
 @login_required
-def workflow_new(request):
+def workflow_new(request, project_pk=None):
     if request.method == 'POST':
         form = WorkflowInstanceNewForm(request.POST)
         if form.is_valid():
             wi = WorkflowInstance()
             wi.project = form.cleaned_data['project']
             wi.version = form.cleaned_data['version']
-            wi.save()  # for the m2m below
-            wi.items = [ItemInstance.objects.create(item_model=i) for i in form.cleaned_data['items']]
             wi.save()
+
+            for i in wi.project.items.all():
+                ItemInstance.objects.create(item_model=i, workflow=wi)
 
             return HttpResponseRedirect(reverse('workflow:workflow_show', args=[wi.pk, 'all']))
         else:
             return render(request, 'workflow/workflow_new.haml', {'form': form})
     else:
-        form = WorkflowInstanceNewForm()
+        form = WorkflowInstanceNewForm(initial={'project': project_pk})
 
     return render(request, 'workflow/workflow_new.haml', {'form': form})
-
-
-@login_required
-def workflowinstance_delete(request, workflow_pk):
-    WorkflowInstance.objects.filter(id=workflow_pk).delete()
-    return HttpResponseRedirect(reverse('workflow:project_list'))
 
 
 @login_required
 def workflow_show(request, workflow_pk, which_display):
     request_person = get_object_or_404(Person, user=request.user)
     workflow = get_object_or_404(WorkflowInstance, pk=workflow_pk)
-    items = ItemInstance.objects.filter(workflow=workflow)
+    print workflow.iteminstance_set.all()
 
     if which_display not in ('all', 'mine', 'untested', 'success', 'failed', 'untaken', 'taken'):
         raise Http404('Unexpected display "%s"' % which_display)

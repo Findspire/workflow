@@ -7,18 +7,23 @@
     %h1
         Projects list
 
-    - for project, workflows in projects.items
-            %h2
-                {{ project }}
+    %ul
+        - for project, workflows in projects.items
+            %li
+                %h2
+                    {{ project }}
+                    (<a href="{% url 'workflow:project_edit' project.pk %}">Edit</a>)
+                    (<a href="{% url 'workflow:workflow_new' project.pk %}">New workflow</a>)
 
-            - if workflows
-                %ul
-                    - for workflow in workflows
-                        %li
-                            %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
-                                {{ workflow.version }}
-                            %a{href: "{% url 'workflow:workflow_delete' workflow.pk %}"}
-                                %img.untake{src: "/static/workflow/img/untake.png"}
-            - else
-                %em
-                    No workflows in this project.
+                - if workflows
+                    %ul
+                        - for workflow in workflows
+                            %li
+                                %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
+                                    {{ workflow.version }}
+                                \-
+                                Complete {{ workflow.get_success_percent }}% ({{ workflow.get_failed_count }} failed - {{ workflow.get_untested_count }} untested)
+                - else
+                    %p
+                        %em
+                            No workflows in this project.

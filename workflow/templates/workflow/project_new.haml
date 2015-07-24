@@ -13,3 +13,14 @@
 
         .submit-row
             %input{type: "submit", title: "Create"}
+
+- block optional_script
+    $(document).ready(function() {
+        labels = $('form .label_category input');
+
+        labels.click(function() {
+            var value = $(this).parent().find('input').prop('checked');
+            $(this).parent().next().find('input').prop('checked', value);
+        });
+
+    });

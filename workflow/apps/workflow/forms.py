@@ -49,8 +49,8 @@ class MyChoiceFieldRenderer(object):
             current_category = choice_label.split('-')[0].strip()
             if old_category != current_category:
                 if old_category != None:
-                    output.append('</li></ul>')
-                output.append('<li><label><input type="checkbox" /> %s</label><ul>' % current_category)
+                    output.append('</ul></li>')
+                output.append('<li><label class="label_category"><input type="checkbox" /> %s</label><ul>' % current_category)
                 old_category = current_category
 
             if isinstance(choice_label, (tuple, list)):
@@ -90,9 +90,7 @@ class ProjectNewForm(forms.ModelForm):
 class WorkflowInstanceNewForm(forms.ModelForm):
     class Meta:
         model = WorkflowInstance
-        fields = ['project', 'version', 'items']
-    items = forms.ModelMultipleChoiceField(queryset=ItemModel.objects.order_by('category__name', 'name'), \
-        required=False, widget=MyCheckboxSelectMultiple)
+        fields = ['project', 'version']
 
 
 class ItemModelNewForm(forms.ModelForm):
