@@ -146,10 +146,12 @@ INSTALLED_APPS = (
     'django_extensions',
 
     'workflow.apps.workflow',
+    'workflow.apps.team',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',  # first
+    'django.middleware.csrf.CsrfViewMiddleware',  # random
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',  # after session
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # after session

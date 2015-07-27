@@ -8,6 +8,8 @@
         Item model creation
 
     %form{action: "{% url 'workflow:itemmodel_new' %}", method: "POST"}
+        - csrf_token
+
         %fieldset.module.aligned
             {{ form.as_p }}
 

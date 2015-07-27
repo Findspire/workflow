@@ -1,0 +1,30 @@
+- load i18n
+- load static
+
+!!!5
+%html{lang: "{{language}}"}
+    %head
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+        <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
+        %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/base_all.css" %}'}
+        %script{type: "text/javascript", src: '{% static "workflow/js/jquery-1.9.1.js" %}'}
+
+    %body
+        #warning_js
+            Your JavaScript seem to be disabled. Some functionalities needs it
+            and we advise you to enable it.
+
+        .breadcrumbs
+            %a{href: "/"}
+                Home
+            ›
+            - block breadcrumbs_app
+            - block breadcrumbs
+
+        #content
+            - block content
+
+        %script{type: "text/javascript"}
+            $('#warning_js').hide();
+            - block optional_script

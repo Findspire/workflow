@@ -63,6 +63,7 @@
             Edit details
 
         %form{action: ".",  method: "POST"}
+            - csrf_token
             {{ form_description.as_p }}
             %input{type: "submit", value:"Post", name: "_description"}
             %input{type: "submit", value:"Cancel", onClick:"details_see(); return false;"}
@@ -87,6 +88,7 @@
         %h2
             Add comment
         %form{action: '.', method:"POST"}
+            - csrf_token
             {{ form_comment.as_p }}
             %input{type: "submit", value:"Post", name: "_comment"}
 

@@ -1,4 +1,5 @@
 - extends "workflow/base.haml"
+
 - load workflow_tags
 
 - block breadcrumbs
@@ -24,6 +25,8 @@
                                     {{ workflow.version }}
                                 \-
                                 Complete {{ workflow|get_percent:'success' }}% ({{ workflow|get_count:'failed' }} failed - {{ workflow|get_count:'untested' }} untested)
+                                \-
+                                Started on {{ workflow.creation_date }}
                 - else
                     %p
                         %em

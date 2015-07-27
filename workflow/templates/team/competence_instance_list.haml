@@ -1,0 +1,14 @@
+- extends "team/base.haml"
+
+- block breadcrumbs
+    List competence
+
+- block content
+    %h1
+        List competence
+
+    %ul
+        - for competence in object_list
+            %li
+                {{ competence.techno }} - {{ competence.person }} - {{ competence.strength }}
+

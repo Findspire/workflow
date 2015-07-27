@@ -8,6 +8,8 @@
         Workflow creation
 
     %form{action: "{% url 'workflow:workflow_new' %}", method: "POST"}
+        - csrf_token
+
         %fieldset.module.aligned
             {{ form.as_p }}
 

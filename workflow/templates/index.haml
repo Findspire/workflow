@@ -1,0 +1,13 @@
+- extends "base.haml"
+
+- block content
+    %h1
+        Workflow
+
+    %ul
+        %li
+            %a{href: "{% url 'team:index' %}"}
+                Team
+        %li
+            %a{href: "{% url 'workflow:index' %}"}
+                Workflow

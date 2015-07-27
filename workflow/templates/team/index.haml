@@ -1,0 +1,48 @@
+- extends "team/base.haml"
+
+- load static
+
+- block breadcrumbs
+    Index
+
+- block content
+    %h1
+        Team management
+
+    %table
+        %tr
+            %th
+                %a{href: "{% url 'team:index' %}"}
+                    Person
+        %tr
+            %th
+                %a{href: "{% url 'team:index' %}"}
+                    Team
+        %tr
+            %th
+               Competence categories
+            %td
+                %a{href: "{% url 'team:competence_category_list' %}"}
+                    List
+            %td
+                %a{href: "{% url 'team:competence_category_new' %}"}
+                    Create
+        %tr
+            %th
+                Competence subject
+            %td
+                %a{href: "{% url 'team:competence_subject_list' %}"}
+                    List
+            %td
+                %a{href: "{% url 'team:competence_subject_new' %}"}
+                    Create
+
+        %tr
+            %th
+                Competence instance
+            %td
+                %a{href: "{% url 'team:competence_list' %}"}
+                    List
+            %td
+                %a{href: "{% url 'team:competence_new' %}"}
+                    Create

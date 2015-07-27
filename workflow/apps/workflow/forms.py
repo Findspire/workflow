@@ -2,12 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-
-from workflow.apps.workflow.models import Project, WorkflowInstance, ItemModel, ItemInstance, Comment, ItemModel
-
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.html import format_html, html_safe
 from django.utils.safestring import mark_safe
+
+from .models import Project, WorkflowInstance, ItemModel, ItemInstance, Comment, ItemModel
 
 
 @html_safe

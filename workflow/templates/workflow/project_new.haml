@@ -8,6 +8,8 @@
         Project creation
 
     %form{action: "{% url 'workflow:project_new' %}", method: "POST"}
+        - csrf_token
+
         %fieldset.module.aligned
             {{ form.as_p }}
 

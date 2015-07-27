@@ -1,0 +1,13 @@
+- extends "team/base.haml"
+
+- block breadcrumbs
+    List competence subjects
+
+- block content
+    %h1
+        List competence subjects
+
+    %ul
+        - for subject in object_list
+            %li
+                {{ subject.name }} - {{ subject.category }} - {{ subject.description }}

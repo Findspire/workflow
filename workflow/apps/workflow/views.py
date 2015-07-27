@@ -7,17 +7,15 @@ from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
-from workflow.apps.workflow.models import Comment, ItemInstance, ItemModel, Person, Project, WorkflowInstance
-from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm, WorkflowInstanceNewForm
-
-
-def welcome(request):
-    return HttpResponseRedirect(reverse('workflow:index'))
+from .models import Comment, ItemInstance, ItemModel, Project, WorkflowInstance
+from ..team.models import Person, Team
+from .forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm, WorkflowInstanceNewForm
 
 
 @login_required
 def index(request):
     return render(request, 'workflow/index.haml')
+
 
 @login_required
 def _project_handle_form(request, project, template):

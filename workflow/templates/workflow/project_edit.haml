@@ -8,6 +8,8 @@
         Project edition
 
     %form{action: "{% url 'workflow:project_edit' project_pk %}", method: "POST"}
+        - csrf_token
+
         %fieldset.module.aligned
             {{ form.as_p }}
 
