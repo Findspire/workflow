@@ -4,20 +4,11 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
-from django.forms.models import model_to_dict
-from django.views.generic.edit import ModelFormMixin, ProcessFormView
-from django.views.generic.detail import SingleObjectTemplateResponseMixin
+from django.shortcuts import render
 from django.views.generic.list import ListView
-from django.http.response import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.utils.decorators import method_decorator
-
-from django.core.urlresolvers import reverse
 
 from .views_generic import CreateUpdateView, LoginRequiredMixin
-from .models import CompetenceCategory, CompetenceSubject, CompetenceInstance
-from .forms import CompetenceCategoryForm, CompetenceSubjectForm, CompetenceInstanceForm
-
+from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject
 
 @login_required
 def index(request):
@@ -48,23 +39,31 @@ class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceSubject
     fields = ['name', 'category', 'description']
 
+    def get_initial(self):
+        """
+        Returns the initial data to use for forms on this view.
+        """
+        ret = self.initial.copy()
+        category_pk = self.kwargs.get('category_pk', None)
+        if category_pk is not None:  # new competence with assigned subject, set its pk for the form
+            ret['category'] = category_pk
+        return ret
+
     def get_bonus_context_data(self):
         return {
             'title': 'Competence subject ' + ('update' if self.is_update_request() else 'creation'),
         }
 
 
-class CompetenceInstanceListView(ListView):
-    model = CompetenceInstance
-    template_name = 'team/competence_instance_list.haml'
+@login_required
+def competences_list(request):
+    categories = CompetenceCategory.objects.all()
 
+    context = {
+        'categories': {},
+    }
 
-class CompetenceCategoryListView(ListView):
-    model = CompetenceCategory
-    template_name = 'team/competence_category_list.haml'
+    for cat in categories:
+        context['categories'][cat] = CompetenceSubject.objects.filter(category=cat)
 
-
-class CompetenceSubjectListView(ListView):
-    model = CompetenceSubject
-    template_name = 'team/competence_subject_list.haml'
-
+    return render(request, 'team/competences_list.haml', context)

@@ -66,7 +66,7 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
         return {}
 
     def get_success_url(self):
-        return reverse('team:index')
+        return reverse('team:competences_list')
 
 
 class LoginRequiredMixin(object):

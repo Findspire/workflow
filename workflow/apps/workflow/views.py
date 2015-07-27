@@ -8,7 +8,7 @@ from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from .models import Comment, ItemInstance, ItemModel, Project, WorkflowInstance
-from ..team.models import Person, Team
+from ..team.models import Person
 from .forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm, WorkflowInstanceNewForm
 
 
