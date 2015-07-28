@@ -1,6 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+This module extend the django class based views: it merge CreateView and UpdateView.
+
+Usage:
+    Like any django class based view. LoginRequiredMixin is optional.
+
+    class SomeView(LoginRequiredMixin, CreateUpdateView):
+        model = SomeModel
+        form_class = SomeModelForm
+        success_url = '/some/url/'
+
+-----
+
+BaseCreateUpdateView:
+    This is an internal class, like django's BaseCreateView or BaseUpdateView.
+    It should not be used directly (cf. the django comments)
+
+CreateUpdateView:
+    This is used instead of the django's CreateView and UpdateView.
+    It overwrite some methods :
+        get_context_data: Add a few var in the template context
+        get_initial: Add the param passed through the url to the initial_data used to instanciate the form.
+
+"""
+
 from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
@@ -55,11 +80,18 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateUpdateView, self).get_context_data(**kwargs)
-        action = ('update' if self.is_update_request() else 'creation')
-        context.update({
-            'title': ' '.join((self.model._meta.verbose_name, action)),
-            'submit': action.capitalize(),
-        })
+
+        if self.is_update_request():
+            context.update({
+                'title': '{} update'.format(self.model._meta.verbose_name.capitalize()),
+                'submit': 'Update',
+            })
+        else:
+            context.update({
+                'title': '{} creation'.format(self.model._meta.verbose_name.capitalize()),
+                'submit': 'Save',
+            })
+
         return context
 
     def get_initial(self):

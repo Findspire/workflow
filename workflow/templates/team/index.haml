@@ -9,27 +9,30 @@
     %h1
         Team management
 
-    %ul
-        %li
-            %a{href: "{% url 'team:competences_list' %}"}
-                List competences
-        %li
-            %a{href: "{% url 'team:competence_category_new' %}"}
-                Create competence category
-        %li
-            %a{href: "{% url 'team:competence_subject_new' %}"}
-                Create competence subject
-        %li
-            %a{href: "{% url 'team:team_new' %}"}
-                Create team
-        %li
-            %a{href: "{% url 'team:team_list' %}"}
-                List teams
-
-
-        %li
-            %a{href: "{% url 'team:index' %}"}
-                Person
-        %li
-            %a{href: "{% url 'team:index' %}"}
-                Team
+    %table
+        %tr
+            %th
+                    Person
+            %td
+                    Add
+        %tr
+            %th
+                %a{href: "{% url 'team:team_list' %}"}
+                    Team
+             %td
+                %a{href: "{% url 'team:team_new' %}"}
+                    Add
+        %tr
+            %th
+                %a{href: "{% url 'team:competence_subject_list' %}"}
+                    Competence categories
+            %td
+                %a{href: "{% url 'team:competence_category_new' %}"}
+                    Add
+        %tr
+            %th
+                %a{href: "{% url 'team:competence_subject_list' %}"}
+                    Competence subjects
+            %td
+                %a{href: "{% url 'team:competence_subject_new' %}"}
+                    Add

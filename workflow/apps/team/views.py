@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -18,23 +19,23 @@ def index(request):
 class CompetenceInstanceView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceInstance
     fields = ['techno', 'person', 'strength']
-    success_url = '/team/competences/list/'
+    success_url = reverse_lazy('team:competence_subject_list')
 
 
 class CompetenceCategoryView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceCategory
     fields = ['name']
-    success_url = '/team/competences/list/'
+    success_url = reverse_lazy('team:competence_subject_list')
 
 
 class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceSubject
     fields = ['name', 'category', 'description']
-    success_url = '/team/competences/list/'
+    success_url = reverse_lazy('team:competence_subject_list')
 
 
 @login_required
-def competences_list(request):
+def competence_subject_list(request):
     categories = CompetenceCategory.objects.all()
 
     context = {
@@ -50,7 +51,7 @@ def competences_list(request):
 class TeamView(LoginRequiredMixin, CreateUpdateView):
     model = Team
     fields = ['name', 'leader', 'members']
-    success_url = '/team/team/list/'
+    success_url = reverse_lazy('team:team_list')
 
 
 @login_required

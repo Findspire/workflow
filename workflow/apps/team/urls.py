@@ -8,13 +8,13 @@ from . import views
 urlpatterns = patterns('workflow.apps.team',
     url(r'^$', 'views.index', name='index'),
 
-    url(r'^competence/new/$', views.CompetenceInstanceView.as_view(), name='competence_new'),
-    url(r'^competence/edit/(?P<pk>\d+)/$', views.CompetenceInstanceView.as_view(), name='competence_edit'),
-    url(r'^competence/list/$', views.competences_list, name='competences_list'),
+    url(r'^competence/new/$', views.CompetenceInstanceView.as_view(), name='competence_instance_new'),
+    url(r'^competence/edit/(?P<pk>\d+)/$', views.CompetenceInstanceView.as_view(), name='competence_instance_edit'),
 
     url(r'^competence/subject/new/$', views.CompetenceSubjectView.as_view(), name='competence_subject_new'),
     url(r'^competence/subject/new/(?P<category>\d+)/$', views.CompetenceSubjectView.as_view(), name='competence_subject_new'),
     url(r'^competence/subject/edit/(?P<pk>\d+)/$', views.CompetenceSubjectView.as_view(), name='competence_subject_edit'),
+    url(r'^competence/subject/list/$', views.competence_subject_list, name='competence_subject_list'),
 
     url(r'^competence/category/new/$', views.CompetenceCategoryView.as_view(), name='competence_category_new'),
     url(r'^competence/category/edit/(?P<pk>\d+)/$', views.CompetenceCategoryView.as_view(), name='competence_category_edit'),
