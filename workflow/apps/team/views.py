@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.views.generic.list import ListView
 
 from workflow.utils.generic_views import CreateUpdateView, LoginRequiredMixin
 from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject, Team
@@ -32,16 +31,6 @@ class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceSubject
     fields = ['name', 'category', 'description']
     success_url = '/team/competences/list/'
-
-    def get_initial(self):
-        """
-        Returns the initial data to use for forms on this view.
-        """
-        ret = self.initial.copy()
-        category_pk = self.kwargs.get('category_pk', None)
-        if category_pk is not None:  # new competence with assigned subject, set its pk for the form
-            ret['category'] = category_pk
-        return ret
 
 
 @login_required

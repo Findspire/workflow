@@ -42,16 +42,6 @@ class WorkflowView(LoginRequiredMixin, CreateUpdateView):
     model = WorkflowInstance
     fields = ['project', 'version']
 
-    def get_initial(self):
-        """
-        Returns the initial data to use for forms on this view.
-        """
-        ret = self.initial.copy()
-        project_pk = self.kwargs.get('project_pk', None)
-        if project_pk is not None:  # new competence with assigned subject, set its pk for the form
-            ret['project'] = project_pk
-        return ret
-
 
 @login_required
 def workflow_show(request, workflow_pk, which_display):

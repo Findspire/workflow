@@ -62,6 +62,11 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
         })
         return context
 
+    def get_initial(self):
+        initial = super(CreateUpdateView, self).get_initial()
+        initial.update(self.kwargs)  # add the param passed by the url
+        return initial
+
 
 class LoginRequiredMixin(object):
     """Ensures that user must be authenticated in order to access the view."""

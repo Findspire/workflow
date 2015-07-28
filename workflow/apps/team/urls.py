@@ -13,7 +13,7 @@ urlpatterns = patterns('workflow.apps.team',
     url(r'^competence/list/$', views.competences_list, name='competences_list'),
 
     url(r'^competence/subject/new/$', views.CompetenceSubjectView.as_view(), name='competence_subject_new'),
-    url(r'^competence/subject/new/(?P<category_pk>\d+)/$', views.CompetenceSubjectView.as_view(), name='competence_subject_new'),
+    url(r'^competence/subject/new/(?P<category>\d+)/$', views.CompetenceSubjectView.as_view(), name='competence_subject_new'),
     url(r'^competence/subject/edit/(?P<pk>\d+)/$', views.CompetenceSubjectView.as_view(), name='competence_subject_edit'),
 
     url(r'^competence/category/new/$', views.CompetenceCategoryView.as_view(), name='competence_category_new'),
