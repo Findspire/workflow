@@ -7,16 +7,32 @@
     %h1
         Workflow management
 
-    %ul
-        %li
-            %a{href: "{% url 'workflow:project_list' %}"}
-                List projects and workflows
-        %li
-            %a{href: "{% url 'workflow:project_new' %}"}
-                Create a new project
-        %li
-            %a{href: "{% url 'workflow:workflow_new' %}"}
-                Create a new workflow
-        %li
-            %a{href: "{% url 'workflow:itemmodel_new' %}"}
-                Create items models
+    %table
+        %tr
+            %th
+                %a{href: "{% url 'workflow:project_list' %}"}
+                    Projects
+            %td
+                %a{href: "{% url 'workflow:project_new' %}"}
+                    Add
+        %tr
+            %th
+                %a{href: "{% url 'workflow:project_list' %}"}
+                    Workflows
+             %td
+                %a{href: "{% url 'workflow:workflow_new' %}"}
+                    Add
+        %tr
+            %th
+                %a{href: ""}
+                    Item categories (todo)
+             %td
+                %a{href: "{% url 'workflow:item_category_new' %}"}
+                    Add
+        %tr
+            %th
+                %a{href: ""}
+                    Item models (todo)
+             %td
+                %a{href: "{% url 'workflow:item_model_new' %}"}
+                    Add

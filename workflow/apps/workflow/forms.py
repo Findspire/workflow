@@ -2,7 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from .models import Project, WorkflowInstance, ItemModel, ItemInstance, ItemCategory, Comment
+from .models import Project, ItemModel, ItemCategory, Comment
+
+
+class MyCheckboxFieldRenderer(forms.widgets.CheckboxFieldRenderer):
+    inner_html = '<li><label>{choice_value}</label>{sub_widgets}</li>'
+
+
+class MyCheckboxSelectMultiple(forms.widgets.CheckboxSelectMultiple):
+    renderer = MyCheckboxFieldRenderer
 
 
 class ProjectNewForm(forms.ModelForm):
@@ -18,21 +26,9 @@ class ProjectNewForm(forms.ModelForm):
 
     items = forms.MultipleChoiceField(
         choices=choices,
-        widget=forms.CheckboxSelectMultiple,
+        widget=MyCheckboxSelectMultiple,
         required=False,
     )
-
-
-class ItemModelNewForm(forms.ModelForm):
-    class Meta:
-        model = ItemModel
-        fields = ['name', 'description', 'category']
-
-
-class ItemInstanceNewForm(forms.ModelForm):
-    class Meta:
-        model = ItemInstance
-        fields = ['item_model', 'assigned_to', 'validation']
 
 
 class CommentNewForm(forms.ModelForm):

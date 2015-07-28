@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from workflow.utils.generic_views import CreateUpdateView, LoginRequiredMixin
-from .models import Comment, ItemInstance, ItemModel, Project, WorkflowInstance
+from .models import Comment, ItemInstance, ItemModel, ItemCategory, Project, WorkflowInstance
 from ..team.models import Person
-from .forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm
+from .forms import CommentNewForm, ItemDetailForm, ProjectNewForm
 
 
 @login_required
@@ -18,27 +18,21 @@ def index(request):
     return render(request, 'workflow/index.haml')
 
 
-class ProjectView(LoginRequiredMixin, CreateUpdateView):
+class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
     model = Project
     form_class = ProjectNewForm
-    success_url = '/workflow/project/list/'
+    success_url = reverse_lazy('workflow:project_list')
 
 
 @login_required
 def project_list(request):
-    projects = Project.objects.all()
-
     context = {
-        'projects': {},
+        'projects': {project:WorkflowInstance.objects.filter(project=project) for project in Project.objects.all()}
     }
-
-    for project in projects:
-        context['projects'][project] = WorkflowInstance.objects.filter(project=project)
-
     return render(request, 'workflow/project_list.haml', context)
 
 
-class WorkflowView(LoginRequiredMixin, CreateUpdateView):
+class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     model = WorkflowInstance
     fields = ['project', 'version']
 
@@ -54,7 +48,7 @@ def workflow_show(request, workflow_pk, which_display):
     workflow = get_object_or_404(WorkflowInstance, pk=workflow_pk)
 
     # group by category
-    items_list = workflow.get_items(which_display, request_person).select_related('item_model__category', 'assigned_to__user')
+    items_list = workflow.get_items(which_display, request_person)
     items_dic = {}
     for item in items_list:
         items_dic.setdefault(item.item_model.category, [])
@@ -71,29 +65,20 @@ def workflow_show(request, workflow_pk, which_display):
     return render(request, 'workflow/workflow_show.haml', context)
 
 
-@login_required
-def itemmodel_new(request):
-    if request.method == 'POST':
-        form = ItemModelNewForm(request.POST)
-        if form.is_valid():
-            im = ItemModel()
-            im.name = form.cleaned_data['name']
-            im.description = form.cleaned_data['description']
-            im.category = form.cleaned_data['category']
-            im.save()
+class ItemModelFormView(LoginRequiredMixin, CreateUpdateView):
+    model = ItemModel
+    fields = ['name', 'description', 'category']
+    success_url = reverse_lazy('workflow:project_list')
 
-            return HttpResponseRedirect('/')
-            # todo responseredirect item model list
-        else:
-            return render(request, 'workflow/itemmodel_new.haml', {'form': form})
-    else:
-        form = ItemModelNewForm()
 
-    return render(request, 'workflow/itemmodel_new.haml', {'form': form})
+class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
+    model = ItemCategory
+    fields = ['name']
+    success_url = reverse_lazy('workflow:project_list')
 
 
 @login_required
-def iteminstance_show(request, item_pk):
+def item_instance_show(request, item_pk):
     item = get_object_or_404(ItemInstance, id=item_pk)
 
     # default
@@ -109,13 +94,13 @@ def iteminstance_show(request, item_pk):
                 c.person = get_object_or_404(Person, user=request.user)
                 c.text = form_comment.cleaned_data['text']
                 c.save()
-                return HttpResponseRedirect(reverse('workflow:iteminstance_show', args=[item.pk]))
+                return HttpResponseRedirect(reverse('workflow:item_instance_show', args=[item.pk]))
         elif '_description' in request.POST:
             form_description = ItemDetailForm(request.POST, initial=model_to_dict(item.item_model))
             if form_description.is_valid():
                 item.item_model.description = form_description.cleaned_data['description']
                 item.item_model.save()
-                return HttpResponseRedirect(reverse('workflow:iteminstance_show', args=[item.pk]))
+                return HttpResponseRedirect(reverse('workflow:item_instance_show', args=[item.pk]))
 
     context = {
         'item': item,
@@ -125,7 +110,7 @@ def iteminstance_show(request, item_pk):
         'ItemInstance': ItemInstance,
     }
 
-    return render(request, 'workflow/iteminstance_show.haml', context)
+    return render(request, 'workflow/item_instance_show.haml', context)
 
 
 @login_required
