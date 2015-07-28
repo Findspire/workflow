@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic.list import ListView
 
-from .views_generic import CreateUpdateView, LoginRequiredMixin
-from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject
+from workflow.utils.generic_views import CreateUpdateView, LoginRequiredMixin
+from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject, Team
+
 
 @login_required
 def index(request):
@@ -18,26 +19,19 @@ def index(request):
 class CompetenceInstanceView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceInstance
     fields = ['techno', 'person', 'strength']
-
-    def get_bonus_context_data(self):
-        return {
-            'title': 'Competence instance ' + ('update' if self.is_update_request() else 'creation'),
-        }
+    success_url = '/team/competences/list/'
 
 
 class CompetenceCategoryView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceCategory
     fields = ['name']
-
-    def get_bonus_context_data(self):
-        return {
-            'title': 'Competence category ' + ('update' if self.is_update_request() else 'creation'),
-        }
+    success_url = '/team/competences/list/'
 
 
 class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceSubject
     fields = ['name', 'category', 'description']
+    success_url = '/team/competences/list/'
 
     def get_initial(self):
         """
@@ -48,11 +42,6 @@ class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
         if category_pk is not None:  # new competence with assigned subject, set its pk for the form
             ret['category'] = category_pk
         return ret
-
-    def get_bonus_context_data(self):
-        return {
-            'title': 'Competence subject ' + ('update' if self.is_update_request() else 'creation'),
-        }
 
 
 @login_required
@@ -67,3 +56,18 @@ def competences_list(request):
         context['categories'][cat] = CompetenceSubject.objects.filter(category=cat)
 
     return render(request, 'team/competences_list.haml', context)
+
+
+class TeamView(LoginRequiredMixin, CreateUpdateView):
+    model = Team
+    fields = ['name', 'leader', 'members']
+    success_url = '/team/team/list/'
+
+
+@login_required
+def team_list(request):
+    context = {
+        'teams': Team.objects.select_related(),
+    }
+
+    return render(request, 'team/team_list.haml', context)

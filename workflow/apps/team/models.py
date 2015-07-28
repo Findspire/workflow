@@ -37,6 +37,10 @@ class Team(models.Model):
 
 
 class CompetenceCategory(models.Model):
+    class Meta:
+        verbose_name = 'competence category'
+        verbose_name_plural = 'competence categories'
+
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -44,6 +48,10 @@ class CompetenceCategory(models.Model):
 
 
 class CompetenceSubject(models.Model):
+    class Meta:
+        verbose_name = 'competence subject'
+        verbose_name_plural = 'competence subjects'
+
     name = models.CharField(max_length=255)
     category = models.ForeignKey(CompetenceCategory)
     description = models.CharField(max_length=1024, null=True, blank=True)
@@ -53,6 +61,10 @@ class CompetenceSubject(models.Model):
 
 
 class CompetenceInstance(models.Model):
+    class Meta:
+        verbose_name = 'competence instance'
+        verbose_name_plural = 'competence instances'
+
     techno = models.ForeignKey(CompetenceSubject)
     person = models.ForeignKey(Person)
     strength = models.IntegerField()

@@ -51,22 +51,16 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
     View for creating a new object instance or updating an existing one,
     with a response rendered by template.
     """
-    template_name_suffix = '_form'
-    template_name = 'team/views_generic_form.haml'
+    template_name = 'utils/generic_views_form.haml'
 
     def get_context_data(self, **kwargs):
         context = super(CreateUpdateView, self).get_context_data(**kwargs)
+        action = ('update' if self.is_update_request() else 'creation')
         context.update({
-            'submit': 'Update' if self.is_update_request() else 'Create',
+            'title': ' '.join((self.model._meta.verbose_name, action)),
+            'submit': action.capitalize(),
         })
-        context.update(self.get_bonus_context_data())
         return context
-
-    def get_bonus_context_data(self):
-        return {}
-
-    def get_success_url(self):
-        return reverse('team:competences_list')
 
 
 class LoginRequiredMixin(object):

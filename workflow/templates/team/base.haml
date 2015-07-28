@@ -1,6 +1,6 @@
 - extends "base.haml"
 
 - block breadcrumbs_app
-    %a{href: "/Team/"}
+    %a{href: "{% url 'team:index' %}"}
         Team
     ›

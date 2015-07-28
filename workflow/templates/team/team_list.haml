@@ -1,0 +1,15 @@
+- extends "team/base.haml"
+
+- block breadcrumbs
+    List teams
+
+- block content
+    %h1
+        List teams
+
+    %ul
+        - for team in teams
+            %li
+                %a{href: "{% url 'team:team_edit' team.pk %}"}
+                    {{ team.name }} - {{ team.leader }} - {{ team.members.all|length }} member(s)
+
