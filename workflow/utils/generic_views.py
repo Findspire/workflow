@@ -95,7 +95,7 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
 
     def get_initial(self):
         initial = super(CreateUpdateView, self).get_initial()
-        initial.update(self.kwargs)  # add the param passed by the url
+        initial.update(self.kwargs)  # add the param passed by the url to the initial form data
         return initial
 
 

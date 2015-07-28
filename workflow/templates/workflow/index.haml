@@ -24,15 +24,11 @@
                     Add
         %tr
             %th
-                %a{href: ""}
-                    Item categories (todo)
+                %a{href: "{% url 'workflow:item_model_list' %}"}
+                    Items
              %td
                 %a{href: "{% url 'workflow:item_category_new' %}"}
-                    Add
-        %tr
-            %th
-                %a{href: ""}
-                    Item models (todo)
-             %td
+                    Add category
+                \-
                 %a{href: "{% url 'workflow:item_model_new' %}"}
-                    Add
+                    Add model

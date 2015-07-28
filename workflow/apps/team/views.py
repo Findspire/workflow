@@ -36,15 +36,9 @@ class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
 
 @login_required
 def competence_subject_list(request):
-    categories = CompetenceCategory.objects.all()
-
     context = {
-        'categories': {},
+        'categories': {cat:CompetenceSubject.objects.filter(category=cat) for cat in CompetenceCategory.objects.all()},
     }
-
-    for cat in categories:
-        context['categories'][cat] = CompetenceSubject.objects.filter(category=cat)
-
     return render(request, 'team/competences_list.haml', context)
 
 
@@ -59,5 +53,4 @@ def team_list(request):
     context = {
         'teams': Team.objects.select_related(),
     }
-
     return render(request, 'team/team_list.haml', context)

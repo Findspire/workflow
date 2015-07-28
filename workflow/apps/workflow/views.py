@@ -67,7 +67,7 @@ def workflow_show(request, workflow_pk, which_display):
 
 class ItemModelFormView(LoginRequiredMixin, CreateUpdateView):
     model = ItemModel
-    fields = ['name', 'description', 'category']
+    fields = ['name', 'category', 'description']
     success_url = reverse_lazy('workflow:project_list')
 
 
@@ -165,3 +165,11 @@ def update(request, action, model, pk, pk_other=None):
 
     default_url = reverse('workflow:workflow_show', args=[workflow_pk, 'all'])
     return HttpResponseRedirect(request.GET.get('next', default_url))
+
+
+@login_required
+def item_model_list(request):
+    context = {
+        'categories': {cat:ItemModel.objects.filter(category=cat) for cat in ItemCategory.objects.all()},
+    }
+    return render(request, 'workflow/item_list.haml', context)

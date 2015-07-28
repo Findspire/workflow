@@ -21,8 +21,8 @@
                             %li
                                 %a{href: "{% url 'team:competence_subject_edit' subject.pk %}"}
                                     {{ subject.name }}
-                                    %em
-                                        {{ subject.description }}
+                                %em
+                                    {{ subject.description }}
                 - else
                     %p
                         %em
