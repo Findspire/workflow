@@ -7,6 +7,7 @@ from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
+from workflow.utils.generic_views import CreateUpdateView, LoginRequiredMixin
 from .models import Comment, ItemInstance, ItemModel, Project, WorkflowInstance
 from ..team.models import Person
 from .forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm, WorkflowInstanceNewForm
@@ -17,34 +18,10 @@ def index(request):
     return render(request, 'workflow/index.haml')
 
 
-@login_required
-def _project_handle_form(request, project, template):
-    if request.method == 'POST':
-        form = ProjectNewForm(request.POST)
-        if form.is_valid():
-            project.name = form.cleaned_data['name']
-            project.team = form.cleaned_data['team']
-            project.save()  # for the m2m below
-            project.items = form.cleaned_data['items']
-            project.save()
-
-            return HttpResponseRedirect(reverse('workflow:project_list'))
-        else:
-            return render(request, template, {'form': form})
-    else:
-        form = ProjectNewForm(initial=model_to_dict(project))
-
-    return render(request, template, {'form': form, 'project_pk': project.pk})
-
-
-@login_required
-def project_new(request):
-    return _project_handle_form(request, Project(), 'workflow/project_new.haml')
-
-
-@login_required
-def project_edit(request, project_pk):
-    return _project_handle_form(request, get_object_or_404(Project, pk=project_pk), 'workflow/project_edit.haml')
+class ProjectView(LoginRequiredMixin, CreateUpdateView):
+    model = Project
+    form_class = ProjectNewForm
+    success_url = '/workflow/project/list/'
 
 
 @login_required
