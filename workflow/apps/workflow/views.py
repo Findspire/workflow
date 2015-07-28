@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from workflow.utils.generic_views import CreateUpdateView, LoginRequiredMixin
 from .models import Comment, ItemInstance, ItemModel, Project, WorkflowInstance
 from ..team.models import Person
-from .forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm, WorkflowInstanceNewForm
+from .forms import CommentNewForm, ItemDetailForm, ItemModelNewForm, ProjectNewForm
 
 
 @login_required
@@ -38,26 +38,19 @@ def project_list(request):
     return render(request, 'workflow/project_list.haml', context)
 
 
-@login_required
-def workflow_new(request, project_pk=None):
-    if request.method == 'POST':
-        form = WorkflowInstanceNewForm(request.POST)
-        if form.is_valid():
-            wi = WorkflowInstance()
-            wi.project = form.cleaned_data['project']
-            wi.version = form.cleaned_data['version']
-            wi.save()
+class WorkflowView(LoginRequiredMixin, CreateUpdateView):
+    model = WorkflowInstance
+    fields = ['project', 'version']
 
-            for i in wi.project.items.all():
-                ItemInstance.objects.create(item_model=i, workflow=wi)
-
-            return HttpResponseRedirect(reverse('workflow:workflow_show', args=[wi.pk, 'all']))
-        else:
-            return render(request, 'workflow/workflow_new.haml', {'form': form})
-    else:
-        form = WorkflowInstanceNewForm(initial={'project': project_pk})
-
-    return render(request, 'workflow/workflow_new.haml', {'form': form})
+    def get_initial(self):
+        """
+        Returns the initial data to use for forms on this view.
+        """
+        ret = self.initial.copy()
+        project_pk = self.kwargs.get('project_pk', None)
+        if project_pk is not None:  # new competence with assigned subject, set its pk for the form
+            ret['project'] = project_pk
+        return ret
 
 
 @login_required

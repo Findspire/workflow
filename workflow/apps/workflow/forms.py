@@ -23,12 +23,6 @@ class ProjectNewForm(forms.ModelForm):
     )
 
 
-class WorkflowInstanceNewForm(forms.ModelForm):
-    class Meta:
-        model = WorkflowInstance
-        fields = ['project', 'version']
-
-
 class ItemModelNewForm(forms.ModelForm):
     class Meta:
         model = ItemModel

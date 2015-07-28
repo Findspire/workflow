@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
@@ -65,6 +66,20 @@ class WorkflowInstance(models.Model):
         value = self.get_count(which_display, person)
         total = self.get_count('all', person)
         return (100 * value / total) if (total != 0) else 100
+
+    def get_absolute_url(self):
+        return reverse('workflow:workflow_show', args=[self.pk, 'all'])
+
+    def save(self, *args, **kwargs):
+        pk_saved = self.pk
+
+        # save Workflow first, to have the pk for the later foreignkey from ItemInstance - if needed
+        super(WorkflowInstance, self).save(*args, **kwargs)
+
+        # if the object is just created and not updated, create its ItemInstances
+        if pk_saved == None:
+            for item in self.project.items.all():
+                ItemInstance.objects.create(item_model=item, workflow=self)
 
 
 class ItemInstance(models.Model):
