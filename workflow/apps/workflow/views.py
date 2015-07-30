@@ -7,7 +7,9 @@ from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
-from workflow.utils.generic_views import CreateUpdateView, LoginRequiredMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin
+
+from workflow.utils.generic_views import CreateUpdateView
 from .models import Comment, ItemInstance, ItemModel, ItemCategory, Project, WorkflowInstance
 from ..team.models import Person
 from .forms import CommentNewForm, ItemDetailForm, ProjectNewForm

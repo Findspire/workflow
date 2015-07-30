@@ -7,7 +7,9 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from workflow.utils.generic_views import CreateUpdateView, LoginRequiredMixin
+from braces.views import LoginRequiredMixin
+
+from workflow.utils.generic_views import CreateUpdateView
 from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject, Team
 
 

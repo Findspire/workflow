@@ -28,10 +28,8 @@ CreateUpdateView:
 
 from __future__ import unicode_literals
 
-from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
-from django.utils.decorators import method_decorator
 
 
 class BaseCreateUpdateView(ModelFormMixin, ProcessFormView):
@@ -97,10 +95,3 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
         initial = super(CreateUpdateView, self).get_initial()
         initial.update(self.kwargs)  # add the param passed by the url to the initial form data
         return initial
-
-
-class LoginRequiredMixin(object):
-    """Ensures that user must be authenticated in order to access the view."""
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)

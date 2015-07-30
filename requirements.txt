@@ -1,9 +1,10 @@
 django==1.8
+django-braces==1.8
+django_user_agents==0.3.0
 gunicorn==19.3
 hamlpy==0.82.2
-django_user_agents==0.3.0
 
 # debug
-django-extensions
 django-debug-toolbar
 django-debug-toolbar-template-profiler
+django-extensions
