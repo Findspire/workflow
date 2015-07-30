@@ -70,13 +70,13 @@ def workflow_show(request, workflow_pk, which_display):
 class ItemModelFormView(LoginRequiredMixin, CreateUpdateView):
     model = ItemModel
     fields = ['name', 'category', 'description']
-    success_url = reverse_lazy('workflow:project_list')
+    success_url = reverse_lazy('workflow:item_model_list')
 
 
 class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
     model = ItemCategory
     fields = ['name']
-    success_url = reverse_lazy('workflow:project_list')
+    success_url = reverse_lazy('workflow:item_model_list')
 
 
 @login_required

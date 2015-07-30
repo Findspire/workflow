@@ -18,14 +18,16 @@ class ProjectNewForm(forms.ModelForm):
         model = Project
         fields = ['name', 'team', 'items']
 
-    choices = []
-    for cat in ItemCategory.objects.order_by('name'):
-        queryset = ItemModel.objects.filter(category=cat).order_by('name')
-        choices_tmp = [(c.pk, c.name) for c in queryset]
-        choices.append((cat.name, choices_tmp))
+    def my_get_choices():
+        choices = []
+        for cat in ItemCategory.objects.order_by('name'):
+            queryset = ItemModel.objects.filter(category=cat).order_by('name')
+            choices_tmp = [(c.pk, c.name) for c in queryset]
+            choices.append((cat.name, choices_tmp))
+        return choices
 
     items = forms.MultipleChoiceField(
-        choices=choices,
+        choices=my_get_choices,
         widget=MyCheckboxSelectMultiple,
         required=False,
     )

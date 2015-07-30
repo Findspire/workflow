@@ -24,7 +24,7 @@ class Person(models.Model):
     phone_number = models.CharField(max_length=32, null=True, blank=True)
 
     def __unicode__(self):
-        return '%s %s' % (self.user.first_name, self.user.last_name.upper())
+        return '%s' % (self.user)
 
 
 class Team(models.Model):

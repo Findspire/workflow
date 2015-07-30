@@ -11,17 +11,13 @@
         %tr
             %th
                 %a{href: "{% url 'workflow:project_list' %}"}
-                    Projects
+                    Projects and Workflows
             %td
                 %a{href: "{% url 'workflow:project_new' %}"}
-                    Add
-        %tr
-            %th
-                %a{href: "{% url 'workflow:project_list' %}"}
-                    Workflows
-             %td
+                    Add project
+                \-
                 %a{href: "{% url 'workflow:workflow_new' %}"}
-                    Add
+                    Add workflow
         %tr
             %th
                 %a{href: "{% url 'workflow:item_model_list' %}"}
