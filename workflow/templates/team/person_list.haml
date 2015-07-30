@@ -1,0 +1,14 @@
+- extends "team/base.haml"
+
+- block breadcrumbs
+    List persons
+
+- block content
+    %h1
+        List persons
+
+    %ul
+        - for person in persons
+            %li
+                %a{href: "{% url 'team:person_edit' person.pk %}"}
+                    {{ person }}

@@ -8,6 +8,10 @@ from . import views
 urlpatterns = patterns('workflow.apps.team',
     url(r'^$', 'views.index', name='index'),
 
+    url(r'^person/new/$', views.person_handle_form, name='person_new'),
+    url(r'^person/edit/(?P<pk>\d+)/$', views.person_handle_form, name='person_edit'),
+    url(r'^person/list/$', views.person_list, name='person_list'),
+
     url(r'^competence/new/$', views.CompetenceInstanceView.as_view(), name='competence_instance_new'),
     url(r'^competence/edit/(?P<pk>\d+)/$', views.CompetenceInstanceView.as_view(), name='competence_instance_edit'),
 
