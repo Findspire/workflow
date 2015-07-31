@@ -40,27 +40,46 @@ def person_handle_form(request, pk=None):
 
         if person_form.is_valid() and user_form.is_valid():
 
+            # django user
             if creating:
                 user.username = user_form.cleaned_data['username']
             user.first_name = user_form.cleaned_data['first_name']
             user.last_name = user_form.cleaned_data['last_name']
             user.save()
 
+            # person
             person.arrival_date = person_form.cleaned_data['arrival_date']
             person.contract_type = person_form.cleaned_data['contract_type']
             person.user = user
-
             person.save()
+
+            # competences
+            techno_current = set([c.techno for c in CompetenceInstance.objects.filter(person=person)])
+            techno_new = set([get_object_or_404(CompetenceSubject, pk=pk) for pk in person_form.cleaned_data['competences']])
+
+            for techno in techno_current - techno_new:
+                comp = get_object_or_404(CompetenceInstance, person=person, techno=techno)
+                comp.delete()
+
+            for techno in techno_new - techno_current:
+                comp = CompetenceInstance()
+                comp.techno = techno
+                comp.person = person
+                comp.strength = 42
+                comp.save()
 
             return HttpResponseRedirect(reverse('team:person_list'))
     else:
-        person_form = PersonForm(initial=model_to_dict(person))
+        initial = model_to_dict(person)
+        initial.update({'competences': [c.techno.pk for c in CompetenceInstance.objects.filter(person=person)]})
         user_form = UserForm(initial=model_to_dict(user))
+        person_form = PersonForm(initial=initial)
 
     context = {
         'person_form': person_form,
         'user_form': user_form,
         'creating': creating,
+        'person_pk': person.pk if person else None,
     }
 
     if creating:
