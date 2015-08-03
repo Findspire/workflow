@@ -11,9 +11,12 @@
     %hr
 
     #progressbar
-        #chart{style: "height:50px;"}
-
-        %div{style: "margin:15px;"}
+        %table
+            %tr
+                %td{class:"success", style:"width: {{ percent.success }}%"}
+                %td{class:"failed", style:"width: {{ percent.failed }}%"}
+                %td{class:"untested", style:"width: {{ percent.untested }}%"}
+        %div
             %ul
                 %li
                     %span{class:"success"}
@@ -60,43 +63,3 @@
     $(document).ready(function() {
         $("#filters ." + location.pathname.split('/')[5]+' input').attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
     });
-
-    google.load('visualization', '1.0', {'packages':['corechart']});
-    google.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        var wrapper = new google.visualization.ChartWrapper({
-            chartType: 'BarChart',
-            dataTable: [
-                ['', 'Sucess', 'Failed', 'Untested'],
-                ['', {{ counters.success }}, {{ counters.failed }}, {{ counters.untested }}],
-
-            ],
-            options: {
-                bar: {
-                    groupWidth: '100%'
-                },
-                chartArea: {
-                    left: 0,
-                    top: 0,
-                    width: '100%',
-                    height: '100%',
-                },
-                colors: [
-                    '#080',
-                    '#A22',
-                    '#888',
-                ],
-                hAxis: {
-                    viewWindowMode: 'maximized',
-                },
-                height: 50,
-                isStacked: true,
-                tooltip: {
-                    trigger: 'none',
-                },
-            },
-            containerId: 'chart'
-        });
-        wrapper.draw();
-    }
