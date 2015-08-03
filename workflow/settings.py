@@ -21,6 +21,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+COMP_STRENGTH_DEFAULT = 5
+
 ###############################
 # Dev vs Prod options
 ###############################

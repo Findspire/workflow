@@ -8,12 +8,12 @@
     › Show item
 
 - block content
-    %h1{style: "display:inline"}
+    %h1
         {{ item.item_model.name }} ({{ item.item_model.category.name }})
         %small{style: "color:gray;"}
             {{ item.workflow.project.name }} - {{ item.workflow.version }}
 
-    %div{style: "display:inline; float:right;"}
+    %div
         %span.take_untake_item
             - if item.assigned_to
                 {{ item.assigned_to }}
@@ -45,7 +45,7 @@
                 %a{href: "{% url 'workflow:update' 'failed' 'validate' item.pk %}?next={{ request.path }}", title: "Click to mark as broken"}
                     %img{src: "/static/workflow/img/validation_KO_disabled.png"}
 
-    %hr
+    %hr{style: "background-color: gray"}
 
     #details_see
         %h2
@@ -67,6 +67,8 @@
             {{ form_description.as_p }}
             %input{type: "submit", value:"Post", name: "_description"}
             %input{type: "submit", value:"Cancel", onClick:"details_see(); return false;"}
+
+    %hr
 
     #comments
         %h2

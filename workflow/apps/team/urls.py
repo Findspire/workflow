@@ -12,8 +12,9 @@ urlpatterns = patterns('workflow.apps.team',
     url(r'^person/edit/(?P<pk>\d+)/$', views.person_handle_form, name='person_edit'),
     url(r'^person/list/$', views.person_list, name='person_list'),
 
-    url(r'^competence/new/$', views.CompetenceInstanceView.as_view(), name='competence_instance_new'),
-    url(r'^competence/edit/(?P<pk>\d+)/$', views.CompetenceInstanceView.as_view(), name='competence_instance_edit'),
+    url(r'^competence/new/$', views.CompetenceInstanceFormView.as_view(), name='competence_instance_new'),
+    url(r'^competence/edit/(?P<pk>\d+)/$', views.CompetenceInstanceFormView.as_view(), name='competence_instance_edit'),
+    url(r'^competence/list/(?P<pk>\d+)/$', views.CompetenceInstanceListView.as_view(), name='competence_instance_list'),
 
     url(r'^competence/subject/new/$', views.CompetenceSubjectView.as_view(), name='competence_subject_new'),
     url(r'^competence/subject/new/(?P<category>\d+)/$', views.CompetenceSubjectView.as_view(), name='competence_subject_new'),

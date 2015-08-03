@@ -4,11 +4,13 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.views.generic.list import ListView
 
 from braces.views import LoginRequiredMixin
 
@@ -65,7 +67,7 @@ def person_handle_form(request, pk=None):
                 comp = CompetenceInstance()
                 comp.techno = techno
                 comp.person = person
-                comp.strength = 42
+                comp.strength = settings.COMP_STRENGTH_DEFAULT
                 comp.save()
 
             return HttpResponseRedirect(reverse('team:person_list'))
@@ -104,10 +106,25 @@ def person_list(request):
     return render(request, 'team/person_list.haml', context)
 
 
-class CompetenceInstanceView(LoginRequiredMixin, CreateUpdateView):
+class CompetenceInstanceFormView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceInstance
     fields = ['techno', 'person', 'strength']
-    success_url = reverse_lazy('team:competence_subject_list')
+
+    def get_success_url(self):
+        person_pk = self.get_form_kwargs()['data']['person']
+        return reverse_lazy('team:competence_instance_list', args=[person_pk])
+
+
+class CompetenceInstanceListView(LoginRequiredMixin, ListView):
+    model = CompetenceInstance
+    success_url = reverse_lazy('team:competence_instance_list')
+
+    def get_context_data(self, **kwargs):
+        context = super(CompetenceInstanceListView, self).get_context_data(**kwargs)
+        context.update({
+            'profile_detail': get_object_or_404(Person, **self.kwargs),
+        })
+        return context
 
 
 class CompetenceCategoryView(LoginRequiredMixin, CreateUpdateView):
