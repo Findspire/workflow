@@ -6,6 +6,8 @@ workflow/static/workflow/css/
 
 # Dev
 workflow.db
+.coverage
+htmlcov
 
 # OSX
 .DS_Store

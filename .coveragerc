@@ -1,0 +1,13 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+source =
+    .
+omit =
+    manage.py
+    workflow/wsgi.py
+timid = True
+
+[report]
+precision = 1
+show_missing = True

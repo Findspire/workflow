@@ -27,11 +27,9 @@ print '=> Creating super user ...'
 u = User.objects.create_superuser('admin', 'admin@admin.fr', 'admin')
 u.save()
 
-c = ContractType(name='CDI')
-c.save()
+c = ContractType.objects.create(name='CDI')
 
-p = Person(user=u, arrival_date=now(), contract_type=c)
-p.save()
+p = Person.objects.create(user=u, arrival_date=now(), contract_type=c)
 
 # todo create a Group "manager" and add yourself
 
