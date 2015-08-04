@@ -15,9 +15,9 @@ from django.views.generic.list import ListView
 from braces.views import LoginRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView
+from workflow.utils.paginator import paginator_range
 from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject, Team, Person
 from .forms import PersonForm, UserFormCreate, UserFormUpdate
-
 
 @login_required
 def index(request):
@@ -98,12 +98,9 @@ def person_handle_form(request, pk=None):
     return render(request, 'team/person_form.haml', context)
 
 
-@login_required
-def person_list(request):
-    context = {
-        'persons': Person.objects.all(),
-    }
-    return render(request, 'team/person_list.haml', context)
+class PersonListView(LoginRequiredMixin, ListView):
+    model = Person
+    paginate_by = 20
 
 
 class CompetenceInstanceFormView(LoginRequiredMixin, CreateUpdateView):
@@ -117,7 +114,6 @@ class CompetenceInstanceFormView(LoginRequiredMixin, CreateUpdateView):
 
 class CompetenceInstanceListView(LoginRequiredMixin, ListView):
     model = CompetenceInstance
-    success_url = reverse_lazy('team:competence_instance_list')
 
     def get_context_data(self, **kwargs):
         context = super(CompetenceInstanceListView, self).get_context_data(**kwargs)
@@ -153,9 +149,5 @@ class TeamView(LoginRequiredMixin, CreateUpdateView):
     success_url = reverse_lazy('team:team_list')
 
 
-@login_required
-def team_list(request):
-    context = {
-        'teams': Team.objects.all().select_related(),
-    }
-    return render(request, 'team/team_list.haml', context)
+class TeamListView(LoginRequiredMixin, ListView):
+    model = Team

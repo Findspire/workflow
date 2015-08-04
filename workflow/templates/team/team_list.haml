@@ -8,7 +8,7 @@
         List teams
 
     %ul
-        - for team in teams
+        - for team in object_list
             %li
                 %a{href: "{% url 'team:team_edit' team.pk %}"}
                     {{ team.name }} - {{ team.leader }} - {{ team.members.all|length }} member(s)
