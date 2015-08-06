@@ -17,7 +17,7 @@ from braces.views import LoginRequiredMixin
 from workflow.utils.generic_views import CreateUpdateView
 from workflow.utils.paginator import paginator_range
 from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject, Team, Person
-from .forms import PersonForm, UserFormCreate, UserFormUpdate
+from .forms import TeamNewForm, PersonForm, UserFormCreate, UserFormUpdate
 
 
 @login_required
@@ -149,7 +149,7 @@ def competence_subject_list(request):
 
 class TeamView(LoginRequiredMixin, CreateUpdateView):
     model = Team
-    fields = ['name', 'leader', 'members']
+    form_class = TeamNewForm
     success_url = reverse_lazy('team:team_list')
     template_name = 'utils/team_generic_views_form.haml'
 

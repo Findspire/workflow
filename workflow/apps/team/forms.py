@@ -3,8 +3,17 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import Person, CompetenceSubject, CompetenceInstance, CompetenceCategory
+from .models import Team, Person, CompetenceSubject, CompetenceInstance, CompetenceCategory
 from ...utils.forms import MyMultipleChoiceField, MyCheckboxSelectMultiple
+
+
+class TeamNewForm(forms.ModelForm):
+    class Meta:
+        model = Team
+        fields = ['name', 'leader', 'members']
+        widgets = {
+            'members': forms.widgets.CheckboxSelectMultiple,
+        }
 
 
 class PersonForm(forms.ModelForm):
