@@ -73,7 +73,6 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
     View for creating a new object instance or updating an existing one,
     with a response rendered by template.
     """
-    template_name = 'utils/generic_views_form.haml'
 
     def get_context_data(self, **kwargs):
         context = super(CreateUpdateView, self).get_context_data(**kwargs)

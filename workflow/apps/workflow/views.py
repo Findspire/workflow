@@ -24,6 +24,13 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
     model = Project
     form_class = ProjectNewForm
     success_url = reverse_lazy('workflow:project_list')
+    template_name = 'utils/workflow_generic_views_form.haml'
+
+    def form_valid(self, form):
+        ret =  super(ProjectFormView, self).form_valid(form)
+        self.object.items = form.cleaned_data['items']
+        self.object.save()
+        return ret
 
 
 @login_required
@@ -37,6 +44,7 @@ def project_list(request):
 class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     model = WorkflowInstance
     fields = ['project', 'version']
+    template_name = 'utils/workflow_generic_views_form.haml'
 
 
 @login_required
@@ -71,12 +79,14 @@ class ItemModelFormView(LoginRequiredMixin, CreateUpdateView):
     model = ItemModel
     fields = ['name', 'category', 'description']
     success_url = reverse_lazy('workflow:item_model_list')
+    template_name = 'utils/workflow_generic_views_form.haml'
 
 
 class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
     model = ItemCategory
     fields = ['name']
     success_url = reverse_lazy('workflow:item_model_list')
+    template_name = 'utils/workflow_generic_views_form.haml'
 
 
 @login_required

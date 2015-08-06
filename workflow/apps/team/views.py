@@ -19,6 +19,7 @@ from workflow.utils.paginator import paginator_range
 from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject, Team, Person
 from .forms import PersonForm, UserFormCreate, UserFormUpdate
 
+
 @login_required
 def index(request):
     return render(request, 'team/index.haml')
@@ -106,6 +107,7 @@ class PersonListView(LoginRequiredMixin, ListView):
 class CompetenceInstanceFormView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceInstance
     fields = ['techno', 'person', 'strength']
+    template_name = 'utils/team_generic_views_form.haml'
 
     def get_success_url(self):
         person_pk = self.get_form_kwargs()['data']['person']
@@ -127,12 +129,14 @@ class CompetenceCategoryView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceCategory
     fields = ['name']
     success_url = reverse_lazy('team:competence_subject_list')
+    template_name = 'utils/team_generic_views_form.haml'
 
 
 class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
     model = CompetenceSubject
     fields = ['name', 'category', 'description']
     success_url = reverse_lazy('team:competence_subject_list')
+    template_name = 'utils/team_generic_views_form.haml'
 
 
 @login_required
@@ -147,6 +151,7 @@ class TeamView(LoginRequiredMixin, CreateUpdateView):
     model = Team
     fields = ['name', 'leader', 'members']
     success_url = reverse_lazy('team:team_list')
+    template_name = 'utils/team_generic_views_form.haml'
 
 
 class TeamListView(LoginRequiredMixin, ListView):
