@@ -71,13 +71,13 @@ class WorkflowInstance(models.Model):
         return reverse('workflow:workflow_show', args=[self.pk, 'all'])
 
     def save(self, *args, **kwargs):
-        pk_saved = self.pk
+        pk = self.pk
 
         # save Workflow first, to have the pk for the later foreignkey from ItemInstance - if needed
         super(WorkflowInstance, self).save(*args, **kwargs)
 
-        # if the object is just created and not updated, create its ItemInstances
-        if pk_saved == None:
+        # if the object is created and not updated, create its ItemInstances
+        if pk == None:
             for item in self.project.items.all():
                 ItemInstance.objects.create(item_model=item, workflow=self)
 
