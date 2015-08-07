@@ -1,6 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+
+Each Person has a set of Skills. Each Skill has a ForeignKey to a SkillSubject
+(which has a name, a category and a description) and a strength. Multiple Person
+can have the same SkillSubject with different strength (that's the purpose of
+the Skill model).
+
+"""
+
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User

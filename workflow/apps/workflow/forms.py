@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from .models import Project, ItemModel, ItemCategory, Comment
-from ...utils.forms import MyMultipleChoiceField, MyCheckboxSelectMultiple
+from workflow.apps.workflow.models import Project, ItemModel, ItemCategory, Comment
+from workflow.utils.forms import MyMultipleChoiceField, MyCheckboxSelectMultiple
 
 
 class ProjectNewForm(forms.ModelForm):

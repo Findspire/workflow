@@ -1,13 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+
+A Project has several ItemModel that needs to be done.
+When a new version of a Project is planed to be released, a Workflow is created.
+For each ItemModel, an Item is created whith a ForeignKey to this ItemModel.
+Some Person will be assigned to this Item and will have to mark the validation
+state : success or failed (or by default untested).
+
+"""
+
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
-from ..team.models import Person, Team
+from workflow.apps.team.models import Person, Team
 
 
 class ItemCategory(models.Model):

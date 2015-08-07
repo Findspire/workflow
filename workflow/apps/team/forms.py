@@ -3,8 +3,8 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import Team, Person, SkillSubject, Skill, SkillCategory
-from ...utils.forms import MyMultipleChoiceField, MyCheckboxSelectMultiple
+from workflow.apps.team.models import Team, Person, SkillSubject, Skill, SkillCategory
+from workflow.utils.forms import MyMultipleChoiceField, MyCheckboxSelectMultiple
 
 
 class TeamNewForm(forms.ModelForm):

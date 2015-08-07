@@ -5,6 +5,7 @@ from django import forms
 
 
 class MyCheckboxFieldRenderer(forms.widgets.CheckboxFieldRenderer):
+    """Add the html label tag for further css and js styling"""
     inner_html = '<li><label>{choice_value}</label>{sub_widgets}</li>'
 
 
@@ -13,6 +14,8 @@ class MyCheckboxSelectMultiple(forms.widgets.CheckboxSelectMultiple):
 
 
 class MyMultipleChoiceField(forms.MultipleChoiceField):
+    """Implement a nested MultipleChoiceField."""
+
     def get_choices(self):
         Category, Object = self.choices_data
         choices = []

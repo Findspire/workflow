@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import patterns, url
-from . import views
+from workflow.apps.workflow import views
 
 
 urlpatterns = patterns('workflow.apps.workflow',

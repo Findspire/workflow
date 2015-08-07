@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from . import models
+from workflow.apps.team import models
 
 
 admin.site.register(models.Person)

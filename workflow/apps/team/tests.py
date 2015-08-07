@@ -6,7 +6,7 @@ from unittest import TestCase
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from .models import Person, Team, SkillCategory, SkillSubject, Skill
+from workflow.apps.team.models import Person, Team, SkillCategory, SkillSubject, Skill
 
 
 class MiscTest(TestCase):

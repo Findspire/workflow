@@ -10,9 +10,9 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView
-from .models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
-from ..team.models import Person
-from .forms import CommentNewForm, ItemDetailForm, ProjectNewForm
+from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
+from workflow.apps.team.models import Person
+from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm
 
 
 @login_required

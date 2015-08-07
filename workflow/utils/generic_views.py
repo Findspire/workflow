@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-This module extend the django class based views: it merge CreateView and UpdateView.
+This module extend the django class based views: it merges CreateView and UpdateView.
 
 Usage:
     Like any django class based view. LoginRequiredMixin is optional.
@@ -20,7 +20,7 @@ BaseCreateUpdateView:
 
 CreateUpdateView:
     This is used instead of the django's CreateView and UpdateView.
-    It overwrite some methods :
+    It overwrites some methods :
         get_context_data: Add a few var in the template context
         get_initial: Add the param passed through the url to the initial_data used to instanciate the form.
 
