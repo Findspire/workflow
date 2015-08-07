@@ -98,7 +98,7 @@ def item_instance_show(request, item_pk):
     form_description = ItemDetailForm(initial=model_to_dict(item.item_model))
 
     if request.method == 'POST':
-        if '_comment' in request.POST:
+        if request.POST['type'] == 'comment':
             form_comment = CommentNewForm(request.POST)
             if form_comment.is_valid():
                 c = Comment()
@@ -107,7 +107,7 @@ def item_instance_show(request, item_pk):
                 c.text = form_comment.cleaned_data['text']
                 c.save()
                 return HttpResponseRedirect(reverse('workflow:item_instance_show', args=[item.pk]))
-        elif '_description' in request.POST:
+        elif request.POST['type'] == 'description':
             form_description = ItemDetailForm(request.POST, initial=model_to_dict(item.item_model))
             if form_description.is_valid():
                 item.item_model.description = form_description.cleaned_data['description']

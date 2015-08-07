@@ -64,8 +64,9 @@
 
         %form{action: ".",  method: "POST"}
             - csrf_token
+            %input{type: "hidden", name: "type", value:"description"}
             {{ form_description.as_p }}
-            %input{type: "submit", value:"Post", name: "_description"}
+            %input{type: "submit", value:"Post"}
             %input{type: "submit", value:"Cancel", onClick:"details_see(); return false;"}
 
     %hr
@@ -91,8 +92,9 @@
             Add comment
         %form{action: '.', method:"POST"}
             - csrf_token
+            %input{type: "hidden", name: "type", value:"comment"}
             {{ form_comment.as_p }}
-            %input{type: "submit", value:"Post", name: "_comment"}
+            %input{type: "submit", value:"Post"}
 
 - block optional_script
     $('#details_edit').hide();
