@@ -6,7 +6,7 @@ from unittest import TestCase
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from workflow.apps.workflow.models import Project, Workflow, ItemCategory, ItemModel, Item
+from workflow.apps.workflow.models import Project, Workflow, ItemCategory, ItemModel, Item, Comment
 
 
 class MiscTest(TestCase):
@@ -166,18 +166,163 @@ class WorkflowTest(TestCase):
         self.assertEqual(itemmodel.description, 'Some new description')
 
         # comment
+        data = {
+            'type': 'comment',
+            'item': 1,
+            'person': 1,
+            'text': 'This is a comment !'
+        }
+        resp = self.client.post(reverse('workflow:item_instance_show', args=[item.pk]), data)
+        self.assertEqual(resp.status_code, 302)
 
-        # todo
+        comment = Comment.objects.get(item=1, person=1, text='This is a comment !')
+        comments = Comment.objects.filter(item__pk=1)
+        self.assertEqual(comment in comments, True)
 
+        # comment - invalid form
+        data = {
+            'type': 'comment',
+            'item': 1,
+            'person': 1,
+            'text': ''
+        }
+        resp = self.client.post(reverse('workflow:item_instance_show', args=[item.pk]), data)
+        self.assertEqual(resp.status_code, 200)
+
+        # invalid form
+        data = {
+            'type': 'nothingExpected',
+        }
+        resp = self.client.post(reverse('workflow:item_instance_show', args=[item.pk]), data)
+        self.assertEqual(resp.status_code, 200)
 
     def test_item_update(self):
-        pass
-        """
-            url(r'^update/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/$'
-                name='update'),
-            url(r'^update/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/(?P<pk_other>\d+)/$'
-                name='update'),
-        """
+        resp = self.client.get(reverse('workflow:update', args=['someAction', 'thisShouldRaiseA404', 42]))
+        self.assertEqual(resp.status_code, 404)
+
+        # todo: more 404 tests ?
+
+    def test_item_update_item_take(self):
+        itemmodel = ItemModel.objects.get(name='item model untaken')
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.assigned_to, None)
+
+        resp = self.client.get(reverse('workflow:update', args=['take', 'item', item.pk]))
+        self.assertEqual(resp.status_code, 302)
+
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertNotEqual(item.assigned_to, None)
+
+    def test_item_update_item_untake(self):
+        itemmodel = ItemModel.objects.get(name='item model taken')
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertNotEqual(item.assigned_to, None)
+
+        resp = self.client.get(reverse('workflow:update', args=['untake', 'item', item.pk]))
+        self.assertEqual(resp.status_code, 302)
+
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.assigned_to, None)
+
+    def test_item_update_item_404(self):
+        itemmodel = ItemModel.objects.get(name='item model 1')
+        item = Item.objects.get(item_model=itemmodel)
+
+        resp = self.client.get(reverse('workflow:update', args=['404', 'item', item.pk]))
+        self.assertEqual(resp.status_code, 404)
+
+    def test_item_update_validate_success(self):
+        itemmodel = ItemModel.objects.get(name='item model untested')
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
+
+        resp = self.client.get(reverse('workflow:update', args=['success', 'validate', item.pk]))
+        self.assertEqual(resp.status_code, 302)
+
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.validation, Item.VALIDATION_SUCCESS)
+
+    def test_item_update_validate_failed(self):
+        itemmodel = ItemModel.objects.get(name='item model untested')
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
+
+        resp = self.client.get(reverse('workflow:update', args=['failed', 'validate', item.pk]))
+        self.assertEqual(resp.status_code, 302)
+
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.validation, Item.VALIDATION_FAILED)
+
+    def test_item_update_validate_untested(self):
+        itemmodel = ItemModel.objects.get(name='item model success')
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.validation, Item.VALIDATION_SUCCESS)
+
+        resp = self.client.get(reverse('workflow:update', args=['untested', 'validate', item.pk]))
+        self.assertEqual(resp.status_code, 302)
+
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
+
+    def test_item_update_validate_404(self):
+        itemmodel = ItemModel.objects.get(name='item model 1')
+        item = Item.objects.get(item_model=itemmodel)
+
+        resp = self.client.get(reverse('workflow:update', args=['404', 'validate', item.pk]))
+        self.assertEqual(resp.status_code, 404)
+
+    def test_item_update_category_take(self):
+        workflow_pk = 1
+        category = ItemCategory.objects.get(pk=4)
+
+        def get_items():
+            return Item.objects.filter(workflow__pk=workflow_pk, item_model__category=category)
+
+        # check there are a few items in this category
+        items = get_items()
+        self.assertEqual(len(items) not in [0, 1], True)
+
+        # check a least one item in the category is untaken
+        items_untaken = get_items().filter(assigned_to=None)
+        self.assertNotEqual(len(items_untaken), 0)
+
+        # take all items
+        resp = self.client.get(reverse('workflow:update', args=['take', 'category', category.pk, workflow_pk]))
+        self.assertEqual(resp.status_code, 302)
+
+        # check all are taken
+        items_untaken = get_items().filter(assigned_to=None)
+        self.assertEqual(len(items_untaken), 0)
+
+    def test_item_update_category_untake(self):
+        workflow_pk = 1
+        category = ItemCategory.objects.get(pk=3)
+
+        def get_items():
+            return Item.objects.filter(workflow__pk=workflow_pk, item_model__category=category)
+
+        # check there are a few items in this category
+        items = get_items()
+        self.assertEqual(len(items) not in [0, 1], True)
+
+        # check a least one item in the category is taken
+        items_taken = get_items().exclude(assigned_to=None)
+        self.assertNotEqual(len(items_taken), 0)
+
+        # untake all items
+        resp = self.client.get(reverse('workflow:update', args=['untake', 'category', category.pk, workflow_pk]))
+        self.assertEqual(resp.status_code, 302)
+
+        # check all are untaken
+        items_taken = get_items().exclude(assigned_to=None)
+        self.assertEqual(len(items_taken), 0)
+
+    def test_item_update_category_404(self):
+        workflow_pk = 1
+        category = ItemCategory.objects.get(pk=4)
+
+        resp = self.client.get(reverse('workflow:update', args=['404', 'category', category.pk, workflow_pk]))
+        self.assertEqual(resp.status_code, 404)
 
 
 class ItemModelTest(TestCase):
