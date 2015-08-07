@@ -86,7 +86,7 @@
 {
     "fields": {
         "category": 4,
-        "name": "item model 6",
+        "name": "item model untested",
         "description": ""
     },
     "model": "workflow.itemmodel",
@@ -95,7 +95,7 @@
 {
     "fields": {
         "category": 4,
-        "name": "item model 7",
+        "name": "item model all",
         "description": ""
     },
     "model": "workflow.itemmodel",
@@ -112,7 +112,8 @@
             4,
             5,
             6,
-            7
+            7,
+            8
         ],
         "name": "project 1",
         "team": 1
@@ -146,12 +147,22 @@
 {
     "fields": {
         "assigned_to": 2,
-        "item_model": 3,
+        "item_model": 2,
         "validation": 0,
         "workflow": 1
     },
     "model": "workflow.item",
     "pk": 2
+},
+{
+    "fields": {
+        "assigned_to": null,
+        "item_model": 3,
+        "validation": 0,
+        "workflow": 1
+    },
+    "model": "workflow.item",
+    "pk": 3
 },
 {
     "fields": {
@@ -161,7 +172,7 @@
         "workflow": 1
     },
     "model": "workflow.item",
-    "pk": 3
+    "pk": 4
 },
 {
     "fields": {
@@ -171,7 +182,7 @@
         "workflow": 1
     },
     "model": "workflow.item",
-    "pk": 4
+    "pk": 5
 },
 {
     "fields": {
@@ -181,7 +192,7 @@
         "workflow": 1
     },
     "model": "workflow.item",
-    "pk": 5
+    "pk": 6
 },
 {
     "fields": {
@@ -191,7 +202,7 @@
         "workflow": 1
     },
     "model": "workflow.item",
-    "pk": 6
+    "pk": 7
 },
 {
     "fields": {
@@ -201,6 +212,18 @@
         "workflow": 1
     },
     "model": "workflow.item",
-    "pk": 7
+    "pk": 8
+},
+
+
+{
+    "fields": {
+        "item": 1,
+        "person": 1,
+        "date": "2015-08-04",
+        "text": ""
+    },
+    "model": "workflow.comment",
+    "pk": 8
 }
 ]

@@ -131,34 +131,46 @@ class WorkflowTest(TestCase):
         self.assertEqual(has_workflow, True)
 
     def test_workflow_show(self):
-        resp = self.client.get(reverse('workflow:item_instance_show', args=[1]))
-        self.assertEqual(resp.status_code, 200)
-        # todo
-
-        # description / comment
-
-    def test_workflow_show(self):
         workflow_pk = Workflow.objects.get(project__pk=1, version='workflow 1').pk
-
-        resp = self.client.get(reverse('workflow:workflow_show', args=[workflow_pk, 'all']))
-        self.assertEqual(resp.status_code, 200)
 
         resp = self.client.get(reverse('workflow:workflow_show', args=[workflow_pk, 'thisShouldRaiseA404']))
         self.assertEqual(resp.status_code, 404)
 
-        for which_display in ('mine', 'untested', 'success', 'failed', 'untaken', 'taken'):
+        for which_display in ('all', 'mine', 'untested', 'success', 'failed', 'untaken'):#, 'taken'):
             resp = self.client.get(reverse('workflow:workflow_show', args=[workflow_pk, which_display]))
             self.assertEqual(resp.status_code, 200)
 
-            # todo
-            # DoesNotExist: ItemModel matching query does not exist.
-            itemmodel = ItemModel.objects.get(name='item instance '+which_display)
+            itemmodel = ItemModel.objects.get(name='item model '+which_display)
             item = Item.objects.get(item_model=itemmodel)
-            has_item = item in resp.context[-1]['items'].keys()
+            has_item = any([item in item_list for item_list in resp.context[-1]['items'].values()])
             self.assertEqual(has_item, True)
 
+    def test_item_show(self):
+        resp = self.client.get(reverse('workflow:item_instance_show', args=[1]))
+        self.assertEqual(resp.status_code, 200)
 
-    def test_workflow_update(self):
+        # description
+        item = Item.objects.get(pk=1)
+        itemmodel = Item.objects.get(pk=1).item_model
+
+        self.assertEqual(itemmodel.description, '')
+
+        data = {
+            'type': 'description',
+            'description': 'Some new description',
+        }
+        resp = self.client.post(reverse('workflow:item_instance_show', args=[item.pk]), data)
+        self.assertEqual(resp.status_code, 302)
+
+        itemmodel = Item.objects.get(pk=1).item_model
+        self.assertEqual(itemmodel.description, 'Some new description')
+
+        # comment
+
+        # todo
+
+
+    def test_item_update(self):
         pass
         """
             url(r'^update/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/$'
@@ -166,7 +178,6 @@ class WorkflowTest(TestCase):
             url(r'^update/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/(?P<pk_other>\d+)/$'
                 name='update'),
         """
-
 
 
 class ItemModelTest(TestCase):
