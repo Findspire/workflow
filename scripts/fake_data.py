@@ -11,10 +11,9 @@ django.setup()
 
 from django.contrib.auth.models import User
 from django.utils.timezone import now
-from workflow.apps.team.models import Person, Team, ContractType, CompetenceCategory, CompetenceSubject
-from workflow.apps.workflow.models import Project, WorkflowInstance, ItemCategory, ItemModel
+from workflow.apps.team.models import Person, Team, SkillCategory, SkillSubject
+from workflow.apps.workflow.models import Project, Workflow, ItemCategory, ItemModel
 
-contract = ContractType.objects.all()[0]
 superuser = Person.objects.all()[0]
 
 # person + team
@@ -26,7 +25,7 @@ for team_id in range(3):
         pseudo = 'user %d' % (team_id*PERSON_PER_TEAM+person_id)
         u = User.objects.create_user(pseudo, 'some@mail.fr', 'pass')
         u.save()
-        p = Person.objects.create(user=u, arrival_date=now(), contract_type=contract)
+        p = Person.objects.create(user=u, arrival_date=now())
 
     dreamteam = Team.objects.create(name=TEAM_NAMES[team_id], leader=superuser)
     dreamteam.members = Person.objects.all()[team_id*PERSON_PER_TEAM:(team_id+1)*PERSON_PER_TEAM]
@@ -41,10 +40,10 @@ COMP = {
 }
 
 for comp_cat, comps in COMP.items():
-    cat = CompetenceCategory.objects.create(name=comp_cat)
+    cat = SkillCategory.objects.create(name=comp_cat)
 
     for comp in comps:
-        c = CompetenceSubject.objects.create(name=comp, category=cat, description='')
+        c = SkillSubject.objects.create(name=comp, category=cat, description='')
 
 # todo comptences instances
 
@@ -68,7 +67,7 @@ for cat, items in ITEMS.items():
 p = Project.objects.create(name='Findspire', team=dreamteam)
 p.items = ItemModel.objects.all()
 p.save()
-w = WorkflowInstance.objects.create(project=p, version='0.42')
+w = Workflow.objects.create(project=p, version='0.42')
 
 """
 randomize ItemInstance

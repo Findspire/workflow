@@ -1,0 +1,29 @@
+- extends "team/base.haml"
+
+- block breadcrumbs
+    List skills
+
+- block content
+    %h1
+        List skills
+
+    %ul
+        - for category, skills in categories.items
+            %li
+                %h2
+                    {{ category.name }}
+                    (<a href="{% url 'team:skill_category_edit' category.pk %}">Edit</a>)
+                    (<a href="{% url 'team:skill_subject_new' category.pk %}">New skill subject</a>)
+
+                - if skills
+                    %ul
+                        - for subject in skills
+                            %li
+                                %a{href: "{% url 'team:skill_subject_edit' subject.pk %}"}
+                                    {{ subject.name }}
+                                %em
+                                    {{ subject.description }}
+                - else
+                    %p
+                        %em
+                            No skills in this category.

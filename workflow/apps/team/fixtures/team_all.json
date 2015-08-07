@@ -1,215 +1,144 @@
 [
 {
     "fields": {
-        "name": "CDI"
-    },
-    "model": "team.contracttype",
-    "pk": 1
-},
-{
-    "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-07-30",
-        "departure_date": null,
-        "token_serial": null,
         "user": 1,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 1
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 2,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 2
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 3,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 3
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 4,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 4
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 5,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 5
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 6,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 6
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 7,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 7
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 8,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 8
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 9,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 9
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 10,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 10
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 11,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 11
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 12,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 12
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 13,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 13
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 14,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 14
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 15,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 15
 },
 {
     "fields": {
-        "access_card": null,
-        "phone_number": null,
         "arrival_date": "2015-08-04",
-        "departure_date": null,
-        "token_serial": null,
         "user": 16,
-        "contract_type": 1
+        "contract_type": 0
     },
     "model": "team.person",
     "pk": 16
@@ -263,21 +192,21 @@
     "fields": {
         "name": "Front"
     },
-    "model": "team.competencecategory",
+    "model": "team.skillcategory",
     "pk": 1
 },
 {
     "fields": {
         "name": "VCS"
     },
-    "model": "team.competencecategory",
+    "model": "team.skillcategory",
     "pk": 2
 },
 {
     "fields": {
         "name": "Back"
     },
-    "model": "team.competencecategory",
+    "model": "team.skillcategory",
     "pk": 3
 },
 {
@@ -286,7 +215,7 @@
         "name": "HTML",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 1
 },
 {
@@ -295,7 +224,7 @@
         "name": "JS",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 2
 },
 {
@@ -304,7 +233,7 @@
         "name": "Backbones",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 3
 },
 {
@@ -313,7 +242,7 @@
         "name": "Git",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 4
 },
 {
@@ -322,7 +251,7 @@
         "name": "SVN",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 5
 },
 {
@@ -331,7 +260,7 @@
         "name": "Mercurial",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 6
 },
 {
@@ -340,7 +269,7 @@
         "name": "Dropbox",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 7
 },
 {
@@ -349,7 +278,7 @@
         "name": "Python",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 8
 },
 {
@@ -358,7 +287,7 @@
         "name": "Django",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 9
 },
 {
@@ -367,7 +296,7 @@
         "name": "Couch",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 10
 },
 {
@@ -376,7 +305,7 @@
         "name": "Elastic",
         "description": ""
     },
-    "model": "team.competencesubject",
+    "model": "team.skillsubject",
     "pk": 11
 }
 ]

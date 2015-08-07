@@ -6,11 +6,11 @@ from unittest import TestCase
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from .models import Project, WorkflowInstance, ItemCategory, ItemModel, ItemInstance
+from .models import Project, Workflow, ItemCategory, ItemModel, Item
 
 
 class MiscTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user']
+    fixtures = ['auth_user']
 
     def test_index_not_logged(self):
         resp = self.client.get(reverse('workflow:index'))
@@ -25,7 +25,7 @@ class MiscTest(TestCase):
 
 
 class ProjectTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all', 'workflow']
+    fixtures = ['auth_user', 'team_all', 'workflow']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
@@ -78,7 +78,7 @@ class ProjectTest(TestCase):
 
 
 class WorkflowTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all', 'workflow']
+    fixtures = ['auth_user', 'team_all', 'workflow']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
@@ -97,16 +97,16 @@ class WorkflowTest(TestCase):
         resp = self.client.post(reverse('workflow:workflow_new'), data)
         self.assertEqual(resp.status_code, 302)
 
-        workflow_count = WorkflowInstance.objects.filter(project__pk=1, version='new workflow').count()
+        workflow_count = Workflow.objects.filter(project__pk=1, version='new workflow').count()
         self.assertEqual(workflow_count, 1)
 
         project_items = [item.pk for item in Project.objects.get(pk=1).items.all()]
-        workflow = WorkflowInstance.objects.get(project__pk=1, version='new workflow')
-        workflow_items = [item.item_model.pk for item in ItemInstance.objects.filter(workflow=workflow)]
+        workflow = Workflow.objects.get(project__pk=1, version='new workflow')
+        workflow_items = [item.item_model.pk for item in Item.objects.filter(workflow=workflow)]
         self.assertEqual(project_items, workflow_items)
 
     def test_workflow_edit(self):
-        workflow_pk = WorkflowInstance.objects.get(project__pk=1, version='workflow 1').pk
+        workflow_pk = Workflow.objects.get(project__pk=1, version='workflow 1').pk
 
         resp = self.client.get(reverse('workflow:workflow_edit', args=[workflow_pk]))
         self.assertEqual(resp.status_code, 200)
@@ -118,15 +118,15 @@ class WorkflowTest(TestCase):
         resp = self.client.post(reverse('workflow:workflow_edit', args=[workflow_pk]), data)
         self.assertEqual(resp.status_code, 302)
 
-        workflow_count = WorkflowInstance.objects.filter(project__pk=1, version='workflow 1').count()
+        workflow_count = Workflow.objects.filter(project__pk=1, version='workflow 1').count()
         self.assertEqual(workflow_count, 0)
-        workflow_count = WorkflowInstance.objects.filter(project__pk=1, version='workflow 1 edited').count()
+        workflow_count = Workflow.objects.filter(project__pk=1, version='workflow 1 edited').count()
         self.assertEqual(workflow_count, 1)
 
     def test_workflow_list(self):
         resp = self.client.get(reverse('workflow:project_list'))
         self.assertEqual(resp.status_code, 200)
-        workflow = WorkflowInstance.objects.get(project__pk=1, version='workflow 1')
+        workflow = Workflow.objects.get(project__pk=1, version='workflow 1')
         has_workflow = any([workflow in workflow_list for workflow_list in resp.context[-1]['projects'].values()])
         self.assertEqual(has_workflow, True)
 
@@ -138,7 +138,7 @@ class WorkflowTest(TestCase):
         # description / comment
 
     def test_workflow_show(self):
-        workflow_pk = WorkflowInstance.objects.get(project__pk=1, version='workflow 1').pk
+        workflow_pk = Workflow.objects.get(project__pk=1, version='workflow 1').pk
 
         resp = self.client.get(reverse('workflow:workflow_show', args=[workflow_pk, 'all']))
         self.assertEqual(resp.status_code, 200)
@@ -170,7 +170,7 @@ class WorkflowTest(TestCase):
 
 
 class ItemModelTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all', 'workflow']
+    fixtures = ['auth_user', 'team_all', 'workflow']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
@@ -222,7 +222,7 @@ class ItemModelTest(TestCase):
 
 
 class ItemCategoryTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all', 'workflow']
+    fixtures = ['auth_user', 'team_all', 'workflow']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')

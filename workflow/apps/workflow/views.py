@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView
-from .models import Comment, ItemInstance, ItemModel, ItemCategory, Project, WorkflowInstance
+from .models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
 from ..team.models import Person
 from .forms import CommentNewForm, ItemDetailForm, ProjectNewForm
 
@@ -27,7 +27,7 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
     template_name = 'utils/workflow_generic_views_form.haml'
 
     def form_valid(self, form):
-        ret =  super(ProjectFormView, self).form_valid(form)
+        ret = super(ProjectFormView, self).form_valid(form)
         self.object.items = form.cleaned_data['items']
         self.object.save()
         return ret
@@ -36,13 +36,13 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
 @login_required
 def project_list(request):
     context = {
-        'projects': {project:WorkflowInstance.objects.filter(project=project) for project in Project.objects.all()}
+        'projects': {project:Workflow.objects.filter(project=project) for project in Project.objects.all()}
     }
     return render(request, 'workflow/project_list.haml', context)
 
 
 class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
-    model = WorkflowInstance
+    model = Workflow
     fields = ['project', 'version']
     template_name = 'utils/workflow_generic_views_form.haml'
 
@@ -55,7 +55,7 @@ def workflow_show(request, workflow_pk, which_display):
         raise Http404('Unexpected display "%s"' % which_display)
 
     request_person = get_object_or_404(Person, user=request.user)
-    workflow = get_object_or_404(WorkflowInstance, pk=workflow_pk)
+    workflow = get_object_or_404(Workflow, pk=workflow_pk)
 
     # group by category
     items_list = workflow.get_items(which_display, request_person)
@@ -69,7 +69,7 @@ def workflow_show(request, workflow_pk, which_display):
         'counters': {display: workflow.get_count(display, request_person) for display in displays},
         'percent': {display: workflow.get_percent(display, request_person) for display in displays},
         'items': items_dic,
-        'ItemInstance': ItemInstance,
+        'Item': Item,
     }
 
     return render(request, 'workflow/workflow_show.haml', context)
@@ -91,7 +91,7 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
 
 @login_required
 def item_instance_show(request, item_pk):
-    item = get_object_or_404(ItemInstance, id=item_pk)
+    item = get_object_or_404(Item, id=item_pk)
 
     # default
     form_comment = CommentNewForm()
@@ -119,7 +119,7 @@ def item_instance_show(request, item_pk):
         'comments': Comment.objects.filter(item=item),
         'form_comment': form_comment,
         'form_description': form_description,
-        'ItemInstance': ItemInstance,
+        'Item': Item,
     }
 
     return render(request, 'workflow/item_instance_show.haml', context)
@@ -134,7 +134,7 @@ def update(request, action, model, pk, pk_other=None):
         if action not in ('take', 'untake'):
             raise Http404('Unexpected action "%s"' % action)
 
-        item = get_object_or_404(ItemInstance, pk=pk)
+        item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
 
         if action == 'take':
@@ -152,7 +152,7 @@ def update(request, action, model, pk, pk_other=None):
         else:  # untake
             assigned_to = None
 
-        items = get_list_or_404(ItemInstance, workflow__pk=pk_other)
+        items = get_list_or_404(Item, workflow__pk=pk_other)
         for item in items:
             if item.item_model.category.pk == int(pk):
                 item.assigned_to = assigned_to
@@ -163,15 +163,15 @@ def update(request, action, model, pk, pk_other=None):
         if action not in ('untested', 'success', 'failed'):
             raise Http404('Unexpected action "%s"' % action)
 
-        item = get_object_or_404(ItemInstance, pk=pk)
+        item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
 
         if action == 'untested':
-            item.validation = ItemInstance.VALIDATION_UNTESTED
+            item.validation = Item.VALIDATION_UNTESTED
         elif action == 'success':
-            item.validation = ItemInstance.VALIDATION_SUCCESS
+            item.validation = Item.VALIDATION_SUCCESS
         elif action == 'failed':
-            item.validation = ItemInstance.VALIDATION_FAILED
+            item.validation = Item.VALIDATION_FAILED
 
         item.save()
 

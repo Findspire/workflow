@@ -3,7 +3,7 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import Team, Person, CompetenceSubject, CompetenceInstance, CompetenceCategory
+from .models import Team, Person, SkillSubject, Skill, SkillCategory
 from ...utils.forms import MyMultipleChoiceField, MyCheckboxSelectMultiple
 
 
@@ -21,8 +21,8 @@ class PersonForm(forms.ModelForm):
         model = Person
         fields = ['arrival_date', 'contract_type']
 
-    competences = MyMultipleChoiceField(
-        choices_data=(CompetenceCategory, CompetenceSubject),
+    skills = MyMultipleChoiceField(
+        choices_data=(SkillCategory, SkillSubject),
         widget=MyCheckboxSelectMultiple,
         required=False,
     )

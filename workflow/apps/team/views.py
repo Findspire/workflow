@@ -16,7 +16,7 @@ from braces.views import LoginRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView
 from workflow.utils.paginator import paginator_range
-from .models import CompetenceInstance, CompetenceCategory, CompetenceSubject, Team, Person
+from .models import Skill, SkillCategory, SkillSubject, Team, Person
 from .forms import TeamNewForm, PersonForm, UserFormCreate, UserFormUpdate
 
 
@@ -56,16 +56,16 @@ def person_handle_form(request, pk=None):
             person.user = user
             person.save()
 
-            # competences
-            techno_current = set([c.techno for c in CompetenceInstance.objects.filter(person=person)])
-            techno_new = set([get_object_or_404(CompetenceSubject, pk=pk) for pk in person_form.cleaned_data['competences']])
+            # skills
+            techno_current = set([c.techno for c in Skill.objects.filter(person=person)])
+            techno_new = set([get_object_or_404(SkillSubject, pk=pk) for pk in person_form.cleaned_data['skills']])
 
             for techno in techno_current - techno_new:
-                comp = get_object_or_404(CompetenceInstance, person=person, techno=techno)
+                comp = get_object_or_404(Skill, person=person, techno=techno)
                 comp.delete()
 
             for techno in techno_new - techno_current:
-                comp = CompetenceInstance()
+                comp = Skill()
                 comp.techno = techno
                 comp.person = person
                 comp.strength = settings.COMP_STRENGTH_DEFAULT
@@ -74,7 +74,7 @@ def person_handle_form(request, pk=None):
             return HttpResponseRedirect(reverse('team:person_list'))
     else:
         initial = model_to_dict(person)
-        initial.update({'competences': [c.techno.pk for c in CompetenceInstance.objects.filter(person=person)]})
+        initial.update({'skills': [c.techno.pk for c in Skill.objects.filter(person=person)]})
         user_form = UserForm(initial=model_to_dict(user))
         person_form = PersonForm(initial=initial)
 
@@ -104,47 +104,47 @@ class PersonListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
 
-class CompetenceInstanceFormView(LoginRequiredMixin, CreateUpdateView):
-    model = CompetenceInstance
+class SkillFormView(LoginRequiredMixin, CreateUpdateView):
+    model = Skill
     fields = ['techno', 'person', 'strength']
     template_name = 'utils/team_generic_views_form.haml'
 
     def get_success_url(self):
         person_pk = self.get_form_kwargs()['data']['person']
-        return reverse_lazy('team:competence_instance_list', args=[person_pk])
+        return reverse_lazy('team:skill_instance_list', args=[person_pk])
 
 
-class CompetenceInstanceListView(LoginRequiredMixin, ListView):
-    model = CompetenceInstance
+class SkillListView(LoginRequiredMixin, ListView):
+    model = Skill
 
     def get_context_data(self, **kwargs):
-        context = super(CompetenceInstanceListView, self).get_context_data(**kwargs)
+        context = super(SkillListView, self).get_context_data(**kwargs)
         context.update({
             'profile_detail': get_object_or_404(Person, **self.kwargs),
         })
         return context
 
 
-class CompetenceCategoryView(LoginRequiredMixin, CreateUpdateView):
-    model = CompetenceCategory
+class SkillCategoryView(LoginRequiredMixin, CreateUpdateView):
+    model = SkillCategory
     fields = ['name']
-    success_url = reverse_lazy('team:competence_subject_list')
+    success_url = reverse_lazy('team:skill_subject_list')
     template_name = 'utils/team_generic_views_form.haml'
 
 
-class CompetenceSubjectView(LoginRequiredMixin, CreateUpdateView):
-    model = CompetenceSubject
+class SkillSubjectView(LoginRequiredMixin, CreateUpdateView):
+    model = SkillSubject
     fields = ['name', 'category', 'description']
-    success_url = reverse_lazy('team:competence_subject_list')
+    success_url = reverse_lazy('team:skill_subject_list')
     template_name = 'utils/team_generic_views_form.haml'
 
 
 @login_required
-def competence_subject_list(request):
+def skill_subject_list(request):
     context = {
-        'categories': {cat:CompetenceSubject.objects.filter(category=cat) for cat in CompetenceCategory.objects.all()},
+        'categories': {cat:SkillSubject.objects.filter(category=cat) for cat in SkillCategory.objects.all()},
     }
-    return render(request, 'team/competences_list.haml', context)
+    return render(request, 'team/skillsubject_list.haml', context)
 
 
 class TeamView(LoginRequiredMixin, CreateUpdateView):

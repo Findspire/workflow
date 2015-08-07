@@ -128,7 +128,7 @@
         "version": "workflow 1",
         "creation_date": "2015-08-04"
     },
-    "model": "workflow.workflowinstance",
+    "model": "workflow.workflow",
     "pk": 1
 },
 
@@ -140,7 +140,7 @@
         "validation": 0,
         "workflow": 1
     },
-    "model": "workflow.iteminstance",
+    "model": "workflow.item",
     "pk": 1
 },
 {
@@ -150,7 +150,7 @@
         "validation": 0,
         "workflow": 1
     },
-    "model": "workflow.iteminstance",
+    "model": "workflow.item",
     "pk": 2
 },
 {
@@ -160,7 +160,7 @@
         "validation": 0,
         "workflow": 1
     },
-    "model": "workflow.iteminstance",
+    "model": "workflow.item",
     "pk": 3
 },
 {
@@ -170,7 +170,7 @@
         "validation": 1,
         "workflow": 1
     },
-    "model": "workflow.iteminstance",
+    "model": "workflow.item",
     "pk": 4
 },
 {
@@ -180,7 +180,7 @@
         "validation": 2,
         "workflow": 1
     },
-    "model": "workflow.iteminstance",
+    "model": "workflow.item",
     "pk": 5
 },
 {
@@ -190,7 +190,7 @@
         "validation": 0,
         "workflow": 1
     },
-    "model": "workflow.iteminstance",
+    "model": "workflow.item",
     "pk": 6
 },
 {
@@ -200,7 +200,7 @@
         "validation": 0,
         "workflow": 1
     },
-    "model": "workflow.iteminstance",
+    "model": "workflow.item",
     "pk": 7
 }
 ]

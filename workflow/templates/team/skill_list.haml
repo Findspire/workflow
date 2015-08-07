@@ -10,5 +10,5 @@
     %ul
         - for comp in object_list
             %li
-                %a{href: "{% url 'team:competence_instance_edit' comp.pk %}"}
+                %a{href: "{% url 'team:skill_instance_edit' comp.pk %}"}
                     {{ comp.techno.name }} - {{ comp.techno.category.name }} (strength: {{ comp.strength }})

@@ -6,11 +6,11 @@ from unittest import TestCase
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from .models import Person, Team, CompetenceCategory, CompetenceSubject, CompetenceInstance
+from .models import Person, Team, SkillCategory, SkillSubject, Skill
 
 
 class MiscTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user']
+    fixtures = ['auth_user']
 
     def test_index_not_logged(self):
         resp = self.client.get(reverse('team:index'))
@@ -25,7 +25,7 @@ class MiscTest(TestCase):
 
 
 class PersonTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all']
+    fixtures = ['auth_user', 'team_all']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
@@ -43,7 +43,7 @@ class PersonTest(TestCase):
             'last_name': 'Bay',
             'arrival_date': '2015-01-01',
             'contract_type': 1,
-            'competences': [1, 2, 3],
+            'skills': [1, 2, 3],
         }
         resp = self.client.post(reverse('team:person_new'), data)
         self.assertEqual(resp.status_code, 302)
@@ -52,7 +52,7 @@ class PersonTest(TestCase):
         self.assertEqual(person_count, 1)
 
         person = Person.objects.get(user__username='Mick')
-        comp_list = [c.pk for c in CompetenceInstance.objects.filter(person=person)]
+        comp_list = [c.pk for c in Skill.objects.filter(person=person)]
         self.assertEqual(comp_list, [1, 2, 3])
 
         # update
@@ -68,7 +68,7 @@ class PersonTest(TestCase):
             'last_name': 'imous',
             'arrival_date': '2015-01-01',
             'contract_type': 1,
-            'competences': [1, 2, 4],
+            'skills': [1, 2, 4],
         }
         resp = self.client.post(reverse('team:person_edit', args=[person_pk]), data)
         self.assertEqual(resp.status_code, 302)
@@ -79,7 +79,7 @@ class PersonTest(TestCase):
         self.assertEqual(person_count, 1)
 
         person = Person.objects.get(user__username='Mick')
-        comp_list = [c.pk for c in CompetenceInstance.objects.filter(person=person)]
+        comp_list = [c.pk for c in Skill.objects.filter(person=person)]
         self.assertEqual(comp_list, [1, 2, 4])
 
     def test_person_list(self):
@@ -95,7 +95,7 @@ class PersonTest(TestCase):
             'last_name': 'Bay',
             'arrival_date': '2015-01-01',
             'contract_type': 1,
-            'competences': [1, 2, 3],
+            'skills': [1, 2, 3],
         }
         resp = self.client.post(reverse('team:person_new'), data)
         self.assertEqual(resp.status_code, 200)
@@ -106,14 +106,14 @@ class PersonTest(TestCase):
             'last_name': 'Bay',
             'arrival_date': '',
             'contract_type': 1,
-            'competences': [1, 2, 3],
+            'skills': [1, 2, 3],
         }
         resp = self.client.post(reverse('team:person_new'), data)
         self.assertEqual(resp.status_code, 200)
 
 
 class TeamTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all']
+    fixtures = ['auth_user', 'team_all']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
@@ -163,129 +163,129 @@ class TeamTest(TestCase):
         self.assertEqual(has_team, True)
 
 
-class CompetencesCategoryTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all']
+class SkillsCategoryTest(TestCase):
+    fixtures = ['auth_user', 'team_all']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
         self.assertEqual(resp, True)
 
-    def test_competence_category(self):
+    def test_skill_category(self):
         # create
 
-        resp = self.client.get(reverse('team:competence_category_new'))
+        resp = self.client.get(reverse('team:skill_category_new'))
         self.assertEqual(resp.status_code, 200)
 
         data = {
             'name': 'Tests',
         }
-        resp = self.client.post(reverse('team:competence_category_new'), data)
+        resp = self.client.post(reverse('team:skill_category_new'), data)
         self.assertEqual(resp.status_code, 302)
 
-        comp_count = CompetenceCategory.objects.filter(name='Tests').count()
+        comp_count = SkillCategory.objects.filter(name='Tests').count()
         self.assertEqual(comp_count, 1)
 
         # update
 
-        comp_pk = CompetenceCategory.objects.get(name='Tests').pk
+        comp_pk = SkillCategory.objects.get(name='Tests').pk
 
-        resp = self.client.get(reverse('team:competence_category_edit', args=[comp_pk]))
+        resp = self.client.get(reverse('team:skill_category_edit', args=[comp_pk]))
         self.assertEqual(resp.status_code, 200)
 
         data = {
             'name': 'Front-end',
         }
-        resp = self.client.post(reverse('team:competence_category_edit', args=[comp_pk]), data)
+        resp = self.client.post(reverse('team:skill_category_edit', args=[comp_pk]), data)
         self.assertEqual(resp.status_code, 302)
 
-        comp_count = CompetenceCategory.objects.filter(name='Tests').count()
+        comp_count = SkillCategory.objects.filter(name='Tests').count()
         self.assertEqual(comp_count, 0)
-        comp_count = CompetenceCategory.objects.filter(name='Front-end').count()
+        comp_count = SkillCategory.objects.filter(name='Front-end').count()
         self.assertEqual(comp_count, 1)
 
 
-class CompetencesSubjectTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all']
+class SkillsSubjectTest(TestCase):
+    fixtures = ['auth_user', 'team_all']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
         self.assertEqual(resp, True)
 
-    def test_competence_subject(self):
+    def test_skill_subject(self):
         # create
 
-        resp = self.client.get(reverse('team:competence_subject_new'))
+        resp = self.client.get(reverse('team:skill_subject_new'))
         self.assertEqual(resp.status_code, 200)
 
         data = {
             'name': 'Some skills',
-            'category': CompetenceCategory.objects.get(name='Front').pk,
+            'category': SkillCategory.objects.get(name='Front').pk,
             'description': 'Some description',
         }
-        resp = self.client.post(reverse('team:competence_subject_new'), data)
+        resp = self.client.post(reverse('team:skill_subject_new'), data)
         self.assertEqual(resp.status_code, 302)
 
-        comp_count = CompetenceSubject.objects.filter(name='Some skills').count()
+        comp_count = SkillSubject.objects.filter(name='Some skills').count()
         self.assertEqual(comp_count, 1)
 
         # update
 
-        comp_pk = CompetenceSubject.objects.get(name='Some skills').pk
+        comp_pk = SkillSubject.objects.get(name='Some skills').pk
 
-        resp = self.client.get(reverse('team:competence_subject_edit', args=[comp_pk]))
+        resp = self.client.get(reverse('team:skill_subject_edit', args=[comp_pk]))
         self.assertEqual(resp.status_code, 200)
 
         data = {
             'name': 'Some other skills',
-            'category': CompetenceCategory.objects.get(name='Front').pk,
+            'category': SkillCategory.objects.get(name='Front').pk,
             'description': 'Some description',
         }
-        resp = self.client.post(reverse('team:competence_subject_edit', args=[comp_pk]), data)
+        resp = self.client.post(reverse('team:skill_subject_edit', args=[comp_pk]), data)
         self.assertEqual(resp.status_code, 302)
 
-        comp_count = CompetenceSubject.objects.filter(name='Some skills').count()
+        comp_count = SkillSubject.objects.filter(name='Some skills').count()
         self.assertEqual(comp_count, 0)
-        comp_count = CompetenceSubject.objects.filter(name='Some other skills').count()
+        comp_count = SkillSubject.objects.filter(name='Some other skills').count()
         self.assertEqual(comp_count, 1)
 
-    def test_competence_subject_list(self):
-        resp = self.client.get(reverse('team:competence_subject_list'))
+    def test_skill_subject_list(self):
+        resp = self.client.get(reverse('team:skill_subject_list'))
         self.assertEqual(resp.status_code, 200)
-        comp = CompetenceSubject.objects.get(name='HTML')
+        comp = SkillSubject.objects.get(name='HTML')
         # the following line is tricky, see the corresponding view to understand
         has_comp = any(comp in comp_list for comp_list in resp.context[-1]['categories'].values())
         self.assertEqual(has_comp, True)
 
 
-class CompetencesInstancesTest(TestCase):
-    fixtures = ['auth_permission', 'auth_user', 'team_all']
+class SkillsInstancesTest(TestCase):
+    fixtures = ['auth_user', 'team_all']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
         self.assertEqual(resp, True)
 
-    def test_competence_instance(self):
+    def test_skill_instance(self):
         # create
 
-        resp = self.client.get(reverse('team:competence_instance_new'))
+        resp = self.client.get(reverse('team:skill_instance_new'))
         self.assertEqual(resp.status_code, 200)
 
         data = {
-            'techno': CompetenceSubject.objects.get(pk=1).pk,
+            'techno': SkillSubject.objects.get(pk=1).pk,
             'person': Person.objects.get(pk=1).pk,
             'strength': 1,
         }
-        resp = self.client.post(reverse('team:competence_instance_new'), data)
+        resp = self.client.post(reverse('team:skill_instance_new'), data)
         self.assertEqual(resp.status_code, 302)
 
-        comp_count = CompetenceInstance.objects.filter(techno__pk=1, person__pk=1).count()
+        comp_count = Skill.objects.filter(techno__pk=1, person__pk=1).count()
         self.assertEqual(comp_count, 1)
 
         # update
 
-        comp_pk = CompetenceInstance.objects.get(techno__pk=1, person__pk=1).pk
+        comp_pk = Skill.objects.get(techno__pk=1, person__pk=1).pk
 
-        resp = self.client.get(reverse('team:competence_instance_edit', args=[comp_pk]))
+        resp = self.client.get(reverse('team:skill_instance_edit', args=[comp_pk]))
         self.assertEqual(resp.status_code, 200)
 
         data = {
@@ -293,10 +293,10 @@ class CompetencesInstancesTest(TestCase):
             'person': 1,
             'strength': 42,
         }
-        resp = self.client.post(reverse('team:competence_instance_edit', args=[comp_pk]), data)
+        resp = self.client.post(reverse('team:skill_instance_edit', args=[comp_pk]), data)
         self.assertEqual(resp.status_code, 302)
 
-        qs = CompetenceInstance.objects.filter(techno=1, person=1)
+        qs = Skill.objects.filter(techno=1, person=1)
         self.assertEqual(qs.count(), 1)
         comp_count = qs.filter(strength=1).count()
         self.assertEqual(comp_count, 0)
@@ -305,8 +305,8 @@ class CompetencesInstancesTest(TestCase):
 
         # list
 
-        resp = self.client.get(reverse('team:competence_instance_list', args=[1]))
+        resp = self.client.get(reverse('team:skill_instance_list', args=[1]))
         self.assertEqual(resp.status_code, 200)
-        comp = CompetenceInstance.objects.get(techno__pk=1, person__pk=1)
+        comp = Skill.objects.get(techno__pk=1, person__pk=1)
         has_comp = comp in resp.context[-1]['object_list']
         self.assertEqual(has_comp, True)

@@ -10,8 +10,8 @@
     -if not creating
         %p
             %em
-                %a{href: "{% url 'team:competence_instance_list' person_pk %}"}
-                    Edit competences strength
+                %a{href: "{% url 'team:skill_instance_list' person_pk %}"}
+                    Edit skills strength
 
     %form{action:"", method:"post"}
         - csrf_token

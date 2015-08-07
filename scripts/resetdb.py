@@ -3,13 +3,15 @@
 
 import os
 import sys
+import django
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "workflow.settings")
+django.setup()
 
 from django.contrib.auth.models import User
 from django.utils.timezone import now
-from workflow.apps.team.models import Person, ContractType
+from workflow.apps.team.models import Person
 
 # clean
 print '=> Cleaning everything ...'
@@ -26,10 +28,7 @@ print '=> Creating super user ...'
 
 u = User.objects.create_superuser('admin', 'admin@admin.fr', 'admin')
 u.save()
-
-c = ContractType.objects.create(name='CDI')
-
-p = Person.objects.create(user=u, arrival_date=now(), contract_type=c)
+p = Person.objects.create(user=u, arrival_date=now())
 
 # todo create a Group "manager" and add yourself
 

@@ -8,6 +8,6 @@ from . import models
 admin.site.register(models.Comment)
 admin.site.register(models.ItemCategory)
 admin.site.register(models.ItemModel)
-admin.site.register(models.ItemInstance)
+admin.site.register(models.Item)
 admin.site.register(models.Project)
-admin.site.register(models.WorkflowInstance)
+admin.site.register(models.Workflow)
