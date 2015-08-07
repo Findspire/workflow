@@ -127,30 +127,27 @@ def item_instance_show(request, item_pk):
 
 @login_required
 def update(request, action, model, pk, pk_other=None):
-    if model not in ('item', 'category', 'validate'):
-        raise Http404('Unexpected model "%s"' % model)
+    # todo: this should be a POST request
 
     if model == 'item':
-        if action not in ('take', 'untake'):
-            raise Http404('Unexpected action "%s"' % action)
-
         item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
 
         if action == 'take':
             item.assigned_to = get_object_or_404(Person, user=request.user)
-        else:  # untake
+        elif action == 'untake':
             item.assigned_to = None
+        else:
+            raise Http404('Unexpected action "%s"' % action)
 
         item.save()
     elif model == 'category':
-        if action not in ('take', 'untake'):
-            raise Http404('Unexpected action "%s"' % action)
-
         if action == 'take':
             assigned_to = get_object_or_404(Person, user=request.user)
-        else:  # untake
+        elif action == 'untake':
             assigned_to = None
+        else:
+            raise Http404('Unexpected action "%s"' % action)
 
         items = get_list_or_404(Item, workflow__pk=pk_other)
         for item in items:
@@ -160,9 +157,6 @@ def update(request, action, model, pk, pk_other=None):
 
         workflow_pk = pk_other
     elif model == 'validate':
-        if action not in ('untested', 'success', 'failed'):
-            raise Http404('Unexpected action "%s"' % action)
-
         item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
 
@@ -172,8 +166,12 @@ def update(request, action, model, pk, pk_other=None):
             item.validation = Item.VALIDATION_SUCCESS
         elif action == 'failed':
             item.validation = Item.VALIDATION_FAILED
+        else:
+            raise Http404('Unexpected action "%s"' % action)
 
         item.save()
+    else:
+        raise Http404('Unexpected model "%s"' % model)
 
     default_url = reverse('workflow:workflow_show', args=[workflow_pk, 'all'])
     return HttpResponseRedirect(request.GET.get('next', default_url))
