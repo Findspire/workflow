@@ -14,6 +14,8 @@ def index(request):
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+
     url(r'^$', index),
     url(r'^workflow/', include('workflow.apps.workflow.urls', namespace='workflow')),
     url(r'^team/', include('workflow.apps.team.urls', namespace='team')),

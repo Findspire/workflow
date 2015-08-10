@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.utils.translation import ugettext  as _
 from django.views.generic.list import ListView
 
 from braces.views import LoginRequiredMixin
@@ -71,7 +72,7 @@ def person_handle_form(request, pk=None):
                 comp.strength = settings.COMP_STRENGTH_DEFAULT
                 comp.save()
 
-            return HttpResponseRedirect(reverse('team:person_list'))
+            return HttpResponseRedirect(reverse('team:person_edit', args=[pk]))
     else:
         initial = model_to_dict(person)
         initial.update({'skills': [c.techno.pk for c in Skill.objects.filter(person=person)]})
@@ -82,18 +83,18 @@ def person_handle_form(request, pk=None):
         'person_form': person_form,
         'user_form': user_form,
         'creating': creating,
-        'person_pk': person.pk if person else None,
+        'person': person,
     }
 
     if creating:
         context.update({
-            'title': 'Person creation',
-            'submit': 'Save',
+            'title': _('Person creation'),
+            'submit': _('Save'),
         })
     else:
         context.update({
-            'title': 'Person update',
-            'submit': 'Update',
+            'title': _('Person update'),
+            'submit': _('Update'),
         })
 
     return render(request, 'team/person_form.haml', context)

@@ -1,11 +1,13 @@
 - extends "team/base.haml"
 
+- load i18n
+
 - block breadcrumbs
-    List teams
+    {% trans "List teams" %}
 
 - block content
     %h1
-        List teams
+        {% trans "List teams" %}
 
     %ul
         - for team in object_list

@@ -1,11 +1,13 @@
 - extends "workflow/base.haml"
 
+- load i18n
+
 - block breadcrumbs
-    List item models
+    {% trans "List item models" %}
 
 - block content
     %h1
-        List item models
+        {% trans "List item models" %}
 
     %ul
         - for category, items in categories.items
@@ -26,4 +28,4 @@
                 - else
                     %p
                         %em
-                            No items in this category.
+                            {% trans "No items in this category." %}

@@ -1,11 +1,13 @@
 - extends "team/base.haml"
 
+- load i18n
+
 - block breadcrumbs
-    List skills
+    {% trans "List skills" %}
 
 - block content
     %h1
-        List skills
+        {% trans "List skills" %}
 
     %ul
         - for category, skills in categories.items
@@ -26,4 +28,4 @@
                 - else
                     %p
                         %em
-                            No skills in this category.
+                            {% trans "No skills in this category." %}

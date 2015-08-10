@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy  as _
 
 
 class Person(models.Model):
@@ -30,11 +30,12 @@ class Person(models.Model):
         (CONTRACT_FREELANCE, _('Freelance')),
     )
 
-    user = models.OneToOneField(User)
-    arrival_date = models.DateField()
+    user = models.OneToOneField(User, verbose_name=_('User'))
+    arrival_date = models.DateField(verbose_name=_('Arrival date'))
     contract_type = models.SmallIntegerField(
         choices=CONTRACT_CHOICEs,
         default=0,
+        verbose_name=_('Contract'),
     )
 
     def __unicode__(self):
@@ -42,9 +43,9 @@ class Person(models.Model):
 
 
 class Team(models.Model):
-    name = models.CharField(max_length=64)
-    leader = models.ForeignKey(Person, related_name='leader')
-    members = models.ManyToManyField(Person, related_name='members')
+    name = models.CharField(max_length=64, verbose_name=_('Name'))
+    leader = models.ForeignKey(Person, related_name='leader', verbose_name=_('Leader'))
+    members = models.ManyToManyField(Person, related_name='members', verbose_name=_('Members'))
 
     def __unicode__(self):
         return '%s' % (self.name)
@@ -52,10 +53,10 @@ class Team(models.Model):
 
 class SkillCategory(models.Model):
     class Meta:
-        verbose_name = 'skill category'
-        verbose_name_plural = 'skill categories'
+        verbose_name = _('Skill category')
+        verbose_name_plural = _('Skill categories')
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
 
     def __unicode__(self):
         return '%s' % (self.name)
@@ -63,12 +64,12 @@ class SkillCategory(models.Model):
 
 class SkillSubject(models.Model):
     class Meta:
-        verbose_name = 'skill subject'
-        verbose_name_plural = 'skill subjects'
+        verbose_name = _('Skill subject')
+        verbose_name_plural = _('Skill subjects')
 
-    name = models.CharField(max_length=255)
-    category = models.ForeignKey(SkillCategory)
-    description = models.CharField(max_length=1024, null=True, blank=True)
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
+    category = models.ForeignKey(SkillCategory, verbose_name=_('Category'))
+    description = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_('Description'))
 
     def __unicode__(self):
         return '%s - %s' % (self.category, self.name)
@@ -76,12 +77,12 @@ class SkillSubject(models.Model):
 
 class Skill(models.Model):
     class Meta:
-        verbose_name = 'skill instance'
-        verbose_name_plural = 'skill instances'
+        verbose_name = _('Skill instance')
+        verbose_name_plural = _('Skill instances')
 
-    techno = models.ForeignKey(SkillSubject)
-    person = models.ForeignKey(Person)
-    strength = models.IntegerField()
+    techno = models.ForeignKey(SkillSubject, verbose_name=_('Skill subject'))
+    person = models.ForeignKey(Person, verbose_name=_('Person'))
+    strength = models.IntegerField(verbose_name=_('Strength'))
 
     def __unicode__(self):
         return '%s - %s - %d' % (self.person, self.techno, self.strength)

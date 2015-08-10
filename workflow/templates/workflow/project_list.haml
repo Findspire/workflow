@@ -1,13 +1,14 @@
 - extends "workflow/base.haml"
 
+- load i18n
 - load workflow_tags
 
 - block breadcrumbs
-    Project list
+    {% trans "Projects list" %}
 
 - block content
     %h1
-        Projects list
+        {% trans "Projects list" %}
 
     %ul
         - for project, workflows in projects.items
@@ -30,4 +31,4 @@
                 - else
                     %p
                         %em
-                            No workflows in this project.
+                            {% trans "No workflows in this project." %}

@@ -28,6 +28,7 @@ CreateUpdateView:
 
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext as _
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 
@@ -79,13 +80,13 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
 
         if self.is_update_request():
             context.update({
-                'title': '{} update'.format(self.model._meta.verbose_name.capitalize()),
-                'submit': 'Update',
+                'title': _('%(name)s update') % {'name': self.model._meta.verbose_name.capitalize()},
+                'submit': _('Update'),
             })
         else:
             context.update({
-                'title': '{} creation'.format(self.model._meta.verbose_name.capitalize()),
-                'submit': 'Save',
+                'title': _('%(name)s creation') % {'name': self.model._meta.verbose_name.capitalize()},
+                'submit': _('Save'),
             })
 
         return context

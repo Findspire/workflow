@@ -1,6 +1,8 @@
 - extends "base.haml"
 
+- load i18n
+
 - block breadcrumbs_app
     %a{href: "/workflow/"}
-        Workflow
+        {% trans "Workflow" %}
     ›

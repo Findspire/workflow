@@ -1,12 +1,14 @@
 - extends "workflow/base.haml"
+
 - load static
+- load i18n
 
 - block breadcrumbs
-    Show workflow
+    {% trans "Show workflow" %}
 
 - block content
     %h1
-        Show workflow : {{ workflow.project.name }} - {{ workflow.version }}
+        {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }}
 
     %hr
 
@@ -20,13 +22,13 @@
             %ul
                 %li
                     %span{class:"success"}
-                    Success: {{ counters.success }}
+                    {% trans "Success:" %} {{ counters.success }}
                 %li
                     %span{class:"failed"}
-                    Failed: {{ counters.failed }}
+                    {% trans "Failed:" %} {{ counters.failed }}
                 %li
                     %span{class:"untested"}
-                    Untested: {{ counters.untested }}
+                    {% trans "Untested:" %} {{ counters.untested }}
 
     %hr
 
@@ -34,27 +36,27 @@
         %label.all
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'all' %}');">
             %span
-                All items {{ counters.all }}
+                {% trans "All items" %} {{ counters.all }}
         %label.mine
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'mine' %}');">
             %span
-                Mine items {{ counters.mine }}
+                {% trans "Mine items" %} {{ counters.mine }}
         %label.untaken
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'untaken' %}');">
             %span
-                Untaken items {{ counters.untaken }}
+                {% trans "Untaken items" %} {{ counters.untaken }}
         %label.taken
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'taken' %}');">
             %span
-                Taken items {{ counters.taken }}
+                {% trans "Taken items" %} {{ counters.taken }}
         %label.success
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'success' %}');">
             %span
-                Success items {{ counters.success }}
+                {% trans "Success items" %} {{ counters.success }}
         %label.failed
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'failed' %}');">
             %span
-                Failed items {{ counters.failed }}
+                {% trans "Failed items" %} {{ counters.failed }}
 
     #items
         - include "workflow/workflow_show.table.part.haml"

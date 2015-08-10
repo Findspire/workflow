@@ -1,36 +1,37 @@
 - extends "team/base.haml"
 
 - load static
+- load i18n
 
 - block breadcrumbs
     Index
 
 - block content
     %h1
-        Team management
+        {% trans "Team management" %}
 
     %table
         %tr
             %th
                 %a{href: "{% url 'team:person_list' %}"}
-                    Person
+                    {% trans "Persons" %}
             %td
                 %a{href: "{% url 'team:person_new' %}"}
-                    Add
+                    {% trans "Add" %}
         %tr
             %th
                 %a{href: "{% url 'team:team_list' %}"}
-                    Team
+                    {% trans "Teams" %}
              %td
                 %a{href: "{% url 'team:team_new' %}"}
-                    Add
+                    {% trans "Add" %}
         %tr
             %th
                 %a{href: "{% url 'team:skill_subject_list' %}"}
-                    Skill categories
+                    {% trans "Skill categories" %}
             %td
                 %a{href: "{% url 'team:skill_category_new' %}"}
-                    Add category
+                    {% trans "Add a category" %}
                 \-
                 %a{href: "{% url 'team:skill_subject_new' %}"}
-                    Add subject
+                    {% trans "Add a skill subject" %}

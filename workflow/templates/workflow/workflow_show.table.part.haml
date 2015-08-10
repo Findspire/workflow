@@ -1,3 +1,5 @@
+
+- load i18n
 - load workflow_tags
 
 - for category, items_list in items.items
@@ -7,10 +9,10 @@
                 {{ category.name }}
             %td.take_untake_category
                 %a{href:"{% url 'workflow:update' 'take' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Take all items of the category"}
-                    take all
+                    {% trans "Take all" %}
                 \/
                 %a{href:"{% url 'workflow:update' 'untake' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Untake all items of the category"}
-                    untake all
+                    {% trans "Untake all" %}
 
         - for item in items_list
             %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}"}
@@ -21,7 +23,7 @@
                     - for url, ticket_id in item.item_model.name|get_tickets
                         - if forloop.counter == 1
                             %strong{style:"margin-left:20px;"}
-                                Tickets:
+                                {% trans "Tickets:" %}
                         %a.urls{href:"{{ url }}", alt:"Ticket #{{ ticket_id }}"}
                             \#{{ ticket_id }}
                         - if not forloop.last
@@ -34,7 +36,7 @@
                             %img{src: "/static/workflow/img/untake.png"}
                     - else
                         %a{href: "{% url 'workflow:update' 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item"}
-                            take
+                            {% trans "Take" %}
 
                 %td.validate
                     - if item.validation == Item.VALIDATION_SUCCESS

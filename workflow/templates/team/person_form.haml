@@ -1,17 +1,25 @@
 - extends "team/base.haml"
 
+- load i18n
+
 - block breadcrumbs
+    - if not creating
+        %a{href: "{% url 'team:person_edit' person.pk %}"}
+            {% blocktrans trimmed %}
+                Edit {{ person }}
+            {% endblocktrans %}
+        ›
     {{ title }}
 
 - block content
     %h1
         {{ title }}
 
-    -if not creating
+    - if not creating
         %p
             %em
-                %a{href: "{% url 'team:skill_instance_list' person_pk %}"}
-                    Edit skills strength
+                %a{href: "{% url 'team:skill_instance_list' person.pk %}"}
+                    {% trans "Edit skills strength" %}
 
     %form{action:"", method:"post"}
         - csrf_token

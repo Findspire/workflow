@@ -1,11 +1,13 @@
 - extends "team/base.haml"
 
+- load i18n
+
 - block breadcrumbs
-    List persons
+    {% trans "List persons" %}
 
 - block content
     %h1
-        List persons
+        {% trans "List persons" %}
 
     %ul
         - for person in object_list

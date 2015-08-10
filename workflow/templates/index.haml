@@ -1,16 +1,18 @@
 - extends "base.haml"
 
+- load i18n
+
 - block breadcrumbs_app
-    home
+    {% trans "Home" %}
 
 - block content
     %h1
-        Workflow
+        {% trans "Workflow project" %}
 
     %ul
         %li
             %a{href: "{% url 'team:index' %}"}
-                Team and skills
+                {% trans "Teams and skills" %}
         %li
             %a{href: "{% url 'workflow:index' %}"}
-                Workflow
+                {% trans "Workflows" %}

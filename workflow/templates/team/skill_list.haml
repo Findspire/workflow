@@ -1,11 +1,27 @@
 - extends "team/base.haml"
 
+- load i18n
+
 - block breadcrumbs
-    Compentences instances edit
+    %a{href: "{% url 'team:person_edit' profile_detail.pk %}"}
+        {% blocktrans trimmed %}
+           Edit {{ profile_detail }}
+        {% endblocktrans %}
+    ›
+    {% trans "Compentences instances edit" %}
 
 - block content
     %h1
-        Compentences instances edit (user: {{ profile_detail }})
+        {% blocktrans trimmed %}
+            Compentences instances edit (user: {{ profile_detail }})
+        {% endblocktrans %}
+
+    %p
+        %em
+            %a{href: "{% url 'team:person_edit' profile_detail.pk %}"}
+                {% blocktrans trimmed %}
+                    Back to {{ profile_detail }}'s general informations
+                {% endblocktrans %}
 
     %ul
         - for comp in object_list

@@ -16,39 +16,40 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy  as _
 
 from workflow.apps.team.models import Person, Team
 
 
 class ItemCategory(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, verbose_name=_('Name'))
 
     def __unicode__(self):
         return '%s' % (self.name)
 
 
 class ItemModel(models.Model):
-    name = models.CharField(max_length=128)
-    description = models.TextField(max_length=1000, blank=True, null=True)
-    category = models.ForeignKey(ItemCategory)
+    name = models.CharField(max_length=128, verbose_name=_('Name'))
+    description = models.TextField(max_length=1000, blank=True, null=True, verbose_name=_('Description'))
+    category = models.ForeignKey(ItemCategory, verbose_name=_('Category'))
 
     def __unicode__(self):
         return '%s - %s' % (self.category, self.name)
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=32)
-    team = models.ForeignKey(Team)
-    items = models.ManyToManyField(ItemModel, blank=True)
+    name = models.CharField(max_length=32, verbose_name=_('Name'))
+    team = models.ForeignKey(Team, verbose_name=_('Team'))
+    items = models.ManyToManyField(ItemModel, blank=True, verbose_name=_('Items'))
 
     def __unicode__(self):
         return '%s' % (self.name)
 
 
 class Workflow(models.Model):
-    project = models.ForeignKey(Project)
-    version = models.CharField(max_length=128)
-    creation_date = models.DateField(auto_now=True)
+    project = models.ForeignKey(Project, verbose_name=_('Project'))
+    version = models.CharField(max_length=128, verbose_name=_('Version'))
+    creation_date = models.DateField(auto_now=True, verbose_name=_('Creation date'))
 
     def __unicode__(self):
         return '%s - %s' % (self.project, self.version)
@@ -98,17 +99,18 @@ class Item(models.Model):
     VALIDATION_FAILED = 2
 
     VALIDATION_CHOICES = (
-        (VALIDATION_UNTESTED, 'Untested'),  # default
-        (VALIDATION_SUCCESS, 'Success'),
-        (VALIDATION_FAILED, 'Failed'),
+        (VALIDATION_UNTESTED, _('Untested')),  # default
+        (VALIDATION_SUCCESS, _('Success')),
+        (VALIDATION_FAILED, _('Failed')),
     )
 
-    item_model = models.ForeignKey(ItemModel)
-    workflow = models.ForeignKey(Workflow)
-    assigned_to = models.ForeignKey(Person, null=True, blank=True)
+    item_model = models.ForeignKey(ItemModel, verbose_name=_('Item model'))
+    workflow = models.ForeignKey(Workflow, verbose_name=_('Workflow'))
+    assigned_to = models.ForeignKey(Person, null=True, blank=True, verbose_name=_('Assigned to'))
     validation = models.SmallIntegerField(
         choices=VALIDATION_CHOICES,
         default=0,
+        verbose_name=_('Validation'),
     )
 
     def __unicode__(self):
@@ -116,10 +118,10 @@ class Item(models.Model):
 
 
 class Comment(models.Model):
-    item = models.ForeignKey(Item)
-    person = models.ForeignKey(Person)
-    date = models.DateField(default=timezone.now)
-    text = models.TextField(max_length=1000)
+    item = models.ForeignKey(Item, verbose_name=_('Item'))
+    person = models.ForeignKey(Person, verbose_name=_('Person'))
+    date = models.DateField(default=timezone.now, verbose_name=_('Date'))
+    text = models.TextField(max_length=1000, verbose_name=_('Text'))
 
     def __unicode__(self):
         return '%s' % (self.text)

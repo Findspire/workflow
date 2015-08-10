@@ -1,11 +1,14 @@
 - extends "workflow/base.haml"
+
 - load static
 - load admin_urls
+- load i18n
 
 - block breadcrumbs
     %a{href: "{% url 'workflow:workflow_show' item.workflow.pk 'all' %}"}
         {{ item.workflow.project.name }} - {{ item.workflow.version }}
-    › Show item
+    ›
+    {% trans "Show item" %}
 
 - block content
     %h1
@@ -21,7 +24,7 @@
                     %img{src: "/static/workflow/img/untake.png"}
             - else
                 %a{href: "{% url 'workflow:update' 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item"}
-                    take
+                    {% trans "Take" %}
         \-
         %span.validate
             - if item.validation == Item.VALIDATION_SUCCESS
@@ -56,7 +59,7 @@
                 {{ item.item_model.description }}
         - else
             %pre<
-                ** No details. **
+                ** {% trans "No details." %} **
 
     #details_edit
         %h2
@@ -73,7 +76,7 @@
 
     #comments
         %h2
-            Comments
+            {% trans "Comments" %}
         - for comment in comments
             .comment
                 %h4
@@ -85,11 +88,11 @@
                 %hr
         - empty
             %em
-                No comments
+                {% trans "No comments yet." %}
 
     #comment_new
         %h2
-            Add comment
+            {% trans "Add a comment" %}
         %form{action: '.', method:"POST"}
             - csrf_token
             %input{type: "hidden", name: "type", value:"comment"}

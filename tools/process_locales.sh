@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-cd workflow/
+cd workflow
 
-/usr/bin/env python ../manage.py makemessages -e html -e haml -a
-/usr/bin/env python ../manage.py makemessages -d djangojs -e js -a
-
-/usr/bin/env python ../manage.py compilemessages
+../manage.py makemessages -e haml -e py -a
+../manage.py compilemessages
