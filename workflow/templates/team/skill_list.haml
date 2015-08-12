@@ -23,8 +23,17 @@
                     Back to {{ profile_detail }}'s general informations
                 {% endblocktrans %}
 
-    %ul
-        - for comp in object_list
-            %li
-                %a{href: "{% url 'team:skill_instance_edit' comp.pk %}"}
-                    {{ comp.techno.name }} - {{ comp.techno.category.name }} (strength: {{ comp.strength }})
+    %form{action: ".",  method: "POST"}
+        - csrf_token
+        {{ myformset.management_form }}
+        <ul>
+        {% for form in myformset %}
+            {% if form.strength.label %}
+                <li>
+                    {{ form.id }}
+                    {{ form.strength.label }} : {{ form.strength }}
+                </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        %input{type: "submit", value:"Save all"}

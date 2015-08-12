@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.forms.models import model_to_dict
+from django.forms.models import model_to_dict, modelformset_factory
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext  as _
@@ -27,14 +27,14 @@ def index(request):
 
 
 @login_required
-def person_handle_form(request, pk=None):
-    creating = (pk == None)
+def person_handle_form(request, person_pk=None):
+    creating = (person_pk == None)
     if creating:
         person = Person()
         user = User()
         UserForm = UserFormCreate
     else:
-        person = get_object_or_404(Person, pk=pk)
+        person = get_object_or_404(Person, pk=person_pk)
         user = person.user
         UserForm = UserFormUpdate
 
@@ -72,7 +72,7 @@ def person_handle_form(request, pk=None):
                 comp.strength = settings.COMP_STRENGTH_DEFAULT
                 comp.save()
 
-            return HttpResponseRedirect(reverse('team:person_edit', args=[pk]))
+            return HttpResponseRedirect(reverse('team:person_edit', args=[person_pk]))
     else:
         initial = model_to_dict(person)
         initial.update({'skills': [c.techno.pk for c in Skill.objects.filter(person=person)]})
@@ -115,15 +115,33 @@ class SkillFormView(LoginRequiredMixin, CreateUpdateView):
         return reverse_lazy('team:skill_instance_list', args=[person_pk])
 
 
-class SkillListView(LoginRequiredMixin, ListView):
-    model = Skill
+@login_required
+def skills_list(request, person_pk):
+    person = get_object_or_404(Person, pk=person_pk)
 
-    def get_context_data(self, **kwargs):
-        context = super(SkillListView, self).get_context_data(**kwargs)
-        context.update({
-            'profile_detail': get_object_or_404(Person, **self.kwargs),
-        })
-        return context
+    MyFormSet = modelformset_factory(Skill, fields=['strength'])
+
+    if request.method == "POST":
+        myformset = MyFormSet(request.POST, queryset=Skill.objects.filter(person=person))
+
+        if myformset.is_valid():
+            myformset.save()
+            return HttpResponseRedirect(reverse('team:skill_instance_list', args=[person_pk]))
+    else:
+        myformset = MyFormSet(queryset=Skill.objects.filter(person=person))
+
+    # add the techno name - for form display
+    for form in myformset:
+        if hasattr(form.instance, 'person'):  # not the form for creating a new object
+            skill = get_object_or_404(SkillSubject, pk=form.instance.techno.pk)
+            form['strength'].label = '{} ({})'.format(skill.name, skill.category.name)
+        else:
+            form['strength'].label = None
+
+    return render(request, 'team/skill_list.haml', {
+        'profile_detail': person,
+        'myformset'  : myformset,
+    })
 
 
 class SkillCategoryView(LoginRequiredMixin, CreateUpdateView):
