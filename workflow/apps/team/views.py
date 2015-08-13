@@ -71,7 +71,7 @@ def person_handle_form(request, person_pk=None):
                 comp.strength = settings.COMP_STRENGTH_DEFAULT
                 comp.save()
 
-            return HttpResponseRedirect(reverse('team:person_edit', args=[person.pk]))
+            return HttpResponseRedirect(reverse('team:person_list'))
     else:
         initial = model_to_dict(person)
         initial.update({'skills': [c.techno.pk for c in Skill.objects.filter(person=person)]})
@@ -125,7 +125,7 @@ def skills_list(request, person_pk):
 
         if myformset.is_valid():
             myformset.save()
-            return HttpResponseRedirect(reverse('team:skill_instance_list', args=[person_pk]))
+            return HttpResponseRedirect(reverse('team:person_edit', args=[person_pk]))
     else:
         myformset = MyFormSet(queryset=Skill.objects.filter(person=person))
 
