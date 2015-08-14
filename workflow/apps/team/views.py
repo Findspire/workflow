@@ -71,7 +71,7 @@ def person_handle_form(request, person_pk=None):
                 comp.strength = settings.COMP_STRENGTH_DEFAULT
                 comp.save()
 
-            return HttpResponseRedirect(reverse('team:person_edit', args=[person_pk]))
+            return HttpResponseRedirect(reverse('team:person_edit', args=[person.pk]))
     else:
         initial = model_to_dict(person)
         initial.update({'skills': [c.techno.pk for c in Skill.objects.filter(person=person)]})
