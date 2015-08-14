@@ -286,19 +286,21 @@ class SkillsInstancesTest(TestCase):
         person_pk = Person.objects.get(pk=1).pk
         resp = self.client.get(reverse('team:skill_instance_list', args=[person_pk]))
 
-        """
-        Todo: make this pass. Django's formset_factory is a mess.
-
         some_object_pk = resp.context['myformset'].forms[0].instance.pk
 
-        data = {
+        # management form, used internally by django.
+        data = resp.context['myformset'].management_form.initial
+        for key in data.keys():
+            data['form-'+key] = data[key]
+            del data[key]
+
+        data.update({
             'form-0-id': some_object_pk,
             'form-0-strength': 42,
-        }
-        data.update(resp.context['myformset'].management_form.initial)
+        })
+
         resp = self.client.post(reverse('team:skill_instance_list', args=[person_pk]), data)
         self.assertEqual(resp.status_code, 302)
 
         skill = Skill.objects.get(pk=some_object_pk)
         self.assertEqual(skill.strength, 42)
-        """
