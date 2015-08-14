@@ -16,7 +16,6 @@ from django.views.generic.list import ListView
 from braces.views import LoginRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView
-from workflow.utils.paginator import paginator_range
 from workflow.apps.team.models import Skill, SkillCategory, SkillSubject, Team, Person
 from workflow.apps.team.forms import TeamNewForm, PersonForm, UserFormCreate, UserFormUpdate
 
