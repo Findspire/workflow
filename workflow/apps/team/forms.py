@@ -3,8 +3,8 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from workflow.apps.team.models import Team, Person, SkillSubject, Skill, SkillCategory
-from workflow.utils.forms import MyMultipleChoiceField, MyCheckboxSelectMultiple
+from workflow.apps.team.models import Team, Person, SkillSubject, SkillCategory
+from workflow.utils.forms import MyMultipleChoiceField
 
 
 class TeamNewForm(forms.ModelForm):
@@ -23,7 +23,6 @@ class PersonForm(forms.ModelForm):
 
     skills = MyMultipleChoiceField(
         choices_data=(SkillCategory, SkillSubject),
-        widget=MyCheckboxSelectMultiple,
         required=False,
     )
 

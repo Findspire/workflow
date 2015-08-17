@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-10 16:00+0000\n"
+"POT-Creation-Date: 2015-08-17 10:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,19 +100,19 @@ msgstr "Personne"
 msgid "Strength"
 msgstr "Niveau"
 
-#: apps/team/views.py:91
+#: apps/team/views.py:90
 msgid "Person creation"
 msgstr "Création d'une personne "
 
-#: apps/team/views.py:92 utils/generic_views.py:89
+#: apps/team/views.py:91 utils/generic_views.py:89
 msgid "Save"
 msgstr "Enregistrer"
 
-#: apps/team/views.py:96
+#: apps/team/views.py:95
 msgid "Person update"
 msgstr "Mise à jour d'une personne"
 
-#: apps/team/views.py:97 utils/generic_views.py:84
+#: apps/team/views.py:96 utils/generic_views.py:84
 msgid "Update"
 msgstr "Mettre a jour"
 
@@ -353,39 +353,43 @@ msgstr ""
 msgid "Show workflow:"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:25
+#: templates/workflow/workflow_show.haml:17
+msgid "Add an item in this workflow"
+msgstr "Ajouter un item a ce workflow"
+
+#: templates/workflow/workflow_show.haml:31
 msgid "Success:"
 msgstr "Réussi:"
 
-#: templates/workflow/workflow_show.haml:28
+#: templates/workflow/workflow_show.haml:34
 msgid "Failed:"
 msgstr "Raté:"
 
-#: templates/workflow/workflow_show.haml:31
+#: templates/workflow/workflow_show.haml:37
 msgid "Untested:"
 msgstr "Non testé"
 
-#: templates/workflow/workflow_show.haml:39
+#: templates/workflow/workflow_show.haml:45
 msgid "All items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:43
+#: templates/workflow/workflow_show.haml:49
 msgid "Mine items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:47
+#: templates/workflow/workflow_show.haml:53
 msgid "Untaken items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:51
+#: templates/workflow/workflow_show.haml:57
 msgid "Taken items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:55
+#: templates/workflow/workflow_show.haml:61
 msgid "Success items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:59
+#: templates/workflow/workflow_show.haml:65
 msgid "Failed items"
 msgstr ""
 

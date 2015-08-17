@@ -12,6 +12,12 @@
 
     %hr
 
+    %p
+        %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
+            {% trans "Add an item in this workflow" %}
+
+    %hr
+
     #progressbar
         %table
             %tr

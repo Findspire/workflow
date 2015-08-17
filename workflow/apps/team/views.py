@@ -73,9 +73,9 @@ def person_handle_form(request, person_pk=None):
 
             return HttpResponseRedirect(reverse('team:person_list'))
     else:
+        user_form = UserForm(initial=model_to_dict(user))
         initial = model_to_dict(person)
         initial.update({'skills': [c.techno.pk for c in Skill.objects.filter(person=person)]})
-        user_form = UserForm(initial=model_to_dict(user))
         person_form = PersonForm(initial=initial)
 
     context = {

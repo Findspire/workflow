@@ -289,10 +289,7 @@ class SkillsInstancesTest(TestCase):
         some_object_pk = resp.context['myformset'].forms[0].instance.pk
 
         # management form, used internally by django.
-        data = resp.context['myformset'].management_form.initial
-        for key in data.keys():
-            data['form-'+key] = data[key]
-            del data[key]
+        data = {'form-'+key: value for key, value in resp.context['myformset'].management_form.initial.items()}
 
         data.update({
             'form-0-id': some_object_pk,

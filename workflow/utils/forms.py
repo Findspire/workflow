@@ -16,6 +16,8 @@ class MyCheckboxSelectMultiple(forms.widgets.CheckboxSelectMultiple):
 class MyMultipleChoiceField(forms.MultipleChoiceField):
     """Implement a nested MultipleChoiceField."""
 
+    widget = MyCheckboxSelectMultiple
+
     def get_choices(self):
         Category, Object = self.choices_data
         choices = []
@@ -25,6 +27,7 @@ class MyMultipleChoiceField(forms.MultipleChoiceField):
             choices.append((cat.name, choices_tmp))
         return choices
 
+    # Overriding __init__ in order to build a nested list of choices (sorted by categories)
     def __init__(self, choices_data, *args, **kwargs):
         self.choices_data = choices_data
         super(MyMultipleChoiceField, self).__init__(choices=self.get_choices, *args, **kwargs)

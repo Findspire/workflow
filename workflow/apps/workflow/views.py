@@ -82,6 +82,26 @@ class ItemModelFormView(LoginRequiredMixin, CreateUpdateView):
     template_name = 'utils/workflow_generic_views_form.haml'
 
 
+class ItemModelFormViewFromWorkflow(ItemModelFormView):
+    def form_valid(self, form):
+        ret = super(ItemModelFormViewFromWorkflow, self).form_valid(form)
+
+        # add to newly created ItemModel to the projects and the workflow
+        created = form.instance
+
+        workflow = get_object_or_404(Workflow, pk=self.kwargs['workflow_pk'])
+        Item.objects.create(item_model=created, workflow=workflow)
+
+        project = workflow.project
+        project.items.add(created)
+
+        return ret
+
+    def get_success_url(self):
+        workflow_pk = self.kwargs['workflow_pk']
+        return reverse_lazy('workflow:workflow_show', args=[workflow_pk, 'all'])
+
+
 class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
     model = ItemCategory
     fields = ['name']
