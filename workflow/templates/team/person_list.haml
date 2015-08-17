@@ -14,3 +14,5 @@
             %li
                 %a{href: "{% url 'team:person_edit' person.pk %}"}
                     {{ person }}
+
+    - include "utils/paginator.part.haml"

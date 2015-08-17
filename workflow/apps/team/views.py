@@ -15,7 +15,7 @@ from django.views.generic.list import ListView
 
 from braces.views import LoginRequiredMixin
 
-from workflow.utils.generic_views import CreateUpdateView
+from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.team.models import Skill, SkillCategory, SkillSubject, Team, Person
 from workflow.apps.team.forms import TeamNewForm, PersonForm, UserFormCreate, UserFormUpdate
 
@@ -99,9 +99,10 @@ def person_handle_form(request, person_pk=None):
     return render(request, 'team/person_form.haml', context)
 
 
-class PersonListView(LoginRequiredMixin, ListView):
+class PersonListView(LoginRequiredMixin, MyListView):
     model = Person
     paginate_by = 20
+    queryset = Person.objects.order_by('user__username').select_related('user')
 
 
 class SkillFormView(LoginRequiredMixin, CreateUpdateView):

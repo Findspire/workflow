@@ -55,7 +55,7 @@ class Workflow(models.Model):
         return '%s - %s' % (self.project, self.version)
 
     def get_items(self, which_display, person=None):
-        qs = Item.objects.filter(workflow=self)
+        qs = Item.objects.filter(workflow=self).order_by('item_model__category__name', 'item_model__name')
 
         try:
             return {

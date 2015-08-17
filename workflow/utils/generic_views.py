@@ -4,15 +4,7 @@
 """
 This module extend the django class based views: it merges CreateView and UpdateView.
 
-Usage:
-    Like any django class based view. LoginRequiredMixin is optional.
-
-    class SomeView(LoginRequiredMixin, CreateUpdateView):
-        model = SomeModel
-        form_class = SomeModelForm
-        success_url = '/some/url/'
-
------
+Note: Like any django class based view. LoginRequiredMixin is optional.
 
 BaseCreateUpdateView:
     This is an internal class, like django's BaseCreateView or BaseUpdateView.
@@ -24,6 +16,19 @@ CreateUpdateView:
         get_context_data: Add a few var in the template context
         get_initial: Add the param passed through the url to the initial_data used to instanciate the form.
 
+    Usage:
+        class SomeView(LoginRequiredMixin, CreateUpdateView):
+            model = SomeModel
+            form_class = SomeModelForm
+            success_url = '/some/url/'
+
+MyListView:
+    This is used instead of the django's ListView. It add a paginator that should be included in your main
+    template via the partial template 'utils/paginator.part.haml'
+
+    class SomeView(LoginRequiredMixin, MyListView):
+        # ... the standards django's ListView fields
+
 """
 
 from __future__ import unicode_literals
@@ -31,6 +36,9 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext as _
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
+from django.views.generic.list import ListView
+
+from workflow.utils.paginator import paginator_range
 
 
 class BaseCreateUpdateView(ModelFormMixin, ProcessFormView):
@@ -95,3 +103,12 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
         initial = super(CreateUpdateView, self).get_initial()
         initial.update(self.kwargs)  # add the param passed by the url to the initial form data
         return initial
+
+
+class MyListView(ListView):
+    def get_context_data(self, **kwargs):
+        context = super(MyListView, self).get_context_data(**kwargs)
+        context.update({
+            'mypaginator': paginator_range(context['page_obj'].number, context['paginator'].num_pages)
+        })
+        return context

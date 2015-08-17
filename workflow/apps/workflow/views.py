@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import OrderedDict
+
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
@@ -9,7 +11,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
-from workflow.utils.generic_views import CreateUpdateView
+from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
 from workflow.apps.team.models import Person
 from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm
@@ -59,10 +61,12 @@ def workflow_show(request, workflow_pk, which_display):
 
     # group by category
     items_list = workflow.get_items(which_display, request_person)
-    items_dic = {}
+
+    items_dic = OrderedDict()
     for item in items_list:
-        items_dic.setdefault(item.item_model.category, [])
-        items_dic[item.item_model.category].append(item)
+        category = item.item_model.category
+        items_dic.setdefault(category, [])
+        items_dic[category].append(item)
 
     context = {
         'workflow': workflow,
@@ -197,9 +201,7 @@ def update(request, action, model, pk, pk_other=None):
     return HttpResponseRedirect(request.GET.get('next', default_url))
 
 
-@login_required
-def item_model_list(request):
-    context = {
-        'categories': {cat:ItemModel.objects.filter(category=cat) for cat in ItemCategory.objects.all()},
-    }
-    return render(request, 'workflow/item_list.haml', context)
+class ItemModelListView(LoginRequiredMixin, MyListView):
+    model = ItemModel
+    paginate_by = 15
+    queryset = ItemModel.objects.order_by('-category').select_related('category')
