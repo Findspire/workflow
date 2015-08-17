@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-17 10:18+0000\n"
+"POT-Creation-Date: 2015-08-17 14:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,7 +103,7 @@ msgstr ""
 msgid "Person creation"
 msgstr ""
 
-#: apps/team/views.py:91 utils/generic_views.py:89
+#: apps/team/views.py:91 utils/generic_views.py:97
 msgid "Save"
 msgstr ""
 
@@ -111,7 +111,7 @@ msgstr ""
 msgid "Person update"
 msgstr ""
 
-#: apps/team/views.py:96 utils/generic_views.py:84
+#: apps/team/views.py:96 utils/generic_views.py:92
 msgid "Update"
 msgstr ""
 
@@ -327,12 +327,17 @@ msgstr ""
 msgid "Add a comment"
 msgstr ""
 
-#: templates/workflow/item_list.haml:6 templates/workflow/item_list.haml:10
+#: templates/workflow/itemmodel_list.haml:6
+#: templates/workflow/itemmodel_list.haml:10
 msgid "List item models"
 msgstr ""
 
-#: templates/workflow/item_list.haml:31
-msgid "No items in this category."
+#: templates/workflow/itemmodel_list.haml:25
+msgid "Edit"
+msgstr ""
+
+#: templates/workflow/itemmodel_list.haml:26
+msgid "New item model"
 msgstr ""
 
 #: templates/workflow/project_list.haml:7
@@ -345,11 +350,8 @@ msgid "No workflows in this project."
 msgstr ""
 
 #: templates/workflow/workflow_show.haml:7
-msgid "Show workflow"
-msgstr ""
-
 #: templates/workflow/workflow_show.haml:11
-msgid "Show workflow:"
+msgid "Show workflow"
 msgstr ""
 
 #: templates/workflow/workflow_show.haml:17
@@ -404,12 +406,12 @@ msgstr ""
 msgid "Tickets:"
 msgstr ""
 
-#: utils/generic_views.py:83
+#: utils/generic_views.py:91
 #, python-format
 msgid "%(name)s update"
 msgstr ""
 
-#: utils/generic_views.py:88
+#: utils/generic_views.py:96
 #, python-format
 msgid "%(name)s creation"
 msgstr ""

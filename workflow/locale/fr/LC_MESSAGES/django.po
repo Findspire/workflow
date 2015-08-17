@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-17 10:18+0000\n"
+"POT-Creation-Date: 2015-08-17 14:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgstr "Niveau"
 msgid "Person creation"
 msgstr "Création d'une personne "
 
-#: apps/team/views.py:91 utils/generic_views.py:89
+#: apps/team/views.py:91 utils/generic_views.py:97
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -112,7 +112,7 @@ msgstr "Enregistrer"
 msgid "Person update"
 msgstr "Mise à jour d'une personne"
 
-#: apps/team/views.py:96 utils/generic_views.py:84
+#: apps/team/views.py:96 utils/generic_views.py:92
 msgid "Update"
 msgstr "Mettre a jour"
 
@@ -310,7 +310,7 @@ msgstr ""
 #: templates/workflow/item_instance_show.haml:27
 #: templates/workflow/workflow_show.table.part.haml:39
 msgid "Take"
-msgstr "Prendre"
+msgstr "Réserver"
 
 #: templates/workflow/item_instance_show.haml:62
 msgid "No details."
@@ -318,23 +318,28 @@ msgstr "Pas de détails."
 
 #: templates/workflow/item_instance_show.haml:79
 msgid "Comments"
-msgstr ""
+msgstr "Commentaires"
 
 #: templates/workflow/item_instance_show.haml:91
 msgid "No comments yet."
-msgstr ""
+msgstr "Aucun commentaires"
 
 #: templates/workflow/item_instance_show.haml:95
 msgid "Add a comment"
-msgstr ""
+msgstr "Ajouter un commentaire"
 
-#: templates/workflow/item_list.haml:6 templates/workflow/item_list.haml:10
+#: templates/workflow/itemmodel_list.haml:6
+#: templates/workflow/itemmodel_list.haml:10
 msgid "List item models"
 msgstr ""
 
-#: templates/workflow/item_list.haml:31
-msgid "No items in this category."
-msgstr "Aucuns items dans cette catégorie"
+#: templates/workflow/itemmodel_list.haml:25
+msgid "Edit"
+msgstr ""
+
+#: templates/workflow/itemmodel_list.haml:26
+msgid "New item model"
+msgstr "Ajouter un model d'item"
 
 #: templates/workflow/project_list.haml:7
 #: templates/workflow/project_list.haml:11
@@ -346,12 +351,9 @@ msgid "No workflows in this project."
 msgstr "Aucuns workflows dans ce projet"
 
 #: templates/workflow/workflow_show.haml:7
-msgid "Show workflow"
-msgstr ""
-
 #: templates/workflow/workflow_show.haml:11
-msgid "Show workflow:"
-msgstr ""
+msgid "Show workflow"
+msgstr "Voir un workflow"
 
 #: templates/workflow/workflow_show.haml:17
 msgid "Add an item in this workflow"
@@ -371,46 +373,46 @@ msgstr "Non testé"
 
 #: templates/workflow/workflow_show.haml:45
 msgid "All items"
-msgstr ""
+msgstr "Tous les items"
 
 #: templates/workflow/workflow_show.haml:49
 msgid "Mine items"
-msgstr ""
+msgstr "Mes items"
 
 #: templates/workflow/workflow_show.haml:53
 msgid "Untaken items"
-msgstr ""
+msgstr "Items non reservés"
 
 #: templates/workflow/workflow_show.haml:57
 msgid "Taken items"
-msgstr ""
+msgstr "Items reservés"
 
 #: templates/workflow/workflow_show.haml:61
 msgid "Success items"
-msgstr ""
+msgstr "Items réussis"
 
 #: templates/workflow/workflow_show.haml:65
 msgid "Failed items"
-msgstr ""
+msgstr "Items cassé"
 
 #: templates/workflow/workflow_show.table.part.haml:12
 msgid "Take all"
-msgstr ""
+msgstr "Réserver tout"
 
 #: templates/workflow/workflow_show.table.part.haml:15
 msgid "Untake all"
-msgstr ""
+msgstr "Réserver aucun"
 
 #: templates/workflow/workflow_show.table.part.haml:26
 msgid "Tickets:"
 msgstr ""
 
-#: utils/generic_views.py:83
+#: utils/generic_views.py:91
 #, python-format
 msgid "%(name)s update"
 msgstr "Mise à jour de %(name)s"
 
-#: utils/generic_views.py:88
+#: utils/generic_views.py:96
 #, python-format
 msgid "%(name)s creation"
 msgstr "Création de %(name)s"

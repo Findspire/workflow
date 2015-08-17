@@ -373,8 +373,7 @@ class ItemModelTest(TestCase):
         resp = self.client.get(reverse('workflow:item_model_list'))
         self.assertEqual(resp.status_code, 200)
         item = ItemModel.objects.get(name='item model 1')
-        has_item = any(item in item_list for item_list in resp.context[-1]['categories'].values())
-        self.assertEqual(has_item, True)
+        self.assertEqual(item in resp.context[-1]['object_list'], True)
 
 
 class ItemCategoryTest(TestCase):
