@@ -21,20 +21,26 @@
     #progressbar
         %table
             %tr
-                %td{class:"success", style:"width: {{ percent.success }}%"}
-                %td{class:"failed", style:"width: {{ percent.failed }}%"}
-                %td{class:"untested", style:"width: {{ percent.untested }}%"}
+                %td{class: "success", style: "width: 0"}
+                %td{class: "failed", style: "width: 0"}
+                %td{class: "untested", style: "width: 1"}
         %div
             %ul
-                %li
-                    %span{class:"success"}
-                    {% trans "Success:" %} {{ counters.success }}
-                %li
-                    %span{class:"failed"}
-                    {% trans "Failed:" %} {{ counters.failed }}
-                %li
-                    %span{class:"untested"}
-                    {% trans "Untested:" %} {{ counters.untested }}
+                %li{class: "success"}
+                    %span{class: "square"}
+                    {% trans "Success:" %}
+                    %span{class: "number"}
+                        {{ counters.success }}
+                %li{class: "failed"}
+                    %span{class: "square"}
+                    {% trans "Failed:" %}
+                    %span{class: "number"}
+                       {{ counters.failed }}
+                %li{class: "untested"}
+                    %span{class: "square"}
+                    {% trans "Untested:" %}
+                    %span{class: "number"}
+                        {{ counters.untested }}
 
     %hr
 
@@ -42,32 +48,55 @@
         %label.all
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'all' %}');">
             %span
-                {% trans "All items" %} {{ counters.all }}
+                {% trans "All items" %}
+            %span{class: "number"}
+                {{ counters.all }}
         %label.mine
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'mine' %}');">
             %span
-                {% trans "Mine items" %} {{ counters.mine }}
+                {% trans "Mine items" %}
+            %span{class: "number"}
+                {{ counters.mine }}
         %label.untaken
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'untaken' %}');">
             %span
-                {% trans "Untaken items" %} {{ counters.untaken }}
+                {% trans "Untaken items" %}
+            %span{class: "number"}
+                {{ counters.untaken }}
         %label.taken
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'taken' %}');">
             %span
-                {% trans "Taken items" %} {{ counters.taken }}
+                {% trans "Taken items" %}
+            %span{class: "number"}
+                {{ counters.taken }}
         %label.success
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'success' %}');">
             %span
-                {% trans "Success items" %} {{ counters.success }}
+                {% trans "Success items" %}
+            %span{class: "number"}
+                {{ counters.success }}
         %label.failed
             <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'failed' %}');">
             %span
-                {% trans "Failed items" %} {{ counters.failed }}
+                {% trans "Failed items" %}
+            %span{class: "number"}
+                {{ counters.failed }}
 
     #items
-        - include "workflow/workflow_show.table.part.haml"
+        - for category, items_list in items.items
+            %table
+                - include "workflow/workflow_show.table.part.haml"
 
 - block optional_script
-    $(document).ready(function() {
-        $("#filters ." + location.pathname.split('/')[5]+' input').attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
-    });
+    %script
+        var counters = {
+            "all": {{ counters.all }},
+            "success": {{ counters.success }},
+            "failed": {{ counters.failed }},
+            "untested": {{ counters.untested }},
+            "taken": {{ counters.taken }},
+            "untaken": {{ counters.untaken }},
+            "mine": {{ counters.mine }},
+        };
+
+    %script{type: "text/javascript", src: '{% static "workflow/js/workflow_show.js" %}'}

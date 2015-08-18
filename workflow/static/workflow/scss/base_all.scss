@@ -37,27 +37,18 @@ li label {
         td {
             padding: 1px;
         }
-    }
 
-    .success {
-        background-color: #080;
-    }
+        .success {
+            background-color: #080;
+        }
 
-    .failed {
-        background-color: #A22;
-    }
+        .failed {
+            background-color: #A22;
+        }
 
-    .untested {
-        background-color: #888;
-    }
-
-    // progress bar
-    span {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border: 1px solid black;
-        margin-right: 5px;
+        .untested {
+            background-color: #888;
+        }
     }
 
     // stats
@@ -69,6 +60,26 @@ li label {
             list-style: none;
             display: inline;
             margin: 15px;
+        }
+
+        .square {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border: 1px solid black;
+            margin-right: 5px;
+        }
+
+        .success .square {
+            background-color: #080;
+        }
+
+        .failed .square {
+            background-color: #A22;
+        }
+
+        .untested .square {
+            background-color: #888;
         }
     }
 }

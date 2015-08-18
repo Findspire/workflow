@@ -4,6 +4,7 @@
 import re
 from django.template import Library
 from django.conf import settings
+from workflow.apps.workflow.models import Item
 
 register = Library()
 
@@ -20,5 +21,10 @@ def get_count(workflow, param):
 
 
 @register.filter
-def get_percent(workflow, param):
-    return workflow.get_percent(param)
+def get_status(item):
+    if item.validation == Item.VALIDATION_SUCCESS:
+        return 'success'
+    elif item.validation == Item.VALIDATION_UNTESTED:
+        return 'untested'
+    elif item.validation == Item.VALIDATION_FAILED:
+        return 'failed'

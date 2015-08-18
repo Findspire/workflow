@@ -71,7 +71,6 @@ def workflow_show(request, workflow_pk, which_display):
     context = {
         'workflow': workflow,
         'counters': {display: workflow.get_count(display, request_person) for display in displays},
-        'percent': {display: workflow.get_percent(display, request_person) for display in displays},
         'items': items_dic,
         'Item': Item,
     }
@@ -173,11 +172,10 @@ def update(request, action, model, pk, pk_other=None):
         else:
             raise Http404('Unexpected action "%s"' % action)
 
-        items = get_list_or_404(Item, workflow__pk=pk_other)
+        items = get_list_or_404(Item, workflow__pk=pk_other, item_model__category__pk=int(pk))
         for item in items:
-            if item.item_model.category.pk == int(pk):
-                item.assigned_to = assigned_to
-                item.save()
+            item.assigned_to = assigned_to
+            item.save()
 
         workflow_pk = pk_other
     elif model == 'validate':
@@ -197,8 +195,31 @@ def update(request, action, model, pk, pk_other=None):
     else:
         raise Http404('Unexpected model "%s"' % model)
 
-    default_url = reverse('workflow:workflow_show', args=[workflow_pk, 'all'])
-    return HttpResponseRedirect(request.GET.get('next', default_url))
+    # response
+
+    if request.is_ajax():
+        if model == 'item':
+            context = {
+                'item': get_object_or_404(Item, pk=pk),
+            }
+            return render(request, 'workflow/workflow_show.take_untake.part.haml', context)
+        elif model == 'category':
+            context = {
+                'category': get_object_or_404(ItemCategory, pk=pk),
+                'items_list': get_list_or_404(Item, workflow__pk=pk_other, item_model__category__pk=int(pk)),
+                'workflow': get_object_or_404(Workflow, pk=pk_other),
+                'Item': Item,
+            }
+            return render(request, 'workflow/workflow_show.table.part.haml', context)
+        elif model == 'validate':
+            context = {
+                'item': get_object_or_404(Item, pk=pk),
+                'Item': Item,
+            }
+            return render(request, 'workflow/workflow_show.validate.part.haml', context)
+    else:
+        default_url = reverse('workflow:workflow_show', args=[workflow_pk, 'all'])
+        return HttpResponseRedirect(request.GET.get('next', default_url))
 
 
 class ItemModelListView(LoginRequiredMixin, MyListView):

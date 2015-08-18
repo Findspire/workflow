@@ -1,0 +1,22 @@
+- load workflow_tags
+
+- if item.validation == Item.VALIDATION_SUCCESS
+    %span{title: "Item is validated"}
+        %img{src: "/static/workflow/img/validation_OK.png"}
+- else
+    %a{href: "{% url 'workflow:update' 'success' 'validate' item.pk %}?next={{ request.path }}", title: "Click to validate", data-status-old: "{{ item|get_status }}", data-status-new: "success"}
+        %img{src: "/static/workflow/img/validation_OK_disabled.png"}
+
+- if item.validation == Item.VALIDATION_UNTESTED
+    %span{title: "Item is untested"}
+        ?
+- else
+    %a{href: "{% url 'workflow:update' 'untested' 'validate' item.pk %}?next={{ request.path }}", title: "Reset item validation", data-status-old: "{{ item|get_status }}", data-status-new: "untested"}
+        ?
+
+- if item.validation == Item.VALIDATION_FAILED
+    %span{title: "Item is broken"}
+        %img{src: "/static/workflow/img/validation_KO.png"}
+- else
+    %a{href: "{% url 'workflow:update' 'failed' 'validate' item.pk %}?next={{ request.path }}", title: "Click to mark as broken", data-status-old: "{{ item|get_status }}", data-status-new: "failed"}
+        %img{src: "/static/workflow/img/validation_KO_disabled.png"}

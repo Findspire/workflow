@@ -25,7 +25,7 @@
                                 %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
                                     {{ workflow.version }}
                                 \-
-                                Complete {{ workflow|get_percent:'success' }}% ({{ workflow|get_count:'failed' }} failed - {{ workflow|get_count:'untested' }} untested)
+                                Complete {{ workflow.success_percent }}% ({{ workflow|get_count:'failed' }} failed - {{ workflow|get_count:'untested' }} untested)
                                 \-
                                 Started on {{ workflow.creation_date }}
                 - else

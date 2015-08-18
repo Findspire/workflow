@@ -100,14 +100,4 @@
             %input{type: "submit", value:"Post"}
 
 - block optional_script
-    $('#details_edit').hide();
-
-    function details_edit() {
-        $('#details_see').hide();
-        $('#details_edit').show();
-    }
-
-    function details_see() {
-        $('#details_see').show();
-        $('#details_edit').hide();
-    }
+    %script{type: "text/javascript", src: '{% static "workflow/js/item_instance_show.js" %}'}

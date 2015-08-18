@@ -73,9 +73,9 @@ class Workflow(models.Model):
     def get_count(self, which_display, person=None):
         return self.get_items(which_display, person).count()
 
-    def get_percent(self, which_display, person=None):
-        value = self.get_count(which_display, person)
-        total = self.get_count('all', person)
+    def success_percent(self):
+        value = self.get_count('success')
+        total = self.get_count('all')
         return (100 * value / total) if (total != 0) else 100
 
     def get_absolute_url(self):
