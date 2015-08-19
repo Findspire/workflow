@@ -8,7 +8,7 @@
 
 - block content
     %h1
-        {% trans "Show workflow" %}: {{ workflow.project.name }} - {{ workflow.version }}
+        {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }}
 
     %hr
 
@@ -25,9 +25,9 @@
     #progressbar
         %table
             %tr
-                %td{class: "success", style: "width: 0"}
-                %td{class: "failed", style: "width: 0"}
-                %td{class: "untested", style: "width: 1"}
+                %td{class: "success", style: "width: 0;"}
+                %td{class: "failed", style: "width: 0;"}
+                %td{class: "untested", style: "width: 1;"}
         %div
             %ul
                 %li{class: "success"}

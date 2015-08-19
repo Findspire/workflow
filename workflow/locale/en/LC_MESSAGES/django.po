@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-17 14:58+0000\n"
+"POT-Creation-Date: 2015-08-20 10:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,19 +99,19 @@ msgstr ""
 msgid "Strength"
 msgstr ""
 
-#: apps/team/views.py:90
+#: apps/team/views.py:97
 msgid "Person creation"
 msgstr ""
 
-#: apps/team/views.py:91 utils/generic_views.py:97
+#: apps/team/views.py:98 utils/generic_views.py:98
 msgid "Save"
 msgstr ""
 
-#: apps/team/views.py:95
+#: apps/team/views.py:102
 msgid "Person update"
 msgstr ""
 
-#: apps/team/views.py:96 utils/generic_views.py:92
+#: apps/team/views.py:103 utils/generic_views.py:93
 msgid "Update"
 msgstr ""
 
@@ -307,7 +307,7 @@ msgid "Show item"
 msgstr ""
 
 #: templates/workflow/item_instance_show.haml:27
-#: templates/workflow/workflow_show.table.part.haml:39
+#: templates/workflow/workflow_show.take_untake.part.haml:9
 msgid "Take"
 msgstr ""
 
@@ -350,68 +350,79 @@ msgid "No workflows in this project."
 msgstr ""
 
 #: templates/workflow/workflow_show.haml:7
-#: templates/workflow/workflow_show.haml:11
 msgid "Show workflow"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:17
+#: templates/workflow/workflow_show.haml:11
+msgid "Show workflow:"
+msgstr ""
+
+#: templates/workflow/workflow_show.haml:18
 msgid "Add an item in this workflow"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:31
+#: templates/workflow/workflow_show.haml:21
+msgid "Add an item category"
+msgstr ""
+
+#: templates/workflow/workflow_show.haml:35
 msgid "Success:"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:34
+#: templates/workflow/workflow_show.haml:40
 msgid "Failed:"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:37
+#: templates/workflow/workflow_show.haml:45
 msgid "Untested:"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:45
+#: templates/workflow/workflow_show.haml:55
 msgid "All items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:49
+#: templates/workflow/workflow_show.haml:61
 msgid "Mine items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:53
+#: templates/workflow/workflow_show.haml:67
 msgid "Untaken items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:57
+#: templates/workflow/workflow_show.haml:73
 msgid "Taken items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:61
+#: templates/workflow/workflow_show.haml:79
 msgid "Success items"
 msgstr ""
 
-#: templates/workflow/workflow_show.haml:65
+#: templates/workflow/workflow_show.haml:85
 msgid "Failed items"
 msgstr ""
 
-#: templates/workflow/workflow_show.table.part.haml:12
-msgid "Take all"
+#: templates/workflow/workflow_show.table.part.haml:10
+msgid "Add an item"
 msgstr ""
 
 #: templates/workflow/workflow_show.table.part.haml:15
+msgid "Take all"
+msgstr ""
+
+#: templates/workflow/workflow_show.table.part.haml:19
 msgid "Untake all"
 msgstr ""
 
-#: templates/workflow/workflow_show.table.part.haml:26
+#: templates/workflow/workflow_show.table.part.haml:32
 msgid "Tickets:"
 msgstr ""
 
-#: utils/generic_views.py:91
+#: utils/generic_views.py:92
 #, python-format
 msgid "%(name)s update"
 msgstr ""
 
-#: utils/generic_views.py:96
+#: utils/generic_views.py:97
 #, python-format
 msgid "%(name)s creation"
 msgstr ""

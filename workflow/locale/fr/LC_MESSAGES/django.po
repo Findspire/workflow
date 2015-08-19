@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-17 14:58+0000\n"
+"POT-Creation-Date: 2015-08-20 10:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,19 +100,19 @@ msgstr "Personne"
 msgid "Strength"
 msgstr "Niveau"
 
-#: apps/team/views.py:90
+#: apps/team/views.py:97
 msgid "Person creation"
 msgstr "Création d'une personne "
 
-#: apps/team/views.py:91 utils/generic_views.py:97
+#: apps/team/views.py:98 utils/generic_views.py:98
 msgid "Save"
 msgstr "Enregistrer"
 
-#: apps/team/views.py:95
+#: apps/team/views.py:102
 msgid "Person update"
 msgstr "Mise à jour d'une personne"
 
-#: apps/team/views.py:96 utils/generic_views.py:92
+#: apps/team/views.py:103 utils/generic_views.py:93
 msgid "Update"
 msgstr "Mettre a jour"
 
@@ -150,7 +150,7 @@ msgstr "Raté"
 
 #: apps/workflow/models.py:107
 msgid "Item model"
-msgstr ""
+msgstr "Model d'item"
 
 #: apps/workflow/models.py:108 templates/workflow/base.haml:7
 msgid "Workflow"
@@ -189,6 +189,8 @@ msgid ""
 "Your JavaScript seem to be disabled. Some functionalities needs it and we "
 "advise you to enable it."
 msgstr ""
+"Votre JavaScript semble désactivé. Certaines fonctionnalités en ont besoin "
+"et nous vous conseillons de le réactiver."
 
 #: templates/base.haml:20 templates/index.haml:6
 msgid "Home"
@@ -305,10 +307,10 @@ msgstr "Ajouter un model d'item"
 
 #: templates/workflow/item_instance_show.haml:11
 msgid "Show item"
-msgstr ""
+msgstr "Voir l'item"
 
 #: templates/workflow/item_instance_show.haml:27
-#: templates/workflow/workflow_show.table.part.haml:39
+#: templates/workflow/workflow_show.take_untake.part.haml:9
 msgid "Take"
 msgstr "Réserver"
 
@@ -331,11 +333,11 @@ msgstr "Ajouter un commentaire"
 #: templates/workflow/itemmodel_list.haml:6
 #: templates/workflow/itemmodel_list.haml:10
 msgid "List item models"
-msgstr ""
+msgstr "Liste des models d'item"
 
 #: templates/workflow/itemmodel_list.haml:25
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
 #: templates/workflow/itemmodel_list.haml:26
 msgid "New item model"
@@ -351,68 +353,79 @@ msgid "No workflows in this project."
 msgstr "Aucuns workflows dans ce projet"
 
 #: templates/workflow/workflow_show.haml:7
-#: templates/workflow/workflow_show.haml:11
 msgid "Show workflow"
 msgstr "Voir un workflow"
 
-#: templates/workflow/workflow_show.haml:17
+#: templates/workflow/workflow_show.haml:11
+msgid "Show workflow:"
+msgstr "Voir un workflow :"
+
+#: templates/workflow/workflow_show.haml:18
 msgid "Add an item in this workflow"
 msgstr "Ajouter un item a ce workflow"
 
-#: templates/workflow/workflow_show.haml:31
+#: templates/workflow/workflow_show.haml:21
+msgid "Add an item category"
+msgstr "Ajouter une categorie"
+
+#: templates/workflow/workflow_show.haml:35
 msgid "Success:"
 msgstr "Réussi:"
 
-#: templates/workflow/workflow_show.haml:34
+#: templates/workflow/workflow_show.haml:40
 msgid "Failed:"
 msgstr "Raté:"
 
-#: templates/workflow/workflow_show.haml:37
+#: templates/workflow/workflow_show.haml:45
 msgid "Untested:"
 msgstr "Non testé"
 
-#: templates/workflow/workflow_show.haml:45
+#: templates/workflow/workflow_show.haml:55
 msgid "All items"
 msgstr "Tous les items"
 
-#: templates/workflow/workflow_show.haml:49
+#: templates/workflow/workflow_show.haml:61
 msgid "Mine items"
 msgstr "Mes items"
 
-#: templates/workflow/workflow_show.haml:53
+#: templates/workflow/workflow_show.haml:67
 msgid "Untaken items"
 msgstr "Items non reservés"
 
-#: templates/workflow/workflow_show.haml:57
+#: templates/workflow/workflow_show.haml:73
 msgid "Taken items"
 msgstr "Items reservés"
 
-#: templates/workflow/workflow_show.haml:61
+#: templates/workflow/workflow_show.haml:79
 msgid "Success items"
 msgstr "Items réussis"
 
-#: templates/workflow/workflow_show.haml:65
+#: templates/workflow/workflow_show.haml:85
 msgid "Failed items"
 msgstr "Items cassé"
 
-#: templates/workflow/workflow_show.table.part.haml:12
+#: templates/workflow/workflow_show.table.part.haml:10
+msgid "Add an item"
+msgstr "Ajouter un item"
+
+#: templates/workflow/workflow_show.table.part.haml:15
 msgid "Take all"
 msgstr "Réserver tout"
 
-#: templates/workflow/workflow_show.table.part.haml:15
+#: templates/workflow/workflow_show.table.part.haml:19
 msgid "Untake all"
 msgstr "Réserver aucun"
 
-#: templates/workflow/workflow_show.table.part.haml:26
+#: templates/workflow/workflow_show.table.part.haml:32
 msgid "Tickets:"
 msgstr ""
 
-#: utils/generic_views.py:91
+#: utils/generic_views.py:92
 #, python-format
 msgid "%(name)s update"
 msgstr "Mise à jour de %(name)s"
 
-#: utils/generic_views.py:96
+#: utils/generic_views.py:97
 #, python-format
 msgid "%(name)s creation"
 msgstr "Création de %(name)s"
