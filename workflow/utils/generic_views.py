@@ -33,6 +33,7 @@ MyListView:
 
 from __future__ import unicode_literals
 
+from django.http.response import JsonResponse
 from django.utils.translation import ugettext as _
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
@@ -103,6 +104,16 @@ class CreateUpdateView(SingleObjectTemplateResponseMixin, BaseCreateUpdateView):
         initial = super(CreateUpdateView, self).get_initial()
         initial.update(self.kwargs)  # add the param passed by the url to the initial form data
         return initial
+
+    def form_valid(self, form):
+        ret = super(CreateUpdateView, self).form_valid(form)
+
+        if self.request.is_ajax():
+            # Send something special so the ajax call know that it is a successfull form validation
+            # Ajax calls cant see the difference between a status code 302 (form success) or a 200 (form failure)
+            return JsonResponse({})
+        else:
+            return ret
 
 
 class MyListView(ListView):

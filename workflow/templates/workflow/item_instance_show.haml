@@ -99,5 +99,17 @@
             {{ form_comment.as_p }}
             %input{type: "submit", value:"Post"}
 
-- block optional_script
-    %script{type: "text/javascript", src: '{% static "workflow/js/item_instance_show.js" %}'}
+
+    %script{type: "text/javascript"}
+        $('#details_edit').hide();
+
+        function details_edit() {
+            $('#details_see').hide();
+            $('#details_edit').show();
+        }
+
+        function details_see() {
+            $('#details_see').show();
+            $('#details_edit').hide();
+        }
+

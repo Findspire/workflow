@@ -12,7 +12,8 @@
 
 #content {
     width: 1000px;
-    margin: 10px auto ;
+    margin: 10px auto;
+    margin-bottom: 50px;
 }
 
 label {
@@ -21,6 +22,38 @@ label {
 
 li label {
     display: initial;
+}
+
+#modal_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+#modal_content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    margin: 100px auto;
+    padding: 25px;
+    border-radius: 3px;
+
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px 0px;
+
+    .close_modal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-weight: bold;
+        font-size: 200%;
+        color: #AAA;
+    }
 }
 
 /*

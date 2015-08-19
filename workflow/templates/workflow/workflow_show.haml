@@ -12,9 +12,13 @@
 
     %hr
 
-    %p
-        %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
-            {% trans "Add an item in this workflow" %}
+    %ul
+        %li{id: "workflow_add_item"}
+            %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
+                {% trans "Add an item in this workflow" %}
+        %li{id: "workflow_add_category"}
+            %a{href: "{% url 'workflow:item_category_new' %}"}
+                {% trans "Add an item category" %}
 
     %hr
 
@@ -86,6 +90,9 @@
         - for category, items_list in items.items
             %table
                 - include "workflow/workflow_show.table.part.haml"
+
+    #modal_background
+    #modal_content
 
 - block optional_script
     %script

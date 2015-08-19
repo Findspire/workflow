@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
@@ -164,20 +164,23 @@ def update(request, action, model, pk, pk_other=None):
             raise Http404('Unexpected action "%s"' % action)
 
         item.save()
+
     elif model == 'category':
+        workflow_pk = pk_other
+
         if action == 'take':
             assigned_to = get_object_or_404(Person, user=request.user)
         elif action == 'untake':
             assigned_to = None
+        elif action == 'show':
+            pass  # use with ajax when adding a new item, this way we refresh the whole category
         else:
             raise Http404('Unexpected action "%s"' % action)
 
-        items = get_list_or_404(Item, workflow__pk=pk_other, item_model__category__pk=int(pk))
-        for item in items:
-            item.assigned_to = assigned_to
-            item.save()
+        if (action == 'take') or (action == 'untake'):
+            items = get_object_or_404(Workflow, pk=pk_other).get_items('all').filter(item_model__category__pk=int(pk))
+            items.update(assigned_to=assigned_to)
 
-        workflow_pk = pk_other
     elif model == 'validate':
         item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
@@ -192,6 +195,7 @@ def update(request, action, model, pk, pk_other=None):
             raise Http404('Unexpected action "%s"' % action)
 
         item.save()
+
     else:
         raise Http404('Unexpected model "%s"' % model)
 
@@ -204,10 +208,13 @@ def update(request, action, model, pk, pk_other=None):
             }
             return render(request, 'workflow/workflow_show.take_untake.part.haml', context)
         elif model == 'category':
+            workflow = get_object_or_404(Workflow, pk=workflow_pk)
+            items = workflow.get_items('all').filter(item_model__category__pk=int(pk))
+
             context = {
                 'category': get_object_or_404(ItemCategory, pk=pk),
-                'items_list': get_list_or_404(Item, workflow__pk=pk_other, item_model__category__pk=int(pk)),
-                'workflow': get_object_or_404(Workflow, pk=pk_other),
+                'items_list': items,
+                'workflow': workflow,
                 'Item': Item,
             }
             return render(request, 'workflow/workflow_show.table.part.haml', context)
