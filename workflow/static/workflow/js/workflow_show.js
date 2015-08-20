@@ -130,11 +130,27 @@ function take_untake_category_update($elem, data) {
     }
 
     /* update html */
+    var nb_elem_before = $table.find("tr").length;
     $table.html(data);
     $table.find("th a").click(modal_onclick);
     $table.find(".take_untake_item a").click(take_untake_item_onclick);
     $table.find(".take_untake_category a").click(take_untake_category_onclick);
     $table.find(".validate a").click(validate_item_onclick);
+
+    /* hack to update the counters which skipped hidden items */
+    var diff = $table.find("tr").length - nb_elem_before;
+    if (status_new === "mine" && (location.pathname.split("/")[5] === "mine" || location.pathname.split("/")[5] === "taken"))
+    {
+        counters["mine"] += diff;
+        counters["taken"] += diff;
+        counters["untaken"] -= diff;
+    }
+    if (status_new === "untaken" && location.pathname.split("/")[5] === "untaken")
+    {
+        counters["mine"] -= diff;
+        counters["taken"] -= diff;
+        counters["untaken"] += diff;
+    }
 }
 
 

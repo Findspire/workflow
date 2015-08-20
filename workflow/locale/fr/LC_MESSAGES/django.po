@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-20 10:40+0000\n"
+"POT-Creation-Date: 2015-08-20 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -153,6 +153,7 @@ msgid "Item model"
 msgstr "Model d'item"
 
 #: apps/workflow/models.py:108 templates/workflow/base.haml:7
+#: templates/workflow/index.haml:6
 msgid "Workflow"
 msgstr ""
 
@@ -204,17 +205,14 @@ msgstr ""
 msgid "Workflow project"
 msgstr ""
 
-#: templates/index.haml:15
+#: templates/index.haml:15 templates/team/base.haml:7
+#: templates/team/index.haml:7
 msgid "Teams and skills"
 msgstr "Equipes et compétences"
 
 #: templates/index.haml:18
 msgid "Workflows"
 msgstr ""
-
-#: templates/team/base.haml:7 templates/team/index.haml:24
-msgid "Teams"
-msgstr "Equipes"
 
 #: templates/team/index.haml:11
 msgid "Team management"
@@ -228,6 +226,10 @@ msgstr "Personnes"
 msgid "Add"
 msgstr "Ajouter"
 
+#: templates/team/index.haml:24
+msgid "Teams"
+msgstr "Equipes"
+
 #: templates/team/index.haml:34 templates/workflow/index.haml:29
 msgid "Add a category"
 msgstr "Ajouter une categorie"
@@ -236,34 +238,39 @@ msgstr "Ajouter une categorie"
 msgid "Add a skill subject"
 msgstr "Ajouter un model de compétence"
 
-#: templates/team/person_form.haml:8
+#: templates/team/person_form.haml:8 templates/team/person_list.haml:6
+#: templates/team/person_list.haml.py:10 templates/team/skill_list.haml:7
+msgid "List persons"
+msgstr "Liste des personnes"
+
+#: templates/team/person_form.haml:10
 #, python-format
 msgid "Edit %(person)s"
 msgstr "Modifier %(person)s"
 
-#: templates/team/person_form.haml:22
+#: templates/team/person_form.haml:14 templates/team/person_form.haml.py:21
+msgid "New person"
+msgstr "Ajouter un personne"
+
+#: templates/team/person_form.haml:27
 msgid "Edit skills strength"
 msgstr "Modifier le niveau des compétences"
 
-#: templates/team/person_list.haml:6 templates/team/person_list.haml.py:10
-msgid "List persons"
-msgstr "Liste des personnes"
-
-#: templates/team/skill_list.haml:7
+#: templates/team/skill_list.haml:10
 #, python-format
 msgid "Edit %(profile_detail)s"
 msgstr "Modifier %(profile_detail)s"
 
-#: templates/team/skill_list.haml:11
-msgid "Compentences instances edit"
-msgstr "Editer une compétence"
+#: templates/team/skill_list.haml:14
+msgid "Compentence instances"
+msgstr "Instances de compétences"
 
-#: templates/team/skill_list.haml:15
+#: templates/team/skill_list.haml:20
 #, python-format
 msgid "Compentences instances edit (user: %(profile_detail)s)"
 msgstr "Editer une compétence (utilisateur : %(profile_detail)s)"
 
-#: templates/team/skill_list.haml:22
+#: templates/team/skill_list.haml:27
 #, python-format
 msgid "Back to %(profile_detail)s's general informations"
 msgstr "Retour aux informations de %(profile_detail)s"
@@ -280,10 +287,6 @@ msgstr "Aucunes compétences dans cette catégorie"
 #: templates/team/team_list.haml:6 templates/team/team_list.haml.py:10
 msgid "List teams"
 msgstr "Liste des équipes"
-
-#: templates/workflow/index.haml:6
-msgid "Index"
-msgstr ""
 
 #: templates/workflow/index.haml:10
 msgid "Workflow management"
@@ -404,19 +407,19 @@ msgstr "Items réussis"
 msgid "Failed items"
 msgstr "Items cassé"
 
-#: templates/workflow/workflow_show.table.part.haml:10
+#: templates/workflow/workflow_show.table.part.haml:11
 msgid "Add an item"
 msgstr "Ajouter un item"
 
-#: templates/workflow/workflow_show.table.part.haml:15
+#: templates/workflow/workflow_show.table.part.haml:17
 msgid "Take all"
 msgstr "Réserver tout"
 
-#: templates/workflow/workflow_show.table.part.haml:19
+#: templates/workflow/workflow_show.table.part.haml:21
 msgid "Untake all"
 msgstr "Réserver aucun"
 
-#: templates/workflow/workflow_show.table.part.haml:32
+#: templates/workflow/workflow_show.table.part.haml:34
 msgid "Tickets:"
 msgstr ""
 

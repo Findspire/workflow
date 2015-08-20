@@ -3,12 +3,17 @@
 - load i18n
 
 - block breadcrumbs
+    %a{href: "{% url 'team:person_list' %}"}
+        {% trans "List persons" %}
+    ›
     %a{href: "{% url 'team:person_edit' profile_detail.pk %}"}
         {% blocktrans trimmed %}
-           Edit {{ profile_detail }}
+            Edit {{ profile_detail }}
         {% endblocktrans %}
     ›
-    {% trans "Compentences instances edit" %}
+    {% blocktrans trimmed %}
+       Compentence instances
+    {% endblocktrans %}
 
 - block content
     %h1

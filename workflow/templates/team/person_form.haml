@@ -4,16 +4,21 @@
 
 - block breadcrumbs
     - if not creating
-        %a{href: "{% url 'team:person_edit' person.pk %}"}
-            {% blocktrans trimmed %}
-                Edit {{ person }}
-            {% endblocktrans %}
+        %a{href: "{% url 'team:person_list' %}"}
+            {% trans "List persons" %}
         ›
-    {{ title }}
+        {% blocktrans trimmed %}
+            Edit {{ person }}
+        {% endblocktrans %}
+    - else
+        {% trans "New person" %}
 
 - block content
     %h1
-        {{ title }}
+        - if not creating
+            Edit {{ person }}
+        - else
+            {% trans "New person" %}
 
     - if not creating
         %p

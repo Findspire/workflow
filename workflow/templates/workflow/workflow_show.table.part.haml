@@ -18,7 +18,7 @@
                     %a{href:"{% url 'workflow:update' 'untake' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Untake all items of the category"}
                         {% trans "Untake all" %}
                 %span{class: "show", id: "take_untake_category_{{ category.pk }}_show"}
-                    %a{href:"{% url 'workflow:update' 'show' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Untake all items of the category"}
+                    %a{href:"{% url 'workflow:update' 'show' 'category' category.pk workflow.pk %}?next={{ request.path }}"}
 
         - for item in items_list
             %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}"}

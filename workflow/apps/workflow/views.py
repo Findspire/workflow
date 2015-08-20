@@ -88,6 +88,7 @@ def workflow_show(request, workflow_pk, which_display):
         'counters': {display: workflow.get_count(display, request_person) for display in displays},
         'items': items_dic,
         'Item': Item,
+        'which_display': which_display,
     }
 
     return render(request, 'workflow/workflow_show.haml', context)
