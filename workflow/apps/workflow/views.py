@@ -71,7 +71,7 @@ def workflow_show(request, workflow_pk, which_display):
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
     team = workflow.project.team
 
-    if (not request_person in team.members.all()) and (not request_person in team.leader):
+    if (not request_person in team.members.all()) and (request_person != team.leader):
         raise PermissionDenied
 
     # group by category
