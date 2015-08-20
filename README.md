@@ -1,11 +1,11 @@
 
-# todo
+# Todo
 
 * renommer en anglais (wip)
 * vue user : login, logout, ... (wip)
-* permissions
+* permissions (wip)
 * more doc
-* more tests
+* more tests (especially ajax and permissions)
 
 # Basic setup
 
@@ -14,7 +14,7 @@ Don't forget to build the css :
     ./tools/build_css.sh
 
 Syncdb :
-If you use the plain django's command `syncdb`, you will need to create a Person instance for the django's superuser. You should use the following script.
+If you use the plain django's command `syncdb`, you will need to create a Person instance for the django's superuser. You should use the following script :
 
     ./scripts/resetdb.py
 

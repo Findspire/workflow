@@ -12,7 +12,6 @@ urlpatterns = patterns('workflow.apps.team',
     url(r'^person/edit/(?P<person_pk>\d+)/$', views.person_handle_form, name='person_edit'),
     url(r'^person/list/$', views.PersonListView.as_view(), name='person_list'),
 
-    url(r'^skill/new/$', views.SkillFormView.as_view(), name='skill_instance_new'),
     url(r'^skill/list/(?P<person_pk>\d+)/$', views.skills_list, name='skill_instance_list'),
 
     url(r'^skill/subject/new/$', views.SkillSubjectView.as_view(), name='skill_subject_new'),

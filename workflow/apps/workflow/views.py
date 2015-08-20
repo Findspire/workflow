@@ -4,6 +4,7 @@
 from collections import OrderedDict
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
@@ -28,6 +29,11 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
     success_url = reverse_lazy('workflow:project_list')
     template_name = 'utils/workflow_generic_views_form.haml'
 
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied
+        return super(ProjectFormView, self).dispatch(*args, **kwargs)
+
     def form_valid(self, form):
         ret = super(ProjectFormView, self).form_valid(form)
         self.object.items = form.cleaned_data['items']
@@ -48,6 +54,11 @@ class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     fields = ['project', 'version']
     template_name = 'utils/workflow_generic_views_form.haml'
 
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied
+        return super(WorkflowFormView, self).dispatch(*args, **kwargs)
+
 
 @login_required
 def workflow_show(request, workflow_pk, which_display):
@@ -56,8 +67,12 @@ def workflow_show(request, workflow_pk, which_display):
     if which_display not in displays:
         raise Http404('Unexpected display "%s"' % which_display)
 
-    request_person = get_object_or_404(Person, user=request.user)
+    request_person = request.user.person
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
+    team = workflow.project.team
+
+    if (not request_person in team.members.all()) and (not request_person in team.leader):
+        raise PermissionDenied
 
     # group by category
     items_list = workflow.get_items(which_display, request_person)
@@ -126,7 +141,7 @@ def item_instance_show(request, item_pk):
             if form_comment.is_valid():
                 c = Comment()
                 c.item = item
-                c.person = get_object_or_404(Person, user=request.user)
+                c.person = request.user.person
                 c.text = form_comment.cleaned_data['text']
                 c.save()
                 return HttpResponseRedirect(reverse('workflow:item_instance_show', args=[item.pk]))
@@ -157,7 +172,7 @@ def update(request, action, model, pk, pk_other=None):
         workflow_pk = item.workflow.pk
 
         if action == 'take':
-            item.assigned_to = get_object_or_404(Person, user=request.user)
+            item.assigned_to = request.user.person
         elif action == 'untake':
             item.assigned_to = None
         else:
@@ -169,7 +184,7 @@ def update(request, action, model, pk, pk_other=None):
         workflow_pk = pk_other
 
         if action == 'take':
-            assigned_to = get_object_or_404(Person, user=request.user)
+            assigned_to = request.user.person
         elif action == 'untake':
             assigned_to = None
         elif action == 'show':

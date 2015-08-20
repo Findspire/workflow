@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -28,6 +29,12 @@ def index(request):
 @login_required
 def person_handle_form(request, person_pk=None):
     creating = (person_pk == None)
+
+    if creating and (not request.user.is_superuser):
+        raise PermissionDenied
+    if (not creating) and (not request.user.is_superuser) and (request.user.person.pk != int(person_pk)):
+        raise PermissionDenied
+
     if creating:
         person = Person()
         user = User()
@@ -105,18 +112,11 @@ class PersonListView(LoginRequiredMixin, MyListView):
     queryset = Person.objects.order_by('user__username').select_related('user')
 
 
-class SkillFormView(LoginRequiredMixin, CreateUpdateView):
-    model = Skill
-    fields = ['techno', 'person', 'strength']
-    template_name = 'utils/team_generic_views_form.haml'
-
-    def get_success_url(self):
-        person_pk = self.get_form_kwargs()['data']['person']
-        return reverse_lazy('team:skill_instance_list', args=[person_pk])
-
-
 @login_required
 def skills_list(request, person_pk):
+    if (not request.user.is_superuser) and (request.user.person.pk != int(person_pk)):
+        raise PermissionDenied
+
     person = get_object_or_404(Person, pk=person_pk)
 
     MyFormSet = modelformset_factory(Skill, fields=['strength'])
@@ -150,12 +150,22 @@ class SkillCategoryView(LoginRequiredMixin, CreateUpdateView):
     success_url = reverse_lazy('team:skill_subject_list')
     template_name = 'utils/team_generic_views_form.haml'
 
+    def dispatch(self, *args, **kwargs):
+        if (not self.request.user.is_superuser) and (self.request.user.person.pk != int(person_pk)):
+            raise PermissionDenied
+        return super(SkillCategoryView, self).dispatch(*args, **kwargs)
+
 
 class SkillSubjectView(LoginRequiredMixin, CreateUpdateView):
     model = SkillSubject
     fields = ['name', 'category', 'description']
     success_url = reverse_lazy('team:skill_subject_list')
     template_name = 'utils/team_generic_views_form.haml'
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied
+        return super(SkillSubjectView, self).dispatch(*args, **kwargs)
 
 
 @login_required
@@ -172,6 +182,16 @@ class TeamView(LoginRequiredMixin, CreateUpdateView):
     success_url = reverse_lazy('team:team_list')
     template_name = 'utils/team_generic_views_form.haml'
 
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied
+        return super(TeamView, self).dispatch(*args, **kwargs)
+
 
 class TeamListView(LoginRequiredMixin, ListView):
     model = Team
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied
+        return super(TeamListView, self).dispatch(*args, **kwargs)
