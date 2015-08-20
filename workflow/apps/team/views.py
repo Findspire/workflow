@@ -119,7 +119,7 @@ def skills_list(request, person_pk):
 
     person = get_object_or_404(Person, pk=person_pk)
 
-    MyFormSet = modelformset_factory(Skill, fields=['strength'])
+    MyFormSet = modelformset_factory(Skill, fields=['strength'], can_delete=True)
 
     if request.method == "POST":
         myformset = MyFormSet(request.POST, queryset=Skill.objects.filter(person=person))

@@ -130,7 +130,7 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
 
 @login_required
 def item_instance_show(request, item_pk):
-    item = get_object_or_404(Item, id=item_pk)
+    item = get_object_or_404(Item.objects.select_related(), pk=item_pk)
 
     # default
     form_comment = CommentNewForm()
@@ -155,7 +155,7 @@ def item_instance_show(request, item_pk):
 
     context = {
         'item': item,
-        'comments': Comment.objects.filter(item=item),
+        'comments': Comment.objects.filter(item=item).select_related(),
         'form_comment': form_comment,
         'form_description': form_description,
         'Item': Item,

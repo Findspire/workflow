@@ -31,14 +31,16 @@
     %form{action: ".",  method: "POST"}
         - csrf_token
         {{ myformset.management_form }}
+        %em{style: "padding-left: 20px;"}
+            Delete | Name (category): Strength
         <ul>
         {% for form in myformset %}
             {% if form.strength.label %}
                 <li>
-                    {{ form.id }}
+                    {{ form.DELETE }} |{{ form.id }}
                     {{ form.strength.label }} : {{ form.strength }}
                 </li>
             {% endif %}
         {% endfor %}
         </ul>
-        %input{type: "submit", value:"Save all"}
+        %input{type: "submit", value:"Save all (Checked objects will be deleted)"}
