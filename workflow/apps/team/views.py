@@ -153,7 +153,7 @@ class SkillCategoryView(LoginRequiredMixin, CreateUpdateView):
     template_name = 'utils/team_generic_views_form.haml'
 
     def dispatch(self, *args, **kwargs):
-        if (not self.request.user.is_superuser) and (self.request.user.person.pk != int(person_pk)):
+        if not self.request.user.is_superuser:
             raise PermissionDenied
         return super(SkillCategoryView, self).dispatch(*args, **kwargs)
 

@@ -21,10 +21,10 @@ class MyMultipleChoiceField(forms.MultipleChoiceField):
     widget = MyCheckboxSelectMultiple
 
     def get_choices(self):
-        Category, Object = self.choices_data
+        category, obj = self.choices_data
         choices = []
-        for cat in Category.objects.order_by('name'):
-            queryset = Object.objects.filter(category=cat).order_by('name')
+        for cat in category.objects.order_by('name'):
+            queryset = obj.objects.filter(category=cat).order_by('name')
             choices_tmp = [(c.pk, c.name) for c in queryset]
             choices.append((cat.name, choices_tmp))
         return choices

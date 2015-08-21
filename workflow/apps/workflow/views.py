@@ -12,11 +12,10 @@ from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 
-from braces.views import LoginRequiredMixin, GroupRequiredMixin
+from braces.views import LoginRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
-from workflow.apps.team.models import Person
 from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm
 
 
