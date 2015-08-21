@@ -1,3 +1,10 @@
+*Disclaimer : Work in progress*
+
+# Workflow
+
+Small internship project to keep a list of items to check when a new release if beeing tested.
+
+-----
 
 # Todo
 

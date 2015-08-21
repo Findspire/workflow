@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# The MIT License (MIT)
+# Copyright (c) 2015 Findspire
 
 """
 This module extend the django class based views: it merges CreateView and UpdateView.

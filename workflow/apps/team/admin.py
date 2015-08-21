@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# The MIT License (MIT)
+# Copyright (c) 2015 Findspire
 
 from django.contrib import admin
 from workflow.apps.team import models

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# The MIT License (MIT)
+# Copyright (c) 2015 Findspire
 #
 # This file used to be part of Progdupeupl but the algo has been totally rewritten
 # cf. https://bitbucket.org/MicroJoe/progdupeupl/src/62de1acc20f7673220deafa7464b2d8130a2841e/pdp/utils/paginator.py?at=master#cl-21
