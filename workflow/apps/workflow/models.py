@@ -52,12 +52,15 @@ class Workflow(models.Model):
     project = models.ForeignKey(Project, verbose_name=_('Project'))
     version = models.CharField(max_length=128, verbose_name=_('Version'))
     creation_date = models.DateField(auto_now=True, verbose_name=_('Creation date'))
+    categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
 
     def __unicode__(self):
         return '%s - %s' % (self.project, self.version)
 
     def get_items(self, which_display, person=None):
-        qs = Item.objects.filter(workflow=self).order_by('item_model__category__name', 'item_model__name') \
+        qs = Item.objects \
+            .filter(workflow=self, item_model__category__in=self.categories.all()) \
+            .order_by('item_model__category__name', 'item_model__name') \
             .select_related('item_model__category', 'assigned_to__user')
 
         try:

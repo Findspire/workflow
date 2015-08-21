@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Findspire
 
 from django import forms
-from workflow.apps.workflow.models import Project, ItemModel, ItemCategory, Comment
+from workflow.apps.workflow.models import Project, ItemModel, ItemCategory, Comment, Workflow
 from workflow.utils.forms import MyMultipleChoiceField
 
 
@@ -25,6 +25,15 @@ class ProjectNewForm(forms.ModelForm):
             kwargs['initial']['items'] = [item.pk for item in kwargs['instance'].items.all()]
 
         super(ProjectNewForm, self).__init__(*args, **kwargs)
+
+
+class WorkflowNewForm(forms.ModelForm):
+    class Meta:
+        model = Workflow
+        fields = ['project', 'version', 'categories']
+        widgets = {
+            'categories': forms.widgets.CheckboxSelectMultiple,
+        }
 
 
 class CommentNewForm(forms.ModelForm):

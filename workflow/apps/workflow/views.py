@@ -16,7 +16,7 @@ from braces.views import LoginRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
-from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm
+from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm, WorkflowNewForm
 
 
 @login_required
@@ -52,7 +52,7 @@ def project_list(request):
 
 class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     model = Workflow
-    fields = ['project', 'version']
+    form_class = WorkflowNewForm
     template_name = 'utils/workflow_generic_views_form.haml'
 
     def dispatch(self, *args, **kwargs):

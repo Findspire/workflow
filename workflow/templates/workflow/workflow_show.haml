@@ -8,7 +8,7 @@
 
 - block content
     %h1
-        {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }}
+        {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }} (<a href="{% url 'workflow:workflow_edit' workflow.pk %}">Edit</a>)
 
     %hr
 

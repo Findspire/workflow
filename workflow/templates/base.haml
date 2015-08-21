@@ -22,22 +22,6 @@
             - block breadcrumbs_app
             - block breadcrumbs
 
-        %div
-            %span{style: "padding-left:5px;"}
-                {% trans "Set lang:" %}
-
-            %ul{style: "display:inline-block; padding-left:5px; margin:0;"}
-                {% for lang_code, lang_name in LANGUAGES %}
-                    <li class="{% if lang_code == request.LANGUAGE_CODE %}active{% endif %}" style="display:inline-block;" >
-                        <form action="{% url 'set_language' %}" method="post" name="topbar_form_{{ lang_code }}">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="/" />
-                            <input type="hidden" name="language" value="{{ lang_code }}" />
-                            <input type="submit" value="{{ lang_code|upper }}" />
-                        </form>
-                    </li>
-                {% endfor %}
-
         #content
             - block content
 
