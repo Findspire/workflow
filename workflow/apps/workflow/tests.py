@@ -215,13 +215,39 @@ class WorkflowTest(TestCase):
         item = Item.objects.get(item_model=itemmodel)
         self.assertNotEqual(item.assigned_to, None)
 
+
+class WorkflowTest_updateAjax(TestCase):
+    fixtures = ['auth_user', 'team_all', 'workflow']
+
+    def get_wrapper(self, *args, **kwargs):
+        """Adds the header to make django think it's an Ajax request"""
+        return self.client.get_save(HTTP_X_REQUESTED_WITH='XMLHttpRequest', *args, **kwargs)
+
+    def setUp(self):
+        resp = self.client.login(username='admin', password='admin')
+        self.assertEqual(resp, True)
+
+        self.client.get_save = self.client.get
+        self.client.get = self.get_wrapper
+
+    def test_item_update_item_take(self):
+        itemmodel = ItemModel.objects.get(name='item model untaken')
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertEqual(item.assigned_to, None)
+
+        resp = self.client.get(reverse('workflow:update', args=['all', 'take', 'item', item.pk]))
+        self.assertEqual(resp.status_code, 200)
+
+        item = Item.objects.get(item_model=itemmodel)
+        self.assertNotEqual(item.assigned_to, None)
+
     def test_item_update_item_untake(self):
         itemmodel = ItemModel.objects.get(name='item model taken')
         item = Item.objects.get(item_model=itemmodel)
         self.assertNotEqual(item.assigned_to, None)
 
         resp = self.client.get(reverse('workflow:update', args=['all', 'untake', 'item', item.pk]))
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.assigned_to, None)
@@ -239,7 +265,7 @@ class WorkflowTest(TestCase):
         self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
 
         resp = self.client.get(reverse('workflow:update', args=['all', 'success', 'validate', item.pk]))
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.validation, Item.VALIDATION_SUCCESS)
@@ -250,7 +276,7 @@ class WorkflowTest(TestCase):
         self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
 
         resp = self.client.get(reverse('workflow:update', args=['all', 'failed', 'validate', item.pk]))
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.validation, Item.VALIDATION_FAILED)
@@ -261,7 +287,7 @@ class WorkflowTest(TestCase):
         self.assertEqual(item.validation, Item.VALIDATION_SUCCESS)
 
         resp = self.client.get(reverse('workflow:update', args=['all', 'untested', 'validate', item.pk]))
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
@@ -290,7 +316,7 @@ class WorkflowTest(TestCase):
 
         # take all items
         resp = self.client.get(reverse('workflow:update', args=['all', 'take', 'category', category.pk, workflow_pk]))
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
         # check all are taken
         items_untaken = get_items().filter(assigned_to=None)
@@ -313,11 +339,18 @@ class WorkflowTest(TestCase):
 
         # untake all items
         resp = self.client.get(reverse('workflow:update', args=['all', 'untake', 'category', category.pk, workflow_pk]))
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
         # check all are untaken
         items_taken = get_items().exclude(assigned_to=None)
         self.assertEqual(len(items_taken), 0)
+
+    def test_item_update_category_show(self):
+        workflow_pk = 1
+        category = ItemCategory.objects.get(pk=4)
+
+        resp = self.client.get(reverse('workflow:update', args=['all', 'show', 'category', category.pk, workflow_pk]))
+        self.assertEqual(resp.status_code, 200)
 
     def test_item_update_category_404(self):
         workflow_pk = 1
@@ -335,10 +368,11 @@ class ItemModelTest(TestCase):
         self.assertEqual(resp, True)
 
     def test_item_model_create(self):
-        resp = self.client.get(reverse('workflow:item_model_new'))
+        # get with initial cat
+        resp = self.client.get(reverse('workflow:item_model_new'), args=[1])
         self.assertEqual(resp.status_code, 200)
-
-        resp = self.client.get(reverse('workflow:item_model_new', args=[1]))
+        # get without initial cat
+        resp = self.client.get(reverse('workflow:item_model_new'))
         self.assertEqual(resp.status_code, 200)
 
         data = {
@@ -347,6 +381,25 @@ class ItemModelTest(TestCase):
             'description': 'Some description',
         }
         resp = self.client.post(reverse('workflow:item_model_new'), data)
+        self.assertEqual(resp.status_code, 302)
+
+        person_count = ItemModel.objects.filter(name='new item model').count()
+        self.assertEqual(person_count, 1)
+
+    def test_item_model_create_from_workflow(self):
+        # get with initial cat
+        resp = self.client.get(reverse('workflow:item_model_add_to_workcat', args=[1, 1]))
+        self.assertEqual(resp.status_code, 200)
+        # get without initial cat
+        resp = self.client.get(reverse('workflow:item_model_add_to_workflow', args=[1]))
+        self.assertEqual(resp.status_code, 200)
+
+        data = {
+            'name': 'new item model',
+            'category': 1,
+            'description': 'Some description',
+        }
+        resp = self.client.post(reverse('workflow:item_model_add_to_workflow', args=[1]), data)
         self.assertEqual(resp.status_code, 302)
 
         person_count = ItemModel.objects.filter(name='new item model').count()
@@ -397,6 +450,21 @@ class ItemCategoryTest(TestCase):
 
         items_count = ItemCategory.objects.filter(name='item category new').count()
         self.assertEqual(items_count, 1)
+
+    def test_item_category_create_to_workflow(self):
+        resp = self.client.get(reverse('workflow:item_category_new', args=[1]))
+        self.assertEqual(resp.status_code, 200)
+
+        data = {
+            'name': 'item category new',
+        }
+        resp = self.client.post(reverse('workflow:item_category_new', args=[1]), data)
+        self.assertEqual(resp.status_code, 302)
+
+        items_count = ItemCategory.objects.filter(name='item category new').count()
+        self.assertEqual(items_count, 1)
+
+        # todo : assert workflow has the category
 
     def test_item_category_edit(self):
         item_pk = ItemCategory.objects.get(name='item category 1').pk

@@ -56,7 +56,7 @@ class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     template_name = 'utils/workflow_generic_views_form.haml'
 
     def dispatch(self, *args, **kwargs):
-        if not self.request.user.is_superuser:
+        if not self.request.user.is_superuser: # todo or leader
             raise PermissionDenied
         return super(WorkflowFormView, self).dispatch(*args, **kwargs)
 
@@ -103,6 +103,11 @@ class ItemModelFormView(LoginRequiredMixin, CreateUpdateView):
 
 
 class ItemModelFormViewFromWorkflow(ItemModelFormView):
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_superuser: # todo or leader
+            raise PermissionDenied
+        return super(ItemModelFormViewFromWorkflow, self).dispatch(*args, **kwargs)
+
     def form_valid(self, form):
         ret = super(ItemModelFormViewFromWorkflow, self).form_valid(form)
 
@@ -131,7 +136,7 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
     def form_valid(self, form):
         ret = super(ItemCategoryFormView, self).form_valid(form)
         # if creating a category from a workflow
-        if 'workflow_pk' in self.kwargs:
+        if 'workflow_pk' in self.kwargs: # todo: check permissions in team or superuser
             get_object_or_404(Workflow, pk=self.kwargs['workflow_pk']).categories.add(form.instance)
         return ret
 
@@ -139,6 +144,10 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
 @login_required
 def item_instance_show(request, item_pk):
     item = get_object_or_404(Item.objects.select_related(), pk=item_pk)
+
+    team = item.workflow.project.team
+    if (not request.user.person in team.members.all()) and (request.user.person != team.leader):
+        raise PermissionDenied
 
     # default
     form_comment = CommentNewForm()
@@ -198,7 +207,9 @@ def update(request, which_display, action, model, pk, pk_other=None):
         elif action == 'untake':
             assigned_to = None
         elif action == 'show':
-            pass  # use with ajax when adding a new item, this way we refresh the whole category
+            # used with ajax when adding a new item, this way we fetch the whole
+            # category without updating any data
+            pass
         else:
             raise Http404('Unexpected action "%s"' % action)
 
@@ -245,7 +256,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
                 'which_display': which_display,
             }
             return render(request, 'workflow/workflow_show.table.part.haml', context)
-        elif model == 'validate':
+        else:  # model == 'validate', asserted a few lines above
             context = {
                 'item': get_object_or_404(Item, pk=pk),
                 'Item': Item,

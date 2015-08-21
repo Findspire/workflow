@@ -259,52 +259,41 @@ class SkillsSubjectTest(TestCase):
         self.assertEqual(has_comp, True)
 
 
-class SkillsInstancesTest(TestCase):
+class SkillTest(TestCase):
     fixtures = ['auth_user', 'team_all']
 
     def setUp(self):
         resp = self.client.login(username='admin', password='admin')
         self.assertEqual(resp, True)
 
-    def test_skill_instance(self):
-        # create
-
-        """
-        todo : make me pass and test the ajax calls
-
-        resp = self.client.get(reverse('team:skill_instance_new'))
-        self.assertEqual(resp.status_code, 200)
-
+    def test_skill_list(self):
+        # add skills
         data = {
-            'techno': SkillSubject.objects.get(pk=1).pk,
-            'person': Person.objects.get(pk=1).pk,
-            'strength': 1,
+            'username': 'admin',
+            'first_name': 'Ad',
+            'last_name': 'min',
+            'arrival_date': '2015-01-01',
+            'contract_type': 1,
+            'skills': [1],
         }
-        resp = self.client.post(reverse('team:skill_instance_new'), data)
+        resp = self.client.post(reverse('team:person_edit', args=[1]), data)
         self.assertEqual(resp.status_code, 302)
 
-        comp_count = Skill.objects.filter(techno__pk=1, person__pk=1).count()
-        self.assertEqual(comp_count, 1)
+        # update them
 
-        # update
-
-        person_pk = Person.objects.get(pk=1).pk
-        resp = self.client.get(reverse('team:skill_instance_list', args=[person_pk]))
-
-        some_object_pk = resp.context['myformset'].forms[0].instance.pk
+        resp = self.client.get(reverse('team:skill_instance_list', args=[1]))
+        self.assertEqual(resp.context['myformset'].forms[0].instance.pk, 1)
 
         # management form, used internally by django.
         data = {'form-'+key: value for key, value in resp.context['myformset'].management_form.initial.items()}
 
         data.update({
-            'form-0-id': some_object_pk,
+            'form-0-id': 1,
             'form-0-strength': 42,
         })
 
-        resp = self.client.post(reverse('team:skill_instance_list', args=[person_pk]), data)
+        resp = self.client.post(reverse('team:skill_instance_list', args=[1]), data)
         self.assertEqual(resp.status_code, 302)
 
-        skill = Skill.objects.get(pk=some_object_pk)
+        skill = Skill.objects.get(pk=1)
         self.assertEqual(skill.strength, 42)
-
-        """

@@ -134,10 +134,10 @@ def skills_list(request, person_pk):
 
     # add the techno name - for form display
     for form in myformset:
-        if hasattr(form.instance, 'person'):  # not the form for creating a new object
+        if hasattr(form.instance, 'person'):  # not the form for creating a new object, set a proper label
             skill = get_object_or_404(SkillSubject, pk=form.instance.techno.pk)
             form['strength'].label = '{} ({})'.format(skill.name, skill.category.name)
-        else:
+        else:  # set a special value, in order not to display it in the template
             form['strength'].label = None
 
     return render(request, 'team/skill_list.haml', {
