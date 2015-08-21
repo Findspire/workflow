@@ -2,26 +2,32 @@
 
 # Workflow
 
-Small internship project to keep a list of items to check when a new release if beeing tested.
+Small internship project to keep a list of items to check when a new release is beeing tested.
+
+![screenshot](screenshot.png)
 
 -----
 
 # Todo
 
 * renommer en anglais (wip)
-* vue user : login, logout, ... (wip)
+* vues user : login, logout, ... (wip)
 * permissions (wip)
 * more doc
 * more tests (especially ajax and permissions)
 
-# Basic setup
+# Setup
+
+Standard django setup :
+* virtualenv: `virtualenv workflow-env`
+* requirements: `pip install -r requirements.txt`
 
 Don't forget to build the css :
 
     ./tools/build_css.sh
 
 Syncdb :
-If you use the plain django's command `syncdb`, you will need to create a Person instance for the django's superuser. You should use the following script :
+If you use the plain django's command `syncdb`, you will need to create a Person instance for the django's superuser. You should use the following script which create a superuser/password admin/admin  :
 
     ./scripts/resetdb.py
 
@@ -45,16 +51,3 @@ Dump db to json :
 
     ./manage.py dumpdata APP --format=json --indent=4 > workflow/apps/APP/fixtures/APP.json
 
----------------------------------------------------------
-
-python manage.py migrate
-python manage.py createsuperuser
-via the django admin create a Person instance
-
-create
-    persons
-    competences
-    items
-    project
-
-start a workflow
