@@ -20,10 +20,10 @@
         %span.take_untake_item
             - if item.assigned_to
                 {{ item.assigned_to }}
-                %a{href: "{% url 'workflow:update' 'untake' 'item' item.pk %}?next={{ request.path }}", title: "Reset owner of item"}
+                %a{href: "{% url 'workflow:update' which_display 'untake' 'item' item.pk %}?next={{ request.path }}", title: "Reset owner of item"}
                     %img{src: "/static/workflow/img/untake.png"}
             - else
-                %a{href: "{% url 'workflow:update' 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item"}
+                %a{href: "{% url 'workflow:update' which_display 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item"}
                     {% trans "Take" %}
         \-
         %span.validate
@@ -31,21 +31,21 @@
                 %span{title: "Item is validated"}
                     %img{src: "/static/workflow/img/validation_OK.png"}
             - else
-                %a{href: "{% url 'workflow:update' 'success' 'validate' item.pk %}?next={{ request.path }}", title: "Click to validate"}
+                %a{href: "{% url 'workflow:update' which_display 'success' 'validate' item.pk %}?next={{ request.path }}", title: "Click to validate"}
                     %img{src: "/static/workflow/img/validation_OK_disabled.png"}
 
             - if item.validation == Item.VALIDATION_UNTESTED
                 %span{title: "Item is untested"}
                     ?
             - else
-                %a{href: "{% url 'workflow:update' 'untested' 'validate' item.pk %}?next={{ request.path }}", title: "Reset item validation"}
+                %a{href: "{% url 'workflow:update' which_display 'untested' 'validate' item.pk %}?next={{ request.path }}", title: "Reset item validation"}
                     ?
 
             - if item.validation == Item.VALIDATION_FAILED
                 %span{title: "Item is broken"}
                     %img{src: "/static/workflow/img/validation_KO.png"}
             - else
-                %a{href: "{% url 'workflow:update' 'failed' 'validate' item.pk %}?next={{ request.path }}", title: "Click to mark as broken"}
+                %a{href: "{% url 'workflow:update' which_display 'failed' 'validate' item.pk %}?next={{ request.path }}", title: "Click to mark as broken"}
                     %img{src: "/static/workflow/img/validation_KO_disabled.png"}
 
     %hr{style: "background-color: gray"}

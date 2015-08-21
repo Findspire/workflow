@@ -225,7 +225,7 @@ function modal_form_submit_onclick() {
         data: f.serialize(),
         timeout: 3000,
         success: function(data, textStatus, jqXHR) {
-            if (jqXHR.getResponseHeader("Content-Type") == "text/html; charset=utf-8") {
+            if (jqXHR.getResponseHeader("Content-Type") === "text/html; charset=utf-8") {
                 /* post failed, show the form again */
                 _modal_callback($("#modal_content form").attr("action"), data);
             }
@@ -235,19 +235,17 @@ function modal_form_submit_onclick() {
                 modal_hide();
 
                 var cat_id = f.find("select :selected").attr("value");
-                var $cat_show = $("#take_untake_category_"+cat_id + "_show a");
 
-                if ((typeof cat_id != "undefined") && ($cat_show.length === 0)) {
-                    /* the item is created in an empty category, we must reload the whole page to show it */
+                if (typeof cat_id === "undefined") {
+                    /* new category, we must reload the whole page to show it */
                     location.reload();
                 }
                 else {
-                    /* category already exist with items, just refresh it */
-                    $cat_show.click();
+                    /* category already exist, just refresh it */
                     counters["all"] += 1;
                     counters["untaken"] += 1;
                     counters["untested"] += 1;
-                    update_counters_html();
+                    $("#take_untake_category_"+cat_id + "_show a").click();
                 }
             }
         },

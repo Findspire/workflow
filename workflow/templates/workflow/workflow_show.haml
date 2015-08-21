@@ -17,7 +17,7 @@
             %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
                 {% trans "Add an item in this workflow" %}
         %li{id: "workflow_add_category"}
-            %a{href: "{% url 'workflow:item_category_new' %}"}
+            %a{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
                 {% trans "Add an item category" %}
 
     %hr

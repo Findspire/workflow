@@ -146,6 +146,14 @@ li label {
         padding: 2px;
     }
 
+    .take_untake_category {
+        width: 20%;
+    }
+
+    .validate_category {
+        width: 10%;
+    }
+
     .odd_line {
         background-color: #ddd;
         padding-left: 50px;
@@ -157,14 +165,6 @@ li label {
 
     .take_untake_category, .take_untake_item, .validate {
         text-align: center;
-    }
-
-    .take_untake_item {
-        width: 20%;
-    }
-
-    .validate {
-        width: 10%;
     }
 
     .item {

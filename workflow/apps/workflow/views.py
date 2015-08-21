@@ -79,10 +79,10 @@ def workflow_show(request, workflow_pk, which_display):
     items_list = workflow.get_items(which_display, request_person)
 
     items_dic = OrderedDict()
+    for cat in workflow.categories.all():
+        items_dic[cat] = []
     for item in items_list:
-        category = item.item_model.category
-        items_dic.setdefault(category, [])
-        items_dic[category].append(item)
+        items_dic[item.item_model.category].append(item)
 
     context = {
         'workflow': workflow,
@@ -125,8 +125,15 @@ class ItemModelFormViewFromWorkflow(ItemModelFormView):
 class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
     model = ItemCategory
     fields = ['name']
-    success_url = reverse_lazy('workflow:item_model_list')
+    success_url = reverse_lazy('workflow:index')
     template_name = 'utils/workflow_generic_views_form.haml'
+
+    def form_valid(self, form):
+        ret = super(ItemCategoryFormView, self).form_valid(form)
+        # if creating a category from a workflow
+        if 'workflow_pk' in self.kwargs:
+            get_object_or_404(Workflow, pk=self.kwargs['workflow_pk']).categories.add(form.instance)
+        return ret
 
 
 @login_required
@@ -160,13 +167,14 @@ def item_instance_show(request, item_pk):
         'form_comment': form_comment,
         'form_description': form_description,
         'Item': Item,
+        'which_display': 'all',
     }
 
     return render(request, 'workflow/item_instance_show.haml', context)
 
 
 @login_required
-def update(request, action, model, pk, pk_other=None):
+def update(request, which_display, action, model, pk, pk_other=None):
     # todo: this should be a POST request
 
     if model == 'item':
@@ -222,31 +230,36 @@ def update(request, action, model, pk, pk_other=None):
         if model == 'item':
             context = {
                 'item': get_object_or_404(Item, pk=pk),
+                'which_display': which_display,
             }
             return render(request, 'workflow/workflow_show.take_untake.part.haml', context)
         elif model == 'category':
             workflow = get_object_or_404(Workflow, pk=workflow_pk)
-            items = workflow.get_items('all').filter(item_model__category__pk=int(pk))
+            items = workflow.get_items(which_display, request.user.person).filter(item_model__category__pk=int(pk))
 
             context = {
                 'category': get_object_or_404(ItemCategory, pk=pk),
                 'items_list': items,
                 'workflow': workflow,
                 'Item': Item,
+                'which_display': which_display,
             }
             return render(request, 'workflow/workflow_show.table.part.haml', context)
         elif model == 'validate':
             context = {
                 'item': get_object_or_404(Item, pk=pk),
                 'Item': Item,
+                'which_display': which_display,
             }
             return render(request, 'workflow/workflow_show.validate.part.haml', context)
     else:
-        default_url = reverse('workflow:workflow_show', args=[workflow_pk, 'all'])
+        default_url = reverse('workflow:workflow_show', args=[workflow_pk, which_display])
         return HttpResponseRedirect(request.GET.get('next', default_url))
 
 
-class ItemModelListView(LoginRequiredMixin, MyListView):
-    model = ItemModel
-    paginate_by = 15
-    queryset = ItemModel.objects.order_by('-category').select_related('category')
+@login_required
+def itemmodel_list(request):
+    context = {
+        'object_list': {cat:ItemModel.objects.filter(category=cat) for cat in ItemCategory.objects.all()}
+    }
+    return render(request, 'workflow/itemmodel_list.haml', context)

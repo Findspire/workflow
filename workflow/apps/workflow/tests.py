@@ -199,7 +199,7 @@ class WorkflowTest(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_item_update(self):
-        resp = self.client.get(reverse('workflow:update', args=['someAction', 'thisShouldRaiseA404', 42]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'someAction', 'thisShouldRaiseA404', 42]))
         self.assertEqual(resp.status_code, 404)
 
         # todo: more 404 tests ?
@@ -209,7 +209,7 @@ class WorkflowTest(TestCase):
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.assigned_to, None)
 
-        resp = self.client.get(reverse('workflow:update', args=['take', 'item', item.pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'take', 'item', item.pk]))
         self.assertEqual(resp.status_code, 302)
 
         item = Item.objects.get(item_model=itemmodel)
@@ -220,7 +220,7 @@ class WorkflowTest(TestCase):
         item = Item.objects.get(item_model=itemmodel)
         self.assertNotEqual(item.assigned_to, None)
 
-        resp = self.client.get(reverse('workflow:update', args=['untake', 'item', item.pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'untake', 'item', item.pk]))
         self.assertEqual(resp.status_code, 302)
 
         item = Item.objects.get(item_model=itemmodel)
@@ -230,7 +230,7 @@ class WorkflowTest(TestCase):
         itemmodel = ItemModel.objects.get(name='item model 1')
         item = Item.objects.get(item_model=itemmodel)
 
-        resp = self.client.get(reverse('workflow:update', args=['404', 'item', item.pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', '404', 'item', item.pk]))
         self.assertEqual(resp.status_code, 404)
 
     def test_item_update_validate_success(self):
@@ -238,7 +238,7 @@ class WorkflowTest(TestCase):
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
 
-        resp = self.client.get(reverse('workflow:update', args=['success', 'validate', item.pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'success', 'validate', item.pk]))
         self.assertEqual(resp.status_code, 302)
 
         item = Item.objects.get(item_model=itemmodel)
@@ -249,7 +249,7 @@ class WorkflowTest(TestCase):
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.validation, Item.VALIDATION_UNTESTED)
 
-        resp = self.client.get(reverse('workflow:update', args=['failed', 'validate', item.pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'failed', 'validate', item.pk]))
         self.assertEqual(resp.status_code, 302)
 
         item = Item.objects.get(item_model=itemmodel)
@@ -260,7 +260,7 @@ class WorkflowTest(TestCase):
         item = Item.objects.get(item_model=itemmodel)
         self.assertEqual(item.validation, Item.VALIDATION_SUCCESS)
 
-        resp = self.client.get(reverse('workflow:update', args=['untested', 'validate', item.pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'untested', 'validate', item.pk]))
         self.assertEqual(resp.status_code, 302)
 
         item = Item.objects.get(item_model=itemmodel)
@@ -270,7 +270,7 @@ class WorkflowTest(TestCase):
         itemmodel = ItemModel.objects.get(name='item model 1')
         item = Item.objects.get(item_model=itemmodel)
 
-        resp = self.client.get(reverse('workflow:update', args=['404', 'validate', item.pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', '404', 'validate', item.pk]))
         self.assertEqual(resp.status_code, 404)
 
     def test_item_update_category_take(self):
@@ -289,7 +289,7 @@ class WorkflowTest(TestCase):
         self.assertNotEqual(len(items_untaken), 0)
 
         # take all items
-        resp = self.client.get(reverse('workflow:update', args=['take', 'category', category.pk, workflow_pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'take', 'category', category.pk, workflow_pk]))
         self.assertEqual(resp.status_code, 302)
 
         # check all are taken
@@ -312,7 +312,7 @@ class WorkflowTest(TestCase):
         self.assertNotEqual(len(items_taken), 0)
 
         # untake all items
-        resp = self.client.get(reverse('workflow:update', args=['untake', 'category', category.pk, workflow_pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', 'untake', 'category', category.pk, workflow_pk]))
         self.assertEqual(resp.status_code, 302)
 
         # check all are untaken
@@ -323,7 +323,7 @@ class WorkflowTest(TestCase):
         workflow_pk = 1
         category = ItemCategory.objects.get(pk=4)
 
-        resp = self.client.get(reverse('workflow:update', args=['404', 'category', category.pk, workflow_pk]))
+        resp = self.client.get(reverse('workflow:update', args=['all', '404', 'category', category.pk, workflow_pk]))
         self.assertEqual(resp.status_code, 404)
 
 
@@ -375,7 +375,7 @@ class ItemModelTest(TestCase):
         resp = self.client.get(reverse('workflow:item_model_list'))
         self.assertEqual(resp.status_code, 200)
         item = ItemModel.objects.get(name='item model 1')
-        self.assertEqual(item in resp.context[-1]['object_list'], True)
+        self.assertEqual(any([item in item_list for item_list in resp.context[-1]['object_list'].values()]), True)
 
 
 class ItemCategoryTest(TestCase):

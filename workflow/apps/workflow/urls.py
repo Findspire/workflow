@@ -24,12 +24,13 @@ urlpatterns = patterns('workflow.apps.workflow',
     url(r'^item/model/new/workflow/(?P<workflow_pk>\d+)$', views.ItemModelFormViewFromWorkflow.as_view(), name='item_model_add_to_workflow'),
     url(r'^item/model/new/workcat/(?P<workflow_pk>\d+)/(?P<category>\d+)$', views.ItemModelFormViewFromWorkflow.as_view(), name='item_model_add_to_workcat'),
     url(r'^item/model/edit/(?P<pk>\d+)/$', views.ItemModelFormView.as_view(), name='item_model_edit'),
-    url(r'^item/model/list/$', views.ItemModelListView.as_view(), name='item_model_list'),
+    url(r'^item/model/list/$', views.itemmodel_list, name='item_model_list'),
 
     url(r'^item/category/new/$', views.ItemCategoryFormView.as_view(), name='item_category_new'),
+    url(r'^item/category/new/(?P<workflow_pk>\d+)/$', views.ItemCategoryFormView.as_view(), name='item_category_new'),
     url(r'^item/category/edit/(?P<pk>\d+)/$', views.ItemCategoryFormView.as_view(), name='item_category_edit'),
 
     url(r'^item/instance/show/(?P<item_pk>\d+)/$', views.item_instance_show, name='item_instance_show'),
-    url(r'^update/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/$', views.update, name='update'),
-    url(r'^update/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/(?P<pk_other>\d+)/$', views.update, name='update'),
+    url(r'^update/(?P<which_display>\w+)/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/$', views.update, name='update'),
+    url(r'^update/(?P<which_display>\w+)/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/(?P<pk_other>\d+)/$', views.update, name='update'),
 )
