@@ -9,5 +9,8 @@ workflow.db
 .coverage
 htmlcov
 
+#STATICFILES
+/static/
+
 # OSX
 .DS_Store
