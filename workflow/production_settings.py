@@ -34,7 +34,7 @@ COMP_STRENGTH_DEFAULT = 5
 SECRET_KEY = '6og(!94ejbbv6x($=gn&amp;x3ea9ffb!64ev4%3jv(m*uy8-0@f=5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,6 +44,8 @@ APPEND_SLASH = True
 
 ADMINS = ()
 MANAGERS = ADMINS
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ################################
 # Internationalization
@@ -117,28 +119,6 @@ TEMPLATES = [
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-##################################
-# Misc
-##################################
-
-DEBUG_TOOLBAR_PANELS = [
-    #'debug_toolbar.panels.versions.VersionsPanel',
-    'debug_toolbar.panels.timer.TimerPanel',
-    #'debug_toolbar.panels.settings.SettingsPanel',
-    'debug_toolbar.panels.headers.HeadersPanel',
-    'debug_toolbar.panels.sql.SQLPanel',
-    'debug_toolbar.panels.request.RequestPanel',
-    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-    'debug_toolbar.panels.templates.TemplatesPanel',
-    'debug_toolbar.panels.cache.CachePanel',
-    #'debug_toolbar.panels.signals.SignalsPanel',
-    #'debug_toolbar.panels.logging.LoggingPanel',
-    #'debug_toolbar.panels.redirects.RedirectsPanel',
-
-    # third-party
-    'template_profiler_panel.panels.template.TemplateProfilerPanel',
-]
-
 INSTALLED_APPS = (
     # django
     'django.contrib.admin',
@@ -151,10 +131,6 @@ INSTALLED_APPS = (
 
     # third party + debug
     'django_user_agents',
-
-    'debug_toolbar',
-    'template_profiler_panel',
-    'django_extensions',
 
     # custom
     'workflow.apps.workflow',
@@ -181,7 +157,6 @@ HAMLPY_ATTR_WRAPPER = '"'
 
 LOGIN_URL = '/admin/login'
 
-BUG_TRACKER_URL = 'https://redmine.findspire.com/issues/'
 
 ############################################
 # Database
