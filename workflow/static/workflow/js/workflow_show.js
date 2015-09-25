@@ -10,6 +10,7 @@ $(document).ready(function() {
     $("#workflow_add_category a").click(modal_onclick);
 
     $("#items th a").click(modal_onclick);
+    $("#modal_background").click(modal_hide);
 
     update_counters_html();
 });
@@ -163,7 +164,6 @@ function validate_item_onclick() {
     return false;
 }
 
-
 function validate_item_update($elem, data) {
     var status_old = $elem.attr("data-status-old");
     var status_new = $elem.attr("data-status-new");
@@ -175,7 +175,6 @@ function validate_item_update($elem, data) {
     $parent_elem.html(data);
     $parent_elem.find("a").click(validate_item_onclick);
 }
-
 
 /*
     Modal
@@ -217,6 +216,7 @@ function modal_hide() {
     return false;
 }
 
+
 function modal_form_submit_onclick() {
     var f = $("#modal_content form");
     $.post(f.attr("action"), f.serialize())
@@ -246,6 +246,8 @@ function modal_form_submit_onclick() {
             }
         })
         .fail(function(jqXHR){
-            alert(jqXHR.responseText);            
+            console.log(jqXHR.responseText);            
         });
+    return false;
 }
+
