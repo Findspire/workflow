@@ -12,6 +12,7 @@ from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 
 from braces.views import LoginRequiredMixin
 
@@ -197,7 +198,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
             if item.validation == 0:
                 item.assigned_to = None
             else:
-                return HttpResponseForbidden("You need to put this this task has untested '?' before untake it")
+                return HttpResponseForbidden(_("You need to put this this task has untested '?' before untake it"))
         else:
             raise Http404('Unexpected action "%s"' % action)
 
@@ -227,10 +228,10 @@ def update(request, which_display, action, model, pk, pk_other=None):
 
         if item.assigned_to != request.user.person:
             if item.assigned_to is not None:
-                return HttpResponseForbidden("%s is the owner of this task" \
-                                             % item.assigned_to)
+                return HttpResponseForbidden(_("%s is the owner of this task" \
+                                             % item.assigned_to))
             else:
-                return HttpResponseForbidden("You must take the task before edit it")
+                return HttpResponseForbidden(_("You must take the task before edit it"))
 
         if action == 'untested':
             item.validation = Item.VALIDATION_UNTESTED

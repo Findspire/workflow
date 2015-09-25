@@ -68,7 +68,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'workflow', 'locale'),
 )
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 SITE_ID = 1
 

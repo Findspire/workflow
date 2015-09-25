@@ -118,9 +118,14 @@ class Item(models.Model):
         default=0,
         verbose_name=_('Validation'),
     )
+    last_modification = models.DateTimeField(null=True, editable=False)
 
     def __unicode__(self):
         return '%s' % (self.item_model)
+
+    def save(self, *args, **kwargs):
+        self.last_modification = timezone.now()
+        super(Item, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):

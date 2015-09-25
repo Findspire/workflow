@@ -20,3 +20,6 @@
 - else
     %a{href: "{% url 'workflow:update' which_display 'failed' 'validate' item.pk %}?next={{ request.path }}", title: "Click to mark as broken", data-status-old: "{{ item|get_status }}", data-status-new: "failed"}
         %img{src: "/static/workflow/img/validation_KO_disabled.png"}
+
+%br
+%span.last_modification= item.last_modification|date:"d/m/Y H:i"
