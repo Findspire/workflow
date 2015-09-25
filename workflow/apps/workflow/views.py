@@ -10,6 +10,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 
 from braces.views import LoginRequiredMixin
@@ -193,7 +194,10 @@ def update(request, which_display, action, model, pk, pk_other=None):
         if action == 'take':
             item.assigned_to = request.user.person
         elif action == 'untake':
-            item.assigned_to = None
+            if item.validation == 0:
+                item.assigned_to = None
+            else:
+                return HttpResponseForbidden("You need to put this this task has untested '?' before untake it")
         else:
             raise Http404('Unexpected action "%s"' % action)
 
@@ -220,6 +224,13 @@ def update(request, which_display, action, model, pk, pk_other=None):
     elif model == 'validate':
         item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
+
+        if item.assigned_to != request.user.person:
+            if item.assigned_to is not None:
+                return HttpResponseForbidden("%s is the owner of this task" \
+                                             % item.assigned_to)
+            else:
+                return HttpResponseForbidden("You must take the task before edit it")
 
         if action == 'untested':
             item.validation = Item.VALIDATION_UNTESTED

@@ -12,30 +12,23 @@ $(document).ready(function() {
     $("#items th a").click(modal_onclick);
 
     update_counters_html();
-    modal_hide();
 });
 
 
-function send_request($elem, callback) {
-    $.ajax({
-        url: $elem.attr("href"),
-        type: "GET",
-        timeout: 3000,
-        success: function(data, textStatus, jqXHR) {
-            callback($elem, data);
-            update_counters_html();
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("An unexpected error happened. Please refresh the page.");
-        },
+
+function send_request($elem){
+    var dfd = $.get($elem.attr("href"));
+    dfd.fail(function(jqXHR){
+            alert(jqXHR.responseText);
     });
+    return dfd;
 }
 
 
 function update_counters_data(status_old, status_new) {
     var status = ["all", "mine", "untaken", "taken", "success", "failed", "untested"];
 
-    for (var i = 0, imax = status.length; i < imax; ++i) {
+    for (var i = 0; i < status.length; ++i) {
         if (status_old === status[i]) {
             counters[status[i]] -= 1;
 
@@ -54,15 +47,14 @@ function update_counters_data(status_old, status_new) {
 
 
 function update_counters_html() {
-    var status = 0, i = 0, imax = 0, total = 0;
+    var i = 0, total = 0;
+    var status = ["success", "failed", "untested"];
 
-    status = ["success", "failed", "untested"];
-
-    for (i = 0, imax = status.length; i < imax; ++i) {
+    for (i = 0; i < status.length; ++i) {
         total += counters[status[i]];
     }
 
-    for (i = 0, imax = status.length; i < imax; ++i) {
+    for (i = 0; i < status.length; ++i) {
         var percent = Math.round(counters[status[i]]/total*100);
         $("#progressbar table ." + status[i]).css("width", ""+percent+"%");
         $("#progressbar div ." + status[i] + " .number").text(counters[status[i]]);
@@ -70,19 +62,18 @@ function update_counters_html() {
 
     status = ["all", "mine", "untaken", "taken", "success", "failed"];
 
-    for (i = 0, imax = status.length; i < imax; ++i) {
+    for (i = 0; i < status.length; ++i) {
         $("#filters ." + status[i] + " .number").text(counters[status[i]]);
     }
 
 }
 
-
-/*
-    take untake item
-*/
-
 function take_untake_item_onclick() {
-    send_request($(this), take_untake_item_update);
+    $elem = $(this)
+    send_request($elem)
+        .done(function(data){ 
+            take_untake_item_update($elem, data); 
+        });
     return false;
 }
 
@@ -97,6 +88,7 @@ function take_untake_item_update($elem, data) {
         status_new = "untaken";
 
     update_counters_data(status_old, status_new);
+    update_counters_html();
 
     $parent_elem.html(data);
     $parent_elem.find("a").click(take_untake_item_onclick);
@@ -108,7 +100,11 @@ function take_untake_item_update($elem, data) {
 */
 
 function take_untake_category_onclick() {
-    send_request($(this), take_untake_category_update);
+    $elem = $(this);
+    send_request($elem)
+        .done(function(data){ 
+            take_untake_category_update($elem, data);
+        });
     return false;
 }
 
@@ -118,13 +114,12 @@ function take_untake_category_update($elem, data) {
 
     /* clear take / untake data */
 
-    var status_new = "";
     if ($elem.parent().hasClass("take"))
-        status_new = "mine";
+        var status_new = "mine";
     else
-        status_new = "untaken";
+        var status_new = "untaken";
 
-    for (var i = 0, imax = $elems.length; i < imax; ++i) {
+    for (var i = 0; i < $elem.length; ++i) {
         var status_old = $($elems[i]).find("a").attr("data-status");
         update_counters_data(status_old, status_new);
     }
@@ -151,6 +146,7 @@ function take_untake_category_update($elem, data) {
         counters["taken"] -= diff;
         counters["untaken"] += diff;
     }
+    update_counters_html();
 }
 
 
@@ -159,7 +155,11 @@ function take_untake_category_update($elem, data) {
 */
 
 function validate_item_onclick() {
-    send_request($(this), validate_item_update);
+    $elem = $(this);
+    send_request($elem)
+        .done(function(data){
+            validate_item_update($elem, data);
+        });
     return false;
 }
 
@@ -170,6 +170,7 @@ function validate_item_update($elem, data) {
     var $parent_elem = $elem.parent();
 
     update_counters_data(status_old, status_new);
+    update_counters_html();
 
     $parent_elem.html(data);
     $parent_elem.find("a").click(validate_item_onclick);
@@ -181,17 +182,17 @@ function validate_item_update($elem, data) {
 */
 
 function modal_onclick() {
-    send_request($(this), modal_callback);
+    $elem = $(this)
+    send_request($elem)
+        .done(function(data){ 
+            modal_callback($elem, data); 
+        });
     return false;
 }
 
 function modal_callback($elem, data) {
-    _modal_callback($elem.attr("href"), data);
-}
-
-function _modal_callback(post_url, data) {
     var $content = $($.trim(data)).filter("#content");
-    $content.find("form").attr("action", post_url); // set the correct target url
+    $content.find("form").attr("action", $elem.attr("href")); // set the correct target url
 
     $("body #modal_content").html($content.html()+'<a href="#" class="close_modal">&times;</a>');
     $("#modal_content form :submit").click(modal_form_submit_onclick);
@@ -218,16 +219,11 @@ function modal_hide() {
 
 function modal_form_submit_onclick() {
     var f = $("#modal_content form");
-
-    $.ajax({
-        url: f.attr("action"),
-        type: "POST",
-        data: f.serialize(),
-        timeout: 3000,
-        success: function(data, textStatus, jqXHR) {
+    $.post(f.attr("action"), f.serialize())
+        .done(function(data, textStatus, jqXHR){
             if (jqXHR.getResponseHeader("Content-Type") === "text/html; charset=utf-8") {
                 /* post failed, show the form again */
-                _modal_callback($("#modal_content form").attr("action"), data);
+                modal_callback($("#modal_content form").attr("action"), data);
             }
             else {
                 /* post successfull (this is supposed to be an empty json response) */
@@ -248,10 +244,8 @@ function modal_form_submit_onclick() {
                     $("#take_untake_category_"+cat_id + "_show a").click();
                 }
             }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("An unexpected error happened. Please refresh the page.");
-        },
-    });
-    return false;
+        })
+        .fail(function(jqXHR){
+            alert(jqXHR.responseText);            
+        });
 }
