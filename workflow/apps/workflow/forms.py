@@ -46,3 +46,7 @@ class ItemDetailForm(forms.ModelForm):
     class Meta:
         model = ItemModel
         fields = ['description']
+
+
+class ItemCreateForm(forms.Form):
+    items = forms.CharField(widget=forms.Textarea)

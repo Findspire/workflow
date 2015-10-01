@@ -5,6 +5,7 @@
 
 from collections import OrderedDict
 
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -18,7 +19,7 @@ from braces.views import LoginRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
-from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm, WorkflowNewForm
+from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm, WorkflowNewForm, ItemCreateForm
 
 
 @login_required
@@ -102,6 +103,28 @@ class ItemModelFormView(LoginRequiredMixin, CreateUpdateView):
     fields = ['name', 'category', 'description']
     success_url = reverse_lazy('workflow:item_model_list')
     template_name = 'utils/workflow_generic_views_form.haml'
+
+
+@login_required
+def create_item_view(request, category, workflow_pk):
+    if request.method == 'POST':
+        form = ItemCreateForm(request.POST)
+        if form.is_valid():
+            items = form.cleaned_data['items']
+            workflow = get_object_or_404(Workflow, pk=workflow_pk)
+            category = get_object_or_404(ItemCategory, pk=category)
+            for name in items.split('\n'):
+                if name.strip():
+                    item_model, created = ItemModel.objects.get_or_create(name=name, category=category)
+                    item = Item.objects.create(item_model=item_model, workflow=workflow)
+                    item.save()
+                    project = workflow.project
+                    project.items.add(item_model)
+            return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
+        else:
+            return HttpResponseForbidden('Informations form are incorrects')
+    else:
+        return render(request, 'utils/workflow_generic_views_form.haml', {'form': ItemCreateForm()})
 
 
 class ItemModelFormViewFromWorkflow(ItemModelFormView):

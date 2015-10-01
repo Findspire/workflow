@@ -9,7 +9,6 @@ $(document).ready(function() {
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);
 
-    $("#items th a").click(modal_onclick);
     $("#modal_background").click(modal_hide);
 
     update_counters_html();

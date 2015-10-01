@@ -22,7 +22,7 @@ urlpatterns = patterns('workflow.apps.workflow',
     url(r'^item/model/new/$', views.ItemModelFormView.as_view(), name='item_model_new'),
     url(r'^item/model/new/category/(?P<category>\d+)$', views.ItemModelFormView.as_view(), name='item_model_new'),
     url(r'^item/model/new/workflow/(?P<workflow_pk>\d+)$', views.ItemModelFormViewFromWorkflow.as_view(), name='item_model_add_to_workflow'),
-    url(r'^item/model/new/workcat/(?P<workflow_pk>\d+)/(?P<category>\d+)$', views.ItemModelFormViewFromWorkflow.as_view(), name='item_model_add_to_workcat'),
+    url(r'^item/model/new/workcat/(?P<workflow_pk>\d+)/(?P<category>\d+)$', views.create_item_view, name='item_model_add_to_workcat'),
     url(r'^item/model/edit/(?P<pk>\d+)/$', views.ItemModelFormView.as_view(), name='item_model_edit'),
     url(r'^item/model/list/$', views.itemmodel_list, name='item_model_list'),
 
