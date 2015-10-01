@@ -117,10 +117,10 @@ def create_item_view(request, category, workflow_pk):
                 if name.strip():
                     item_model, created = ItemModel.objects.get_or_create(name=name, category=category)
                     item = Item.objects.create(item_model=item_model, workflow=workflow)
-                    item.save()
                     project = workflow.project
                     project.items.add(item_model)
-            return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
+            return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk,
+                                                                      'which_display': 'all'}))
         else:
             return HttpResponseForbidden('Informations form are incorrects')
     else:
