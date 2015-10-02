@@ -52,13 +52,7 @@ class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     model = Workflow
     form_class = WorkflowNewForm
     template_name = 'utils/workflow_generic_views_form.haml'
-
-    def dispatch(self, *args, **kwargs):
-        person = self.request.user.person
-        if person != team.leader:
-            return HttpResponseForbidden('You are not team leader')
-        return super(WorkflowFormView, self).dispatch(*args, **kwargs)
-
+    
 
 @login_required
 def workflow_show(request, workflow_pk, which_display):
