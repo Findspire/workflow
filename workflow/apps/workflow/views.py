@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # The MIT License (MIT)
 # Copyright (c) 2015 Findspire
+from __future__ import unicode_literals
+
 
 from collections import OrderedDict
 

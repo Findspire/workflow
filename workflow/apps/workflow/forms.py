@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # The MIT License (MIT)
 # Copyright (c) 2015 Findspire
+from __future__ import unicode_literals
 
 from django import forms
 from workflow.apps.workflow.models import Project, ItemModel, ItemCategory, Comment, Workflow
