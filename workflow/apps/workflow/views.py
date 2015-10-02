@@ -33,11 +33,6 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
     success_url = reverse_lazy('workflow:project_list')
     template_name = 'utils/workflow_generic_views_form.haml'
 
-    def dispatch(self, *args, **kwargs):
-        if not self.request.user.is_superuser:
-            raise PermissionDenied
-        return super(ProjectFormView, self).dispatch(*args, **kwargs)
-
     def form_valid(self, form):
         ret = super(ProjectFormView, self).form_valid(form)
         self.object.items = form.cleaned_data['items']
@@ -59,8 +54,9 @@ class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     template_name = 'utils/workflow_generic_views_form.haml'
 
     def dispatch(self, *args, **kwargs):
-        if not self.request.user.is_superuser: # todo or leader
-            raise PermissionDenied
+        person = self.request.user.person
+        if person != team.leader:
+            return HttpResponseForbidden('You are not team leader')
         return super(WorkflowFormView, self).dispatch(*args, **kwargs)
 
 
@@ -75,7 +71,7 @@ def workflow_show(request, workflow_pk, which_display):
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
     team = workflow.project.team
 
-    if (not request_person in team.members.all()) and (request_person != team.leader):
+    if request_person not in team.members.all():
         raise PermissionDenied
 
     # group by category
@@ -128,10 +124,6 @@ def create_item_view(request, category, workflow_pk):
 
 
 class ItemModelFormViewFromWorkflow(ItemModelFormView):
-    def dispatch(self, *args, **kwargs):
-        if not self.request.user.is_superuser: # todo or leader
-            raise PermissionDenied
-        return super(ItemModelFormViewFromWorkflow, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         ret = super(ItemModelFormViewFromWorkflow, self).form_valid(form)
@@ -171,7 +163,7 @@ def item_instance_show(request, item_pk):
     item = get_object_or_404(Item.objects.select_related(), pk=item_pk)
 
     team = item.workflow.project.team
-    if (not request.user.person in team.members.all()) and (request.user.person != team.leader):
+    if request.user.person not in team.members.all():
         raise PermissionDenied
 
     # default
