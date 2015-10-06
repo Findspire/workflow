@@ -8,7 +8,7 @@ from django import forms
 
 class MyCheckboxFieldRenderer(forms.widgets.CheckboxFieldRenderer):
     """Add the html label tag for further css and js styling"""
-    inner_html = '<li><label>{choice_value}</label>{sub_widgets}</li>'
+    inner_html = u'<li><label>{choice_value}</label>{sub_widgets}</li>'
 
 
 class MyCheckboxSelectMultiple(forms.widgets.CheckboxSelectMultiple):
@@ -25,8 +25,8 @@ class MyMultipleChoiceField(forms.MultipleChoiceField):
         choices = []
         for cat in category.objects.order_by('name'):
             queryset = obj.objects.filter(category=cat).order_by('name')
-            choices_tmp = [(c.pk, c.name) for c in queryset]
-            choices.append((cat.name, choices_tmp))
+            choices_tmp = [(c.pk, c.name.encode('utf-8')) for c in queryset]
+            choices.append((cat.name.encode('utf-8'), choices_tmp))
         return choices
 
     # Overriding __init__ in order to build a nested list of choices (sorted by categories)

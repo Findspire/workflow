@@ -30,3 +30,10 @@ def get_status(item):
         return 'untested'
     elif item.validation == Item.VALIDATION_FAILED:
         return 'failed'
+
+
+@register.filter
+def u(s):
+    if isinstance(s, unicode):
+        return s.encode('utf-8', errors='ignore')
+    return s

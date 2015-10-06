@@ -1,9 +1,11 @@
+- load workflow_tags
+
 %h1
     {{ title }}
 
 %form{action:"", method:"post"}
     - csrf_token
-    {{ form.as_p }}
+    {{ form.as_p | u }}
     %input{type:"submit", value:"Submit"}
 
 %script

@@ -1,6 +1,7 @@
 - extends "team/base.haml"
 
 - load i18n
+- load workflow_tags
 
 - block breadcrumbs
     - if not creating
@@ -28,6 +29,6 @@
 
     %form{action:"", method:"post"}
         - csrf_token
-        {{ user_form.as_p }}
-        {{ person_form.as_p }}
+        {{ user_form.as_p | u }}
+        {{ person_form.as_p | u }}
         %input{type:"submit", value:"{{ submit }}"}
