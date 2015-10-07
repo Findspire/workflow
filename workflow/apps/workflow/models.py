@@ -72,7 +72,7 @@ class Workflow(models.Model):
                 'failed': qs.filter(validation=Item.VALIDATION_FAILED),
                 'untaken': qs.filter(assigned_to=None),
                 'taken': qs.exclude(assigned_to=None),
-            }[which_display]  # OMG this is awesome !
+            }[which_display].extra(order_by=[Item._meta.pk.name])
         except KeyError:
             raise ValueError('Unexpected param "%s"' % which_display)
 
