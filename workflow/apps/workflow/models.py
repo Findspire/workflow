@@ -129,11 +129,14 @@ class Item(models.Model):
         self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
 
+    def last_comment(self):
+        return Comment.objects.filter(item=self).latest('date')
+
 
 class Comment(models.Model):
     item = models.ForeignKey(Item, verbose_name=_('Item'))
     person = models.ForeignKey(Person, verbose_name=_('Person'))
-    date = models.DateField(default=timezone.now, verbose_name=_('Date'))
+    date = models.DateTimeField(default=timezone.now, verbose_name=_('Date'))
     text = models.TextField(max_length=1000, verbose_name=_('Text'))
 
     def __unicode__(self):

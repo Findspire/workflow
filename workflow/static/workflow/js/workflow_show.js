@@ -6,6 +6,8 @@ $(document).ready(function() {
     $("#items .take_untake_category a").click(take_untake_category_onclick);
     $("#items .validate a").click(validate_item_onclick);
 
+    $("#items td").click(display_comment);
+
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);
 
@@ -248,5 +250,16 @@ function modal_form_submit_onclick() {
             console.log(jqXHR.responseText);            
         });
     return false;
+}
+
+function display_comment(event){
+    var target = $(event.target)
+    if(target.is("a")){
+        $.noop();
+    }
+    else{
+        var comment = $(this).parent().next(".comment");
+        (comment.css("display") == 'none') ? comment.fadeIn() : comment.fadeOut();
+    }
 }
 

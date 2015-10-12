@@ -25,7 +25,7 @@
         - for item in items_list
             %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}"}
                 %td.item
-                    %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"Label item"}
+                    %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.item_model.name}}"}
                         {{ item.item_model.name }}
 
                     - for url, ticket_id in item.item_model.name|get_tickets
@@ -36,9 +36,23 @@
                             \#{{ ticket_id }}
                         - if not forloop.last
                             \-
-
+                
                 %td.take_untake_item
                     - include "workflow/workflow_show.take_untake.part.haml"
 
                 %td.validate
                     - include "workflow/workflow_show.validate.part.haml"
+            %tr.comment
+                %td{"colspan" => "3"}
+                    - if item.last_comment
+                        %b
+                            {{ item.last_comment.person}} 
+                        [{{ item.last_comment.date|date:"d/m/Y H:i" }}]
+                        %br
+                        {{ item.last_comment }}
+                    - else
+                        %b
+                            No comment
+
+
+
