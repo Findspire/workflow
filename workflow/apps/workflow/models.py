@@ -60,9 +60,8 @@ class Workflow(models.Model):
     def get_items(self, which_display, person=None):
         qs = Item.objects \
             .filter(workflow=self, item_model__category__in=self.categories.all()) \
-            .order_by('item_model__category__name', 'item_model__name') \
+            .order_by('item_model__category__name', '-created_at') \
             .select_related('item_model__category', 'assigned_to__user')
-
         try:
             return {
                 'all': qs,
@@ -72,7 +71,7 @@ class Workflow(models.Model):
                 'failed': qs.filter(validation=Item.VALIDATION_FAILED),
                 'untaken': qs.filter(assigned_to=None),
                 'taken': qs.exclude(assigned_to=None),
-            }[which_display].extra(order_by=[Item._meta.pk.name])
+            }[which_display]
         except KeyError:
             raise ValueError('Unexpected param "%s"' % which_display)
 
@@ -118,13 +117,16 @@ class Item(models.Model):
         default=0,
         verbose_name=_('Validation'),
     )
-    last_modification = models.DateTimeField(null=True, editable=False)
+    updated_at = models.DateTimeField(null=True, editable=False)
+    created_at = models.DateTimeField(null=True, editable=False)
 
     def __unicode__(self):
         return '%s' % (self.item_model)
 
     def save(self, *args, **kwargs):
-        self.last_modification = timezone.now()
+        if self.created_at is None:
+            self.created_at = timezone.now()
+        self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
 
 
