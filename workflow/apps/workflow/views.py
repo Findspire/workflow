@@ -119,6 +119,13 @@ def create_item_view(request, category, workflow_pk):
         return render(request, 'utils/workflow_generic_views_form.haml', {'form': ItemCreateForm()})
 
 
+@login_required
+def delete_item_view(request, item_pk, workflow_pk):
+    item = get_object_or_404(Item.objects.select_related(), pk=item_pk)
+    item.delete()
+    return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
+
+
 class ItemModelFormViewFromWorkflow(ItemModelFormView):
 
     def form_valid(self, form):

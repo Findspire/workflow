@@ -254,10 +254,7 @@ function modal_form_submit_onclick() {
 
 function display_comment(event){
     var target = $(event.target)
-    if(target.is("a")){
-        $.noop();
-    }
-    else{
+    if(target.is("td")){
         var comment = $(this).parent().next(".comment");
         (comment.css("display") == 'none') ? comment.fadeIn() : comment.fadeOut();
     }

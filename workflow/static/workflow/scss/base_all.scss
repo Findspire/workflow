@@ -147,6 +147,13 @@ li label {
     td {
         padding: 2px;
     }
+    .close{
+        margin-right: 10px;
+        text-decoration: none !important;
+    }
+    .close:hover{
+        opacity: 0.6;
+    }
     .comment{
         display: none;
         text-align: center;
