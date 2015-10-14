@@ -121,7 +121,7 @@ def create_item_view(request, category, workflow_pk):
 
 @login_required
 def delete_item_view(request, item_pk, workflow_pk):
-    item = get_object_or_404(Item.objects.select_related(), pk=item_pk)
+    item = get_object_or_404(Item, pk=item_pk)
     item.delete()
     return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
 
@@ -304,3 +304,28 @@ def itemmodel_list(request):
         'object_list': {cat:ItemModel.objects.filter(category=cat) for cat in ItemCategory.objects.all()}
     }
     return render(request, 'workflow/itemmodel_list.haml', context)
+
+
+@login_required
+def item_up_or_down(request, workflow_pk, item_pk, action):
+    item = get_object_or_404(Item, pk=item_pk)
+    if item.position:
+        try:
+            item_related = {
+                'up': Item.objects.filter(position__lt=item.position, item_model__category=item.item_model.category,
+                                          workflow=item.workflow).order_by('position').last(),
+                'down': Item.objects.filter(position__gt=item.position, item_model__category=item.item_model.category,
+                                            workflow=item.workflow).order_by('position').first(),
+            }[action]
+        except KeyError:
+            raise Http404('Unexpected action "%s"' % action)
+        if item_related:
+            item.position, item_related.position = item_related.position, item.position
+            item_related.save()
+            item.save()
+            items_list = Item.objects.filter(position__gt=item.position, item_model__category=item.item_model.category).order_by('-position')
+            for items in items_list:
+                items.position += 1
+                items.save()
+    return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
+

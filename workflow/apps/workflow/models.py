@@ -29,6 +29,9 @@ class ItemCategory(models.Model):
     def __unicode__(self):
         return '%s' % (self.name)
 
+    def get_items(self):
+        return Item.objects.filter(item_model___category=self)
+
 
 class ItemModel(models.Model):
     name = models.CharField(max_length=128, verbose_name=_('Name'))
@@ -60,7 +63,7 @@ class Workflow(models.Model):
     def get_items(self, which_display, person=None):
         qs = Item.objects \
             .filter(workflow=self, item_model__category__in=self.categories.all()) \
-            .order_by('item_model__category__name', '-created_at') \
+            .order_by('item_model__category__name', 'position') \
             .select_related('item_model__category', 'assigned_to__user')
         try:
             return {
@@ -119,6 +122,7 @@ class Item(models.Model):
     )
     updated_at = models.DateTimeField(null=True, editable=False)
     created_at = models.DateTimeField(null=True, editable=False)
+    position = models.IntegerField(null=True, editable=False)
 
     def __unicode__(self):
         return '%s' % (self.item_model)
@@ -126,6 +130,9 @@ class Item(models.Model):
     def save(self, *args, **kwargs):
         if self.created_at is None:
             self.created_at = timezone.now()
+        if self.position is None:
+            last_item = Item.objects.filter(item_model__category=self.item_model.category).order_by('-position').first()
+            self.position = last_item.position + 1 if last_item.position else 1
         self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
 

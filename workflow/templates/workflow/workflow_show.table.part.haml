@@ -1,9 +1,8 @@
 - load static
 - load i18n
 - load workflow_tags
-
         %tr
-            %th
+            %th{:style => "width: 65%;"}
                 {{ category.name }}
                 %em{style: "font-weight:normal;"}
                     %a{href: "{% url 'workflow:item_model_add_to_workcat' workflow.pk category.pk %}"}
@@ -22,6 +21,8 @@
 
             %td.validate_category
 
+            %td.up_or_down
+
         - for item in items_list
             %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}"}
                 %td.item
@@ -29,7 +30,6 @@
                         %img{:src => "{% static 'workflow/img/untake.png'%}"}
                     %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.item_model.name}}"}
                         {{ item.item_model.name }}
-
                     - for url, ticket_id in item.item_model.name|get_tickets
                         - if forloop.counter == 1
                             %strong{style:"margin-left:20px;"}
@@ -44,6 +44,12 @@
 
                 %td.validate
                     - include "workflow/workflow_show.validate.part.haml"
+
+                %td.up_or_down
+                    %a{href:"{% url 'workflow:item_up_or_down' workflow.pk item.pk 'up' %}"} 
+                        %img{:src => "{% static 'workflow/img/arrowUp.png' %}", :style => "width: 10px; height: 10px;"}
+                    %a{href:"{% url 'workflow:item_up_or_down' workflow.pk item.pk 'down' %}"}
+                        %img{:src => "{% static 'workflow/img/arrowDown.png' %}", :style => "width: 10px; height: 10px;"}
             %tr.comment
                 %td{"colspan" => "3"}
                     - if item.last_comment

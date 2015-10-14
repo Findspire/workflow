@@ -195,6 +195,15 @@ li label {
             text-decoration: underline;
         }
     }
+    .up_or_down{
+        border-bottom: none;
+        float: right;
+        margin: 5px 10px 0 0;
+
+        a:hover{
+            opacity: 0.6;
+        }
+    }
 }
 
 .item, .take_untake_item, .take_untake_category, .validate {
