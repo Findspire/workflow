@@ -7,7 +7,7 @@ $(document).ready(function() {
     $("#items .validate a").click(validate_item_onclick);
 
     $("#items td").click(display_comment)
-    $("#items .highlight, #items .odd_line").hover(display_up_or_down);
+    $("#items .highlight, #items .odd_line").hover(display_on_hover);
 
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);
@@ -260,10 +260,10 @@ function display_comment(event){
     }
 }
 
-function display_up_or_down(){
-    target_arrow = $(this).find('.up_or_down a');
-    target_date = $(this).find('.last_modification');
-    (target_date.css("display") == "none") ? target_date.show() : target_date.hide();
-    (target_arrow.css("display") == "none") ? target_arrow.show() : target_arrow.hide();
+function display_on_hover(){
+    var target_arrow = $(this).find('.up_or_down a');
+    var target_date = $(this).find('.last_modification');
+    (target_date.css("opacity") == 0) ? target_date.css("opacity", 1) : target_date.css("opacity", 0);
+    (target_arrow.css("opacity") == 0) ? target_arrow.css("opacity", 1) : target_arrow.css("opacity", 0);
 }
 
