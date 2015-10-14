@@ -24,7 +24,7 @@
             %td.up_or_down
 
         - for item in items_list
-            %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}"}
+            %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", :style => "padding-top: 50%;"}
                 %td.item
                     %a.close{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
                         %img{:src => "{% static 'workflow/img/untake.png'%}"}
