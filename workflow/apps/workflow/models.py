@@ -131,8 +131,9 @@ class Item(models.Model):
         if self.created_at is None:
             self.created_at = timezone.now()
         if self.position is None:
-            last_item = Item.objects.filter(item_model__category=self.item_model.category).order_by('-position').first()
-            self.position = last_item.position + 1 if last_item.position else 1
+            last_item = Item.objects.filter(item_model__category=self.item_model.category,
+                                            workflow=self.workflow).order_by('-position').first()
+            self.position = last_item.position + 1 if last_item else 1
         self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
 
