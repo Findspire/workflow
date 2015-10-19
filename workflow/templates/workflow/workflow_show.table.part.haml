@@ -26,8 +26,6 @@
         - for item in items_list
             %tr{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", :style => "padding-top: 50%;"}
                 %td.item
-                    %a.close{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
-                        %img{:src => "{% static 'workflow/img/untake.png'%}"}
                     %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.item_model.name}}"}
                         {{ item.item_model.name }}
                     - for url, ticket_id in item.item_model.name|get_tickets
@@ -50,6 +48,10 @@
 
                 %td.validate
                     - include "workflow/workflow_show.validate.part.haml"
+
+                %td
+                    %a.close{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
+                        %img{:src => "{% static 'workflow/img/untake.png'%}"}
             %tr.comment
                 %td{"colspan" => "3"}
                     - if item.last_comment

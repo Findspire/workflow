@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);
+
     $("#modal_background").click(modal_hide);
 
     update_counters_html();
@@ -261,9 +262,12 @@ function display_comment(event){
 }
 
 function display_on_hover(){
-    var target_arrow = $(this).find('.up_or_down a');
-    var target_date = $(this).find('.last_modification');
-    (target_date.css("opacity") == 0) ? target_date.css("opacity", 1) : target_date.css("opacity", 0);
-    (target_arrow.css("opacity") == 0) ? target_arrow.css("opacity", 1) : target_arrow.css("opacity", 0);
+    var target = {
+        'arrow': $(this).find('.up_or_down a'),
+        'date': $(this).find('.last_modification'),
+        'close': $(this).find('.close')
+    }
+    for(element in target){
+        (target[element].css("opacity") == 0) ? target[element].css("opacity", 1) : target[element].css("opacity", 0);
+    }
 }
-

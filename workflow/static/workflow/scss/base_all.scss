@@ -178,7 +178,8 @@ li label {
 
     }
     .close{
-        margin-right: 10px;
+        margin-right: 20px;
+        opacity: 0;
         text-decoration: none !important;
     }
     .close:hover{
@@ -214,6 +215,7 @@ li label {
 
     .item {
         padding-left: 20px;
+        width: 75%;
     }
 
     .item:hover {

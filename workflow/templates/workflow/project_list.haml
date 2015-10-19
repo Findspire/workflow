@@ -2,6 +2,7 @@
 
 - load i18n
 - load workflow_tags
+- load static
 
 - block breadcrumbs
     {% trans "Projects list" %}
@@ -29,6 +30,8 @@
                                     {% trans 'Success / Untested / Failed' %}
                                 %th
                                     {% trans 'Creation date' %}
+                                %th
+
                             - for workflow in workflows
                                 %tr
                                     %td{:style => "width: 60%"}
@@ -43,12 +46,16 @@
                                         \/
                                         %span.untested
                                             {{ workflow|get_count:'untested' }}
-                                                                                
+
                                         \/
                                         %span.failed
                                             {{ workflow|get_count:'failed' }}
                                     %td
                                         {{ workflow.creation_date|date:"d/m/Y" }}
+
+                                    %td
+                                        %a.close_workflo{:href => "{% url 'workflow:workflow_delete' workflow.pk %}"}
+                                            %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
                 - else
                     %p
                         %em
