@@ -54,7 +54,17 @@ class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     model = Workflow
     form_class = WorkflowNewForm
     template_name = 'utils/workflow_generic_views_form.haml'
-    
+
+
+@login_required
+def workflow_delete(request, workflow_pk):
+    workflow = get_object_or_404(Workflow, pk=workflow_pk)
+    if request.user.person in workflow.project.team.members.all():
+        workflow.delete()
+    else:
+        return HttpResponseForbidden(_('You are not in %s team' % workflow.project.team))
+    return redirect('workflow:project_list')
+
 
 @login_required
 def workflow_show(request, workflow_pk, which_display):

@@ -18,6 +18,7 @@ urlpatterns = patterns('workflow.apps.workflow',
     url(r'^workflow/new/(?P<project>\d+)/$', views.WorkflowFormView.as_view(), name='workflow_new'),
     url(r'^workflow/edit/(?P<pk>\d+)/$', views.WorkflowFormView.as_view(), name='workflow_edit'),
     url(r'^workflow/show/(?P<workflow_pk>\d+)/(?P<which_display>\w+)/$', views.workflow_show, name='workflow_show'),
+    url(r'^workflow/(?P<workflow_pk>\d+)/delete/$', views.workflow_delete, name='workflow_delete'),
 
     url(r'^item/model/new/$', views.ItemModelFormView.as_view(), name='item_model_new'),
     url(r'^item/model/new/category/(?P<category>\d+)$', views.ItemModelFormView.as_view(), name='item_model_new'),
