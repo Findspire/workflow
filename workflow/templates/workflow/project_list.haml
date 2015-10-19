@@ -19,15 +19,36 @@
                     (<a href="{% url 'workflow:workflow_new' project.pk %}">New workflow</a>)
 
                 - if workflows
-                    %ul
-                        - for workflow in workflows
-                            %li
-                                %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
-                                    {{ workflow.version }}
-                                \-
-                                Complete {{ workflow.success_percent }}% ({{ workflow|get_count:'failed' }} failed - {{ workflow|get_count:'untested' }} untested)
-                                \-
-                                Started on {{ workflow.creation_date }}
+                        %table.workflow_list{:style => "width: 100%"}
+                            %tr
+                                %th
+                                    {% trans 'Workflow version' %}
+                                %th
+                                    {% trans 'Success percent' %}
+                                %th
+                                    {% trans 'Success / Untested / Failed' %}
+                                %th
+                                    {% trans 'Creation date' %}
+                            - for workflow in workflows
+                                %tr
+                                    %td{:style => "width: 60%"}
+                                        %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
+                                            {{ workflow.version }}
+                                    %td
+                                        %span.success
+                                            {{ workflow.success_percent }}% 
+                                    %td
+                                        %span.success
+                                            {{ workflow|get_count:'success'}}
+                                        \/
+                                        %span.untested
+                                            {{ workflow|get_count:'untested' }}
+                                                                                
+                                        \/
+                                        %span.failed
+                                            {{ workflow|get_count:'failed' }}
+                                    %td
+                                        {{ workflow.creation_date|date:"d/m/Y" }}
                 - else
                     %p
                         %em

@@ -3,6 +3,10 @@
     Global
 */
 
+$success_color: #5ac200;
+$failed_color: #ff0f13;
+$untested_color: #828282;
+
 #warning_js
 {
     padding: 10px;
@@ -61,6 +65,31 @@ li label {
 /*
     Workflow detail
 */
+.success{
+    color: $success_color;
+}
+.failed{
+    color: $failed_color;
+}
+.untested{
+    color: $untested_color;
+}
+
+.workflow_list{
+    tr{
+        td{
+            text-align: center;
+            &:first-child{
+                text-align: left;
+            }
+        }
+        th{
+            @extend td;
+            font-size: 10px;
+
+        }
+    }
+}
 
 #progressbar
 {
@@ -203,7 +232,7 @@ li label {
         float: right;
         margin: 5px 10px 0 0;
         a{
-            display: none;
+            opacity: 0;
             margin-left: 5px;
         }
         a:hover{
@@ -228,7 +257,7 @@ li label {
     }
     .last_modification{
         color: #6b6b6b;
-        display: none;
+        opacity: 0;
         font-size: 0.4em;
     }
 }
