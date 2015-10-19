@@ -228,15 +228,13 @@ li label {
         }
     }
     .up_or_down{
-        border-bottom: none;
-        float: right;
-        margin: 5px 10px 0 0;
+        text-align: center;
         a{
             opacity: 0;
-            margin-left: 5px;
         }
-        a:hover{
-            opacity: 0.6;
+        a:nth-child(2){
+            @extend a;
+            margin-left: 5px; 
         }
     }
 }
@@ -251,6 +249,7 @@ li label {
 .validate {
     font-size: 150%;
     font-weight: bold;
+    min-width: 100px;
 
     a {
         color: #babdb6;

@@ -42,14 +42,14 @@
                 %td.take_untake_item
                     - include "workflow/workflow_show.take_untake.part.haml"
 
-                %td.validate
-                    - include "workflow/workflow_show.validate.part.haml"
-
                 %td.up_or_down
                     %a{href:"{% url 'workflow:item_up_or_down' workflow.pk item.pk 'up' %}"} 
                         %img{:src => "{% static 'workflow/img/arrowUp.png' %}", :style => "width: 10px; height: 10px;"}
                     %a{href:"{% url 'workflow:item_up_or_down' workflow.pk item.pk 'down' %}"}
                         %img{:src => "{% static 'workflow/img/arrowDown.png' %}", :style => "width: 10px; height: 10px;"}
+
+                %td.validate
+                    - include "workflow/workflow_show.validate.part.haml"
             %tr.comment
                 %td{"colspan" => "3"}
                     - if item.last_comment
