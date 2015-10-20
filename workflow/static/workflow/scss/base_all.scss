@@ -76,12 +76,16 @@ li label {
 }
 
 
-.workflow_controls{
+.controls{
     font-size: 12px;
     font-weight: 300;
 }
 .workflow_list{
     tr{
+        &:nth-child(even){
+            background-color: #fafafa;
+        }
+
         td{
             text-align: center;
             &:first-child{
@@ -136,6 +140,72 @@ li label {
         }
     }
 }
+
+#items{
+    table{
+        width: 100%;
+        margin-bottom: 25px;
+        tr{
+            th{
+                font-weight: bold;
+                font-size: 10px;
+                text-decoration: none;
+                &:nth-child(1){
+                    font-size: 13px;
+                    text-align: left;
+                }
+            }
+            td{
+                vertical-align: middle;
+                &:not(:nth-child(1)){
+                    text-align: center;
+                } 
+            }
+        }
+        .odd_line{
+            background-color: #fafafa;
+        }
+        .item_list{
+            .take_untake_item{
+                width: 110px;
+            }
+            .up_or_down{
+                text-align: center;
+                width: 100px;
+                a:nth-child(2){
+                    @extend a;
+                    margin-left: 5px; 
+                } 
+            }
+            .validate{
+                text-align: center;
+                width: 100px;
+                .last_modification{
+                    color: #6b6b6b;
+                    font-size: 0.4em;
+                }
+            }
+            .up_or_down, .close, .last_modification{
+                opacity: 0;
+            }
+            &:hover{
+                .up_or_down, .close, .last_modification{
+                    opacity: 1;
+                    a:hover{
+                        opacity: 0.6;
+                    }
+                    &:hover{
+                        opacity: 0.6;
+                    }
+                }
+            }
+        }
+        .comment{
+            display: none;
+            text-align: center;
+        }
+    }
+}  
 
 #progressbar
 {
@@ -209,91 +279,6 @@ li label {
     }
 }
 
-#items table {
-    text-decoration: bold;
-    border-top: 1px solid gray;
-    margin-bottom: 20px;
-    width: 100%;
-    th {
-        text-align: left;
-    }
-
-    td {
-        padding: 2px;
-        vertical-align: middle;
-
-    }
-    .close{
-        margin-right: 20px;
-        opacity: 0;
-        text-decoration: none !important;
-    }
-    .close:hover{
-        opacity: 0.6;
-    }
-    .comment{
-        display: none;
-        text-align: center;
-    }
-
-    .take_untake_category {
-        width: 20%;
-    }
-
-    .validate_category {
-        width: 10%;
-    }
-    .highlight, .odd_line{
-        height: 30px;
-    }
-    .odd_line {
-        background-color: #ddd;
-        padding-left: 50px;
-    }
-
-    .highlight:hover {
-        background: #CDF;
-    }
-
-    .take_untake_category, .take_untake_item, .validate {
-        text-align: center;
-    }
-
-    .item {
-        padding-left: 20px;
-        width: 75%;
-    }
-
-    .item:hover {
-        a {
-            text-decoration: underline;
-        }
-        .urls {
-            text-decoration: none;
-        }
-        .urls:hover {
-            text-decoration: underline;
-        }
-    }
-    .up_or_down{
-        text-align: center;
-        a{
-            opacity: 0;
-        }
-        a:nth-child(2){
-            @extend a;
-            margin-left: 5px; 
-        }
-    }
-}
-
-.item, .take_untake_item, .take_untake_category, .validate {
-    a {
-        color: black;
-        text-decoration: none;
-    }
-}
-
 .validate {
     font-size: 150%;
     font-weight: bold;
@@ -301,11 +286,6 @@ li label {
 
     a {
         color: #babdb6;
-    }
-    .last_modification{
-        color: #6b6b6b;
-        opacity: 0;
-        font-size: 0.4em;
     }
 }
 

@@ -7,7 +7,6 @@ $(document).ready(function() {
     $("#items .validate a").click(validate_item_onclick);
 
     $("#items td").click(display_comment)
-    $("#items .highlight, #items .odd_line").hover(display_on_hover);
 
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);

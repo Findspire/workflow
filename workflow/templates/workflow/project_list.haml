@@ -16,7 +16,7 @@
             %li
                 %h2
                     {{ project }}
-                    %span.workflow_controls
+                    %span.controls
                         %a{:href => "{% url 'workflow:project_edit' project.pk %}"}
                             {% trans 'Edit' %}
                         \/
