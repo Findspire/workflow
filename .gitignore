@@ -2,7 +2,6 @@
 *.pyc
 *.mo
 workflow/.sass-cache/
-workflow/static/workflow/css/
 
 # Dev
 workflow.db
