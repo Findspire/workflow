@@ -259,14 +259,3 @@ function display_comment(event){
         (comment.css("display") == 'none') ? comment.fadeIn() : comment.fadeOut();
     }
 }
-
-function display_on_hover(){
-    var target = {
-        'arrow': $(this).find('.up_or_down a'),
-        'date': $(this).find('.last_modification'),
-        'close': $(this).find('.close')
-    }
-    for(element in target){
-        (target[element].css("opacity") == 0) ? target[element].css("opacity", 1) : target[element].css("opacity", 0);
-    }
-}
