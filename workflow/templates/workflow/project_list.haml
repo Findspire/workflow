@@ -16,8 +16,12 @@
             %li
                 %h2
                     {{ project }}
-                    (<a href="{% url 'workflow:project_edit' project.pk %}">Edit</a>)
-                    (<a href="{% url 'workflow:workflow_new' project.pk %}">New workflow</a>)
+                    %span.workflow_controls
+                        %a{:href => "{% url 'workflow:project_edit' project.pk %}"}
+                            {% trans 'Edit' %}
+                        \/
+                        %a{:href => "{% url 'workflow:workflow_new' project.pk %}"}
+                            {% trans 'New workflow' %}
 
                 - if workflows
                         %table.workflow_list{:style => "width: 100%"}

@@ -75,6 +75,11 @@ li label {
     color: $untested_color;
 }
 
+
+.workflow_controls{
+    font-size: 12px;
+    font-weight: 300;
+}
 .workflow_list{
     tr{
         td{
@@ -93,6 +98,13 @@ li label {
         }
     }
     .item{
+        a{
+            transition: all 200ms ease-in-out;
+            color: #5b80b2;
+            &:hover{
+                opacity: 0.6;
+            }
+        }
         &:hover{
             background-color: #f7f7f7;
             .close{
