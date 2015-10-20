@@ -136,6 +136,14 @@ def delete_item_view(request, item_pk, workflow_pk):
     return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
 
 
+@login_required
+def delete_comment_view(request, comment_pk, workflow_pk):
+    print(comment_pk)
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    comment.delete()
+    return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
+
+
 class ItemModelFormViewFromWorkflow(ItemModelFormView):
 
     def form_valid(self, form):

@@ -84,6 +84,8 @@
                     %a{href: "#{{ forloop.counter }}", name: "{{ forloop.counter }}", title: "Comment anchor - {{ forloop.counter }}"}
                         \#{{ forloop.counter }}
                     \- {{ comment.date }} - {{ comment.person }}
+                    %a{:href => "{% url 'workflow:delete_comment_view' comment.item.workflow.pk comment.pk %}"}
+                        %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
                 %p
                     {{ comment }}
                 %hr
