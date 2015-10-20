@@ -88,6 +88,40 @@ li label {
             font-size: 10px;
 
         }
+        .close{
+            opacity: 0;
+        }
+    }
+    .item{
+        &:hover{
+            background-color: #f7f7f7;
+            .close{
+                opacity: 1;
+                transition: all 200ms ease-in-out;
+                &:hover{
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
+    .progress_bar{
+        background-color: #ebebeb;
+        border-radius: 2px;
+        font-size: 9px;
+        height: 12px;
+        position: relative;
+        width: 100px;
+        p{
+            left: 44%;
+            position: absolute;
+        }
+        .success{
+            background-color: #16f831;
+            border-radius: 2px;
+            color: #000;
+            float: left;
+            height: 12px;
+        }
     }
 }
 

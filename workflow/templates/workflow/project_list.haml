@@ -33,13 +33,15 @@
                                 %th
 
                             - for workflow in workflows
-                                %tr
+                                %tr.item
                                     %td{:style => "width: 60%"}
                                         %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
                                             {{ workflow.version }}
                                     %td
-                                        %span.success
-                                            {{ workflow.success_percent }}% 
+                                        .progress_bar
+                                            %span.success{:style => "width:{{ workflow.success_percent }}%;"}
+                                            %p
+                                                {{ workflow.success_percent }}% 
                                     %td
                                         %span.success
                                             {{ workflow|get_count:'success'}}
@@ -55,7 +57,7 @@
 
                                     %td
                                         - if request.user.person in workflow.project.team.members.all
-                                            %a{:href => "{% url 'workflow:workflow_delete' workflow.pk %}"}
+                                            %a.close{:href => "{% url 'workflow:workflow_delete' workflow.pk %}"}
                                                 %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
                 - else
                     %p
