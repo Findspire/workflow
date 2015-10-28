@@ -13,6 +13,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponseRedirect, Http404
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -22,6 +23,7 @@ from braces.views import LoginRequiredMixin
 from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
 from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm, WorkflowNewForm, ItemCreateForm
+from workflow.apps.workflow.models import update_item_position
 
 
 @login_required
@@ -325,25 +327,14 @@ def itemmodel_list(request):
 
 
 @login_required
-def item_up_or_down(request, workflow_pk, item_pk, action):
+@csrf_exempt
+def drag_item(request, item_pk, related_pk=None):
     item = get_object_or_404(Item, pk=item_pk)
-    if item.position:
-        try:
-            item_related = {
-                'up': Item.objects.filter(position__lt=item.position, item_model__category=item.item_model.category,
-                                          workflow=item.workflow).order_by('position').last(),
-                'down': Item.objects.filter(position__gt=item.position, item_model__category=item.item_model.category,
-                                            workflow=item.workflow).order_by('position').first(),
-            }[action]
-        except KeyError:
-            raise Http404('Unexpected action "%s"' % action)
-        if item_related:
-            item.position, item_related.position = item_related.position, item.position
-            item_related.save()
-            item.save()
-            items_list = Item.objects.filter(position__gt=item.position, item_model__category=item.item_model.category).order_by('-position')
-            for items in items_list:
-                items.position += 1
-                items.save()
-    return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
+    if related_pk is not None:
+        related_item = Item.objects.get(pk=related_pk)
+        update_item_position(item, related_item)
+    else:
+        update_item_position(item)
+    return redirect(reverse('workflow:workflow_show', 
+                            kwargs={'workflow_pk': item.workflow.pk, 'which_display': 'all'}))
 

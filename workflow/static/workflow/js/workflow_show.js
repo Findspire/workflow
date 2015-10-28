@@ -5,17 +5,41 @@ $(document).ready(function() {
     $("#items .take_untake_item a").click(take_untake_item_onclick);
     $("#items .take_untake_category a").click(take_untake_category_onclick);
     $("#items .validate a").click(validate_item_onclick);
-
-    $("#items td").click(display_comment)
-
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);
 
+    $("table #sortable").each(function(){
+        $(this).sortable({
+            items: '.item_list',
+            stop: onDragStop,
+        }).disableSelection();
+    });
+    $(".tooltip").tooltip({
+        position: { my: "left+15 center", at: "right center" }
+    });
     $("#modal_background").click(modal_hide);
 
     update_counters_html();
 });
 
+
+function onDragStop(event, ui){
+    var item = $(ui.item).data("itemPk");
+    var related = $(ui.item).next().data("itemPk");
+    setItemPosition(related, item);
+}
+
+function setItemPosition(afterId, taskId){
+    if(afterId){
+        var url = "/workflow/drag-item/" + taskId + "/" + afterId + "/";
+    }else{
+        var url = "/workflow/drag-item/" + taskId + "/";  
+    }
+    var dfd = $.post(url);
+    dfd.fail(function(jqXHR, textStatus){
+        console.log(textStatus);
+    });
+}     
 
 
 function send_request($elem){
@@ -250,12 +274,4 @@ function modal_form_submit_onclick() {
             console.log(jqXHR.responseText);            
         });
     return false;
-}
-
-function display_comment(event){
-    var target = $(event.target)
-    if(target.is("td")){
-        var comment = $(this).parent().next(".comment");
-        (comment.css("display") == 'none') ? comment.fadeIn() : comment.fadeOut();
-    }
 }

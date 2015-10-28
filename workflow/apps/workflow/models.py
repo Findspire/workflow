@@ -17,8 +17,10 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import F
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy  as _
+
 
 from workflow.apps.team.models import Person, Team
 
@@ -63,7 +65,7 @@ class Workflow(models.Model):
     def get_items(self, which_display, person=None):
         qs = Item.objects \
             .filter(workflow=self, item_model__category__in=self.categories.all()) \
-            .order_by('item_model__category__name', 'position') \
+            .order_by('position') \
             .select_related('item_model__category', 'assigned_to__user')
         try:
             return {
@@ -101,6 +103,23 @@ class Workflow(models.Model):
                 Item.objects.create(item_model=item, workflow=self)
 
 
+def update_item_position(item, related_item=None):
+    if related_item is not None:
+        item.position = related_item.position
+        Item.objects.filter(
+                workflow=related_item.workflow, 
+                item_model__category=related_item.item_model.category, 
+                position__gte=related_item.position)\
+            .update(position=F('position') + 1)
+    else:
+        related_item = Item.objects.filter(workflow=item.workflow,
+                                           item_model__category=item.item_model.category)\
+                                    .order_by('position')\
+                                    .last()
+        item.position = related_item.position + 1 if related_item else 0
+    item.save()
+
+
 class Item(models.Model):
     VALIDATION_UNTESTED = 0
     VALIDATION_SUCCESS = 1
@@ -131,9 +150,8 @@ class Item(models.Model):
         if self.created_at is None:
             self.created_at = timezone.now()
         if self.position is None:
-            last_item = Item.objects.filter(item_model__category=self.item_model.category,
-                                            workflow=self.workflow).order_by('-position').first()
-            self.position = last_item.position + 1 if last_item else 1
+            last_item = Item.objects.filter(workflow=self.workflow).order_by('position').last()
+            self.position = last_item.position + 1 if last_item else 0
         self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
 

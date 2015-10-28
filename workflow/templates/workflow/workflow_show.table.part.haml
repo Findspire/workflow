@@ -1,68 +1,59 @@
 - load static
 - load i18n
 - load workflow_tags
-        %tr
-            %th{:style => "width: 65%;"}
-                {{ category.name }}
-                %a.controls{href: "{% url 'workflow:item_model_add_to_workcat' workflow.pk category.pk %}"}
-                    {% trans "Add an item" %}
+    %table
+        %thead
+            %tr.category
+                %th{:style => "width: 65%;"}
+                    {{ category.name }}
+                    %a.controls{href: "{% url 'workflow:item_model_add_to_workcat' workflow.pk category.pk %}"}
+                        {% trans "Add an item" %}
 
-            %th.take_untake_category
-                %span{class: "take"}
-                    %a{href:"{% url 'workflow:update' which_display 'take' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Take all items of the category"}
-                        {% trans "Take all" %}
-                \/
-                %span{class: "untake"}
-                    %a{href:"{% url 'workflow:update' which_display 'untake' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Untake all items of the category"}
-                        {% trans "Untake all" %}
-                %span{class: "show", id: "take_untake_category_{{ category.pk }}_show"}
-                    %a{href:"{% url 'workflow:update' which_display 'show' 'category' category.pk workflow.pk %}?next={{ request.path }}"}
+                %th.take_untake_category{:style => "width: 120px;"}
+                    %span{class: "take"}
+                        %a{href:"{% url 'workflow:update' which_display 'take' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Take all items of the category"}
+                            {% trans "Take all" %}
+                    \/
+                    %span{class: "untake"}
+                        %a{href:"{% url 'workflow:update' which_display 'untake' 'category' category.pk workflow.pk %}?next={{ request.path }}", title:"Untake all items of the category"}
+                            {% trans "Untake all" %}
+                    %span{class: "show", id: "take_untake_category_{{ category.pk }}_show"}
+                        %a{href:"{% url 'workflow:update' which_display 'show' 'category' category.pk workflow.pk %}?next={{ request.path }}"}
 
-            %th
+                %th
 
-            %th
-            
-            %th
-        - for item in items_list
-            %tr.item_list{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", :style => "padding-top: 50%;"}
-                %td.item
-                    %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.item_model.name}}"}
-                        {{ item.item_model.name }}
-                    - for url, ticket_id in item.item_model.name|get_tickets
-                        - if forloop.counter == 1
-                            %strong{style:"margin-left:20px;"}
-                                {% trans "Tickets:" %}
-                        %a.urls{href:"{{ url }}", alt:"Ticket #{{ ticket_id }}"}
-                            \#{{ ticket_id }}
-                        - if not forloop.last
-                            \-
+                %th
                 
-                %td.take_untake_item
-                    - include "workflow/workflow_show.take_untake.part.haml"
+                %th
+        %tbody#sortable
+            - for item in items_list
+                %tr.item_list{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", "data-url" => "{% url 'workflow:drag_item' item.pk %}", "data-item-pk" => "{{ item.pk }}"}
+                    %td.item
+                        %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.item_model.name}}"}
+                            {{ item.item_model.name }}
+                        - for url, ticket_id in item.item_model.name|get_tickets
+                            - if forloop.counter == 1
+                                %strong{style:"margin-left:20px;"}
+                                    {% trans "Tickets:" %}
+                            %a.urls{href:"{{ url }}", alt:"Ticket #{{ ticket_id }}"}
+                                \#{{ ticket_id }}
+                            - if not forloop.last
+                                \-
+                    
+                    %td.take_untake_item
+                        - include "workflow/workflow_show.take_untake.part.haml"
 
-                %td.up_or_down
-                    %a{href:"{% url 'workflow:item_up_or_down' workflow.pk item.pk 'up' %}"} 
-                        %img{:src => "{% static 'workflow/img/arrowUp.png' %}", :style => "width: 10px; height: 10px;"}
-                    %a{href:"{% url 'workflow:item_up_or_down' workflow.pk item.pk 'down' %}"}
-                        %img{:src => "{% static 'workflow/img/arrowDown.png' %}", :style => "width: 10px; height: 10px;"}
+                    %td{:style => "width: 72px"}
+                        - if item.last_comment
+                            %a.tooltip{:href => "#", "title" => "{{ item.last_comment }}"}
+                                %img{:src => "{% static 'workflow/img/comment.png' %}", :alt => ""}/
+                    %td.validate
+                        - include "workflow/workflow_show.validate.part.haml"
 
-                %td.validate
-                    - include "workflow/workflow_show.validate.part.haml"
-
-                %td.close
-                    %a{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
-                        %img{:src => "{% static 'workflow/img/untake.png'%}"}
-            %tr.comment
-                %td{"colspan" => "5"}
-                    - if item.last_comment
-                        %b
-                            {{ item.last_comment.person}} 
-                        [{{ item.last_comment.date|date:"d/m/Y H:i" }}]
-                        %br
-                        {{ item.last_comment }}
-                    - else
-                        %b
-                            No comment
+                    %td
+                        %a.close{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
+                            %img{:src => "{% static 'workflow/img/untake.png'%}"}
+                            
 
 
 
