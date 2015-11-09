@@ -4,8 +4,10 @@
 */
 
 $success_color: #5ac200;
+$warning_color: #ffd738;
 $failed_color: #ff0f13;
 $untested_color: #828282;
+$findspire_color: #00b6e5;
 
 #warning_js
 {
@@ -26,6 +28,36 @@ label {
 
 li label {
     display: initial;
+}
+// LOGIN PAGE
+.login{
+    position: relative;
+    text-align: center;
+    button{
+        background-color: $findspire_color; 
+        border: 1px solid $findspire_color;
+        color: #fff;
+        margin-top: 15px;
+        padding: 5px;
+        transition: all 200ms ease-in-out;
+        &:hover{
+            background-color: #fff;
+            color: #00b6e5;
+            cursor: pointer;
+        }
+    }
+    .messages{
+        margin-top: 30px;
+        li{
+            list-style-type: none;
+        }
+        .warning{
+            color: $warning_color;
+        }
+        .error{
+            color: $failed_color;
+        }
+    }
 }
 
 #modal_background {

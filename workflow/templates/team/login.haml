@@ -1,0 +1,32 @@
+- extends "base.haml"
+- load i18n
+
+- block breadcrumbs
+    - if not creating
+        %a{href: "{% url 'team:login' %}"}
+            {% trans "Login" %}
+    - else
+        {% trans "Login" %}
+
+- block content
+    .login
+        %h2
+            Login
+        %form{:action => "/team/login/", :method => "post"}
+            - csrf_token
+            %label{:for => "username"}
+                {% trans 'Username' %}
+            %input{:type => "text", :name => "username", :required => "true"}/
+            %label{:for => "password"}
+                {% trans 'Password' %}
+            %input{:type => "password", :name => "password", :required => "true"}/
+            %br/
+            %button{:type => "submit"}
+                {% trans 'Connection' %}
+        
+        .messages
+            - if messages
+                - for message in messages
+                    %li{:class => "{{ message.tags }}"}
+                        {{ message }}
+                    

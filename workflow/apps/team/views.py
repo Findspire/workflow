@@ -10,9 +10,13 @@ from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib import messages
 from django.forms.models import model_to_dict, modelformset_factory
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext  as _
 from django.views.generic.list import ListView
 
@@ -197,3 +201,29 @@ class TeamListView(LoginRequiredMixin, ListView):
         if not self.request.user.is_superuser:
             raise PermissionDenied
         return super(TeamListView, self).dispatch(*args, **kwargs)
+
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                auth_login(request, user)
+                return redirect('workflow:project_list')
+            else:
+                messages.add_message(request, messages.WARNING, _('Your account has been disabled'))
+                return render(request, 'team/login.haml')
+        else:
+            messages.add_message(request, messages.ERROR, _('Account %s does not exist or incorrect password'
+                                                            % username))
+            return render(request, 'team/login.haml')
+    else:
+        return render(request, 'team/login.haml')
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('team:login')
