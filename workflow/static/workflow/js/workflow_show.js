@@ -7,6 +7,8 @@ $(document).ready(function() {
     $("#items .validate a").click(validate_item_onclick);
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);
+    $("a[data-target='pop-up']").click(popupShow);
+    $(".pop-up .close").click(popupClose);  
 
     $("table #sortable").each(function(){
         $(this).sortable({
@@ -22,6 +24,32 @@ $(document).ready(function() {
     update_counters_html();
 });
 
+function popupData(popup){
+    $.getJSON($(popup).data('url'), function(data){
+        $.each(data, function(key, val){
+            $(popup).find('ul').append('<li class="title"><b>'+ val.fields.person + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.fields.date))  + '</b></li>');
+            $(popup).find('ul').append('<li class="text">'+ val.fields.text + '</li>');         
+        });
+    });
+}
+
+function popupShow(){
+    var element = $(this).next();
+    if($(element).hasClass('active')){
+        $(element).removeClass('active');
+        $.each($(element).find('li'), function(){
+            $(this).remove();
+        })
+    }
+    else{
+        $(this).next().addClass('active');
+        popupData($(this).next());
+    }
+}
+
+function popupClose(){
+    $(this).closest('.pop-up').removeClass('active');
+}
 
 function onDragStop(event, ui){
     var item = $(ui.item).data("itemPk");

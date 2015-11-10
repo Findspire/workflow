@@ -43,6 +43,9 @@ class Person(models.Model):
     def __unicode__(self):
         return '%s' % (self.user)
 
+    def natural_key(self):
+        return (self.user.username)
+
 
 class Team(models.Model):
     name = models.CharField(max_length=64, verbose_name=_('Name'))

@@ -44,9 +44,14 @@
                         - include "workflow/workflow_show.take_untake.part.haml"
 
                     %td{:style => "width: 72px"}
-                        - if item.last_comment
-                            %a.tooltip{:href => "#", "title" => "{{ item.last_comment }}"}
+                        - if item.comments.count
+                            %a.comment{:href => "", "data-target" => "pop-up"}
                                 %img{:src => "{% static 'workflow/img/comment.png' %}", :alt => ""}/
+                            %div.pop-up{"data-url" => "{% url 'workflow:get_item_comments' item.pk %}"}
+                                %span.close
+                                    %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
+                                %ul
+                                
                     %td.validate
                         - include "workflow/workflow_show.validate.part.haml"
 

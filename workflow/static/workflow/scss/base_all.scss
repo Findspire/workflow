@@ -29,6 +29,11 @@ label {
 li label {
     display: initial;
 }
+.close{
+    &:hover{
+        cursor: pointer;
+    }
+}
 // LOGIN PAGE
 .login{
     position: relative;
@@ -255,11 +260,45 @@ li label {
                 }
             }
         }
-        .tooltip{
+        .comment{
             img{
                 height: 20px;
-                width: 20px;
+                width: 20px
             }
+        }
+        .pop-up{
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 10px;
+            display: none;
+            max-height: 400px;
+            padding: 10px;
+            position: absolute;
+            text-align: center;
+            width: 300px;
+            ul{
+                overflow: auto;
+                max-height: 380px;
+                padding: 10px;
+                li{
+                    list-style-type: none;
+                }
+                .title{
+                    text-align: left;
+                }
+                .text{
+                    margin-bottom: 10px;
+                }
+            }
+            .close{
+                opacity: 1;
+                position: absolute;
+                right: 3px;
+                top: 2px;
+            }
+        }
+        .active{
+            display: block !important;
         }
     }
 }  

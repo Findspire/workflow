@@ -155,9 +155,6 @@ class Item(models.Model):
         self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
 
-    def last_comment(self):
-        return Comment.objects.filter(item=self).latest('date')
-
 
 class Comment(models.Model):
     item = models.ForeignKey(Item, verbose_name=_('Item'))

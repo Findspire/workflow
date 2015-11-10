@@ -12,9 +12,10 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
-from django.http.response import HttpResponseRedirect, Http404
+from django.http.response import HttpResponseRedirect, Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseForbidden
+from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
@@ -79,7 +80,7 @@ def workflow_show(request, workflow_pk, which_display):
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
     team = workflow.project.team
 
-    if request_person not in team.members.all():
+    if request_person not in team.members.all() or not request.user.is_superuser:
         raise PermissionDenied
 
     # group by category
@@ -140,7 +141,6 @@ def delete_item_view(request, item_pk, workflow_pk):
 
 @login_required
 def delete_comment_view(request, comment_pk, workflow_pk):
-    print(comment_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.delete()
     return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
@@ -338,3 +338,10 @@ def drag_item(request, item_pk, related_pk=None):
     return redirect(reverse('workflow:workflow_show', 
                             kwargs={'workflow_pk': item.workflow.pk, 'which_display': 'all'}))
 
+
+@login_required
+def get_comments(request, item_pk):
+    data = serializers.serialize("json", Comment.objects.filter(item__pk=item_pk), 
+                                                                fields=('person', 'date', 'text'),
+                                                                use_natural_foreign_keys=True)
+    return HttpResponse(data)
