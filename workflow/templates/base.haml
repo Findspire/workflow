@@ -12,11 +12,20 @@
             - block title
                 Workflow
         %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/base_all.css" %}'}
+        %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/bootstrap.min.css" %}'}
         %link{rel: "icon", href: '{% static "workflow/img/favicon.ico" %}'}
         %script{type: "text/javascript", src: '{% static "workflow/js/jquery-1.9.1.js" %}'}
         %script{type: "text/javascript", src: '{% static "workflow/js/jquery-ui.min.js" %}'}
+        %script{type: "text/javascript", src: '{% static "workflow/js/bootstrap.min.js" %}'}
+        %script{type: "text/javascript", src: '{% static "workflow/js/moment.js" %}'}
 
     %body
+        - block nav
+            %nav
+                .navbar.navbar-inverse.navbar-fixed-top
+                    .navbar-brand
+                        %a{:href => "/"}
+                            Workflow
         #warning_js
             {% trans "Your JavaScript seem to be disabled. Some functionalities needs it and we advise you to enable it." %}
 
@@ -30,6 +39,6 @@
         #content
             - block content
 
-        - block optional_script
-        %script{type: "text/javascript"}
-            $('#warning_js').hide();
+            - block optional_script
+            %script{type: "text/javascript"}
+                $('#warning_js').hide();

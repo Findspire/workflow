@@ -1,6 +1,7 @@
 - load static
 - load i18n
 - load workflow_tags
+- for category, items in categories
     %table
         %thead
             %tr.category
@@ -26,12 +27,12 @@
                 
                 %th
         %tbody#sortable
-            - for item in items_list
+            - for item in items
                 %tr.item_list{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", "data-url" => "{% url 'workflow:drag_item' item.pk %}", "data-item-pk" => "{{ item.pk }}"}
                     %td.item
-                        %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.item_model.name}}"}
-                            {{ item.item_model.name }}
-                        - for url, ticket_id in item.item_model.name|get_tickets
+                        %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.name}}"}
+                            {{ item.name }}
+                        - for url, ticket_id in item.name|get_tickets
                             - if forloop.counter == 1
                                 %strong{style:"margin-left:20px;"}
                                     {% trans "Tickets:" %}
@@ -41,11 +42,18 @@
                                 \-
                     
                     %td.take_untake_item
-                        - include "workflow/workflow_show.take_untake.part.haml"
+                        - if item.assigned_to_name_cache
+                            {{ item.assigned_to_name_cache }}
+                            %a.close{href: "{% url 'workflow:update' which_display 'untake' 'item' item.pk %}?next={{ request.path }}", title: "Reset owner of item", data-status: "mine"}
+                                %img{src: "/static/workflow/img/untake.png"}
+                        - else
+                            %a{href: "{% url 'workflow:update' which_display 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item", data-status: "untaken"}
+                                {% trans "Take" %}
+
 
                     %td{:style => "width: 72px"}
-                        - if item.comments.count
-                            %a.comment{:href => "", "data-target" => "pop-up"}
+                        - if item.comments_count
+                            %a.comment{:href => "#", "data-target" => "pop-up"}
                                 %img{:src => "{% static 'workflow/img/comment.png' %}", :alt => ""}/
                             %div.pop-up{"data-url" => "{% url 'workflow:get_item_comments' item.pk %}"}
                                 %span.close
@@ -53,12 +61,32 @@
                                 %ul
                                 
                     %td.validate
-                        - include "workflow/workflow_show.validate.part.haml"
+                        - if item.validation == Item.VALIDATION_SUCCESS
+                            %a{href: "#", title: "Item is validated", data-url: "{% url 'workflow:update_item_validation' 'success' item.pk %}"}
+                                %span.glyphicon.glyphicon-ok-sign.success.validated
+                        - else
+                            %a{href: "#", title: "Click to validate", data-url: "{% url 'workflow:update_item_validation' 'success' item.pk %}"}
+                                %span.glyphicon.glyphicon-ok-sign.success
+
+                        - if item.validation == Item.VALIDATION_UNTESTED
+                            %a{href: "#", title: "Item is untested", data-url: "{% url 'workflow:update_item_validation' 'untested' item.pk %}"}
+                                %span.glyphicon.glyphicon-question-sign.untested.validated
+                        - else
+                            %a{href: "#", title: "Reset item validation", data-status-old: "{{ item|get_status }}", data-status-new: "untested", data-url: "{% url 'workflow:update_item_validation' 'untested' item.pk %}"}
+                                %span.glyphicon.glyphicon-question-sign.untested
+
+                        - if item.validation == Item.VALIDATION_FAILED
+                            %a{href: "#", title: "Item is broken", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}"}
+                                %span.glyphicon.glyphicon-remove-sign.failed.validated
+                        - else
+                            %a{href: "#", title: "Click to failed item", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}"}
+                                %span.glyphicon.glyphicon-remove-sign.failed
+
+                        %br
+                            %span.last_modification= item.updated_at|date:"d/m/Y H:i"
+
 
                     %td
-                        %a.close{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
+                        %a.close{:href => "{% url 'workflow:delete_item_view' item.workflow.pk item.pk %}"}
                             %img{:src => "{% static 'workflow/img/untake.png'%}"}
-                            
-
-
 

@@ -4,7 +4,9 @@ $(document).ready(function() {
 
     $("#items .take_untake_item a").click(take_untake_item_onclick);
     $("#items .take_untake_category a").click(take_untake_category_onclick);
-    $("#items .validate a").click(validate_item_onclick);
+    $("#items .validate a").each(function(){
+        $(this).click(validate_item_onclick);
+    })
     $("#workflow_add_item a").click(modal_onclick);
     $("#workflow_add_category a").click(modal_onclick);
     $("a[data-target='pop-up']").click(popupShow);
@@ -209,10 +211,17 @@ function take_untake_category_update($elem, data) {
 */
 
 function validate_item_onclick() {
-    $elem = $(this);
-    send_request($elem)
+    var elem = $(this);
+    var url = $(elem).data('url');
+    $.get(url)
         .done(function(data){
-            validate_item_update($elem, data);
+            var status_old = data.status_old;
+            var status_new = data.validation;
+            $(elem).closest('td').find('span.validated').removeClass('validated');
+            $(elem).find('span').addClass('validated');
+            $(elem).closest('td').find('span.last_modification').text(moment(data.updated_at).format('D/MM/YYYY HH:mm'));
+            update_counters_data(status_old, status_new);
+            update_counters_html();
         });
     return false;
 }

@@ -18,6 +18,8 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import F
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy  as _
 
@@ -26,17 +28,17 @@ from workflow.apps.team.models import Person, Team
 
 
 class ItemCategory(models.Model):
-    name = models.CharField(max_length=64, verbose_name=_('Name'))
+    name = models.CharField(max_length=64, verbose_name=_('Name'), db_index=True)
 
     def __unicode__(self):
         return '%s' % (self.name)
 
     def get_items(self):
-        return Item.objects.filter(item_model___category=self)
+        return self.item_set.all()
 
 
 class ItemModel(models.Model):
-    name = models.CharField(max_length=128, verbose_name=_('Name'))
+    name = models.CharField(max_length=128, verbose_name=_('Name'), db_index=True)
     description = models.TextField(max_length=1000, blank=True, null=True, verbose_name=_('Description'))
     category = models.ForeignKey(ItemCategory, verbose_name=_('Category'))
 
@@ -45,9 +47,9 @@ class ItemModel(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=32, verbose_name=_('Name'))
+    name = models.CharField(max_length=32, verbose_name=_('Name'), db_index=True)
     team = models.ForeignKey(Team, verbose_name=_('Team'))
-    items = models.ManyToManyField(ItemModel, blank=True, verbose_name=_('Items'))
+    categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
 
     def __unicode__(self):
         return '%s' % (self.name)
@@ -64,9 +66,9 @@ class Workflow(models.Model):
 
     def get_items(self, which_display, person=None):
         qs = Item.objects \
-            .filter(workflow=self, item_model__category__in=self.categories.all()) \
+            .filter(workflow=self) \
             .order_by('position') \
-            .select_related('item_model__category', 'assigned_to__user')
+            .select_related('category', 'assigned_to__user')
         try:
             return {
                 'all': qs,
@@ -99,8 +101,10 @@ class Workflow(models.Model):
 
         # if the object is created and not updated, create its Items
         if pk == None:
-            for item in self.project.items.all():
-                Item.objects.create(item_model=item, workflow=self)
+            for category in self.project.categories.all():
+                self.categories.add(category)
+                for item in ItemModel.objects.filter(category=category):
+                    Item.objects.create(item_model=item, workflow=self)
 
 
 def update_item_position(item, related_item=None):
@@ -132,8 +136,11 @@ class Item(models.Model):
     )
 
     item_model = models.ForeignKey(ItemModel, verbose_name=_('Item model'))
+    name = models.CharField(null=True, blank=True, max_length=100, db_index=True)
     workflow = models.ForeignKey(Workflow, verbose_name=_('Workflow'))
+    category = models.ForeignKey(ItemCategory, null=True, blank=True, verbose_name=_('Category'))
     assigned_to = models.ForeignKey(Person, null=True, blank=True, verbose_name=_('Assigned to'))
+    assigned_to_name_cache = models.CharField(null=True, blank=True, max_length=50)
     validation = models.SmallIntegerField(
         choices=VALIDATION_CHOICES,
         default=0,
@@ -142,6 +149,10 @@ class Item(models.Model):
     updated_at = models.DateTimeField(null=True, editable=False)
     created_at = models.DateTimeField(null=True, editable=False)
     position = models.IntegerField(null=True, editable=False)
+    comments_count = models.IntegerField(null=True, editable=False)
+
+    class Meta:
+        ordering = ['position']
 
     def __unicode__(self):
         return '%s' % (self.item_model)
@@ -149,9 +160,16 @@ class Item(models.Model):
     def save(self, *args, **kwargs):
         if self.created_at is None:
             self.created_at = timezone.now()
+        if self.category is None:
+            self.category = self.item_model.category
         if self.position is None:
             last_item = Item.objects.filter(workflow=self.workflow).order_by('position').last()
-            self.position = last_item.position + 1 if last_item else 0
+            if last_item is not None and last_item.position is not None:
+                self.position = last_item.position + 1 
+            else:
+                self.position = 0
+        if self.name is None:
+            self.name = self.item_model.name
         self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
 
@@ -164,3 +182,21 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return '%s' % (self.text)
+
+
+@receiver(post_save, sender=Comment)
+def comments_count_save_handler(sender, instance=None, **kwargs):
+    item = instance.item
+    if item.comments_count is not None:
+        Item.objects.filter(id=item.id).update(comments_count=F('comments_count') + 1)
+    else:
+        Item.objects.filter(id=item.id).update(comments_count = 1)
+
+
+@receiver(post_delete, sender=Comment)
+def comments_count_delete_handler(sender, instance=None, **kwargs):
+    item = instance.item
+    if item.comments_count - 1 < 0:
+        Item.objects.filter(id=item.id).update(comments_count = 0)
+    else:
+        Item.objects.filter(id=item.id).update(comments_count = F('comments_count') - 1)

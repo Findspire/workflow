@@ -37,6 +37,6 @@ urlpatterns = patterns('workflow.apps.workflow',
     url(r'^item/instance/get-comments/(?P<item_pk>\d+)/$', views.get_comments, name='get_item_comments'),
     url(r'^update/(?P<which_display>\w+)/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/$', views.update, name='update'),
     url(r'^update/(?P<which_display>\w+)/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/(?P<pk_other>\d+)/$', views.update, name='update'),
-
+    url(r'^update/(?P<action>\w+)/(?P<item_pk>\d+)/', views.update_item_validation, name='update_item_validation'),
     url(r'^drag-item/(?P<item_pk>[0-9]+)(?:/(?P<related_pk>[0-9]+))?/$', views.drag_item, name='drag_item'),
 )

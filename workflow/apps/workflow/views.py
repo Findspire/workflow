@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import model_to_dict
-from django.http.response import HttpResponseRedirect, Http404, HttpResponse
+from django.http.response import HttpResponseRedirect, Http404, HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseForbidden
 from django.core import serializers
@@ -37,12 +37,6 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
     form_class = ProjectNewForm
     success_url = reverse_lazy('workflow:project_list')
     template_name = 'utils/workflow_generic_views_form.haml'
-
-    def form_valid(self, form):
-        ret = super(ProjectFormView, self).form_valid(form)
-        self.object.items = form.cleaned_data['items']
-        self.object.save()
-        return ret
 
 
 @login_required
@@ -83,21 +77,20 @@ def workflow_show(request, workflow_pk, which_display):
     if request_person not in team.members.all() or not request.user.is_superuser:
         raise PermissionDenied
 
-    # group by category
-    items_list = workflow.get_items(which_display, request_person)
+    items = set(workflow.item_set.all())
+    categories = workflow.categories.all()
 
-    items_dic = OrderedDict()
-    for cat in workflow.categories.all():
-        items_dic[cat] = []
-    for item in items_list:
-        items_dic[item.item_model.category].append(item)
+    items_by_category = []
+    for category in categories:
+        cat_items = [item for item in items if item.category_id == category.id]
+        items_by_category.append((category, [item for item in sorted(cat_items, key=lambda item: item.position)]))
 
     context = {
         'workflow': workflow,
+        'categories': items_by_category,
         'counters': {display: workflow.get_count(display, request_person) for display in displays},
-        'items': items_dic,
-        'Item': Item,
         'which_display': which_display,
+        'Item': Item
     }
 
     return render(request, 'workflow/workflow_show.haml', context)
@@ -122,8 +115,6 @@ def create_item_view(request, category, workflow_pk):
                 if name.strip():
                     item_model, created = ItemModel.objects.get_or_create(name=name, category=category)
                     item = Item.objects.create(item_model=item_model, workflow=workflow)
-                    project = workflow.project
-                    project.items.add(item_model)
             return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk,
                                                                       'which_display': 'all'}))
         else:
@@ -177,7 +168,9 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
         ret = super(ItemCategoryFormView, self).form_valid(form)
         # if creating a category from a workflow
         if 'workflow_pk' in self.kwargs: # todo: check permissions in team or superuser
-            get_object_or_404(Workflow, pk=self.kwargs['workflow_pk']).categories.add(form.instance)
+            workflow = get_object_or_404(Workflow, pk=self.kwargs['workflow_pk'])
+            workflow.categories.add(form.instance)
+            get_object_or_404(Project, pk=workflow.project.pk).categories.add(form.instance)
         return ret
 
 
@@ -225,21 +218,21 @@ def item_instance_show(request, item_pk):
 @login_required
 def update(request, which_display, action, model, pk, pk_other=None):
     # todo: this should be a POST request
-
     if model == 'item':
         item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
 
         if action == 'take':
             item.assigned_to = request.user.person
+            item.assigned_to_name_cache = request.user.username
         elif action == 'untake':
             if item.validation == 0:
                 item.assigned_to = None
+                item.assigned_to_name_cache = None
             else:
                 return HttpResponseForbidden(_("You need to put this this task has untested '?' before untake it"))
         else:
             raise Http404('Unexpected action "%s"' % action)
-
         item.save()
 
     elif model == 'category':
@@ -247,8 +240,10 @@ def update(request, which_display, action, model, pk, pk_other=None):
 
         if action == 'take':
             assigned_to = request.user.person
+            assigned_to_name_cache = request.user.username
         elif action == 'untake':
             assigned_to = None
+            assigned_to_name_cache = None
         elif action == 'show':
             # used with ajax when adding a new item, this way we fetch the whole
             # category without updating any data
@@ -259,6 +254,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
         if (action == 'take') or (action == 'untake'):
             items = get_object_or_404(Workflow, pk=pk_other).get_items('all').filter(item_model__category__pk=int(pk))
             items.update(assigned_to=assigned_to)
+            items.update(assigned_to_name_cache=assigned_to_name_cache)
 
     elif model == 'validate':
         item = get_object_or_404(Item, pk=pk)
@@ -281,6 +277,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
             raise Http404('Unexpected action "%s"' % action)
 
         item.save()
+        print(item.validation)
 
     else:
         raise Http404('Unexpected model "%s"' % model)
@@ -312,10 +309,32 @@ def update(request, which_display, action, model, pk, pk_other=None):
                 'Item': Item,
                 'which_display': which_display,
             }
-            return render(request, 'workflow/workflow_show.validate.part.haml', context)
+            return render(request, 'workflow/workflow_show.table.part.haml', context)
     else:
         default_url = reverse('workflow:workflow_show', args=[workflow_pk, which_display])
         return HttpResponseRedirect(request.GET.get('next', default_url))
+
+
+@login_required
+def update_item_validation(request, item_pk, action):
+    item = get_object_or_404(Item, pk=item_pk)
+    status_old = item.validation
+    try:
+        item.validation = {
+            'success': Item.VALIDATION_SUCCESS,
+            'failed': Item.VALIDATION_FAILED,
+            'untested': Item.VALIDATION_UNTESTED
+        }[action]
+        item.save()
+    except KeyError:
+        return Http404(_('Action does not exist'))
+    data = {
+        'item_pk': item.pk,
+        'validation': item.validation,
+        'status_old': status_old,
+        'updated_at': item.updated_at,
+    }
+    return JsonResponse(data)
 
 
 @login_required
