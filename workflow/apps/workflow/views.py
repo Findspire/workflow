@@ -179,7 +179,7 @@ def item_instance_show(request, item_pk):
     item = get_object_or_404(Item.objects.select_related(), pk=item_pk)
 
     team = item.workflow.project.team
-    if request.user.person not in team.members.all():
+    if request.user.person not in team.members.all() and not request.user.is_superuser:
         raise PermissionDenied
 
     # default
