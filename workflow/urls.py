@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^$', index),
     url(r'^workflow/', include('workflow.apps.workflow.urls', namespace='workflow')),
     url(r'^team/', include('workflow.apps.team.urls', namespace='team')),
+    url(r'^api/', include('workflow.apps.API.urls', namespace='api')),
 ]
 

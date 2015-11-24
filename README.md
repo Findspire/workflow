@@ -5,6 +5,7 @@
 Small internship project to keep a list of items to check when a new release is beeing tested.
 
 ![screenshot](screenshot.png)
+![screenshot](screenshot2.png)
 
 -----
 

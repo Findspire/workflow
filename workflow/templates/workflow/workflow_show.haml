@@ -2,53 +2,55 @@
 
 - load static
 - load i18n
+- load l10n
+- load workflow_tags
 
 - block title
-    v{{ workflow.version}}
+    {{ workflow.version}}
 
 - block breadcrumbs
     {% trans "Show workflow" %}
 
 - block content
     %h1
-        {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }} (<a href="{% url 'workflow:workflow_edit' workflow.pk %}">Edit</a>)
-
-    %hr
+        {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }}
+        %a{:href => "{% url 'workflow:workflow_edit' workflow.pk %}"}
+            %span.glyphicon.glyphicon-cog{:style => "font-size: 18px"}
 
     %ul
-        %li{id: "workflow_add_item"}
-            %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
-                {% trans "Add an item in this workflow" %}
-        %li{id: "workflow_add_category"}
-            %a{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
-                {% trans "Add an item category" %}
+        / %li{id: "workflow_add_item"}
+        /     %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
+        /         {% trans "Add an item in this workflow" %}
+        / %li{id: "workflow_add_category"}
+        /     %a{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
+        /         {% trans "Add an item category" %}
 
     %hr
-
-    #progressbar
-        %table
-            %tr
-                %td{class: "success", style: "width: 0;"}
-                %td{class: "failed", style: "width: 0;"}
-                %td{class: "untested", style: "width: 1;"}
+    .progress
+        .progress-bar.progress-bar-success{style: 'width: {{ workflow|percent:"success"|floatformat:"0" }}%;'}
+            {{ workflow|percent:"success"|floatformat:"0"}}%
+        .progress-bar.progress-bar-untested{style: 'width: {{ workflow|percent:"untested"|floatformat:"0" }}%;'}
+            {{ workflow|percent:"untested"|floatformat:"0"}}%
+        .progress-bar.progress-bar-danger{style: 'width: {{ workflow|percent:"failed"|floatformat:"0"}}%;'}
+            {{ workflow|percent:"failed"|floatformat:"0"}}%
+    .col-md-6.col-md-offset-4
         %div
             %ul
-                %li{class: "success"}
-                    %span{class: "square"}
+                %li.square.success
+                    %span.glyphicon.glyphicon-stop
                     {% trans "Success:" %}
                     %span{class: "number"}
                         {{ counters.success }}
-                %li{class: "failed"}
-                    %span{class: "square"}
+                %li.square.failed
+                    %span.glyphicon.glyphicon-stop
                     {% trans "Failed:" %}
                     %span{class: "number"}
                        {{ counters.failed }}
-                %li{class: "untested"}
-                    %span{class: "square"}
+                %li.square.untested
+                    %span.glyphicon.glyphicon-stop
                     {% trans "Untested:" %}
                     %span{class: "number"}
                         {{ counters.untested }}
-
     %hr
 
     #filters
@@ -88,6 +90,9 @@
                 {% trans "Failed items" %}
             %span{class: "number"}
                 {{ counters.failed }}
+    %a.workflow_add_category{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
+        %button.btn.btn-primary.btn-custom
+            {% trans "Add category" %}
 
     #items
         - include "workflow/workflow_show.table.part.haml"

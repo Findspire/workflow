@@ -1,14 +1,11 @@
 
 $(document).ready(function() {
     $("#filters ." + location.pathname.split("/")[5]+" input").attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
-
-    $("#items .take_untake_item a").click(take_untake_item_onclick);
-    $("#items .take_untake_category a").click(take_untake_category_onclick);
     $("#items .validate a").each(function(){
         $(this).click(validate_item_onclick);
     })
     $("#workflow_add_item a").click(modal_onclick);
-    $("#workflow_add_category a").click(modal_onclick);
+    $(".workflow_add_category").click(modal_onclick);
     $("a[data-target='pop-up']").click(popupShow);
     $(".pop-up .close").click(popupClose);  
 
@@ -23,34 +20,30 @@ $(document).ready(function() {
     });
     $("#modal_background").click(modal_hide);
 
-    update_counters_html();
 });
 
 function popupData(popup){
-    $.getJSON($(popup).data('url'), function(data){
+    var $popup = $(popup),
+        $ul = $popup.find('ul');
+
+    $ul.empty();
+    $.getJSON($popup.data('url'), function(data){
         $.each(data, function(key, val){
-            $(popup).find('ul').append('<li class="title"><b>'+ val.fields.person + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.fields.date))  + '</b></li>');
-            $(popup).find('ul').append('<li class="text">'+ val.fields.text + '</li>');         
+            $ul.append('<li class="title"><b>'+ val.username + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.date))  + '</b></li>')
+                .append('<li class="text">'+ val.text + '</li>');
         });
     });
 }
 
 function popupShow(){
-    var element = $(this).next();
-    if($(element).hasClass('active')){
-        $(element).removeClass('active');
-        $.each($(element).find('li'), function(){
-            $(this).remove();
-        })
-    }
-    else{
-        $(this).next().addClass('active');
-        popupData($(this).next());
-    }
+    var $element = $($(this).next());
+    $element.addClass('active');
+    popupData($element);
 }
 
 function popupClose(){
     $(this).closest('.pop-up').removeClass('active');
+    return false;
 }
 
 function onDragStop(event, ui){
@@ -80,135 +73,41 @@ function send_request($elem){
     return dfd;
 }
 
+function updateProgressBar(){
+    var $bar = $('.progress'),
+        successBar = $bar.find('.progress-bar-success'),
+        untestedBar = $bar.find('.progress-bar-untested'),
+        failedBar = $bar.find('.progress-bar-danger');
 
-function update_counters_data(status_old, status_new) {
-    var status = ["all", "mine", "untaken", "taken", "success", "failed", "untested"];
+    var counts = {
+        0: 0, // Untested items
+        1: 0, // Success items
+        2: 0 // Failed items
+    },
+    total = 0;
 
-    for (var i = 0; i < status.length; ++i) {
-        if (status_old === status[i]) {
-            counters[status[i]] -= 1;
+    var $trs = $('.item_list');
+    $trs.each(function() {
+        counts[this.getAttribute('data-status')] += 1;
+    });
+    total = $trs.length; 
+    successPercent = (counts[1] * 100 )/ total;
+    untestedPercent = (counts[0] * 100 )/ total;
+    failedPercent = (counts[2] * 100 )/ total;
 
-            if (status_old === "mine")
-                counters["taken"] -= 1;
-        }
-
-        if (status_new === status[i]) {
-            counters[status[i]] += 1;
-
-            if (status_new === "mine")
-                counters["taken"] += 1;
-        }
-    }
+    successBar.css('width', successPercent + '%').text(Math.round(successPercent) + '%');
+    untestedBar.css('width', untestedPercent + '%').text(Math.round(untestedPercent) + '%');
+    failedBar.css('width', failedPercent + '%').text(Math.round(failedPercent) + '%');
+    updateCounters(counts);
 }
 
-
-function update_counters_html() {
-    var i = 0, total = 0;
-    var status = ["success", "failed", "untested"];
-
-    for (i = 0; i < status.length; ++i) {
-        total += counters[status[i]];
-    }
-
-    for (i = 0; i < status.length; ++i) {
-        var percent = Math.round(counters[status[i]]/total*100);
-        $("#progressbar table ." + status[i]).css("width", ""+percent+"%");
-        $("#progressbar div ." + status[i] + " .number").text(counters[status[i]]);
-    }
-
-    status = ["all", "mine", "untaken", "taken", "success", "failed"];
-
-    for (i = 0; i < status.length; ++i) {
-        $("#filters ." + status[i] + " .number").text(counters[status[i]]);
-    }
-
+function updateCounters(counts){
+    $('.square.success .number').text(counts[1]);
+    $('.square.untested .number').text(counts[0]);
+    $('.square.failed .number').text(counts[2]);
+    $('#filters .success .number').text(counts[1]);
+    $('#filters .failed .number').text(counts[2]);
 }
-
-function take_untake_item_onclick() {
-    $elem = $(this)
-    send_request($elem)
-        .done(function(data){ 
-            take_untake_item_update($elem, data); 
-        });
-    return false;
-}
-
-
-function take_untake_item_update($elem, data) {
-    var status_old = $elem.attr("data-status"), status_new = "";
-    var $parent_elem = $elem.parent();
-
-    if (status_old === "untaken")
-        status_new = "mine";
-    else
-        status_new = "untaken";
-
-    update_counters_data(status_old, status_new);
-    update_counters_html();
-
-    $parent_elem.html(data);
-    $parent_elem.find("a").click(take_untake_item_onclick);
-}
-
-
-/*
-    take untake category
-*/
-
-function take_untake_category_onclick() {
-    $elem = $(this);
-    send_request($elem)
-        .done(function(data){ 
-            take_untake_category_update($elem, data);
-        });
-    return false;
-}
-
-function take_untake_category_update($elem, data) {
-    var $table = $elem.closest("table");
-    var $elems = $table.find(".take_untake_item");
-
-    /* clear take / untake data */
-
-    if ($elem.parent().hasClass("take"))
-        var status_new = "mine";
-    else
-        var status_new = "untaken";
-
-    for (var i = 0; i < $elem.length; ++i) {
-        var status_old = $($elems[i]).find("a").attr("data-status");
-        update_counters_data(status_old, status_new);
-    }
-
-    /* update html */
-    var nb_elem_before = $table.find("tr").length;
-    $table.html(data);
-    $table.find("th a").click(modal_onclick);
-    $table.find(".take_untake_item a").click(take_untake_item_onclick);
-    $table.find(".take_untake_category a").click(take_untake_category_onclick);
-    $table.find(".validate a").click(validate_item_onclick);
-
-    /* hack to update the counters which skipped hidden items */
-    var diff = $table.find("tr").length - nb_elem_before;
-    if (status_new === "mine" && (location.pathname.split("/")[5] === "mine" || location.pathname.split("/")[5] === "taken"))
-    {
-        counters["mine"] += diff;
-        counters["taken"] += diff;
-        counters["untaken"] -= diff;
-    }
-    if (status_new === "untaken" && location.pathname.split("/")[5] === "untaken")
-    {
-        counters["mine"] -= diff;
-        counters["taken"] -= diff;
-        counters["untaken"] += diff;
-    }
-    update_counters_html();
-}
-
-
-/*
-    validate
-*/
 
 function validate_item_onclick() {
     var elem = $(this);
@@ -217,30 +116,18 @@ function validate_item_onclick() {
         .done(function(data){
             var status_old = data.status_old;
             var status_new = data.validation;
+            $(elem).closest('tr').attr('data-status', status_new);
             $(elem).closest('td').find('span.validated').removeClass('validated');
             $(elem).find('span').addClass('validated');
             $(elem).closest('td').find('span.last_modification').text(moment(data.updated_at).format('D/MM/YYYY HH:mm'));
-            update_counters_data(status_old, status_new);
-            update_counters_html();
+
+            updateProgressBar();
+        })
+        .fail(function(jqXHR){
+            alert(jqXHR.responseText);
         });
     return false;
 }
-
-function validate_item_update($elem, data) {
-    var status_old = $elem.attr("data-status-old");
-    var status_new = $elem.attr("data-status-new");
-    var $parent_elem = $elem.parent();
-
-    update_counters_data(status_old, status_new);
-    update_counters_html();
-
-    $parent_elem.html(data);
-    $parent_elem.find("a").click(validate_item_onclick);
-}
-
-/*
-    Modal
-*/
 
 function modal_onclick() {
     $elem = $(this)

@@ -21,5 +21,3 @@ class CommentList(APIView):
         comments = Comment.objects.filter(item__pk=item_pk)
         serializer = serializers.CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-

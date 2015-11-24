@@ -42,7 +42,7 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
 @login_required
 def project_list(request):
     context = {
-        'projects': {project:Workflow.objects.filter(project=project) for project in Project.objects.all()}
+        'projects': {project:Workflow.objects.filter(project=project) for project in Project.objects.all()},
     }
     return render(request, 'workflow/project_list.haml', context)
 
@@ -56,10 +56,11 @@ class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
 @login_required
 def workflow_delete(request, workflow_pk):
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
-    if request.user.person in workflow.project.team.members.all():
+    if request.user.person is workflow.project.team.leader or request.user.is_superuser:
         workflow.delete()
     else:
-        return HttpResponseForbidden(_('You are not in %s team' % workflow.project.team))
+        return HttpResponseForbidden(_('You are not allowed to delete this workflow. Contact %s :)' % 
+                                     workflow.project.team.leader))
     return redirect('workflow:project_list')
 
 
@@ -74,10 +75,10 @@ def workflow_show(request, workflow_pk, which_display):
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
     team = workflow.project.team
 
-    if request_person not in team.members.all() or not request.user.is_superuser:
+    if request_person not in team.members.all() and not request.user.is_superuser:
         raise PermissionDenied
 
-    items = set(workflow.item_set.all())
+    items = set(workflow.get_items(which_display, request_person))
     categories = workflow.categories.all()
 
     items_by_category = []
@@ -147,8 +148,7 @@ class ItemModelFormViewFromWorkflow(ItemModelFormView):
 
         workflow = get_object_or_404(Workflow, pk=self.kwargs['workflow_pk'])
         Item.objects.create(item_model=created, workflow=workflow)
-
-        project = workflow.project
+        project = workflow.project_set
         project.items.add(created)
 
         return ret
@@ -234,51 +234,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
         else:
             raise Http404('Unexpected action "%s"' % action)
         item.save()
-
-    elif model == 'category':
-        workflow_pk = pk_other
-
-        if action == 'take':
-            assigned_to = request.user.person
-            assigned_to_name_cache = request.user.username
-        elif action == 'untake':
-            assigned_to = None
-            assigned_to_name_cache = None
-        elif action == 'show':
-            # used with ajax when adding a new item, this way we fetch the whole
-            # category without updating any data
-            pass
-        else:
-            raise Http404('Unexpected action "%s"' % action)
-
-        if (action == 'take') or (action == 'untake'):
-            items = get_object_or_404(Workflow, pk=pk_other).get_items('all').filter(item_model__category__pk=int(pk))
-            items.update(assigned_to=assigned_to)
-            items.update(assigned_to_name_cache=assigned_to_name_cache)
-
-    elif model == 'validate':
-        item = get_object_or_404(Item, pk=pk)
-        workflow_pk = item.workflow.pk
-
-        if item.assigned_to != request.user.person:
-            if item.assigned_to is not None:
-                return HttpResponseForbidden(_("%s is the owner of this task" \
-                                             % item.assigned_to))
-            else:
-                return HttpResponseForbidden(_("You must take the task before edit it"))
-
-        if action == 'untested':
-            item.validation = Item.VALIDATION_UNTESTED
-        elif action == 'success':
-            item.validation = Item.VALIDATION_SUCCESS
-        elif action == 'failed':
-            item.validation = Item.VALIDATION_FAILED
-        else:
-            raise Http404('Unexpected action "%s"' % action)
-
-        item.save()
-        print(item.validation)
-
+        return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
     else:
         raise Http404('Unexpected model "%s"' % model)
 
@@ -303,13 +259,6 @@ def update(request, which_display, action, model, pk, pk_other=None):
                 'which_display': which_display,
             }
             return render(request, 'workflow/workflow_show.table.part.haml', context)
-        else:  # model == 'validate', asserted a few lines above
-            context = {
-                'item': get_object_or_404(Item, pk=pk),
-                'Item': Item,
-                'which_display': which_display,
-            }
-            return render(request, 'workflow/workflow_show.table.part.haml', context)
     else:
         default_url = reverse('workflow:workflow_show', args=[workflow_pk, which_display])
         return HttpResponseRedirect(request.GET.get('next', default_url))
@@ -318,24 +267,31 @@ def update(request, which_display, action, model, pk, pk_other=None):
 @login_required
 def update_item_validation(request, item_pk, action):
     item = get_object_or_404(Item, pk=item_pk)
-    status_old = item.validation
-    try:
-        item.validation = {
-            'success': Item.VALIDATION_SUCCESS,
-            'failed': Item.VALIDATION_FAILED,
-            'untested': Item.VALIDATION_UNTESTED
-        }[action]
-        item.save()
-    except KeyError:
-        return Http404(_('Action does not exist'))
-    data = {
-        'item_pk': item.pk,
-        'validation': item.validation,
-        'status_old': status_old,
-        'updated_at': item.updated_at,
-    }
-    return JsonResponse(data)
-
+    if item.assigned_to_name_cache != request.user.username:
+        if item.assigned_to_name_cache is not None:
+            return HttpResponseForbidden(_("%s is the owner of this task" \
+                                             % item.assigned_to_name_cache))
+        else:
+            return HttpResponseForbidden(_("You must take the task before edit it"))
+    else:
+        status_old = item.validation
+        try:
+            item.validation = {
+                'success': Item.VALIDATION_SUCCESS,
+                'failed': Item.VALIDATION_FAILED,
+                'untested': Item.VALIDATION_UNTESTED
+            }[action]
+            item.save()
+        except KeyError:
+            return Http404(_('Action does not exist'))
+        data = {
+            'item_pk': item.pk,
+            'validation': item.validation,
+            'status_old': status_old,
+            'updated_at': item.updated_at,
+        }
+        return JsonResponse(data)
+        
 
 @login_required
 def itemmodel_list(request):
@@ -359,8 +315,15 @@ def drag_item(request, item_pk, related_pk=None):
 
 
 @login_required
-def get_comments(request, item_pk):
-    data = serializers.serialize("json", Comment.objects.filter(item__pk=item_pk), 
-                                                                fields=('person', 'date', 'text'),
-                                                                use_natural_foreign_keys=True)
-    return HttpResponse(data)
+def take_items_category(request, workflow_pk, category_pk, action):
+    if action == 'take':
+        Item.objects.filter(category__pk=category_pk, assigned_to=None).update(
+                                                            assigned_to=request.user, 
+                                                            assigned_to_name_cache=request.user.username)
+    elif action == 'untake':
+        Item.objects.filter(category__pk=category_pk, assigned_to_name_cache=request.user.username, validation=0)\
+                    .update(assigned_to=None, assigned_to_name_cache=None)                     
+    else:
+        raise Http404('Action %s does not exist' % action)
+    return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
+

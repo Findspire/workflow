@@ -1,9 +1,2 @@
 - load i18n
 
-- if item.assigned_to
-    {{ item.assigned_to }}
-    %a.close{href: "{% url 'workflow:update' which_display 'untake' 'item' item.pk %}?next={{ request.path }}", title: "Reset owner of item", data-status: "{% if item.assigned_to == user.person %}mine{% else %}taken{% endif %}"}
-        %img{src: "/static/workflow/img/untake.png"}
-- else
-    %a{href: "{% url 'workflow:update' which_display 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item", data-status: "untaken"}
-        {% trans "Take" %}

@@ -28,7 +28,7 @@ from workflow.apps.team.models import Person, Team
 
 
 class ItemCategory(models.Model):
-    name = models.CharField(max_length=64, verbose_name=_('Name'), db_index=True)
+    name = models.CharField(max_length=64, verbose_name=_('Name'))
 
     def __unicode__(self):
         return '%s' % (self.name)
@@ -38,7 +38,7 @@ class ItemCategory(models.Model):
 
 
 class ItemModel(models.Model):
-    name = models.CharField(max_length=128, verbose_name=_('Name'), db_index=True)
+    name = models.CharField(max_length=128, verbose_name=_('Name'))
     description = models.TextField(max_length=1000, blank=True, null=True, verbose_name=_('Description'))
     category = models.ForeignKey(ItemCategory, verbose_name=_('Category'))
 
@@ -47,7 +47,7 @@ class ItemModel(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=32, verbose_name=_('Name'), db_index=True)
+    name = models.CharField(max_length=32, verbose_name=_('Name'))
     team = models.ForeignKey(Team, verbose_name=_('Team'))
     categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
 
@@ -72,7 +72,7 @@ class Workflow(models.Model):
         try:
             return {
                 'all': qs,
-                'mine': qs.filter(assigned_to=person),
+                'mine': qs.filter(assigned_to_name_cache=person),
                 'untested': qs.filter(validation=Item.VALIDATION_UNTESTED),
                 'success': qs.filter(validation=Item.VALIDATION_SUCCESS),
                 'failed': qs.filter(validation=Item.VALIDATION_FAILED),
@@ -85,10 +85,10 @@ class Workflow(models.Model):
     def get_count(self, which_display, person=None):
         return self.get_items(which_display, person).count()
 
-    def success_percent(self):
-        value = self.get_count('success')
+    def get_percent(self, display):
+        value = self.get_count(display)
         total = self.get_count('all')
-        return (100 * value / total) if (total != 0) else 100
+        return (100.0 * value / total) if (total != 0) else 100
 
     def get_absolute_url(self):
         return reverse('workflow:workflow_show', args=[self.pk, 'all'])
@@ -136,7 +136,7 @@ class Item(models.Model):
     )
 
     item_model = models.ForeignKey(ItemModel, verbose_name=_('Item model'))
-    name = models.CharField(null=True, blank=True, max_length=100, db_index=True)
+    name = models.CharField(null=True, blank=True, max_length=100)
     workflow = models.ForeignKey(Workflow, verbose_name=_('Workflow'))
     category = models.ForeignKey(ItemCategory, null=True, blank=True, verbose_name=_('Category'))
     assigned_to = models.ForeignKey(Person, null=True, blank=True, verbose_name=_('Assigned to'))

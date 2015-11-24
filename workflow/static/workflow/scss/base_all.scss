@@ -6,7 +6,7 @@
 $success_color: #5ac200;
 $warning_color: #ffd738;
 $failed_color: #ff0f13;
-$untested_color: #828282;
+$untested_color: #54534f;
 $findspire_color: #00b6e5;
 
 #warning_js
@@ -16,12 +16,28 @@ $findspire_color: #00b6e5;
     background-color: #FF4136;
 }
 
-#content {
+#content{
     width: 1000px;
     margin: 10px auto;
+    margin-top: 80px;
     margin-bottom: 50px;
 }
-
+.breadcrumbs{
+    background: #222 !important;
+    border: none !important;
+    border-top: 1px solid $findspire_color !important;
+    position: fixed;
+    top: 52px;
+    width: 100%;
+    z-index: 1001;
+    a{
+        color: #fff;
+    }
+}
+.btn-custom{
+    font-size: 10px !important;
+    margin-bottom: 10px !important;
+}
 label {
     display: block;
 }
@@ -34,10 +50,30 @@ li label {
         cursor: pointer;
     }
 }
+// NAVBAR
+.navbar{
+    border-bottom: none !important;
+    height: 52px;
+    .navbar-brand{
+        padding-top: 13px !important;
+        img{
+            height: 27px;
+        }
+    }
+    .navbar-right{
+        li{
+            list-style-type: none;
+            font-size: 15px !important;
+        }
+    }
+}
 // LOGIN PAGE
 .login{
     position: relative;
     text-align: center;
+    .form-control{
+        width: 10%;
+    }
     button{
         background-color: $findspire_color; 
         border: 1px solid $findspire_color;
@@ -144,7 +180,9 @@ li label {
         }
 
         td{
+            padding: 5px !important;
             text-align: center;
+            vertical-align: middle;
             &:first-child{
                 text-align: left;
             }
@@ -211,6 +249,12 @@ li label {
                     font-size: 13px;
                     text-align: left;
                 }
+                .success{
+                    transition: all 200ms ease-in-out;
+                    &:hover{
+                        opacity: 0.6;
+                    }
+                }
             }
             td{
                 vertical-align: middle;
@@ -229,13 +273,8 @@ li label {
                     color: #000;
                 }
             }
-            .up_or_down{
-                text-align: center;
-                width: 100px;
-                a:nth-child(2){
-                    @extend a;
-                    margin-left: 5px; 
-                } 
+            .item{
+                padding-left: 10px;
             }
             .validate{
                 text-align: center;
@@ -244,12 +283,52 @@ li label {
                     color: #6b6b6b;
                     font-size: 0.4em;
                 }
+                a{
+                    &:hover{
+                        text-decoration: none !important;
+                    }
+                    .success{
+                        color: #d1d1d1;
+                        &:hover, &.validated{
+                            color: $success_color;
+                        }
+                    }
+                    .untested{
+                        color: #d1d1d1;
+                        &:hover, &.validated{
+                            color: $untested_color !important;
+                        }
+                    }
+                    .failed{
+                        color: #d1d1d1;
+                        &:hover, &.validated{
+                            color: $failed_color !important;
+                        }
+                    }
+                }
             }
-            .up_or_down, .close, .last_modification{
+            .comment{
+                a{
+                    color: $findspire_color;
+                    font-size: 20px;
+                    transition: all 200ms ease-in-out;
+                    &:hover{
+                        cursor: pointer;
+                        opacity: 0.6;
+                    }
+                }
+            }
+            .close, .last_modification{
                 opacity: 0;
             }
+            .close{
+                span{
+                    color: red !important;
+                    font-size: 15px;
+                }
+            }
             &:hover{
-                .up_or_down, .close, .last_modification{
+                .close, .last_modification{
                     opacity: 1;
                     a:hover{
                         opacity: 0.6;
@@ -260,22 +339,16 @@ li label {
                 }
             }
         }
-        .comment{
-            img{
-                height: 20px;
-                width: 20px
-            }
-        }
         .pop-up{
             background-color: #fff;
             border: 1px solid #000;
-            border-radius: 10px;
             display: none;
             max-height: 400px;
             padding: 10px;
             position: absolute;
             text-align: center;
             width: 300px;
+            z-index: 1000;
             ul{
                 overflow: auto;
                 max-height: 380px;
@@ -302,64 +375,25 @@ li label {
         }
     }
 }  
-
-#progressbar
-{
-    table {
-        width: 100%;
-        margin: 10px 0;
-        height: 30px;
-
-        td {
-            padding: 1px;
-        }
-
-        .success {
-            background-color: #080;
-        }
-
-        .failed {
-            background-color: #A22;
-        }
-
-        .untested {
-            background-color: #888;
-        }
+.progress{
+    .progress-bar-success{
+        float: left;
     }
-
-    // stats
-    div {
-        text-align: center;
-        text-transform: capitalize;
-
-        li {
-            list-style: none;
-            display: inline;
-            margin: 15px;
-        }
-
-        .square {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border: 1px solid black;
-            margin-right: 5px;
-        }
-
-        .success .square {
-            background-color: #080;
-        }
-
-        .failed .square {
-            background-color: #A22;
-        }
-
-        .untested .square {
-            background-color: #888;
-        }
+    .progress-bar-danger{
+        float: right;
+    }
+    .progress-bar-untested{
+        background-color: #f0ad4e !important;
+        float: center;
     }
 }
-
+.square{
+        display: inline;
+        padding: 10px;
+        &.untested{
+            color: #f0ad4e;
+        }
+}
 #filters {
     text-align: center;
     margin: 10px;

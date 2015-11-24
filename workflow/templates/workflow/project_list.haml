@@ -1,6 +1,7 @@
 - extends "workflow/base.haml"
 
 - load i18n
+- load l10n
 - load workflow_tags
 - load static
 - block title
@@ -15,57 +16,58 @@
 
     %ul
         - for project, workflows in projects.items
-            %li
-                %h2
-                    {{ project }}
-                    %span.controls
-                        %a{:href => "{% url 'workflow:project_edit' project.pk %}"}
-                            {% trans 'Edit' %}
-                        \/
-                        %a{:href => "{% url 'workflow:workflow_new' project.pk %}"}
-                            {% trans 'New workflow' %}
+            - if user.person in project.team.members.all or user.is_superuser
+                %li
+                    %h2
+                        {{ project }}
+                        %span.controls
+                            %a{:href => "{% url 'workflow:project_edit' project.pk %}"}
+                                {% trans 'Edit' %}
+                            \/
+                            %a{:href => "{% url 'workflow:workflow_new' project.pk %}"}
+                                {% trans 'New workflow' %}
 
-                - if workflows
-                        %table.workflow_list{:style => "width: 100%"}
-                            %tr
-                                %th
-                                    {% trans 'Workflow version' %}
-                                %th
-                                    {% trans 'Success percent' %}
-                                %th
-                                    {% trans 'Success / Untested / Failed' %}
-                                %th
-                                    {% trans 'Creation date' %}
-                                %th
+                    - if workflows
+                            %table.workflow_list{:style => "width: 100%"}
+                                %tr
+                                    %th
+                                        {% trans 'Workflow version' %}
+                                    %th
+                                        {% trans 'Success percent' %}
+                                    %th
+                                        {% trans 'Success / Untested / Failed' %}
+                                    %th
+                                        {% trans 'Creation date' %}
+                                    %th
 
-                            - for workflow in workflows
-                                %tr.item
-                                    %td{:style => "width: 60%"}
-                                        %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
-                                            {{ workflow.version }}
-                                    %td
-                                        .progress_bar
-                                            %span.success{:style => "width:{{ workflow.success_percent }}%;"}
-                                            %p
-                                                {{ workflow.success_percent }}% 
-                                    %td
-                                        %span.success
-                                            {{ workflow|get_count:'success'}}
-                                        \/
-                                        %span.untested
-                                            {{ workflow|get_count:'untested' }}
+                                - for workflow in workflows
+                                    %tr.item
+                                        %td{:style => "width: 60%"}
+                                            %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
+                                                {{ workflow.version }}
+                                        %td
+                                            .progress_bar
+                                                %span.success{:style => 'width:{{ workflow|percent:"success"|unlocalize }}%;'}
+                                                %p
+                                                    {{ workflow|percent:"success"|floatformat:"0"}}% 
+                                        %td
+                                            %span.success
+                                                {{ workflow|get_count:'success'}}
+                                            \/
+                                            %span.untested
+                                                {{ workflow|get_count:'untested' }}
 
-                                        \/
-                                        %span.failed
-                                            {{ workflow|get_count:'failed' }}
-                                    %td
-                                        {{ workflow.creation_date|date:"d/m/Y" }}
+                                            \/
+                                            %span.failed
+                                                {{ workflow|get_count:'failed' }}
+                                        %td
+                                            {{ workflow.creation_date|date:"d/m/Y" }}
 
-                                    %td
-                                        - if request.user.person in workflow.project.team.members.all
-                                            %a.close{:href => "{% url 'workflow:workflow_delete' workflow.pk %}"}
-                                                %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
-                - else
-                    %p
-                        %em
-                            {% trans "No workflows in this project." %}
+                                        %td
+                                            - if request.user.person in workflow.project.team.members.all
+                                                %a.close{:href => "{% url 'workflow:workflow_delete' workflow.pk %}"}
+                                                    %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
+                    - else
+                        %p
+                            %em
+                                {% trans "No workflows in this project." %}

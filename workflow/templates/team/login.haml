@@ -9,19 +9,21 @@
         {% trans "Login" %}
 
 - block content
-    .login
+    .col-md-4.col-md-offset-4
         %h2
             Login
         %form{:action => "/team/login/", :method => "post"}
             - csrf_token
-            %label{:for => "username"}
-                {% trans 'Username' %}
-            %input{:type => "text", :name => "username", :required => "true"}/
-            %label{:for => "password"}
-                {% trans 'Password' %}
-            %input{:type => "password", :name => "password", :required => "true"}/
+            .form-group
+                %label{:for => "username"}
+                    {% trans 'Username' %}
+                %input.form-control{:type => "text", :name => "username", :required => "true"}/
+            .form-group
+                %label{:for => "password"}
+                    {% trans 'Password' %}
+                %input.form-control{:type => "password", :name => "password", :required => "true"}/
             %br/
-            %button{:type => "submit"}
+            %button.btn.btn-success{:type => "submit"}
                 {% trans 'Connection' %}
         
         .messages

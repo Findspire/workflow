@@ -6,7 +6,8 @@
 %form{action:"", method:"post"}
     - csrf_token
     {{ form.as_p | u }}
-    %input{type:"submit", value:"Submit"}
+    %button.btn.btn-primary.btn-custom{type:"submit", value:"Submit"}
+        Submit
 
 %script
     $(document).ready(function() {

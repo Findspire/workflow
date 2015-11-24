@@ -23,9 +23,22 @@
         - block nav
             %nav
                 .navbar.navbar-inverse.navbar-fixed-top
-                    .navbar-brand
-                        %a{:href => "/"}
-                            Workflow
+                    .container-fluid
+                        .navbar-header
+                            .navbar-brand
+                                %a{:href => "/"}
+                                    %img{:src => "{% static 'workflow/img/logo.png' %}", :alt => ""}/
+                        .navbar-collapse.collapse
+                            - if request.user.is_active
+                                %ul.nav.navbar-nav.navbar-right
+                                    %li.dropdown
+                                        %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
+                                            %span.glyphicon.glyphicon-user
+                                        %ul.dropdown-menu
+                                            %li
+                                                %a{:href => "{% url 'team:logout' %}"}
+                                                    %span.glyphicon.glyphicon-off
+                                                    {% trans 'Logout' %}
         #warning_js
             {% trans "Your JavaScript seem to be disabled. Some functionalities needs it and we advise you to enable it." %}
 

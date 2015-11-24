@@ -23,6 +23,11 @@ def get_count(workflow, param):
 
 
 @register.filter
+def percent(workflow, value):
+    return workflow.get_percent(value)
+
+
+@register.filter
 def get_status(item):
     if item.validation == Item.VALIDATION_SUCCESS:
         return 'success'
