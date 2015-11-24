@@ -20,7 +20,7 @@ def set_comments_count():
     for w in Workflow.objects.all():
         for i in w.get_items('all'):
             for c in Comment.objects.filter(item=i):
-                Item.objects.filter(id=c.id).update(comments_count = F('comments_count') + 1)
+                Item.objects.filter(id=c.item.id).update(comments_count = F('comments_count') + 1)
 
 
 if __name__ == '__main__':
