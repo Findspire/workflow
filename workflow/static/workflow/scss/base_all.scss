@@ -317,6 +317,9 @@ li label {
                         opacity: 0.6;
                     }
                 }
+                .link{
+                    font-size: 12px;
+                }
             }
             .close, .last_modification{
                 opacity: 0;
@@ -349,17 +352,14 @@ li label {
             text-align: center;
             width: 300px;
             z-index: 1000;
-            ul{
+            dl{
                 overflow: auto;
                 max-height: 380px;
                 padding: 10px;
-                li{
-                    list-style-type: none;
-                }
-                .title{
+                dt{
                     text-align: left;
                 }
-                .text{
+                dd{
                     margin-bottom: 10px;
                 }
             }

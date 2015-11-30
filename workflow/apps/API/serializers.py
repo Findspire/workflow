@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
-from workflow.apps.workflow.models import Comment
+from workflow.apps.workflow.models import Comment, Item
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -9,3 +9,8 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('username', 'date', 'text')
+
+
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item

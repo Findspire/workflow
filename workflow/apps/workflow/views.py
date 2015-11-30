@@ -291,7 +291,7 @@ def update_item_validation(request, item_pk, action):
             'updated_at': item.updated_at,
         }
         return JsonResponse(data)
-        
+
 
 @login_required
 def itemmodel_list(request):
@@ -317,11 +317,11 @@ def drag_item(request, item_pk, related_pk=None):
 @login_required
 def take_items_category(request, workflow_pk, category_pk, action):
     if action == 'take':
-        Item.objects.filter(category__pk=category_pk, assigned_to=None).update(
-                                                            assigned_to=request.user, 
-                                                            assigned_to_name_cache=request.user.username)
+        Item.objects.filter(category__pk=category_pk, assigned_to=None, workflow__pk=workflow_pk)\
+                    .update(assigned_to=request.user, assigned_to_name_cache=request.user.username)
     elif action == 'untake':
-        Item.objects.filter(category__pk=category_pk, assigned_to_name_cache=request.user.username, validation=0)\
+        Item.objects.filter(category__pk=category_pk, assigned_to_name_cache=request.user.username,
+                            validation=0, workflow__pk=workflow_pk)\
                     .update(assigned_to=None, assigned_to_name_cache=None)                     
     else:
         raise Http404('Action %s does not exist' % action)

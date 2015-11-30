@@ -2,7 +2,7 @@
 - load i18n
 - load workflow_tags
 - for category, items in categories
-    %table
+    %table{data-username: "{{ user }}"}
         %thead
             %tr.category
                 %th{:style => "width: 65%;"}
@@ -45,10 +45,10 @@
                         - if item.assigned_to_name_cache
                             {{ item.assigned_to_name_cache }}
                             - if item.assigned_to_name_cache == user.username
-                                %a.close{href: "{% url 'workflow:update' which_display 'untake' 'item' item.pk %}?next={{ request.path }}", title: "Reset owner of item", data-status: "mine"}
+                                %a.close{title: "Reset owner of item", data-status: "mine"}
                                     %span.glyphicon.glyphicon-remove
                         - else
-                            %a{href: "{% url 'workflow:update' which_display 'take' 'item' item.pk %}?next={{ request.path }}", title: "Take item", data-status: "untaken"}
+                             %a.not-take{title: "Take item", data-status: "untaken"}
                                 {% trans "Take" %}
 
 
@@ -59,7 +59,7 @@
                             %div.pop-up{"data-url" => "{% url 'api:comments-list' item.pk %}"}
                                 %a.close
                                     %span.glyphicon.glyphicon-remove
-                                %ul
+                                %dl
                                 
                     %td.validate
                         - if item.validation == Item.VALIDATION_SUCCESS

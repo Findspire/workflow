@@ -1,14 +1,15 @@
-
+'use strict';
 $(document).ready(function() {
     $("#filters ." + location.pathname.split("/")[5]+" input").attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
     $("#items .validate a").each(function(){
         $(this).click(validate_item_onclick);
-    })
+    });
     $("#workflow_add_item a").click(modal_onclick);
     $(".workflow_add_category").click(modal_onclick);
     $("a[data-target='pop-up']").click(popupShow);
     $(".pop-up .close").click(popupClose);  
-
+    $(".take_untake_item a").click(takeItem);
+    $(".take_untake_item a.close").click(untakeItem);
     $("table #sortable").each(function(){
         $(this).sortable({
             items: '.item_list',
@@ -24,20 +25,33 @@ $(document).ready(function() {
 
 function popupData(popup){
     var $popup = $(popup),
-        $ul = $popup.find('ul');
+        $ul = $popup.find('dl');
 
     $ul.empty();
     $.getJSON($popup.data('url'), function(data){
+        var re = new RegExp("((((http|https):\/\/)?(www\.)?)?([a-zA-Z0-9;/?:@&=+$-])*(\.(fr|com|eu|org|net|edu|gouv|co|paris)){1}(\/[a-zA-Z0-9;/?:@&=+$-_!~*'()]+)?)");
         $.each(data, function(key, val){
-            $ul.append('<li class="title"><b>'+ val.username + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.date))  + '</b></li>')
-                .append('<li class="text">'+ val.text + '</li>');
+            var words = val.text.split(' ');
+            for(var i in words){
+                var word = String(words[i]);
+                if(word.match(re)){
+                    if(!word.startsWith('http')){
+                        word = 'http://' + word;
+                        words[i] = word;
+                    }
+                }
+            }
+            val.text = words.join(' ');
+            var text = val.text.replace(re, '<a class="link" target="_blank" href="$&">$&</a>');
+            $ul.append('<dt class="title"><b>'+ val.username + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.date))  + '</b></dt>')
+               .append('<dd class="text">'+ text + '</dd>');
         });
     });
 }
 
 function popupShow(){
     var $element = $($(this).next());
-    $element.addClass('active');
+    $element.addClass('active').draggable();
     popupData($element);
 }
 
@@ -69,6 +83,18 @@ function send_request($elem){
     var dfd = $.get($elem.attr("href"));
     dfd.fail(function(jqXHR){
             alert(jqXHR.responseText);
+    });
+    return dfd;
+}
+
+function sendPutRequest(url, data){
+    var dfd = $.ajax({
+        url: url,
+        type: 'PUT',
+        data: data,
+    });
+    dfd.fail(function(jqXHR){
+        console.log(jqXHR.responseText);
     });
     return dfd;
 }
@@ -107,6 +133,41 @@ function updateCounters(counts){
     $('.square.failed .number').text(counts[2]);
     $('#filters .success .number').text(counts[1]);
     $('#filters .failed .number').text(counts[2]);
+}
+
+function takeItem(){
+    var elem = $(this);
+    var username = elem.closest('table').data('username');
+    var item_pk = elem.closest('.item_list').data('item-pk');
+    if(elem.hasClass('not-take')){
+        var dfd = sendPutRequest(
+            "/api/item/" + item_pk + "/take/" + username + "/",
+            {username: username, item_pk: item_pk}
+        );
+        dfd.done(function(){
+            elem.removeClass('not-take');
+            var link = $('<a class="close untake"><span class="glyphicon glyphicon-remove"></span></a>');
+            elem.closest('.take_untake_item').html(username + link[0].outerHTML);
+            $('.untake').click(untakeItem);
+        });
+    }
+}
+
+function untakeItem(){
+    var elem = $(this);
+    var item_pk = elem.closest('.item_list').data('item-pk');
+    if(!elem.hasClass('not-take')){
+        var dfd = sendPutRequest(
+            "/api/item/" + item_pk + "/untake/",
+            {item_pk: item_pk}
+        );
+        dfd.done(function(){
+            var link = $('<a class="not-take">Take</a>');
+            elem.closest('.take_untake_item').html(link);
+            link.click(takeItem);
+        });
+    }
+
 }
 
 function validate_item_onclick() {
