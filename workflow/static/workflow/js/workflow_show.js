@@ -117,9 +117,9 @@ function updateProgressBar(){
         counts[this.getAttribute('data-status')] += 1;
     });
     total = $trs.length; 
-    successPercent = (counts[1] * 100 )/ total;
-    untestedPercent = (counts[0] * 100 )/ total;
-    failedPercent = (counts[2] * 100 )/ total;
+    var successPercent = (counts[1] * 100 )/ total,
+        untestedPercent = (counts[0] * 100 )/ total,
+        failedPercent = (counts[2] * 100 )/ total;
 
     successBar.css('width', successPercent + '%').text(Math.round(successPercent) + '%');
     untestedBar.css('width', untestedPercent + '%').text(Math.round(untestedPercent) + '%');
