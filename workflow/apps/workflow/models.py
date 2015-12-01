@@ -60,6 +60,7 @@ class Workflow(models.Model):
     version = models.CharField(max_length=128, verbose_name=_('Version'))
     creation_date = models.DateField(auto_now=True, verbose_name=_('Creation date'))
     categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
+    archived = models.BooleanField(default=False)
 
     def __unicode__(self):
         return '%s - %s' % (self.project, self.version)

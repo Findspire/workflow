@@ -65,7 +65,7 @@
 
                                         %td
                                             - if request.user.person in workflow.project.team.members.all
-                                                %a.close{:href => "{% url 'workflow:workflow_delete' workflow.pk %}"}
+                                                %a.close{data-workflow: "{{workflow.pk}}"}
                                                     %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
                     - else
                         %p

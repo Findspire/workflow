@@ -1,9 +1,10 @@
 'use strict';
-$(document).ready(function() {
+$(function() {
     $("#filters ." + location.pathname.split("/")[5]+" input").attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
     $("#items .validate a").each(function(){
         $(this).click(validate_item_onclick);
     });
+    $(".workflow_list .item a.close").click(archivedWorkflow);
     $("#workflow_add_item a").click(modal_onclick);
     $(".workflow_add_category").click(modal_onclick);
     $("a[data-target='pop-up']").click(popupShow);
@@ -88,15 +89,36 @@ function send_request($elem){
 }
 
 function sendPutRequest(url, data){
+    return sendRequest(url, data, 'PUT');
+}
+
+function sendPatchRequest(url, data){
+    return sendRequest(url, data, 'PATCH');
+}
+
+function sendPOSTRequest(url, data){
+    return sendRequest(url, data, 'POST');
+}
+
+function sendRequest(url, data, type){
     var dfd = $.ajax({
         url: url,
-        type: 'PUT',
+        type: type,
         data: data,
     });
     dfd.fail(function(jqXHR){
         console.log(jqXHR.responseText);
     });
-    return dfd;
+}
+
+function archivedWorkflow(){
+    if(confirm("This workflow will be archived, are you sure ?")){
+        var workflow_pk = this.getAttribute('data-workflow');
+        var url = '/api/workflow/' + workflow_pk;
+        sendRequest(url, { archived: true}, 'PATCH');
+        $(this).closest('.item').fadeOut();
+    }
+    return false;
 }
 
 function updateProgressBar(){

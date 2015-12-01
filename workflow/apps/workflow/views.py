@@ -42,7 +42,7 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
 @login_required
 def project_list(request):
     context = {
-        'projects': {project:Workflow.objects.filter(project=project) for project in Project.objects.all()},
+        'projects': {project:Workflow.objects.filter(project=project, archived=False) for project in Project.objects.all()},
     }
     return render(request, 'workflow/project_list.haml', context)
 
