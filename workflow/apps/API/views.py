@@ -30,57 +30,25 @@ class CommentList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class TakeItem(APIView):
+class ItemDetails(APIView):
     """
-    Take item to request user
+    Retrieve or update details of selected item
     """
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
-    def put(self, request, username, item_pk, format=None):
+    def patch(self, request, item_pk, format=None):
         """
-        Assign selected item to username
+        Update partial details of selected item
         ---
         request_serializer: serializers.ItemSerializer
         response_serializer: serializers.ItemSerializer
         """
         item = get_object_or_404(Item, pk=item_pk)
-        user = get_object_or_404(User, username=username)
-        if item.assigned_to == None:
-            item.assigned_to = user.person
-            item.assigned_to_name_cache = user.username
-            serializer = serializers.ItemSerializer(item, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
-        return Response(status=status.HTTP_403_FORBIDDEN)
-
-
-class UntakeItem(APIView):
-    """
-    Untake item
-    """
-    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
-
-    def put(self, request, item_pk, format=None):
-        """
-        Untake item
-        ---
-        request_serializer: serializers.ItemSerializer
-        response_serializer: serializers.ItemSerializer
-        """
-        item = get_object_or_404(Item, pk=item_pk)
-        if item.assigned_to is not None:
-            item.assigned_to = None
-            item.assigned_to_name_cache = None
-            serializer = serializers.ItemSerializer(item, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        serializer = serializers.ItemSerializer(item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class WorkflowDetails(APIView):

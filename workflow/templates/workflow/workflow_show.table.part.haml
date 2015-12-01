@@ -2,7 +2,7 @@
 - load i18n
 - load workflow_tags
 - for category, items in categories
-    %table{data-username: "{{ user }}"}
+    %table{data-user-pk: "{{ user.pk }}", data-username: "{{ user.username }}"}
         %thead
             %tr.category
                 %th{:style => "width: 65%;"}
@@ -32,6 +32,9 @@
                     %td.item
                         %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.name}}"}
                             {{ item.name }}
+                        %form{:style => "display: none"}
+                            %input{:type => "text", :value => "{{ item.name }}"}/
+                            %input{:type => "submit"}/
                         - for url, ticket_id in item.name|get_tickets
                             - if forloop.counter == 1
                                 %strong{style:"margin-left:20px;"}
@@ -40,7 +43,7 @@
                                 \#{{ ticket_id }}
                             - if not forloop.last
                                 \-
-                    
+                            
                     %td.take_untake_item
                         - if item.assigned_to_name_cache
                             {{ item.assigned_to_name_cache }}
@@ -88,6 +91,10 @@
 
 
                     %td
-                        %a.close{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
-                            %span.glyphicon.glyphicon-remove
+                        .col-md-1
+                            %a.action.edit
+                                %span.glyphicon.glyphicon-edit
+                        .col-md-offset-1
+                            %a.action.close{:href => "{% url 'workflow:delete_item_view' workflow.pk item.pk %}"}
+                                %span.glyphicon.glyphicon-remove
 

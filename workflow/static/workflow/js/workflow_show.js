@@ -11,6 +11,7 @@ $(function() {
     $(".pop-up .close").click(popupClose);  
     $(".take_untake_item a").click(takeItem);
     $(".take_untake_item a.close").click(untakeItem);
+    $(".item_list .edit").click(editItemName);
     $("table #sortable").each(function(){
         $(this).sortable({
             items: '.item_list',
@@ -109,6 +110,7 @@ function sendRequest(url, data, type){
     dfd.fail(function(jqXHR){
         console.log(jqXHR.responseText);
     });
+    return dfd;
 }
 
 function archivedWorkflow(){
@@ -158,13 +160,15 @@ function updateCounters(counts){
 }
 
 function takeItem(){
-    var elem = $(this);
-    var username = elem.closest('table').data('username');
-    var item_pk = elem.closest('.item_list').data('item-pk');
+    var elem = $(this),
+        username = elem.closest('table').data('username'),
+        user_pk = elem.closest('table').data('user-pk'),
+        item_pk = elem.closest('.item_list').data('item-pk');
     if(elem.hasClass('not-take')){
-        var dfd = sendPutRequest(
-            "/api/item/" + item_pk + "/take/" + username + "/",
-            {username: username, item_pk: item_pk}
+        var dfd = sendRequest(
+            "/api/item/" + item_pk + "/",
+            {item_pk: item_pk, assigned_to:user_pk, assigned_to_name_cache:username},
+            'PATCH'
         );
         dfd.done(function(){
             elem.removeClass('not-take');
@@ -179,9 +183,10 @@ function untakeItem(){
     var elem = $(this);
     var item_pk = elem.closest('.item_list').data('item-pk');
     if(!elem.hasClass('not-take')){
-        var dfd = sendPutRequest(
-            "/api/item/" + item_pk + "/untake/",
-            {item_pk: item_pk}
+        var dfd = sendRequest(
+            "/api/item/" + item_pk + "/",
+            {item_pk: item_pk, assigned_to:null, assigned_to_name_cache:null},
+            'PATCH'
         );
         dfd.done(function(){
             var link = $('<a class="not-take">Take</a>');
@@ -210,6 +215,31 @@ function validate_item_onclick() {
             alert(jqXHR.responseText);
         });
     return false;
+}
+
+function editItemName() {
+    var $item = $(this).closest('.item_list'),
+        item_pk = $item.data('item-pk'),
+        edit = $item.find('.item'),
+        editVal = edit.text().trim(),
+        form = edit.find('form');
+    edit.find('a:first').hide();
+    form.show();
+    form.on('submit', function(f){
+        f.preventDefault();
+        changeItemName($item, item_pk)});
+    return false
+}
+function changeItemName(elem, item_pk){
+    var newName = $(elem).find('input').val(),
+        url = '/api/item/' + item_pk + '/',
+        dfd = sendRequest(url, {name: newName}, 'PATCH');
+    dfd.done(function(){
+        $(elem).find('.item a:first').text(newName);
+        $(elem).find('.item form').hide();
+        $(elem).find('.item a:first').show();
+    }); 
+    return false
 }
 
 function modal_onclick() {
