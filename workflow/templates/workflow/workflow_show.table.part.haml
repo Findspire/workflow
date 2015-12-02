@@ -3,7 +3,7 @@
 - load workflow_tags
 %script#template_form_item{type: "text/template"}
     %form{:style => "display: none"}
-        %input{:type => "text"}/
+        %input{:type => "text", :size => "50"}/
         %input{:type => "submit"}/
 - for category, items in categories
     %table{data-user-pk: "{{ user.pk }}", data-username: "{{ user.username }}"}
