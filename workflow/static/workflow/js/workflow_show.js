@@ -16,6 +16,7 @@ $(function() {
     $(".take_untake_item a").click(takeItem);
     $(".take_untake_item a.close").click(untakeItem);
     $(".item_list .edit").click(editItemName);
+    $(".item_list .action.close").click(deleteItem);
     $("table #sortable").each(function(){
         $(this).sortable({
             items: '.item_list',
@@ -119,6 +120,11 @@ wf.ajax.patch = function(url, data) {
 wf.ajax.post = function(url, data) {
     return wf.ajax.send(url, data, 'POST');
 }
+
+wf.ajax.delete = function(url, data) {
+    return wf.ajax.send(url, data, 'DELETE');
+}
+
 function send_request($elem){
     var dfd = $.get($elem.attr("href"));
     dfd.fail(function(jqXHR){
@@ -129,10 +135,13 @@ function send_request($elem){
 
 function archivedWorkflow(){
     if(confirm("This workflow will be archived, are you sure ?")){
-        var workflow_pk = this.getAttribute('data-workflow');
-        var url = '/api/workflow/' + workflow_pk;
-        sendRequest(url, { archived: true}, 'PATCH');
-        $(this).closest('.item').fadeOut();
+        var workflow_pk = this.getAttribute('data-workflow'),
+            url = '/api/workflow/' + workflow_pk,
+            $elem = $(this).closest('.item');
+        wf.ajax.patch(url, { archived: true})
+          .done(function(){
+            $elem.fadeOut();
+          })
     }
     return false;
 }
@@ -254,6 +263,16 @@ function changeItemName(elem, item_pk){
             $(elem).find('.item a:first').show();
         }); 
     return false
+}
+
+function deleteItem() {
+    var $elem = $(this).closest('.item_list'),
+        itemPk = $elem.data('item-pk'),
+        url = '/api/item/' + itemPk + '/';
+    wf.ajax.delete(url, {item_pk: itemPk})
+      .done(function(){
+            $elem.fadeOut();
+      });
 }
 
 function modal_onclick() {

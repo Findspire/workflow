@@ -6,7 +6,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from django.shortcuts import get_object_or_404
 from workflow.apps.API import serializers
 from django.contrib.auth.models import User
-from workflow.apps.workflow.models import Item, Comment, Workflow
+from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -49,6 +49,14 @@ class ItemDetails(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, item_pk, format=None):
+        """
+        Delete selected item
+        """
+        item = get_object_or_404(Item, pk=item_pk)
+        item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class WorkflowDetails(APIView):
