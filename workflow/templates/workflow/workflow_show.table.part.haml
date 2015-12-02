@@ -1,6 +1,10 @@
 - load static
 - load i18n
 - load workflow_tags
+%script#template_form_item{type: "text/template"}
+    %form{:style => "display: none"}
+        %input{:type => "text"}/
+        %input{:type => "submit"}/
 - for category, items in categories
     %table{data-user-pk: "{{ user.pk }}", data-username: "{{ user.username }}"}
         %thead
@@ -32,9 +36,6 @@
                     %td.item
                         %a{href: "{% url 'workflow:item_instance_show' item.pk %}", title:"{{ item.name}}"}
                             {{ item.name }}
-                        %form{:style => "display: none"}
-                            %input{:type => "text", :value => "{{ item.name }}"}/
-                            %input{:type => "submit"}/
                         - for url, ticket_id in item.name|get_tickets
                             - if forloop.counter == 1
                                 %strong{style:"margin-left:20px;"}
@@ -85,7 +86,6 @@
                         - else
                             %a{href: "#", title: "Click to failed item", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}"}
                                 %span.glyphicon.glyphicon-remove-sign.failed
-
                         %br
                             %span.last_modification= item.updated_at|date:"d/m/Y H:i"
 

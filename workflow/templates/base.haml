@@ -29,6 +29,8 @@
                             .navbar-brand
                                 %a{:href => "/"}
                                     %img{:src => "{% static 'workflow/img/logo.png' %}", :alt => ""}/
+                                .version
+                                    1.0.3
                         .navbar-collapse.collapse
                             - if request.user.is_active
                                 %ul.nav.navbar-nav.navbar-right

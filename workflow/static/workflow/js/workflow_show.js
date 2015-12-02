@@ -1,6 +1,10 @@
 'use strict';
+
+var wf = {};
+
+
 $(function() {
-    $("#filters ." + location.pathname.split("/")[5]+" input").attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
+    $("#filters ." + location.pathname.split("/")[5]+"input").attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
     $("#items .validate a").each(function(){
         $(this).click(validate_item_onclick);
     });
@@ -23,6 +27,15 @@ $(function() {
     });
     $("#modal_background").click(modal_hide);
 
+    wf.templates = {};
+    wf.templates.itemNameEditForm = $('#template_form_item');
+
+    wf.dom = {};
+    wf.dom.table = $('table');
+    wf.dom.progressBar = $('.progress');
+    wf.dom.successBar = wf.dom.progressBar.find('.progress-bar-success');
+    wf.dom.untestedBar = wf.dom.progressBar.find('.progress-bar-untested');
+    wf.dom.failedBar = wf.dom.progressBar.find('.progress-bar-danger');
 });
 
 function popupData(popup){
@@ -81,27 +94,9 @@ function setItemPosition(afterId, taskId){
 }     
 
 
-function send_request($elem){
-    var dfd = $.get($elem.attr("href"));
-    dfd.fail(function(jqXHR){
-            alert(jqXHR.responseText);
-    });
-    return dfd;
-}
+wf.ajax = {};
 
-function sendPutRequest(url, data){
-    return sendRequest(url, data, 'PUT');
-}
-
-function sendPatchRequest(url, data){
-    return sendRequest(url, data, 'PATCH');
-}
-
-function sendPOSTRequest(url, data){
-    return sendRequest(url, data, 'POST');
-}
-
-function sendRequest(url, data, type){
+wf.ajax.send = function(url, data, type) {
     var dfd = $.ajax({
         url: url,
         type: type,
@@ -109,6 +104,25 @@ function sendRequest(url, data, type){
     });
     dfd.fail(function(jqXHR){
         console.log(jqXHR.responseText);
+    });
+    return dfd;
+};
+
+wf.ajax.put = function(url, data) {
+    return wf.ajax.send(url, data, 'PUT');
+};
+
+wf.ajax.patch = function(url, data) {
+    return wf.ajax.send(url, data, 'PATCH');
+}
+
+wf.ajax.post = function(url, data) {
+    return wf.ajax.send(url, data, 'POST');
+}
+function send_request($elem){
+    var dfd = $.get($elem.attr("href"));
+    dfd.fail(function(jqXHR){
+            alert(jqXHR.responseText);
     });
     return dfd;
 }
@@ -124,11 +138,6 @@ function archivedWorkflow(){
 }
 
 function updateProgressBar(){
-    var $bar = $('.progress'),
-        successBar = $bar.find('.progress-bar-success'),
-        untestedBar = $bar.find('.progress-bar-untested'),
-        failedBar = $bar.find('.progress-bar-danger');
-
     var counts = {
         0: 0, // Untested items
         1: 0, // Success items
@@ -145,12 +154,15 @@ function updateProgressBar(){
         untestedPercent = (counts[0] * 100 )/ total,
         failedPercent = (counts[2] * 100 )/ total;
 
-    successBar.css('width', successPercent + '%').text(Math.round(successPercent) + '%');
-    untestedBar.css('width', untestedPercent + '%').text(Math.round(untestedPercent) + '%');
-    failedBar.css('width', failedPercent + '%').text(Math.round(failedPercent) + '%');
+    wf.dom.successBar.css('width', successPercent + '%').text(Math.round(successPercent) + '%');
+    wf.dom.untestedBar.css('width', untestedPercent + '%').text(Math.round(untestedPercent) + '%');
+    wf.dom.failedBar.css('width', failedPercent + '%').text(Math.round(failedPercent) + '%');
     updateCounters(counts);
 }
 
+/*
+ * @param Array counts 0 untested, 1 success, 2 failed
+ */
 function updateCounters(counts){
     $('.square.success .number').text(counts[1]);
     $('.square.untested .number').text(counts[0]);
@@ -165,12 +177,11 @@ function takeItem(){
         user_pk = elem.closest('table').data('user-pk'),
         item_pk = elem.closest('.item_list').data('item-pk');
     if(elem.hasClass('not-take')){
-        var dfd = sendRequest(
+        wf.ajax.patch(
             "/api/item/" + item_pk + "/",
-            {item_pk: item_pk, assigned_to:user_pk, assigned_to_name_cache:username},
-            'PATCH'
-        );
-        dfd.done(function(){
+            {item_pk: item_pk, assigned_to:user_pk, assigned_to_name_cache:username}
+        )
+        .done(function(){
             elem.removeClass('not-take');
             var link = $('<a class="close untake"><span class="glyphicon glyphicon-remove"></span></a>');
             elem.closest('.take_untake_item').html(username + link[0].outerHTML);
@@ -183,12 +194,11 @@ function untakeItem(){
     var elem = $(this);
     var item_pk = elem.closest('.item_list').data('item-pk');
     if(!elem.hasClass('not-take')){
-        var dfd = sendRequest(
+        wf.ajax.patch(
             "/api/item/" + item_pk + "/",
-            {item_pk: item_pk, assigned_to:null, assigned_to_name_cache:null},
-            'PATCH'
-        );
-        dfd.done(function(){
+            {item_pk: item_pk, assigned_to:null, assigned_to_name_cache:null}
+        )
+        .done(function(){
             var link = $('<a class="not-take">Take</a>');
             elem.closest('.take_untake_item').html(link);
             link.click(takeItem);
@@ -222,23 +232,27 @@ function editItemName() {
         item_pk = $item.data('item-pk'),
         edit = $item.find('.item'),
         editVal = edit.text().trim(),
-        form = edit.find('form');
+        $form = $(wf.templates.itemNameEditForm.html().trim());
     edit.find('a:first').hide();
-    form.show();
-    form.on('submit', function(f){
-        f.preventDefault();
-        changeItemName($item, item_pk)});
+    edit.append($form);
+    $form.show();
+    $form.on('submit', function(e) {
+        e.preventDefault();
+        changeItemName($item, item_pk);
+        return false;
+    });
     return false
 }
 function changeItemName(elem, item_pk){
     var newName = $(elem).find('input').val(),
-        url = '/api/item/' + item_pk + '/',
-        dfd = sendRequest(url, {name: newName}, 'PATCH');
-    dfd.done(function(){
-        $(elem).find('.item a:first').text(newName);
-        $(elem).find('.item form').hide();
-        $(elem).find('.item a:first').show();
-    }); 
+        url = '/api/item/' + item_pk + '/';
+
+    wf.ajax.patch(url, {name: newName})
+        .done(function(){
+            $(elem).find('.item a:first').text(newName);
+            $(elem).find('.item form').hide();
+            $(elem).find('.item a:first').show();
+        }); 
     return false
 }
 
