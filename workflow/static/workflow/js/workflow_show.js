@@ -45,19 +45,8 @@ function popupData(popup){
 
     $ul.empty();
     $.getJSON($popup.data('url'), function(data){
-        var re = new RegExp("((((http|https):\/\/)?(www\.)?)?([a-zA-Z0-9;/?:@&=+$-])*(\.(fr|com|eu|org|net|edu|gouv|co|paris)){1}(\/[a-zA-Z0-9;/?:@&=+$-_!~*'()]+)?)");
+        var re = new RegExp("((http:\/\/|https:\/\/)(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)$");
         $.each(data, function(key, val){
-            var words = val.text.split(' ');
-            for(var i in words){
-                var word = String(words[i]);
-                if(word.match(re)){
-                    if(!word.startsWith('http')){
-                        word = 'http://' + word;
-                        words[i] = word;
-                    }
-                }
-            }
-            val.text = words.join(' ');
             var text = val.text.replace(re, '<a class="link" target="_blank" href="$&">$&</a>');
             $ul.append('<dt class="title"><b>'+ val.username + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.date))  + '</b></dt>')
                .append('<dd class="text">'+ text + '</dd>');
