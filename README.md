@@ -9,14 +9,6 @@ Small internship project to keep a list of items to check when a new release is 
 
 -----
 
-# Todo
-
-* renommer en anglais (wip)
-* vues user : login, logout, ... (wip)
-* permissions (wip)
-* more doc
-* more tests (especially ajax and permissions)
-
 # Setup
 
 Standard django setup :

@@ -1,0 +1,15 @@
+Workflow v1.0.3 Release Notes
+=============================
+
+Updates sinces v1.0.2
+---------------------
+  *   Match url pattern in comment text of item to make it clickable
+  *   In workflow list, the close button dont delete this workflow, but set it archived
+  *   In item list, add an edit button to change item name
+  *   Update breadcrumb in workflow show view to return in project list view
+  *   "Take" and delete link now with ajax request
+  *   Add version number under navbar-brand
+  *   Add ItemDetails and WorkflowDetails view in API with patch request
+  *   Optimize Javascript with namespace object
+
+=============================
