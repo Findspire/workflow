@@ -239,6 +239,7 @@ function editItemName() {
         editVal = edit.text().trim(),
         $form = $(wf.templates.itemNameEditForm.html().trim());
     edit.find('a:first').hide();
+    edit.find('form').remove();
     edit.append($form);
     $form.show();
     $form.on('submit', function(e) {
