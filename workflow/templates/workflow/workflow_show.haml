@@ -9,7 +9,9 @@
     {{ workflow.version}}
 
 - block breadcrumbs
-    {% trans "Show workflow" %}
+    %a{:href => "{% url 'workflow:project_list' %}"}
+        {{ workflow.project }}
+    › {{ workflow.version }}
 
 - block content
     %h1
