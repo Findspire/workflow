@@ -47,9 +47,16 @@ function popupData(popup){
     $.getJSON($popup.data('url'), function(data){
         var re = new RegExp("((http:\/\/|https:\/\/)(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)$");
         $.each(data, function(key, val){
-            var text = val.text.replace(re, '<a class="link" target="_blank" href="$&">$&</a>');
+            var words = val.text.split(' ');
+            for(var i in words){
+                var word = String(words[i]);
+                if(word.match(re)){
+                    words[i] = word.replace(re, '<a class="link" target="_blank" href="$&">$&</a>')
+                }
+             }
+            val.text = words.join(' ');
             $ul.append('<dt class="title"><b>'+ val.username + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.date))  + '</b></dt>')
-               .append('<dd class="text">'+ text + '</dd>');
+               .append('<dd class="text">'+ val.text + '</dd>');
         });
     });
 }
