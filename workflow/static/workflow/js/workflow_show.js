@@ -132,7 +132,7 @@ function send_request($elem){
 function archivedWorkflow(){
     if(confirm("This workflow will be archived, are you sure ?")){
         var workflow_pk = this.getAttribute('data-workflow'),
-            url = '/api/workflow/' + workflow_pk,
+            url = '/api/workflow/' + workflow_pk + '/',
             $elem = $(this).closest('.item');
         wf.ajax.patch(url, { archived: true})
           .done(function(){
