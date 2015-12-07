@@ -12,7 +12,7 @@ sys.path.append(PATH)
 django.setup()
 
 
-from workflow.apps.workflow.models import Item, ItemCategory, Workflow, Project
+from workflow.apps.workflow.models import Workflow, Project
 
 
 def workflow_position():
