@@ -36,6 +36,5 @@ urlpatterns = patterns('workflow.apps.workflow',
     url(r'^update/(?P<which_display>\w+)/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/$', views.update, name='update'),
     url(r'^update/(?P<which_display>\w+)/(?P<action>\w+)/(?P<model>\w+)/(?P<pk>\d+)/(?P<pk_other>\d+)/$', views.update, name='update'),
     url(r'^update/(?P<action>\w+)/(?P<item_pk>\d+)/', views.update_item_validation, name='update_item_validation'),
-    url(r'^drag-item/(?P<item_pk>[0-9]+)(?:/(?P<related_pk>[0-9]+))?/$', views.drag_item, name='drag_item'),
     url(r'^workflow/(?P<workflow_pk>[0-9]+)/(?P<category_pk>[0-9]+)/(?P<action>\w+)/', views.take_items_category, name='take_items_category'),
 )

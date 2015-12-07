@@ -295,19 +295,6 @@ def itemmodel_list(request):
 
 
 @login_required
-@csrf_exempt
-def drag_item(request, item_pk, related_pk=None):
-    item = get_object_or_404(Item, pk=item_pk)
-    if related_pk is not None:
-        related_item = Item.objects.get(pk=related_pk)
-        update_item_position(item, related_item)
-    else:
-        update_item_position(item)
-    return redirect(reverse('workflow:workflow_show', 
-                            kwargs={'workflow_pk': item.workflow.pk, 'which_display': 'all'}))
-
-
-@login_required
 def take_items_category(request, workflow_pk, category_pk, action):
     if action == 'take':
         Item.objects.filter(category__pk=category_pk, assigned_to=None, workflow__pk=workflow_pk)\

@@ -3,10 +3,12 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.core.urlresolvers import reverse
 from workflow.apps.API import serializers
 from django.contrib.auth.models import User
 from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel
+from workflow.apps.workflow.models import update_workflow_position, update_item_position
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -88,3 +90,35 @@ class WorkflowDetails(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class WorkflowDragPosition(APIView):
+    """
+    Update workflow position with drag and drop
+    """
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    def post(self, request, workflow_pk, related_pk=None):
+        workflow = get_object_or_404(Workflow, pk=workflow_pk)
+        if related_pk is not None:
+            related_item = Workflow.objects.get(pk=related_pk)
+            update_workflow_position(workflow, related_item)
+        else:
+            update_workflow_position(workflow)
+        return Response(status=status.HTTP_200_OK)
+
+
+class ItemDragPosition(APIView):
+    """
+    Update workflow position with drag and drop
+    """
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    def post(self, request, item_pk, related_pk=None):
+        item = get_object_or_404(Item, pk=item_pk)
+        if related_pk is not None:
+            related_item = Item.objects.get(pk=related_pk)
+            update_item_position(item, related_item)
+        else:
+            update_item_position(item)
+        return Response(status=status.HTTP_200_OK)

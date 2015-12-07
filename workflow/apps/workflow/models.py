@@ -18,7 +18,7 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import F
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy  as _
@@ -61,6 +61,10 @@ class Workflow(models.Model):
     creation_date = models.DateField(auto_now=True, verbose_name=_('Creation date'))
     categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
     archived = models.BooleanField(default=False)
+    position = models.IntegerField(null=True, editable=False)
+
+    class Meta:
+        ordering = ['position']
 
     def __unicode__(self):
         return '%s - %s' % (self.project, self.version)
@@ -108,19 +112,27 @@ class Workflow(models.Model):
                     Item.objects.create(item_model=item, workflow=self)
 
 
-def update_item_position(item, related_item=None):
+@receiver(pre_save, sender=Workflow)
+def workflow_position_handler(sender, instance=None, **kwargs):
+    if instance.position is None:
+        last = Workflow.objects.filter(project=instance.project, archived=False).last()
+        if last and last.position is not None:
+            instance.position = last.position + 1
+        else:
+            instance.position = 0
+
+
+def update_workflow_position(item, related_item=None):
     if related_item is not None:
         item.position = related_item.position
-        Item.objects.filter(
-                workflow=related_item.workflow, 
-                item_model__category=related_item.item_model.category, 
-                position__gte=related_item.position)\
+        Workflow.objects.filter(
+                project=item.project, 
+                archived=False)\
             .update(position=F('position') + 1)
     else:
-        related_item = Item.objects.filter(workflow=item.workflow,
-                                           item_model__category=item.item_model.category)\
-                                    .order_by('position')\
-                                    .last()
+        related_item = Workflow.objects.filter(project=item.project,
+                                               archived=False)\
+                                       .last()
         item.position = related_item.position + 1 if related_item else 0
     item.save()
 
@@ -173,6 +185,23 @@ class Item(models.Model):
             self.name = self.item_model.name
         self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
+
+
+def update_item_position(item, related_item=None):
+    if related_item is not None:
+        item.position = related_item.position
+        Item.objects.filter(
+                workflow=related_item.workflow, 
+                item_model__category=related_item.item_model.category, 
+                position__gte=related_item.position)\
+            .update(position=F('position') + 1)
+    else:
+        related_item = Item.objects.filter(workflow=item.workflow,
+                                           item_model__category=item.item_model.category)\
+                                    .order_by('position')\
+                                    .last()
+        item.position = related_item.position + 1 if related_item else 0
+    item.save()
 
 
 class Comment(models.Model):

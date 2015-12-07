@@ -41,7 +41,7 @@
                                     %th
 
                                 - for workflow in workflows
-                                    %tr.item
+                                    %tr.item{"data-item-pk" => "{{ workflow.pk }}", "data-model" => "workflow"}
                                         %td{:style => "width: 60%"}
                                             %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
                                                 {{ workflow.version }}

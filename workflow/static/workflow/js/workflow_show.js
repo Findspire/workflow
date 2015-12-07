@@ -17,12 +17,14 @@ $(function() {
     $(".take_untake_item a.close").click(untakeItem);
     $(".item_list .edit").click(editItemName);
     $(".item_list .action.close").click(deleteItem);
-    $("table #sortable").each(function(){
-        $(this).sortable({
+    $("table #sortable").sortable({
             items: '.item_list',
-            stop: onDragStop,
+            stop: function (event, ui) { onDragStop(event, ui, '/api/drag-item/')}
         }).disableSelection();
-    });
+    $(".workflow_list").sortable({
+        items: '.item',
+        stop: function (event, ui) {onDragStop(event, ui, '/api/drag-workflow/')},
+    }).disableSelection(); 
     $(".tooltip").tooltip({
         position: { my: "left+15 center", at: "right center" }
     });
@@ -72,24 +74,16 @@ function popupClose(){
     return false;
 }
 
-function onDragStop(event, ui){
-    var item = $(ui.item).data("itemPk");
-    var related = $(ui.item).next().data("itemPk");
-    setItemPosition(related, item);
-}
-
-function setItemPosition(afterId, taskId){
-    if(afterId){
-        var url = "/workflow/drag-item/" + taskId + "/" + afterId + "/";
-    }else{
-        var url = "/workflow/drag-item/" + taskId + "/";  
+function onDragStop(event, ui, url) {
+    var item = $(ui.item).data("item-pk");
+    var related = $(ui.item).next().data("item-pk");
+    if(related){
+        url = url + item + "/" + related + "/";
+    }else{ 
+        url = url + item + "/";
     }
-    var dfd = $.post(url);
-    dfd.fail(function(jqXHR, textStatus){
-        console.log(textStatus);
-    });
-}     
-
+    wf.ajax.post(url);
+}
 
 wf.ajax = {};
 
