@@ -182,12 +182,12 @@ function updateCounters(counts){
 function takeItem(){
     var elem = $(this),
         username = elem.closest('table').data('username'),
-        user_pk = elem.closest('table').data('user-pk'),
+        person_pk = elem.closest('table').data('person-pk'),
         item_pk = elem.closest('.item_list').data('item-pk');
     if(elem.hasClass('not-take')){
         wf.ajax.patch(
             "/api/item/" + item_pk + "/",
-            {item_pk: item_pk, assigned_to:user_pk, assigned_to_name_cache:username}
+            {item_pk: item_pk, assigned_to:person_pk, assigned_to_name_cache:username}
         )
         .done(function(){
             elem.removeClass('not-take');

@@ -6,7 +6,7 @@
         %input{:type => "text", :size => "50"}/
         %input{:type => "submit"}/
 - for category, items in categories
-    %table{data-user-pk: "{{ user.pk }}", data-username: "{{ user.username }}"}
+    %table{data-person-pk: "{{ user.person.pk }}", data-username: "{{ user.username }}"}
         %thead
             %tr.category
                 %th{:style => "width: 65%;"}
