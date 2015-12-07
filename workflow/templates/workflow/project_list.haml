@@ -35,21 +35,21 @@
                                     %th
                                         {% trans 'Success percent' %}
                                     %th
-                                        {% trans 'Success / Untested / Failed' %}
+                                        {% trans 'Success / Untested / Failed / Disabled' %}
                                     %th
                                         {% trans 'Creation date' %}
                                     %th
 
                                 - for workflow in workflows
                                     %tr.item{"data-item-pk" => "{{ workflow.pk }}", "data-model" => "workflow"}
-                                        %td{:style => "width: 60%"}
+                                        %td{:style => "width: 55%"}
                                             %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
                                                 {{ workflow.version }}
                                         %td
                                             .progress_bar
-                                                %span.success{:style => 'width:{{ workflow|percent:"success"|unlocalize }}%;'}
+                                                %span.success{:style => 'width:{{ workflow.get_success_percent }}%;'}
                                                 %p
-                                                    {{ workflow|percent:"success"|floatformat:"0"}}% 
+                                                    {{ workflow.get_success_percent }}% 
                                         %td
                                             %span.success
                                                 {{ workflow|get_count:'success'}}
@@ -60,6 +60,10 @@
                                             \/
                                             %span.failed
                                                 {{ workflow|get_count:'failed' }}
+                                            
+                                            \/
+                                            %span.disabled
+                                                {{ workflow|get_count:'disabled' }}
                                         %td
                                             {{ workflow.creation_date|date:"d/m/Y" }}
 

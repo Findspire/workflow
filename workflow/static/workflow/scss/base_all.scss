@@ -241,7 +241,11 @@ li label {
         }
     }
 }
-
+.progress{
+    .progress-bar-disabled{
+        background-color: #000;
+    }
+}
 #items{
     table{
         width: 100%;
@@ -284,7 +288,7 @@ li label {
             }
             .validate{
                 text-align: center;
-                width: 100px;
+                width: 110px;
                 .last_modification{
                     color: #6b6b6b;
                     font-size: 0.4em;
@@ -302,13 +306,19 @@ li label {
                     .untested{
                         color: #d1d1d1;
                         &:hover, &.validated{
-                            color: $untested_color !important;
+                            color: $untested_color;
                         }
                     }
                     .failed{
                         color: #d1d1d1;
                         &:hover, &.validated{
-                            color: $failed_color !important;
+                            color: $failed_color;
+                        }
+                    }
+                    .disabled{
+                        color: #d1d1d1;
+                         &:hover, &.validated{
+                            color: #000 !important;
                         }
                     }
                 }

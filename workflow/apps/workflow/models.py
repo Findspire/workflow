@@ -81,6 +81,7 @@ class Workflow(models.Model):
                 'untested': qs.filter(validation=Item.VALIDATION_UNTESTED),
                 'success': qs.filter(validation=Item.VALIDATION_SUCCESS),
                 'failed': qs.filter(validation=Item.VALIDATION_FAILED),
+                'disabled': qs.filter(validation=Item.VALIDATION_DISABLED),
                 'untaken': qs.filter(assigned_to=None),
                 'taken': qs.exclude(assigned_to=None),
             }[which_display]
@@ -94,6 +95,11 @@ class Workflow(models.Model):
         value = self.get_count(display)
         total = self.get_count('all')
         return (100.0 * value / total) if (total != 0) else 100
+
+    def get_success_percent(self):
+        value = self.get_count('success')
+        total = self.get_count('all') - self.get_count('disabled')
+        return int((100.0 * value / total) if (total != 0) else 100)
 
     def get_absolute_url(self):
         return reverse('workflow:workflow_show', args=[self.pk, 'all'])
@@ -141,11 +147,13 @@ class Item(models.Model):
     VALIDATION_UNTESTED = 0
     VALIDATION_SUCCESS = 1
     VALIDATION_FAILED = 2
+    VALIDATION_DISABLED = 3
 
     VALIDATION_CHOICES = (
         (VALIDATION_UNTESTED, _('Untested')),  # default
         (VALIDATION_SUCCESS, _('Success')),
         (VALIDATION_FAILED, _('Failed')),
+        (VALIDATION_DISABLED, _('Disabled'))
     )
 
     item_model = models.ForeignKey(ItemModel, verbose_name=_('Item model'))

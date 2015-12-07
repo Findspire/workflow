@@ -36,6 +36,9 @@ def get_status(item):
     elif item.validation == Item.VALIDATION_FAILED:
         return 'failed'
 
+    elif item.validation == Item.VALIDATION_DISABLED:
+        return 'disabled'
+
 
 @register.filter
 def u(s):

@@ -86,9 +86,15 @@
                         - else
                             %a{href: "#", title: "Click to failed item", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}"}
                                 %span.glyphicon.glyphicon-remove-sign.failed
+
+                        - if item.validation == Item.VALIDATION_DISABLED
+                            %a{href: "#", title: "Item disabled", data-url: "{% url 'workflow:update_item_validation' 'disabled' item.pk %}", data-status:"disabled"}
+                                %span.glyphicon.glyphicon-ban-circle.disabled.validated
+                        - else
+                            %a{href: "#", title: "Click to disable item", data-url: "{% url 'workflow:update_item_validation' 'disabled' item.pk %}"}
+                                %span.glyphicon.glyphicon-ban-circle.disabled
                         %br
                             %span.last_modification= item.updated_at|date:"d/m/Y H:i"
-
 
                     %td
                         .col-md-1

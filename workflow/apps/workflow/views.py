@@ -66,7 +66,7 @@ def workflow_delete(request, workflow_pk):
 
 @login_required
 def workflow_show(request, workflow_pk, which_display):
-    displays = ('all', 'mine', 'untested', 'success', 'failed', 'untaken', 'taken')
+    displays = ('all', 'mine', 'untested', 'success', 'failed', 'disabled', 'untaken', 'taken')
 
     if which_display not in displays:
         raise Http404('Unexpected display "%s"' % which_display)
@@ -214,7 +214,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
     if model == 'item':
         item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
-
+        
         if action == 'take':
             item.assigned_to = request.user.person
             item.assigned_to_name_cache = request.user.username
@@ -261,9 +261,9 @@ def update(request, which_display, action, model, pk, pk_other=None):
 def update_item_validation(request, item_pk, action):
     item = get_object_or_404(Item, pk=item_pk)
     if item.assigned_to_name_cache != request.user.username:
-        if item.assigned_to_name_cache is not None:
+        if item.assigned_to is not None:
             return HttpResponseForbidden(_("%s is the owner of this task" \
-                                             % item.assigned_to_name_cache))
+                                             % item.assigned_to))
         else:
             return HttpResponseForbidden(_("You must take the task before edit it"))
     else:
@@ -272,7 +272,8 @@ def update_item_validation(request, item_pk, action):
             item.validation = {
                 'success': Item.VALIDATION_SUCCESS,
                 'failed': Item.VALIDATION_FAILED,
-                'untested': Item.VALIDATION_UNTESTED
+                'untested': Item.VALIDATION_UNTESTED,
+                'disabled': Item.VALIDATION_DISABLED
             }[action]
             item.save()
         except KeyError:

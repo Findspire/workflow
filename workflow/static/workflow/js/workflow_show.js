@@ -39,6 +39,7 @@ $(function() {
     wf.dom.successBar = wf.dom.progressBar.find('.progress-bar-success');
     wf.dom.untestedBar = wf.dom.progressBar.find('.progress-bar-untested');
     wf.dom.failedBar = wf.dom.progressBar.find('.progress-bar-danger');
+    wf.dom.disabledBar = wf.dom.progressBar.find('.progress-bar-disabled');
 });
 
 function popupData(popup){
@@ -140,7 +141,8 @@ function updateProgressBar(){
     var counts = {
         0: 0, // Untested items
         1: 0, // Success items
-        2: 0 // Failed items
+        2: 0, // Failed items
+        3: 0
     },
     total = 0;
 
@@ -151,11 +153,17 @@ function updateProgressBar(){
     total = $trs.length; 
     var successPercent = (counts[1] * 100 )/ total,
         untestedPercent = (counts[0] * 100 )/ total,
-        failedPercent = (counts[2] * 100 )/ total;
+        failedPercent = (counts[2] * 100 )/ total,
+        disabledPercent = (counts[3] * 100)/ total;
 
     wf.dom.successBar.css('width', successPercent + '%').text(Math.round(successPercent) + '%');
     wf.dom.untestedBar.css('width', untestedPercent + '%').text(Math.round(untestedPercent) + '%');
     wf.dom.failedBar.css('width', failedPercent + '%').text(Math.round(failedPercent) + '%');
+    if(Math.round(disabledPercent) != 0) {
+        wf.dom.disabledBar.css('width', disabledPercent + '%').text(Math.round(disabledPercent) + '%');
+    } else {
+        wf.dom.disabledBar.css('width', disabledPercent + '%').text('');
+    }
     updateCounters(counts);
 }
 
@@ -166,6 +174,7 @@ function updateCounters(counts){
     $('.square.success .number').text(counts[1]);
     $('.square.untested .number').text(counts[0]);
     $('.square.failed .number').text(counts[2]);
+    $('.square.disabled .number').text(counts[3]);
     $('#filters .success .number').text(counts[1]);
     $('#filters .failed .number').text(counts[2]);
 }

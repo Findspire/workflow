@@ -35,6 +35,9 @@
             {{ workflow|percent:"untested"|floatformat:"0"}}%
         .progress-bar.progress-bar-danger{style: 'width: {{ workflow|percent:"failed"|floatformat:"0"}}%;'}
             {{ workflow|percent:"failed"|floatformat:"0"}}%
+        .progress-bar.progress-bar-disabled{style: 'width: {{ workflow|percent:"disabled"|floatformat:"0"}}%;'}
+            - if workflow|percent:"disabled" != 0
+                {{ workflow|percent:"disabled"|floatformat:"0"}}%
     .col-md-6.col-md-offset-4
         %div
             %ul
@@ -53,6 +56,11 @@
                     {% trans "Untested:" %}
                     %span{class: "number"}
                         {{ counters.untested }}
+                %li.square.disabled
+                    %span.glyphicon.glyphicon-stop
+                    {% trans "Disabled:" %}
+                    %span{class: "number"}
+                        {{ counters.disabled }}
     %hr
 
     #filters
@@ -109,6 +117,7 @@
             "success": {{ counters.success }},
             "failed": {{ counters.failed }},
             "untested": {{ counters.untested }},
+            "disabled": {{ counters.disabled }},
             "taken": {{ counters.taken }},
             "untaken": {{ counters.untaken }},
             "mine": {{ counters.mine }},
