@@ -1,3 +1,14 @@
+Workflow v1.0.4 Release Notes
+=============================
+
+Updates sinces v1.0.3
+---------------------
+  *   Disabled button on item in workflow
+  *   Drag & drop on workflow list in project
+  *   WorkflowDragPosition & ItemDragPosition view in API
+ 
+
+=============================
 Workflow v1.0.3 Release Notes
 =============================
 
