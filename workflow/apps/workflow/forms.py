@@ -20,7 +20,7 @@ class ProjectNewForm(forms.ModelForm):
 class WorkflowNewForm(forms.ModelForm):
     class Meta:
         model = Workflow
-        fields = ['project', 'version']
+        fields = ['project', 'name']
 
 
 class CommentNewForm(forms.ModelForm):

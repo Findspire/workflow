@@ -6,12 +6,12 @@
 - load workflow_tags
 
 - block title
-    {{ workflow.version}}
+    {{ workflow.name}}
 
 - block breadcrumbs
     %a{:href => "{% url 'workflow:project_list' %}"}
         {{ workflow.project }}
-    › {{ workflow.version }}
+    › {{ workflow.name }}
 
 - block content
     %h1

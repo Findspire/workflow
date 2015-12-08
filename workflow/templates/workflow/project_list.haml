@@ -44,7 +44,7 @@
                                     %tr.item{"data-item-pk" => "{{ workflow.pk }}", "data-model" => "workflow"}
                                         %td{:style => "width: 55%"}
                                             %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
-                                                {{ workflow.version }}
+                                                {{ workflow.name }}
                                         %td
                                             .progress_bar
                                                 %span.success{:style => 'width:{{ workflow.get_success_percent }}%;'}

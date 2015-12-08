@@ -57,7 +57,7 @@ class Project(models.Model):
 
 class Workflow(models.Model):
     project = models.ForeignKey(Project, verbose_name=_('Project'))
-    version = models.CharField(max_length=128, verbose_name=_('Version'))
+    name = models.CharField(max_length=128, verbose_name=_('Version'))
     creation_date = models.DateField(auto_now=True, verbose_name=_('Creation date'))
     categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
     archived = models.BooleanField(default=False)
