@@ -281,6 +281,9 @@ li label {
                 width: 110px;
                 a{
                     color: #000;
+                    &:hover{
+                        cursor: pointer;
+                    }
                 }
             }
             .item{
