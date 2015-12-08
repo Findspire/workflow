@@ -80,12 +80,10 @@ def workflow_show(request, workflow_pk, which_display):
 
     items = set(workflow.get_items(which_display, request_person))
     categories = workflow.categories.all()
-
     items_by_category = []
     for category in categories:
         cat_items = [item for item in items if item.category_id == category.id]
         items_by_category.append((category, [item for item in sorted(cat_items, key=lambda item: item.position)]))
-
     context = {
         'workflow': workflow,
         'categories': items_by_category,
@@ -214,7 +212,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
     if model == 'item':
         item = get_object_or_404(Item, pk=pk)
         workflow_pk = item.workflow.pk
-        
+
         if action == 'take':
             item.assigned_to = request.user.person
             item.assigned_to_name_cache = request.user.username
@@ -299,7 +297,7 @@ def itemmodel_list(request):
 def take_items_category(request, workflow_pk, category_pk, action):
     if action == 'take':
         Item.objects.filter(category__pk=category_pk, assigned_to=None, workflow__pk=workflow_pk)\
-                    .update(assigned_to=request.user, assigned_to_name_cache=request.user.username)
+                    .update(assigned_to=request.user.person, assigned_to_name_cache=request.user.username)
     elif action == 'untake':
         Item.objects.filter(category__pk=category_pk, assigned_to_name_cache=request.user.username,
                             validation=0, workflow__pk=workflow_pk)\

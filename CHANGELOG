@@ -1,3 +1,14 @@
+Workflow v1.0.5 Release Notes
+=============================
+
+Updates sinces v1.0.4
+---------------------
+  *   Fix assigned_to on item with Person model
+  *   Move updated_at and created_at from save method to signals handler
+
+ 
+
+=============================
 Workflow v1.0.4 Release Notes
 =============================
 

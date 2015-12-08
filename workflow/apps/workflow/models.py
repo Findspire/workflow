@@ -71,7 +71,7 @@ class Workflow(models.Model):
 
     def get_items(self, which_display, person=None):
         qs = Item.objects \
-            .filter(workflow=self) \
+            .filter(workflow=self, category__in=self.categories.all()) \
             .order_by('position') \
             .select_related('category', 'assigned_to__user')
         try:
@@ -141,7 +141,7 @@ def update_workflow_position(item, related_item=None):
                                        .last()
         item.position = related_item.position + 1 if related_item else 0
     item.save()
-
+ 
 
 class Item(models.Model):
     VALIDATION_UNTESTED = 0
@@ -179,8 +179,6 @@ class Item(models.Model):
         return '%s' % (self.item_model)
 
     def save(self, *args, **kwargs):
-        if self.created_at is None:
-            self.created_at = timezone.now()
         if self.category is None:
             self.category = self.item_model.category
         if self.position is None:
@@ -191,8 +189,18 @@ class Item(models.Model):
                 self.position = 0
         if self.name is None:
             self.name = self.item_model.name
-        self.updated_at = timezone.now()
         super(Item, self).save(*args, **kwargs)
+
+
+@receiver(pre_save, sender=Item)
+def updated_at_handler(sender, instance=None, **kwargs):
+    instance.updated_at = timezone.now()
+
+
+@receiver(pre_save, sender=Item)
+def created_at_handler(sender, instance=None, **kwargs):
+    if instance.created_at is None:
+        instance.created_at = timezone.now()
 
 
 def update_item_position(item, related_item=None):
