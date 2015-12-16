@@ -15,8 +15,7 @@
         {% trans "Projects list" %}
 
     %ul
-        - for project, workflows in projects.items
-            - if user.person in project.team.members.all or user.is_superuser
+        - for project, workflows in projects
                 %li
                     %h2
                         {{ project }}
@@ -52,23 +51,21 @@
                                                     {{ workflow.get_success_percent }}% 
                                         %td
                                             %span.success
-                                                {{ workflow|get_count:'success'}}
+                                                {{ workflow.success}}
                                             \/
                                             %span.untested
-                                                {{ workflow|get_count:'untested' }}
-
+                                                {{ workflow.untested }}
                                             \/
                                             %span.failed
-                                                {{ workflow|get_count:'failed' }}
+                                                {{ workflow.failed }}
                                             
                                             \/
                                             %span.disabled
-                                                {{ workflow|get_count:'disabled' }}
+                                                {{ workflow.disabled }}
                                         %td
                                             {{ workflow.creation_date|date:"d/m/Y" }}
 
                                         %td
-                                            - if request.user.person in workflow.project.team.members.all
                                                 %a.close{data-workflow: "{{workflow.pk}}"}
                                                     %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
                     - else

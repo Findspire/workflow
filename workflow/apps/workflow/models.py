@@ -62,12 +62,17 @@ class Workflow(models.Model):
     categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
     archived = models.BooleanField(default=False)
     position = models.IntegerField(null=True, editable=False)
+    success = models.IntegerField(default=0, editable=False)
+    untested = models.IntegerField(default=0, editable=False)
+    failed = models.IntegerField(default=0, editable=False)
+    disabled = models.IntegerField(default=0, editable=False)
+    total = models.IntegerField(default=0, editable=False)
 
     class Meta:
         ordering = ['position']
 
     def __unicode__(self):
-        return '%s - %s' % (self.project, self.version)
+        return '%s - %s' % (self.project, self.name)
 
     def get_items(self, which_display, person=None):
         qs = Item.objects \
@@ -91,15 +96,8 @@ class Workflow(models.Model):
     def get_count(self, which_display, person=None):
         return self.get_items(which_display, person).count()
 
-    def get_percent(self, display):
-        value = self.get_count(display)
-        total = self.get_count('all')
-        return (100.0 * value / total) if (total != 0) else 100
-
     def get_success_percent(self):
-        value = self.get_count('success')
-        total = self.get_count('all') - self.get_count('disabled')
-        return int((100.0 * value / total) if (total != 0) else 100)
+        return int((100.0 * self.success / (self.total - self.disabled)) if (self.total != 0) else 100)
 
     def get_absolute_url(self):
         return reverse('workflow:workflow_show', args=[self.pk, 'all'])
@@ -201,6 +199,40 @@ def updated_at_handler(sender, instance=None, **kwargs):
 def created_at_handler(sender, instance=None, **kwargs):
     if instance.created_at is None:
         instance.created_at = timezone.now()
+        instance.workflow.total += 1
+        instance.workflow.save()
+
+
+@receiver(post_delete, sender=Item)
+def delete_item_handler(sender, instance=None, **kwargs):
+    instance.workflow.total -= 1
+    instance.workflow.save()
+
+
+@receiver(pre_save, sender=Item)
+def workflow_counts_handler(sender, instance=None, **kwargs):
+    if instance.pk is not None:
+        # On item update validation
+        item = Item.objects.get(pk=instance.pk)
+        workflow = item.workflow
+        if item.validation != instance.validation:
+            d = {
+                Item.VALIDATION_UNTESTED: 'untested',
+                Item.VALIDATION_SUCCESS: 'success',
+                Item.VALIDATION_FAILED: 'failed',
+                Item.VALIDATION_DISABLED: 'disabled'
+            }
+            attr = d[item.validation]
+            if getattr(workflow, attr) > 0:
+                setattr(workflow, attr, getattr(workflow, attr) - 1)
+            attr = d[instance.validation]
+            setattr(workflow, attr, getattr(workflow, attr) + 1)
+    else:
+        # On item creation
+        workflow = instance.workflow
+        attr = 'untested'
+        setattr(workflow, attr, getattr(workflow, attr) + 1)
+    workflow.save()
 
 
 def update_item_position(item, related_item=None):

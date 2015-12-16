@@ -45,22 +45,22 @@
                     %span.glyphicon.glyphicon-stop
                     {% trans "Success:" %}
                     %span{class: "number"}
-                        {{ counters.success }}
+                        {{ workflow.success }}
                 %li.square.failed
                     %span.glyphicon.glyphicon-stop
                     {% trans "Failed:" %}
                     %span{class: "number"}
-                       {{ counters.failed }}
+                       {{ workflow.failed }}
                 %li.square.untested
                     %span.glyphicon.glyphicon-stop
                     {% trans "Untested:" %}
                     %span{class: "number"}
-                        {{ counters.untested }}
+                        {{ workflow.untested }}
                 %li.square.disabled
                     %span.glyphicon.glyphicon-stop
                     {% trans "Disabled:" %}
                     %span{class: "number"}
-                        {{ counters.disabled }}
+                        {{ workflow.disabled }}
     %hr
 
     #filters
@@ -113,10 +113,10 @@
 - block optional_script
     %script
         var counters = {
-            "all": {{ counters.all }},
-            "success": {{ counters.success }},
-            "failed": {{ counters.failed }},
-            "untested": {{ counters.untested }},
+            "all": {{ workflow.total }},
+            "success": {{ workflow.success }},
+            "failed": {{ workflow.failed }},
+            "untested": {{ workflow.untested }},
             "disabled": {{ counters.disabled }},
             "taken": {{ counters.taken }},
             "untaken": {{ counters.untaken }},

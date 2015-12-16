@@ -41,10 +41,15 @@ class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
 
 @login_required
 def project_list(request):
-    context = {
-        'projects': {project:Workflow.objects.filter(project=project, archived=False) for project in Project.objects.all()},
-    }
-    return render(request, 'workflow/project_list.haml', context)
+    user = request.user
+    if user.is_superuser:
+        projects_by_user = Project.objects.all()
+    else:
+        projects_by_user = set([project for project in Project.objects.all() if user.person in project.team.members.all()])
+    projects = [(project, sorted([workflow for workflow in Workflow.objects.filter(project=project, archived=False)],\
+                key=lambda workflow: workflow.position))
+                for project in projects_by_user]
+    return render(request, 'workflow/project_list.haml', {'projects': projects})
 
 
 class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
@@ -305,4 +310,4 @@ def take_items_category(request, workflow_pk, category_pk, action):
     else:
         raise Http404('Action %s does not exist' % action)
     return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
-
+    

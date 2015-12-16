@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from workflow.apps.API import serializers
 from django.contrib.auth.models import User
-from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel
+from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel, Project
 from workflow.apps.workflow.models import update_workflow_position, update_item_position
 
 
@@ -15,6 +15,81 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
     def enforce_csrf(self, request):
         return  # To not perform the csrf check previously happening
+
+
+class ProjectList(APIView):
+    """
+    List all project or create new
+    """
+    def get(self, request, format=None):
+        """
+        List all project
+        ---
+        response_serializer: serializers.ProjectSerializer
+        """
+        projects = Project.objects.all()
+        serializer = serializers.ProjectSerializer(projects, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, format=None):
+        """
+        Create new project
+        ---
+        request_serializer: serializers.ProjectSerializer
+        response_serializer: serializers.ProjectSerializer
+        """
+        serializer = serializers.ProjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class WorkflowList(APIView):
+    """
+    List all workflow or create new
+    """
+    def get(self, request, format=None):
+        """
+        List all workflow
+        ---
+        response_serializer: serializers.WorkflowSerializer
+        """
+        workflows = Workflow.objects.all()
+        serializer = serializers.WorkflowSerializer(workflows, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, format=None):
+        """
+        Create new workflow
+        ---
+        request_serializer: serializers.WorkflowSerializer
+        response_serializer: serializers.WorkflowSerializer
+        """
+        serializer = serializer.WorkflowSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProjectWorkflowList(APIView):
+    """
+    List all workflow of selected project
+    """
+    def get(self, request, project_pk, format=None):
+        """
+        List all workflow of selected project
+        ---
+        response_serializer: serializers.WorkflowSerializer
+        """
+        project = get_object_or_404(Project, pk=project_pk)
+        workflows = Workflow.objects.filter(project=project)
+        print(workflows)
+        serializer = serializers.WorkflowSerializer(workflows, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class CommentList(APIView):
