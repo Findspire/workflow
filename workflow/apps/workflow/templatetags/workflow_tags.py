@@ -24,7 +24,7 @@ def get_count(workflow, param):
 
 @register.filter
 def percent(workflow, value):
-    return (getattr(workflow, value) * 100.0) / workflow.total
+    return (getattr(workflow, value) * 100.0) / workflow.total if workflow.total != 0 else 100
 
 
 @register.filter
