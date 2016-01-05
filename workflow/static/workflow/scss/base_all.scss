@@ -9,6 +9,14 @@ $failed_color: #ff0f13;
 $untested_color: #54534f;
 $findspire_color: #00b6e5;
 
+@import 'templates';
+
+/* TEMPLATE */
+.pop-up-comment {
+    background-color: red;
+    position: absolute;
+}
+
 #warning_js
 {
     padding: 10px;
@@ -45,7 +53,7 @@ label {
 li label {
     display: initial;
 }
-.close{
+.close, .action{
     &:hover{
         cursor: pointer;
     }
@@ -327,7 +335,7 @@ li label {
                 }
             }
             .comment{
-                a{
+                .comment{
                     color: $findspire_color;
                     font-size: 20px;
                     transition: all 200ms ease-in-out;
@@ -349,6 +357,9 @@ li label {
                     color: red !important;
                     font-size: 15px;
                 }
+            }
+            .action.comment{
+                color: #ebc000;
             }
             &:hover{
                 .action, .close, .last_modification{

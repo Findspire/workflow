@@ -1,3 +1,14 @@
+=============================
+Workflow v1.0.7 Release Notes
+=============================
+
+Updates sinces v1.0.6
+---------------------
+  *   Add post request on CommentList API view
+  *   Show modal to display item comments and create new
+  *   Add _templates.scss file
+
+=============================
 Workflow v1.0.6 Release Notes
 =============================
 
@@ -6,7 +17,7 @@ Updates sinces v1.0.5
   *   Optimization render on project list page
   *   Add ProjectList, WorkflowList, ProjectWorkflowList views in API
 
-
+=============================
 Workflow v1.0.5 Release Notes
 =============================
 

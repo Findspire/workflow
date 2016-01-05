@@ -1,9 +1,7 @@
-'use strict';
-
 var wf = {};
 
-
 $(function() {
+    "use strict";
     $("#filters ." + location.pathname.split("/")[5]+"input").attr("checked", "checked").parent().attr("style", "font-weight: bold !important;");
     $("#items .validate a").each(function(){
         $(this).click(validate_item_onclick);
@@ -11,8 +9,6 @@ $(function() {
     $(".workflow_list .item a.close").click(archivedWorkflow);
     $("#workflow_add_item a").click(modal_onclick);
     $(".workflow_add_category").click(modal_onclick);
-    $("a[data-target='pop-up']").click(popupShow);
-    $(".pop-up .close").click(popupClose);  
     $(".take_untake_item a").click(takeItem);
     $(".take_untake_item a.close").click(untakeItem);
     $(".item_list .edit").click(editItemName);
@@ -32,6 +28,8 @@ $(function() {
 
     wf.templates = {};
     wf.templates.itemNameEditForm = $('#template_form_item');
+    wf.templates.itemCommentModal = $('#template_modal_comment');
+    wf.templates.itemComment = $('#template_comment');
 
     wf.dom = {};
     wf.dom.table = $('table');
@@ -40,40 +38,12 @@ $(function() {
     wf.dom.untestedBar = wf.dom.progressBar.find('.progress-bar-untested');
     wf.dom.failedBar = wf.dom.progressBar.find('.progress-bar-danger');
     wf.dom.disabledBar = wf.dom.progressBar.find('.progress-bar-disabled');
-});
+    wf.dom.items = $('.item');
 
-function popupData(popup){
-    var $popup = $(popup),
-        $ul = $popup.find('dl');
-
-    $ul.empty();
-    $.getJSON($popup.data('url'), function(data){
-        var re = new RegExp("((http:\/\/|https:\/\/)(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(\/([a-zA-Z-_\/\.0-9#:?=&;,]*)?)?)$");
-        $.each(data, function(key, val){
-            var words = val.text.split(' ');
-            for(var i in words){
-                var word = String(words[i]);
-                if(word.match(re)){
-                    words[i] = word.replace(re, '<a class="link" target="_blank" href="$&">$&</a>')
-                }
-             }
-            val.text = words.join(' ');
-            $ul.append('<dt class="title"><b>'+ val.username + ' ' + $.datepicker.formatDate('dd/mm', new Date(val.date))  + '</b></dt>')
-               .append('<dd class="text">'+ val.text + '</dd>');
-        });
+    $('body').find('.item_list a.comment').on('click', function(elem){
+        showModalComment(elem);
     });
-}
-
-function popupShow(){
-    var $element = $($(this).next());
-    $element.addClass('active').draggable();
-    popupData($element);
-}
-
-function popupClose(){
-    $(this).closest('.pop-up').removeClass('active');
-    return false;
-}
+});
 
 function onDragStop(event, ui, url) {
     var item = $(ui.item).data("item-pk");
@@ -198,7 +168,7 @@ function takeItem(){
     }
 }
 
-function untakeItem(){
+function untakeItem() {
     var elem = $(this);
     var item_pk = elem.closest('.item_list').data('item-pk');
     if(!elem.hasClass('not-take')){
@@ -212,7 +182,57 @@ function untakeItem(){
             link.click(takeItem);
         });
     }
+}
 
+function showModalComment(elem) {
+    var $modal = $(wf.templates.itemCommentModal.html().trim()).modal(),
+        url = $(elem.currentTarget).closest('tr').data('url'),
+        itemPk = $(elem.currentTarget).closest('tr').data('item-pk');
+    $modal.find('button[type="submit"]').on('click', function() {
+        addNewComment($modal, itemPk);
+    });
+    $.getJSON(url, function(data) {
+        $.each(data, function(key, val){
+            addCommentToModal($modal, val.username, val.date, val.text);
+        });
+    });
+}
+
+function addCommentToModal($modal, username, date, comment) {
+    if(typeof username !== 'undefined' && typeof comment !== 'undefined') {
+        var $tpl = $(wf.templates.itemComment.html().trim());
+        var words = comment.split(' ');
+        for(var i in words){
+            var word = String(words[i]);
+            if(word.startsWith('http')  || 
+               word.startsWith('https') || 
+               word.startsWith('www.')) {
+                if(word.startsWith('www.')) {
+                    words[i] = '<a href="https://' + word + '" target="_blank">' + word + '</a>';
+                }
+                else {
+                    words[i] = '<a href="' + word + '" target="_blank">' + word + '</a>';
+                }
+            }
+         }
+        comment = words.join(' ');
+        $tpl.find('aside .username').text(username);
+        $tpl.find('aside .date').text($.datepicker.formatDate('dd/mm', new Date(date)));
+        $tpl.find('section').append(comment);
+        $modal.find('.modal-body .col-md-12').prepend($tpl);
+    }
+}
+
+function addNewComment($modal, itemPk) {
+    var comment = $modal.find('input').val(),
+        url = '/api/comments/' + itemPk + '/',
+        personPk = $modal.find('.modal-dialog').data('person'),
+        username = $modal.find('.modal-dialog').data('username');
+    wf.ajax.post(url, {person: personPk, text: comment})
+           .done(function(data) {
+                addCommentToModal($modal, username, data.date, comment);
+                $modal.find('input').val('');
+           });
 }
 
 function validate_item_onclick() {
@@ -253,6 +273,7 @@ function editItemName() {
     });
     return false
 }
+
 function changeItemName(elem, item_pk){
     var newName = $(elem).find('input').val(),
         url = '/api/item/' + item_pk + '/';
@@ -273,7 +294,7 @@ function deleteItem() {
     wf.ajax.delete(url, {item_pk: itemPk})
       .done(function(){
             $elem.fadeOut();
-      });
+    });
 }
 
 function modal_onclick() {
@@ -311,7 +332,6 @@ function modal_hide() {
     $("#modal_content").hide();
     return false;
 }
-
 
 function modal_form_submit_onclick() {
     var f = $("#modal_content form");

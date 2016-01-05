@@ -1,0 +1,46 @@
+
+/* MODAL COMMENT */
+.commentModal{
+    .modal-header{
+        background-color: #222222;
+        color: #fff;
+        .close{
+            color: red;
+            opacity: 1;
+            &:hover{
+                opacity: 0.7;
+            }
+        }
+    }
+    .modal-body{
+        overflow-y: auto;
+        max-height: calc(100vh - 210px);
+        article{
+            aside{
+                padding-top: 3px;
+                font-weight: 300;
+            }
+            section{
+                background-color: $findspire_color;
+                color: #fff;
+                margin-bottom: 10px;
+                padding: 20px;
+                .triangle{
+                    border-top: 15px solid transparent;
+                    border-right: 27px solid $findspire_color;
+                    border-bottom: 15px solid transparent;
+                    height: 0;
+                    left: -27px;
+                    position: absolute;
+                    top: 0;
+                    width: 0;
+                }
+
+            }
+        }
+
+    }
+    .modal-footer{
+
+    }
+}

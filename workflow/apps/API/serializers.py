@@ -8,7 +8,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('username', 'date', 'text')
 
 
 class ItemSerializer(serializers.ModelSerializer):

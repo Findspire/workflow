@@ -5,8 +5,9 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
-from workflow.apps.API import serializers
 from django.contrib.auth.models import User
+from django.utils import timezone
+from workflow.apps.API import serializers
 from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel, Project
 from workflow.apps.workflow.models import update_workflow_position, update_item_position
 
@@ -87,15 +88,16 @@ class ProjectWorkflowList(APIView):
         """
         project = get_object_or_404(Project, pk=project_pk)
         workflows = Workflow.objects.filter(project=project)
-        print(workflows)
         serializer = serializers.WorkflowSerializer(workflows, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class CommentList(APIView):
     """
-    Display comment list
+    Display comment list or create new
     """
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     def get(self, request, item_pk, format=None):
         """
         Display comment list of selected item
@@ -105,6 +107,24 @@ class CommentList(APIView):
         comments = Comment.objects.filter(item__pk=item_pk)
         serializer = serializers.CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, item_pk, format=None):
+        """
+        Create new comment for selected item
+        ---
+        request_serializer: serializers.CommentSerializer
+        response_serializer: serializers.CommentSerializer
+        """
+        data = dict(request.data)
+        data['item'] = item_pk
+        data['person'] = int(request.data['person'])
+        data['text'] = str(request.data['text'])
+        serializer = serializers.CommentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ItemDetails(APIView):

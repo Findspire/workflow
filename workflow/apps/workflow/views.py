@@ -46,7 +46,7 @@ def project_list(request):
         projects_by_user = Project.objects.all()
     else:
         projects_by_user = set([project for project in Project.objects.all() if user.person in project.team.members.all()])
-    projects = [(project, sorted([workflow for workflow in Workflow.objects.filter(project=project, archived=False)],\
+    projects = [(project, sorted([workflow for workflow in Workflow.objects.filter(project=project, archived=False)],
                 key=lambda workflow: workflow.position))
                 for project in projects_by_user]
     return render(request, 'workflow/project_list.haml', {'projects': projects})
