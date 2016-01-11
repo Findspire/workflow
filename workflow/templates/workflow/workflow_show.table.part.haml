@@ -64,8 +64,7 @@
       - for item in items
         %tr.item_list{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", "data-item-pk" => "{{ item.pk }}", data-status: "{{ item.validation }}", data-url: "{% url 'api:comments-list' item.pk %}"}
           %td.item
-            %a
-              {{ item.name }}
+            {{ item.name }}
             - for url, ticket_id in item.name|get_tickets
               - if forloop.counter == 1
                 %strong{style:"margin-left:20px;"}
