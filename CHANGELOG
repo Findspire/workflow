@@ -1,4 +1,14 @@
 =============================
+Workflow v1.0.8 Release Notes
+=============================
+
+Updates sinces v1.0.7
+---------------------
+  * Add Project, Workflow and Home button on navbar
+  * Add choice workflow model on create new
+  * Update workflow new, project new and edit templates
+
+=============================
 Workflow v1.0.7 Release Notes
 =============================
 

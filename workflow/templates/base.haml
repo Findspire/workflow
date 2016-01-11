@@ -34,14 +34,42 @@
                         .navbar-collapse.collapse
                             - if request.user.is_active
                                 %ul.nav.navbar-nav.navbar-right
+                                    %li
+                                        %a{:href => "{% url 'workflow:project_list' %}", :title => "Projects list", :title => "{% trans 'Home' %}"}
+                                            %span
+                                                .glyphicon.glyphicon-home
                                     %li.dropdown
-                                        %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
+                                        %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false", :title => "Project"}
+                                            %span
+                                                .glyphicon.glyphicon-folder-open
+                                            %span.caret
+                                        %ul.dropdown-menu
+                                            %li
+                                                %a{:href => "{% url 'workflow:project_new' %}"}
+                                                    %span.glyphicon.glyphicon-plus
+                                                    {% trans 'New project' %}
+                                            %li
+                                                %a{:href => "{% url 'workflow:project_list' %}"}
+                                                    %span.glyphicon.glyphicon-th-list
+                                                    {% trans 'Projects list' %}
+                                    %li.dropdown
+                                        %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false", :title => "Worklow"}
+                                            %span.glyphicon.glyphicon-tasks
+                                            %span.caret
+                                        %ul.dropdown-menu
+                                            %li
+                                                %a{:href => "{% url 'workflow:workflow_new' %}"}
+                                                    %span.glyphicon.glyphicon-plus
+                                                    {% trans 'New Workflow' %}
+                                    %li.dropdown
+                                        %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false", :title => "User"}
                                             %span.glyphicon.glyphicon-user
                                         %ul.dropdown-menu
                                             %li
                                                 %a{:href => "{% url 'team:logout' %}"}
                                                     %span.glyphicon.glyphicon-off
                                                     {% trans 'Logout' %}
+                                
         #warning_js
             {% trans "Your JavaScript seem to be disabled. Some functionalities needs it and we advise you to enable it." %}
 

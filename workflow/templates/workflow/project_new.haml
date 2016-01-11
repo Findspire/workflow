@@ -1,0 +1,53 @@
+- extends "workflow/base.haml"
+
+- load static
+- load admin_urls
+- load i18n
+- load workflow_tags
+
+- block breadcrumbs
+    %a{href: "{% url 'workflow:workflow_new' %}"}
+    {% trans "New workflow" %}
+
+- block content
+  .col-md-6.col-md-offset-3
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          - if project
+            {% trans "Project edit" %}
+          - else
+            {% trans "New project" %}
+      .panel-body
+        %form.project-new-form{:action => "{{ url }}", :method => "post"}
+          - csrf_token
+          .form-group
+            %label{:for => "name"}
+              {% trans 'Name' %}
+            - if project
+              %input.form-control{:type => "text", :name => 'name', :value => '{{ project.name }}'}/
+            - else
+              %input.form-control{:type => "text", :name => 'name'}/
+          .form-group
+            %label{:for => "team"}
+              {% trans 'Team' %}
+            - if project
+              %select.form-control{:name => "team"}
+                - for team in teams
+                  - if team == project.team
+                    %option{:value => "{{ team.pk }}", :selected => "selected"}
+                      {{ team.name }}
+                  - else
+                    %option{:value => "{{ team.pk }}"}
+                      {{ team.name }}
+            - else
+              %select.form-control{:name => "team"}
+                - for team in teams
+                  %option{:value => "{{ team.pk }}"}
+                    {{ team.name }}
+          %button.btn.btn-success{:type => "submit"}
+            {% trans 'Save' %}
+          %a{:href => "{% url 'workflow:project_list' %}"}
+            %button.btn.btn-primary{:type => "button"}
+              {% trans 'Cancel' %}
+

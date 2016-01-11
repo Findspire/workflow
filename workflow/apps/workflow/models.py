@@ -49,7 +49,6 @@ class ItemModel(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=32, verbose_name=_('Name'))
     team = models.ForeignKey(Team, verbose_name=_('Team'))
-    categories = models.ManyToManyField(ItemCategory, blank=True, verbose_name=_('Categories'))
 
     def __unicode__(self):
         return '%s' % (self.name)
@@ -102,22 +101,9 @@ class Workflow(models.Model):
     def get_absolute_url(self):
         return reverse('workflow:workflow_show', args=[self.pk, 'all'])
 
-    def save(self, *args, **kwargs):
-        pk = self.pk
-
-        # save Workflow first, to have the pk for the later foreignkey from Item - if needed
-        super(Workflow, self).save(*args, **kwargs)
-
-        # if the object is created and not updated, create its Items
-        if pk == None:
-            for category in self.project.categories.all():
-                self.categories.add(category)
-                for item in ItemModel.objects.filter(category=category):
-                    Item.objects.create(item_model=item, workflow=self)
-
 
 @receiver(pre_save, sender=Workflow)
-def workflow_position_handler(sender, instance=None, **kwargs):
+def worklow_position_handler(sender, instance=None, **kwargs):
     if instance.position is None:
         last = Workflow.objects.filter(project=instance.project, archived=False).last()
         if last and last.position is not None:

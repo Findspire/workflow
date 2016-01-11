@@ -26,6 +26,19 @@ $(function() {
     });
     $("#modal_background").click(modal_hide);
 
+    $('body').find('.item_list a.comment').on('click', function(elem) {
+        showModalComment(elem);
+    });
+
+    $(".workflow-new-form input[type='checkbox']").on('change', function() {
+        if(this.checked) {
+            $('.workflow-new-form .workflow-model').show();
+        }
+        else {
+           $('.workflow-new-form .workflow-model').hide(); 
+        }
+    });
+
     wf.templates = {};
     wf.templates.itemNameEditForm = $('#template_form_item');
     wf.templates.itemCommentModal = $('#template_modal_comment');
@@ -40,9 +53,6 @@ $(function() {
     wf.dom.disabledBar = wf.dom.progressBar.find('.progress-bar-disabled');
     wf.dom.items = $('.item');
 
-    $('body').find('.item_list a.comment').on('click', function(elem){
-        showModalComment(elem);
-    });
 });
 
 function onDragStop(event, ui, url) {

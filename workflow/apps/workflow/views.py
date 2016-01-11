@@ -23,8 +23,9 @@ from braces.views import LoginRequiredMixin
 
 from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
-from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, ProjectNewForm, WorkflowNewForm, ItemCreateForm
+from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, WorkflowNewForm, ItemCreateForm
 from workflow.apps.workflow.models import update_item_position
+from workflow.apps.team.models import Team
 
 
 @login_required
@@ -32,11 +33,31 @@ def index(request):
     return render(request, 'workflow/index.haml')
 
 
-class ProjectFormView(LoginRequiredMixin, CreateUpdateView):
-    model = Project
-    form_class = ProjectNewForm
-    success_url = reverse_lazy('workflow:project_list')
-    template_name = 'utils/workflow_generic_views_form.haml'
+@login_required
+def project_new(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        team = Team.objects.get(pk=request.POST.get('team'))
+        project = Project.objects.create(
+            name=name,
+            team=team
+        )
+        return redirect('workflow:project_list')
+    return render(request, 'workflow/project_new.haml', {'teams': Team.objects.all(),
+                                                         'url': reverse('workflow:project_new')})
+
+
+@login_required
+def project_edit(request, project_pk):
+    project = get_object_or_404(Project, pk=project_pk)
+    if request.method == 'POST':
+        project.name = request.POST.get('name')
+        project.team = Team.objects.get(pk=request.POST.get('team'))
+        project.save()
+        return redirect('workflow:project_list')
+    return render(request, 'workflow/project_new.haml', {'project': project, 
+                                                         'teams': Team.objects.all(), 
+                                                         'url': reverse('workflow:project_edit', kwargs={'project_pk': project.pk})})
 
 
 @login_required
@@ -56,6 +77,28 @@ class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
     model = Workflow
     form_class = WorkflowNewForm
     template_name = 'utils/workflow_generic_views_form.haml'
+
+
+@login_required
+def workflow_create(request, project_pk=None):
+    if request.method == 'POST':
+        project = Project.objects.get(id=request.POST.get('project'))
+        workflow_name = request.POST.get('name')
+        workflow_clone = request.POST.get('clone')
+        workflow = Workflow.objects.create(
+                        project=project,
+                        name=workflow_name,
+                    )
+        if workflow_clone:
+            workflow_model = Workflow.objects.get(id=request.POST.get('workflow_model'))
+            for category in workflow_model.categories.all():
+                workflow.categories.add(category)
+                for item in ItemModel.objects.filter(category=category):
+                    Item.objects.create(item_model=item, workflow=workflow)
+        workflow.save()
+        return redirect('workflow:project_list')
+    projects = [(project, [workflow for workflow in Workflow.objects.filter(project=project, archived=False)]) for project in Project.objects.all()]
+    return render(request, 'workflow/workflow_new.haml', {'projects': projects, 'project_pk': int(project_pk) if project_pk else None})
 
 
 @login_required

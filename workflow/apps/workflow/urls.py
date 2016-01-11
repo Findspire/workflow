@@ -10,12 +10,12 @@ from workflow.apps.workflow import views
 urlpatterns = patterns('workflow.apps.workflow',
     url(r'^$', 'views.index', name='index'),
 
-    url(r'^project/new/$', views.ProjectFormView.as_view(), name='project_new'),
-    url(r'^project/edit/(?P<pk>\d+)/$', views.ProjectFormView.as_view(), name='project_edit'),
+    url(r'^project/new/$', views.project_new, name='project_new'),
+    url(r'^project/edit/(?P<project_pk>\d+)/$', views.project_edit, name='project_edit'),
     url(r'^project/list/$', views.project_list, name='project_list'),
 
-    url(r'^workflow/new/$', views.WorkflowFormView.as_view(), name='workflow_new'),
-    url(r'^workflow/new/(?P<project>\d+)/$', views.WorkflowFormView.as_view(), name='workflow_new'),
+    url(r'^workflow/new/$', views.workflow_create, name='workflow_new'),
+    url(r'^workflow/new/(?P<project_pk>\d+)/$', views.workflow_create, name='workflow_new'),
     url(r'^workflow/edit/(?P<pk>\d+)/$', views.WorkflowFormView.as_view(), name='workflow_edit'),
     url(r'^workflow/show/(?P<workflow_pk>\d+)/(?P<which_display>\w+)/$', views.workflow_show, name='workflow_show'),
     url(r'^workflow/(?P<workflow_pk>\d+)/delete/$', views.workflow_delete, name='workflow_delete'),
