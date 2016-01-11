@@ -6,119 +6,119 @@
 - load workflow_tags
 
 - block title
-    {{ workflow.name}}
+  {{ workflow.name}}
 
 - block breadcrumbs
-    %a{:href => "{% url 'workflow:project_list' %}"}
-        {{ workflow.project }}
-    › {{ workflow.name }}
+  %a{:href => "{% url 'workflow:project_list' %}"}
+    {{ workflow.project }}
+  › {{ workflow.name }}
 
 - block content
-    %h1
-        {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }}
-        %a{:href => "{% url 'workflow:workflow_edit' workflow.pk %}"}
-            %span.glyphicon.glyphicon-cog{:style => "font-size: 18px"}
+  %h1
+    {% trans "Show workflow:" %} {{ workflow.project.name }} - {{ workflow.version }}
+    %a{:href => "{% url 'workflow:workflow_edit' workflow.pk %}"}
+      %span.glyphicon.glyphicon-cog{:style => "font-size: 18px"}
 
-    %ul
-        / %li{id: "workflow_add_item"}
-        /     %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
-        /         {% trans "Add an item in this workflow" %}
-        / %li{id: "workflow_add_category"}
-        /     %a{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
-        /         {% trans "Add an item category" %}
+  %ul
+    / %li{id: "workflow_add_item"}
+    /     %a{href: "{% url 'workflow:item_model_add_to_workflow' workflow.pk %}"}
+    /         {% trans "Add an item in this workflow" %}
+    / %li{id: "workflow_add_category"}
+    /     %a{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
+    /         {% trans "Add an item category" %}
 
-    %hr
-    .progress
-        .progress-bar.progress-bar-success{style: 'width: {{ workflow|percent:"success"|floatformat:"0" }}%;'}
-            {{ workflow|percent:"success"|floatformat:"0"}}%
-        .progress-bar.progress-bar-untested{style: 'width: {{ workflow|percent:"untested"|floatformat:"0" }}%;'}
-            {{ workflow|percent:"untested"|floatformat:"0"}}%
-        .progress-bar.progress-bar-danger{style: 'width: {{ workflow|percent:"failed"|floatformat:"0"}}%;'}
-            {{ workflow|percent:"failed"|floatformat:"0"}}%
-        .progress-bar.progress-bar-disabled{style: 'width: {{ workflow|percent:"disabled"|floatformat:"0"}}%;'}
-            - if workflow|percent:"disabled" != 0
-                {{ workflow|percent:"disabled"|floatformat:"0"}}%
-    .col-md-6.col-md-offset-4
-        %div
-            %ul
-                %li.square.success
-                    %span.glyphicon.glyphicon-stop
-                    {% trans "Success:" %}
-                    %span{class: "number"}
-                        {{ workflow.success }}
-                %li.square.failed
-                    %span.glyphicon.glyphicon-stop
-                    {% trans "Failed:" %}
-                    %span{class: "number"}
-                       {{ workflow.failed }}
-                %li.square.untested
-                    %span.glyphicon.glyphicon-stop
-                    {% trans "Untested:" %}
-                    %span{class: "number"}
-                        {{ workflow.untested }}
-                %li.square.disabled
-                    %span.glyphicon.glyphicon-stop
-                    {% trans "Disabled:" %}
-                    %span{class: "number"}
-                        {{ workflow.disabled }}
-    %hr
+  %hr
+  .progress
+    .progress-bar.progress-bar-success{style: 'width: {{ workflow|percent:"success"|floatformat:"0" }}%;'}
+      {{ workflow|percent:"success"|floatformat:"0"}}%
+    .progress-bar.progress-bar-untested{style: 'width: {{ workflow|percent:"untested"|floatformat:"0" }}%;'}
+      {{ workflow|percent:"untested"|floatformat:"0"}}%
+    .progress-bar.progress-bar-danger{style: 'width: {{ workflow|percent:"failed"|floatformat:"0"}}%;'}
+      {{ workflow|percent:"failed"|floatformat:"0"}}%
+    .progress-bar.progress-bar-disabled{style: 'width: {{ workflow|percent:"disabled"|floatformat:"0"}}%;'}
+      - if workflow|percent:"disabled" != 0
+        {{ workflow|percent:"disabled"|floatformat:"0"}}%
+  .col-md-6.col-md-offset-4
+    %div
+      %ul
+        %li.square.success
+          %span.glyphicon.glyphicon-stop
+          {% trans "Success:" %}
+          %span{class: "number"}
+            {{ workflow.success }}
+        %li.square.failed
+          %span.glyphicon.glyphicon-stop
+          {% trans "Failed:" %}
+          %span{class: "number"}
+             {{ workflow.failed }}
+        %li.square.untested
+          %span.glyphicon.glyphicon-stop
+          {% trans "Untested:" %}
+          %span{class: "number"}
+            {{ workflow.untested }}
+        %li.square.disabled
+          %span.glyphicon.glyphicon-stop
+          {% trans "Disabled:" %}
+          %span{class: "number"}
+            {{ workflow.disabled }}
+  %hr
 
-    #filters
-        %label.all
-            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'all' %}');">
-            %span
-                {% trans "All items" %}
-            %span{class: "number"}
-                {{ counters.all }}
-        %label.mine
-            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'mine' %}');">
-            %span
-                {% trans "Mine items" %}
-            %span{class: "number"}
-                {{ counters.mine }}
-        %label.untaken
-            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'untaken' %}');">
-            %span
-                {% trans "Untaken items" %}
-            %span{class: "number"}
-                {{ counters.untaken }}
-        %label.taken
-            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'taken' %}');">
-            %span
-                {% trans "Taken items" %}
-            %span{class: "number"}
-                {{ counters.taken }}
-        %label.success
-            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'success' %}');">
-            %span
-                {% trans "Success items" %}
-            %span{class: "number"}
-                {{ counters.success }}
-        %label.failed
-            <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'failed' %}');">
-            %span
-                {% trans "Failed items" %}
-            %span{class: "number"}
-                {{ counters.failed }}
-    %a.workflow_add_category{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
-        %button.btn.btn-primary.btn-custom
-            {% trans "Add category" %}
+  #filters
+    %label.all
+      <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'all' %}');">
+      %span
+        {% trans "All items" %}
+      %span{class: "number"}
+        {{ counters.all }}
+    %label.mine
+      <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'mine' %}');">
+      %span
+        {% trans "Mine items" %}
+      %span{class: "number"}
+        {{ counters.mine }}
+    %label.untaken
+      <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'untaken' %}');">
+      %span
+        {% trans "Untaken items" %}
+      %span{class: "number"}
+        {{ counters.untaken }}
+    %label.taken
+      <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'taken' %}');">
+      %span
+        {% trans "Taken items" %}
+      %span{class: "number"}
+        {{ counters.taken }}
+    %label.success
+      <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'success' %}');">
+      %span
+        {% trans "Success items" %}
+      %span{class: "number"}
+        {{ counters.success }}
+    %label.failed
+      <input type="radio" onClick="$(location).attr('href','{% url 'workflow:workflow_show' workflow.pk 'failed' %}');">
+      %span
+        {% trans "Failed items" %}
+      %span{class: "number"}
+        {{ counters.failed }}
+  %a.workflow_add_category{href: "{% url 'workflow:item_category_new' workflow.pk %}"}
+    %button.btn.btn-primary.btn-custom
+      {% trans "Add category" %}
 
-    #items
-        - include "workflow/workflow_show.table.part.haml"
+  #items
+    - include "workflow/workflow_show.table.part.haml"
 
-    #modal_background
-    #modal_content
+  #modal_background
+  #modal_content
 
 - block optional_script
-    %script
-        var counters = {
-            "all": {{ workflow.total }},
-            "success": {{ workflow.success }},
-            "failed": {{ workflow.failed }},
-            "untested": {{ workflow.untested }},
-            "disabled": {{ counters.disabled }},
-            "taken": {{ counters.taken }},
-            "untaken": {{ counters.untaken }},
-            "mine": {{ counters.mine }},
-        };
+  %script
+    var counters = {
+      "all": {{ workflow.total }},
+      "success": {{ workflow.success }},
+      "failed": {{ workflow.failed }},
+      "untested": {{ workflow.untested }},
+      "disabled": {{ counters.disabled }},
+      "taken": {{ counters.taken }},
+      "untaken": {{ counters.untaken }},
+      "mine": {{ counters.mine }},
+    };

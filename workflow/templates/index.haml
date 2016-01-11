@@ -3,16 +3,16 @@
 - load i18n
 
 - block breadcrumbs_app
-    {% trans "Home" %}
+  {% trans "Home" %}
 
 - block content
-    %h1
-        {% trans "Workflow project" %}
+  %h1
+    {% trans "Workflow project" %}
 
-    %ul
-        %li
-            %a{href: "{% url 'team:index' %}"}
-                {% trans "Teams and skills" %}
-        %li
-            %a{href: "{% url 'workflow:index' %}"}
-                {% trans "Workflows" %}
+  %ul
+    %li
+      %a{href: "{% url 'team:index' %}"}
+        {% trans "Teams and skills" %}
+    %li
+      %a{href: "{% url 'workflow:index' %}"}
+        {% trans "Workflows" %}

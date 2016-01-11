@@ -3,30 +3,30 @@
 - load i18n
 
 - block breadcrumbs_app
-    {% trans "Workflow" %}
+  {% trans "Workflow" %}
 
 - block content
-    %h1
-        {% trans "Workflow management" %}
+  %h1
+    {% trans "Workflow management" %}
 
-    %table
-        %tr
-            %th
-                %a{href: "{% url 'workflow:project_list' %}"}
-                    {% trans "Projects and Workflows" %}
-            %td
-                %a{href: "{% url 'workflow:project_new' %}"}
-                    {% trans "Add a project" %}
-                \-
-                %a{href: "{% url 'workflow:workflow_new' %}"}
-                    {% trans "Add a workflow" %}
-        %tr
-            %th
-                %a{href: "{% url 'workflow:item_model_list' %}"}
-                    {% trans "Items" %}
-             %td
-                %a{href: "{% url 'workflow:item_category_new' %}"}
-                    {% trans "Add a category" %}
-                \-
-                %a{href: "{% url 'workflow:item_model_new' %}"}
-                    {% trans "Add an item model" %}
+  %table
+    %tr
+      %th
+        %a{href: "{% url 'workflow:project_list' %}"}
+          {% trans "Projects and Workflows" %}
+      %td
+        %a{href: "{% url 'workflow:project_new' %}"}
+          {% trans "Add a project" %}
+        \-
+        %a{href: "{% url 'workflow:workflow_new' %}"}
+          {% trans "Add a workflow" %}
+    %tr
+      %th
+        %a{href: "{% url 'workflow:item_model_list' %}"}
+          {% trans "Items" %}
+       %td
+        %a{href: "{% url 'workflow:item_category_new' %}"}
+          {% trans "Add a category" %}
+        \-
+        %a{href: "{% url 'workflow:item_model_new' %}"}
+          {% trans "Add an item model" %}

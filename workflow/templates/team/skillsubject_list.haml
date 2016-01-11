@@ -3,29 +3,29 @@
 - load i18n
 
 - block breadcrumbs
-    {% trans "List skills" %}
+  {% trans "List skills" %}
 
 - block content
-    %h1
-        {% trans "List skills" %}
+  %h1
+    {% trans "List skills" %}
 
-    %ul
-        - for category, skills in categories.items
-            %li
-                %h2
-                    {{ category.name }}
-                    (<a href="{% url 'team:skill_category_edit' category.pk %}">Edit</a>)
-                    (<a href="{% url 'team:skill_subject_new' category.pk %}">New skill subject</a>)
+  %ul
+    - for category, skills in categories.items
+      %li
+        %h2
+          {{ category.name }}
+          (<a href="{% url 'team:skill_category_edit' category.pk %}">Edit</a>)
+          (<a href="{% url 'team:skill_subject_new' category.pk %}">New skill subject</a>)
 
-                - if skills
-                    %ul
-                        - for subject in skills
-                            %li
-                                %a{href: "{% url 'team:skill_subject_edit' subject.pk %}"}
-                                    {{ subject.name }}
-                                %em
-                                    {{ subject.description }}
-                - else
-                    %p
-                        %em
-                            {% trans "No skills in this category." %}
+        - if skills
+          %ul
+            - for subject in skills
+              %li
+                %a{href: "{% url 'team:skill_subject_edit' subject.pk %}"}
+                  {{ subject.name }}
+                %em
+                  {{ subject.description }}
+        - else
+          %p
+            %em
+              {% trans "No skills in this category." %}

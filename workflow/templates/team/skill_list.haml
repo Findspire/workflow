@@ -3,44 +3,44 @@
 - load i18n
 
 - block breadcrumbs
-    %a{href: "{% url 'team:person_list' %}"}
-        {% trans "List persons" %}
-    ›
-    %a{href: "{% url 'team:person_edit' profile_detail.pk %}"}
-        {% blocktrans trimmed %}
-            Edit {{ profile_detail }}
-        {% endblocktrans %}
-    ›
+  %a{href: "{% url 'team:person_list' %}"}
+    {% trans "List persons" %}
+  ›
+  %a{href: "{% url 'team:person_edit' profile_detail.pk %}"}
     {% blocktrans trimmed %}
-       Compentence instances
+      Edit {{ profile_detail }}
     {% endblocktrans %}
+  ›
+  {% blocktrans trimmed %}
+     Compentence instances
+  {% endblocktrans %}
 
 - block content
-    %h1
+  %h1
+    {% blocktrans trimmed %}
+      Compentences instances edit (user: {{ profile_detail }})
+    {% endblocktrans %}
+
+  %p
+    %em
+      %a{href: "{% url 'team:person_edit' profile_detail.pk %}"}
         {% blocktrans trimmed %}
-            Compentences instances edit (user: {{ profile_detail }})
+          Back to {{ profile_detail }}'s general informations
         {% endblocktrans %}
 
-    %p
-        %em
-            %a{href: "{% url 'team:person_edit' profile_detail.pk %}"}
-                {% blocktrans trimmed %}
-                    Back to {{ profile_detail }}'s general informations
-                {% endblocktrans %}
-
-    %form{action: ".",  method: "POST"}
-        - csrf_token
-        {{ myformset.management_form }}
-        %em{style: "padding-left: 20px;"}
-            Delete | Name (category): Strength
-        <ul>
-        {% for form in myformset %}
-            {% if form.strength.label %}
-                <li>
-                    {{ form.DELETE }} |{{ form.id }}
-                    {{ form.strength.label }} : {{ form.strength }}
-                </li>
-            {% endif %}
-        {% endfor %}
-        </ul>
-        %input{type: "submit", value:"Save all (Checked objects will be deleted)"}
+  %form{action: ".",  method: "POST"}
+    - csrf_token
+    {{ myformset.management_form }}
+    %em{style: "padding-left: 20px;"}
+      Delete | Name (category): Strength
+    <ul>
+    {% for form in myformset %}
+      {% if form.strength.label %}
+        <li>
+          {{ form.DELETE }} |{{ form.id }}
+          {{ form.strength.label }} : {{ form.strength }}
+        </li>
+      {% endif %}
+    {% endfor %}
+    </ul>
+    %input{type: "submit", value:"Save all (Checked objects will be deleted)"}

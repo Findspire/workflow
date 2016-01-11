@@ -3,32 +3,32 @@
 - load i18n
 
 - block breadcrumbs
-    {% trans "List item models" %}
+  {% trans "List item models" %}
 
 - block content
-    %h1
-        {% trans "List item models" %}
+  %h1
+    {% trans "List item models" %}
 
-    %ul
-        - for cat, items in object_list.items
+  %ul
+    - for cat, items in object_list.items
+      <li>
+        <h2>
+          {{ cat.name }}
+          (<a href="{% url 'workflow:item_category_edit' cat.pk %}">{% trans "Edit" %}</a>)
+          (<a href="{% url 'workflow:item_model_new' cat.pk %}">{% trans "New item model" %}</a>)
+        </h2>
+
+        <ul>
+          - for item in items
             <li>
-                <h2>
-                    {{ cat.name }}
-                    (<a href="{% url 'workflow:item_category_edit' cat.pk %}">{% trans "Edit" %}</a>)
-                    (<a href="{% url 'workflow:item_model_new' cat.pk %}">{% trans "New item model" %}</a>)
-                </h2>
-
-                <ul>
-                    - for item in items
-                        <li>
-                            <a href="{% url 'workflow:item_model_edit' item.pk %}">
-                                {{ item.name }}
-                            </a>
-                            <em>
-                                {{ item.description }}
-                            </em>
-                        </li>
-                </ul>
+              <a href="{% url 'workflow:item_model_edit' item.pk %}">
+                {{ item.name }}
+              </a>
+              <em>
+                {{ item.description }}
+              </em>
             </li>
+        </ul>
+      </li>
 
-    - include "utils/paginator.part.haml"
+  - include "utils/paginator.part.haml"

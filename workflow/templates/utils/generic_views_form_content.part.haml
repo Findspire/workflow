@@ -1,20 +1,20 @@
 - load workflow_tags
 
 %h1
-    {{ title }}
+  {{ title }}
 
 %form{action:"", method:"post"}
-    - csrf_token
-    {{ form.as_p | u }}
-    %button.btn.btn-primary.btn-custom{type:"submit", value:"Submit"}
-        Submit
+  - csrf_token
+  {{ form.as_p | u }}
+  %button.btn.btn-primary.btn-custom{type:"submit", value:"Submit"}
+    Submit
 
 %script
-    $(document).ready(function() {
-        /* for nested multiple choice fields */
-        $('#id_items > li > label').click(function() {
-            var new_value = ! $(this).parent().find('input').data('checked');
-            $(this).parent().find('input').data('checked', new_value);
-            $(this).parent().find('input').prop('checked', new_value);
-        });
+  $(document).ready(function() {
+    /* for nested multiple choice fields */
+    $('#id_items > li > label').click(function() {
+      var new_value = ! $(this).parent().find('input').data('checked');
+      $(this).parent().find('input').data('checked', new_value);
+      $(this).parent().find('input').prop('checked', new_value);
     });
+  });

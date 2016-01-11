@@ -5,67 +5,67 @@
 - load workflow_tags
 - load static
 - block title
-    Projects
+  Projects
 
 - block breadcrumbs
-    {% trans "Projects list" %}
+  {% trans "Projects list" %}
 
 - block content
-    %h1
-        {% trans "Projects list" %}
-    %ul
-        - for project, workflows in projects
-            %li
-                %h2
-                    {{ project }}
-                    %span.controls
-                        %a{:href => "{% url 'workflow:project_edit' project.pk %}", :title => "{% trans 'Edit' %}"}
-                            %span.glyphicon.glyphicon-cog
-                        %a{:href => "{% url 'workflow:workflow_new' project.pk %}", :title => "{% trans 'New workflow' %}"}
-                            %span.glyphicon.glyphicon-plus.success.opacity-hover
-                - if workflows
-                        %table.workflow_list{:style => "width: 100%"}
-                            %tr
-                                %th
-                                    {% trans 'Workflow version' %}
-                                %th
-                                    {% trans 'Success percent' %}
-                                %th
-                                    {% trans 'Success / Untested / Failed / Disabled' %}
-                                %th
-                                    {% trans 'Creation date' %}
-                                %th
+  %h1
+    {% trans "Projects list" %}
+  %ul
+    - for project, workflows in projects
+      %li
+        %h2
+          {{ project }}
+          %span.controls
+            %a{:href => "{% url 'workflow:project_edit' project.pk %}", :title => "{% trans 'Edit' %}"}
+              %span.glyphicon.glyphicon-cog
+            %a{:href => "{% url 'workflow:workflow_new' project.pk %}", :title => "{% trans 'New workflow' %}"}
+              %span.glyphicon.glyphicon-plus.success.opacity-hover
+        - if workflows
+            %table.workflow_list{:style => "width: 100%"}
+              %tr
+                %th
+                  {% trans 'Workflow version' %}
+                %th
+                  {% trans 'Success percent' %}
+                %th
+                  {% trans 'Success / Untested / Failed / Disabled' %}
+                %th
+                  {% trans 'Creation date' %}
+                %th
 
-                            - for workflow in workflows
-                                %tr.item{"data-item-pk" => "{{ workflow.pk }}", "data-model" => "workflow"}
-                                    %td{:style => "width: 55%"}
-                                        %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
-                                            {{ workflow.name }}
-                                    %td
-                                        .progress_bar
-                                            %span.success{:style => 'width:{{ workflow.get_success_percent }}%;'}
-                                            %p
-                                                {{ workflow.get_success_percent }}% 
-                                    %td
-                                        %span.success
-                                            {{ workflow.success}}
-                                        \/
-                                        %span.untested
-                                            {{ workflow.untested }}
-                                        \/
-                                        %span.failed
-                                            {{ workflow.failed }}
-                                        
-                                        \/
-                                        %span.disabled
-                                            {{ workflow.disabled }}
-                                    %td
-                                        {{ workflow.creation_date|date:"d/m/Y" }}
+              - for workflow in workflows
+                %tr.item{"data-item-pk" => "{{ workflow.pk }}", "data-model" => "workflow"}
+                  %td{:style => "width: 55%"}
+                    %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
+                      {{ workflow.name }}
+                  %td
+                    .progress_bar
+                      %span.success{:style => 'width:{{ workflow.get_success_percent }}%;'}
+                      %p
+                        {{ workflow.get_success_percent }}% 
+                  %td
+                    %span.success
+                      {{ workflow.success}}
+                    \/
+                    %span.untested
+                      {{ workflow.untested }}
+                    \/
+                    %span.failed
+                      {{ workflow.failed }}
+                    
+                    \/
+                    %span.disabled
+                      {{ workflow.disabled }}
+                  %td
+                    {{ workflow.creation_date|date:"d/m/Y" }}
 
-                                    %td
-                                        %a.close{data-workflow: "{{workflow.pk}}"}
-                                            %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
-                    - else
-                        %p
-                            %em
-                                {% trans "No workflows in this project." %}
+                  %td
+                    %a.close{data-workflow: "{{workflow.pk}}"}
+                      %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
+          - else
+            %p
+              %em
+                {% trans "No workflows in this project." %}

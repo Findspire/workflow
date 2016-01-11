@@ -2,131 +2,131 @@
 - load i18n
 - load workflow_tags
 %script#template_form_item{type: "text/template"}
-    %form{:style => "display: none"}
-        %input{:type => "text", :size => "50"}/
-        %input{:type => "submit"}/
+  %form{:style => "display: none"}
+    %input{:type => "text", :size => "50"}/
+    %input{:type => "submit"}/
 
 %script#template_modal_comment{type: "text/template"}
-    .modal.fade.commentModal#commentModal{tabindex: "-1", role:"dialog", aria-labellebdy:"commentLabel"}
-        .modal-dialog{role: "document", data-person: "{{ user.person.pk }}", data-username: "{{ user.username }}"}
-            .modal-content
-                .modal-header
-                    %button.close{type: "button", data-dismiss:"modal", aria-label:"Close"}
-                        %span{aria-hidden: "true"}
-                            &times;
-                    %h4.modal-title#commentModal
-                        Comments
-                .modal-body
-                    .col-md-12
-                .modal-footer
-                    .col-md-12
-                        %form.form-group{:action => "#"}
-                            .col-md-11
-                                %input.form-control#textComment{:type => "text", "placeholder" => "test"}/
-                            .col-md-1
-                                %button.btn.btn-success{:type => "submit"}
-                                    %span.glyphicon.glyphicon-plus
+  .modal.fade.commentModal#commentModal{tabindex: "-1", role:"dialog", aria-labellebdy:"commentLabel"}
+    .modal-dialog{role: "document", data-person: "{{ user.person.pk }}", data-username: "{{ user.username }}"}
+      .modal-content
+        .modal-header
+          %button.close{type: "button", data-dismiss:"modal", aria-label:"Close"}
+            %span{aria-hidden: "true"}
+              &times;
+          %h4.modal-title#commentModal
+            Comments
+        .modal-body
+          .col-md-12
+        .modal-footer
+          .col-md-12
+            %form.form-group{:action => "#"}
+              .col-md-11
+                %input.form-control#textComment{:type => "text", "placeholder" => "test"}/
+              .col-md-1
+                %button.btn.btn-success{:type => "submit"}
+                  %span.glyphicon.glyphicon-plus
 
 %script#template_comment{type: "text/template"}
-    %article
-        %aside.col-md-1
-            %row.username
-            %row.date
-        %section.col-md-9.col-md-offset-2
-            %span.triangle
+  %article
+    %aside.col-md-1
+      %row.username
+      %row.date
+    %section.col-md-9.col-md-offset-2
+      %span.triangle
 
 
 - for category, items in categories
-    %table{data-person-pk: "{{ user.person.pk }}", data-username: "{{ user.username }}"}
-        %thead
-            %tr.category
-                %th{:style => "width: 65%;"}
-                    {{ category.name }}
-                    %a.controls{href: "{% url 'workflow:item_model_add_to_workcat' workflow.pk category.pk %}"}
-                        %span.glyphicon.glyphicon-plus.success{:title => "{% trans 'Add an item '%}"}
-                %th
-                %th.take_untake_category{:style => "width: 120px;"}
-                    %span{class: "take"}
-                        %a{href:"{% url 'workflow:take_items_category' workflow.pk category.pk 'take' %}", title:"Take all items of the category"}
-                            {% trans "Take all" %}
-                    \/
-                    %span{class: "untake"}
-                        %a{href:"{% url 'workflow:take_items_category' workflow.pk category.pk 'untake' %}", title:"Untake all items of the category"}
-                            {% trans "Untake all" %}
-                    %span{class: "show", id: "take_untake_category_{{ category.pk }}_show"}
-                        %a{href:"{% url 'workflow:update' which_display 'show' 'category' category.pk workflow.pk %}?next={{ request.path }}"}
+  %table{data-person-pk: "{{ user.person.pk }}", data-username: "{{ user.username }}"}
+    %thead
+      %tr.category
+        %th{:style => "width: 65%;"}
+          {{ category.name }}
+          %a.controls{href: "{% url 'workflow:item_model_add_to_workcat' workflow.pk category.pk %}"}
+            %span.glyphicon.glyphicon-plus.success{:title => "{% trans 'Add an item '%}"}
+        %th
+        %th.take_untake_category{:style => "width: 120px;"}
+          %span{class: "take"}
+            %a{href:"{% url 'workflow:take_items_category' workflow.pk category.pk 'take' %}", title:"Take all items of the category"}
+              {% trans "Take all" %}
+          \/
+          %span{class: "untake"}
+            %a{href:"{% url 'workflow:take_items_category' workflow.pk category.pk 'untake' %}", title:"Untake all items of the category"}
+              {% trans "Untake all" %}
+          %span{class: "show", id: "take_untake_category_{{ category.pk }}_show"}
+            %a{href:"{% url 'workflow:update' which_display 'show' 'category' category.pk workflow.pk %}?next={{ request.path }}"}
 
-                %th
+        %th
+        
+        %th
+        %th
+    %tbody#sortable
+      - for item in items
+        %tr.item_list{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", "data-item-pk" => "{{ item.pk }}", data-status: "{{ item.validation }}", data-url: "{% url 'api:comments-list' item.pk %}"}
+          %td.item
+            %a
+              {{ item.name }}
+            - for url, ticket_id in item.name|get_tickets
+              - if forloop.counter == 1
+                %strong{style:"margin-left:20px;"}
+                  {% trans "Tickets:" %}
+              %a.urls{href:"{{ url }}", alt:"Ticket #{{ ticket_id }}"}
+                \#{{ ticket_id }}
+              - if not forloop.last
+                \-
+          %td
+            %a.action.edit
+              %span.glyphicon.glyphicon-edit
+            %a.action.comment
+              %span.glyphicon.glyphicon-envelope
+
+          %td.take_untake_item
+            - if item.assigned_to_name_cache
+              {{ item.assigned_to_name_cache }}
+              - if item.assigned_to_name_cache == user.username
+                %a.close{title: "Reset owner of item", data-status: "mine"}
+                  %span.glyphicon.glyphicon-remove
+            - else
+               %a.not-take{title: "Take item", data-status: "untaken"}
+                {% trans "Take" %}
+
+          %td.comment{:style => "width: 72px"}
+            - if item.comments_count
+              %a.comment{style: "visibility: visible;"}
+                %span.glyphicon.glyphicon-comment
                 
-                %th
-                %th
-        %tbody#sortable
-            - for item in items
-                %tr.item_list{class: "highlight {% if forloop.counter|divisibleby:2 %}{% else %}odd_line{% endif %}", "data-item-pk" => "{{ item.pk }}", data-status: "{{ item.validation }}", data-url: "{% url 'api:comments-list' item.pk %}"}
-                    %td.item
-                        %a
-                            {{ item.name }}
-                        - for url, ticket_id in item.name|get_tickets
-                            - if forloop.counter == 1
-                                %strong{style:"margin-left:20px;"}
-                                    {% trans "Tickets:" %}
-                            %a.urls{href:"{{ url }}", alt:"Ticket #{{ ticket_id }}"}
-                                \#{{ ticket_id }}
-                            - if not forloop.last
-                                \-
-                    %td
-                        %a.action.edit
-                            %span.glyphicon.glyphicon-edit
-                        %a.action.comment
-                            %span.glyphicon.glyphicon-envelope
+          %td.validate
+            - if item.validation == Item.VALIDATION_SUCCESS
+              %a{href: "#", title: "Item is validated", data-url: "{% url 'workflow:update_item_validation' 'success' item.pk %}"}
+                %span.glyphicon.glyphicon-ok-sign.success.validated
+            - else
+              %a{href: "#", title: "Click to validate", data-url: "{% url 'workflow:update_item_validation' 'success' item.pk %}"}
+                %span.glyphicon.glyphicon-ok-sign.success
 
-                    %td.take_untake_item
-                        - if item.assigned_to_name_cache
-                            {{ item.assigned_to_name_cache }}
-                            - if item.assigned_to_name_cache == user.username
-                                %a.close{title: "Reset owner of item", data-status: "mine"}
-                                    %span.glyphicon.glyphicon-remove
-                        - else
-                             %a.not-take{title: "Take item", data-status: "untaken"}
-                                {% trans "Take" %}
+            - if item.validation == Item.VALIDATION_UNTESTED
+              %a{href: "#", title: "Item is untested", data-url: "{% url 'workflow:update_item_validation' 'untested' item.pk %}", data-status:"untested"}
+                %span.glyphicon.glyphicon-question-sign.untested.validated
+            - else
+              %a{href: "#", title: "Reset item validation", data-status-old: "{{ item|get_status }}", data-status-new: "untested", data-url: "{% url 'workflow:update_item_validation' 'untested' item.pk %}"}
+                %span.glyphicon.glyphicon-question-sign.untested
 
-                    %td.comment{:style => "width: 72px"}
-                        - if item.comments_count
-                            %a.comment{style: "visibility: visible;"}
-                                %span.glyphicon.glyphicon-comment
-                                
-                    %td.validate
-                        - if item.validation == Item.VALIDATION_SUCCESS
-                            %a{href: "#", title: "Item is validated", data-url: "{% url 'workflow:update_item_validation' 'success' item.pk %}"}
-                                %span.glyphicon.glyphicon-ok-sign.success.validated
-                        - else
-                            %a{href: "#", title: "Click to validate", data-url: "{% url 'workflow:update_item_validation' 'success' item.pk %}"}
-                                %span.glyphicon.glyphicon-ok-sign.success
+            - if item.validation == Item.VALIDATION_FAILED
+              %a{href: "#", title: "Item is broken", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}", data-status:"failed"}
+                %span.glyphicon.glyphicon-remove-sign.failed.validated
+            - else
+              %a{href: "#", title: "Click to failed item", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}"}
+                %span.glyphicon.glyphicon-remove-sign.failed
 
-                        - if item.validation == Item.VALIDATION_UNTESTED
-                            %a{href: "#", title: "Item is untested", data-url: "{% url 'workflow:update_item_validation' 'untested' item.pk %}", data-status:"untested"}
-                                %span.glyphicon.glyphicon-question-sign.untested.validated
-                        - else
-                            %a{href: "#", title: "Reset item validation", data-status-old: "{{ item|get_status }}", data-status-new: "untested", data-url: "{% url 'workflow:update_item_validation' 'untested' item.pk %}"}
-                                %span.glyphicon.glyphicon-question-sign.untested
+            - if item.validation == Item.VALIDATION_DISABLED
+              %a{href: "#", title: "Item disabled", data-url: "{% url 'workflow:update_item_validation' 'disabled' item.pk %}", data-status:"disabled"}
+                %span.glyphicon.glyphicon-ban-circle.disabled.validated
+            - else
+              %a{href: "#", title: "Click to disable item", data-url: "{% url 'workflow:update_item_validation' 'disabled' item.pk %}"}
+                %span.glyphicon.glyphicon-ban-circle.disabled
+            %br
+              %span.last_modification= item.updated_at|date:"d/m/Y H:i"
 
-                        - if item.validation == Item.VALIDATION_FAILED
-                            %a{href: "#", title: "Item is broken", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}", data-status:"failed"}
-                                %span.glyphicon.glyphicon-remove-sign.failed.validated
-                        - else
-                            %a{href: "#", title: "Click to failed item", data-url: "{% url 'workflow:update_item_validation' 'failed' item.pk %}"}
-                                %span.glyphicon.glyphicon-remove-sign.failed
-
-                        - if item.validation == Item.VALIDATION_DISABLED
-                            %a{href: "#", title: "Item disabled", data-url: "{% url 'workflow:update_item_validation' 'disabled' item.pk %}", data-status:"disabled"}
-                                %span.glyphicon.glyphicon-ban-circle.disabled.validated
-                        - else
-                            %a{href: "#", title: "Click to disable item", data-url: "{% url 'workflow:update_item_validation' 'disabled' item.pk %}"}
-                                %span.glyphicon.glyphicon-ban-circle.disabled
-                        %br
-                            %span.last_modification= item.updated_at|date:"d/m/Y H:i"
-
-                    %td
-                        %a.action.close
-                            %span.glyphicon.glyphicon-remove
+          %td
+            %a.action.close
+              %span.glyphicon.glyphicon-remove
 

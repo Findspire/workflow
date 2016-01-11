@@ -1,11 +1,11 @@
 - if is_paginated
-    %p.paginator
-        - for i in mypaginator
-            - if not i
-                \...
-            - elif i == page_obj.number
-                %span{class: "this-page"}<
-                    {{ i }}
-            - else
-                %a{href: "?page={{ i }}"}<
-                    {{ i }}
+  %p.paginator
+    - for i in mypaginator
+      - if not i
+        \...
+      - elif i == page_obj.number
+        %span{class: "this-page"}<
+          {{ i }}
+      - else
+        %a{href: "?page={{ i }}"}<
+          {{ i }}

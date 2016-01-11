@@ -6,80 +6,80 @@
 - load workflow_tags
 
 - block breadcrumbs
-    %a{href: "{% url 'workflow:workflow_show' item.workflow.pk 'all' %}"}
-        {{ item.workflow.project.name }} - {{ item.workflow.version }}
-    ›
-    {% trans "Show item" %}
+  %a{href: "{% url 'workflow:workflow_show' item.workflow.pk 'all' %}"}
+    {{ item.workflow.project.name }} - {{ item.workflow.version }}
+  ›
+  {% trans "Show item" %}
 
 - block content
-    %h1
-        {{ item.item_model.name }} ({{ item.item_model.category.name }})
-        %small{style: "color:gray;"}
-            {{ item.workflow.project.name }} - {{ item.workflow.version }}
+  %h1
+    {{ item.item_model.name }} ({{ item.item_model.category.name }})
+    %small{style: "color:gray;"}
+      {{ item.workflow.project.name }} - {{ item.workflow.version }}
 
-    
-    #details_see
-        %h2
-            Details (<a href="." onClick="details_edit(); return false;">Edit</a>)
+  
+  #details_see
+    %h2
+      Details (<a href="." onClick="details_edit(); return false;">Edit</a>)
 
-        - if item.item_model.description
-            %pre<
-                {{ item.item_model.description }}
-        - else
-            %pre<
-                ** {% trans "No details." %} **
+    - if item.item_model.description
+      %pre<
+        {{ item.item_model.description }}
+    - else
+      %pre<
+        ** {% trans "No details." %} **
 
-    #details_edit
-        %h2
-            Edit details
+  #details_edit
+    %h2
+      Edit details
 
-        %form{action: ".",  method: "POST"}
-            - csrf_token
-            %input{type: "hidden", name: "type", value:"description"}
-            {{ form_description.as_p | u }}
-            %input{type: "submit", value:"Post"}
-            %input{type: "submit", value:"Cancel", onClick:"details_see(); return false;"}
+    %form{action: ".",  method: "POST"}
+      - csrf_token
+      %input{type: "hidden", name: "type", value:"description"}
+      {{ form_description.as_p | u }}
+      %input{type: "submit", value:"Post"}
+      %input{type: "submit", value:"Cancel", onClick:"details_see(); return false;"}
 
-    %hr
+  %hr
 
-    #comments
-        %h2
-            {% trans "Comments" %}
-        - for comment in comments
-            .comment
-                %h4
-                    %a{href: "#{{ forloop.counter }}", name: "{{ forloop.counter }}", title: "Comment anchor - {{ forloop.counter }}"}
-                        \#{{ forloop.counter }}
-                    \- {{ comment.date }} - {{ comment.person }}
-                    %a{:href => "{% url 'workflow:delete_comment_view' comment.item.workflow.pk comment.pk %}"}
-                        %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
-                %p
-                    {{ comment }}
-                %hr
-        - empty
-            %em
-                {% trans "No comments yet." %}
+  #comments
+    %h2
+      {% trans "Comments" %}
+    - for comment in comments
+      .comment
+        %h4
+          %a{href: "#{{ forloop.counter }}", name: "{{ forloop.counter }}", title: "Comment anchor - {{ forloop.counter }}"}
+            \#{{ forloop.counter }}
+          \- {{ comment.date }} - {{ comment.person }}
+          %a{:href => "{% url 'workflow:delete_comment_view' comment.item.workflow.pk comment.pk %}"}
+            %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
+        %p
+          {{ comment }}
+        %hr
+    - empty
+      %em
+        {% trans "No comments yet." %}
 
-    #comment_new
-        %h2
-            {% trans "Add a comment" %}
-        %form{action: '.', method:"POST"}
-            - csrf_token
-            %input{type: "hidden", name: "type", value:"comment"}
-            {{ form_comment.as_p | u }}
-            %input{type: "submit", value:"Post"}
+  #comment_new
+    %h2
+      {% trans "Add a comment" %}
+    %form{action: '.', method:"POST"}
+      - csrf_token
+      %input{type: "hidden", name: "type", value:"comment"}
+      {{ form_comment.as_p | u }}
+      %input{type: "submit", value:"Post"}
 
 
-    %script{type: "text/javascript"}
-        $('#details_edit').hide();
+  %script{type: "text/javascript"}
+    $('#details_edit').hide();
 
-        function details_edit() {
-            $('#details_see').hide();
-            $('#details_edit').show();
-        }
+    function details_edit() {
+      $('#details_see').hide();
+      $('#details_edit').show();
+    }
 
-        function details_see() {
-            $('#details_see').show();
-            $('#details_edit').hide();
-        }
+    function details_see() {
+      $('#details_see').show();
+      $('#details_edit').hide();
+    }
 

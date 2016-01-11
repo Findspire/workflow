@@ -4,31 +4,31 @@
 - load workflow_tags
 
 - block breadcrumbs
-    - if not creating
-        %a{href: "{% url 'team:person_list' %}"}
-            {% trans "List persons" %}
-        ›
-        {% blocktrans trimmed %}
-            Edit {{ person }}
-        {% endblocktrans %}
-    - else
-        {% trans "New person" %}
+  - if not creating
+    %a{href: "{% url 'team:person_list' %}"}
+      {% trans "List persons" %}
+    ›
+    {% blocktrans trimmed %}
+      Edit {{ person }}
+    {% endblocktrans %}
+  - else
+    {% trans "New person" %}
 
 - block content
-    %h1
-        - if not creating
-            Edit {{ person }}
-        - else
-            {% trans "New person" %}
-
+  %h1
     - if not creating
-        %p
-            %em
-                %a{href: "{% url 'team:skill_instance_list' person.pk %}"}
-                    {% trans "Edit skills strength" %}
+      Edit {{ person }}
+    - else
+      {% trans "New person" %}
 
-    %form{action:"", method:"post"}
-        - csrf_token
-        {{ user_form.as_p | u }}
-        {{ person_form.as_p | u }}
-        %input{type:"submit", value:"{{ submit }}"}
+  - if not creating
+    %p
+      %em
+        %a{href: "{% url 'team:skill_instance_list' person.pk %}"}
+          {% trans "Edit skills strength" %}
+
+  %form{action:"", method:"post"}
+    - csrf_token
+    {{ user_form.as_p | u }}
+    {{ person_form.as_p | u }}
+    %input{type:"submit", value:"{{ submit }}"}

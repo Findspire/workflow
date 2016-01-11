@@ -3,15 +3,15 @@
 - load i18n
 
 - block breadcrumbs
-    {% trans "List teams" %}
+  {% trans "List teams" %}
 
 - block content
-    %h1
-        {% trans "List teams" %}
+  %h1
+    {% trans "List teams" %}
 
-    %ul
-        - for team in object_list
-            %li
-                %a{href: "{% url 'team:team_edit' team.pk %}"}
-                    {{ team.name }} - {{ team.leader }} - {{ team.members.count }} member(s)
+  %ul
+    - for team in object_list
+      %li
+        %a{href: "{% url 'team:team_edit' team.pk %}"}
+          {{ team.name }} - {{ team.leader }} - {{ team.members.count }} member(s)
 

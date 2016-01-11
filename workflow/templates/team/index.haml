@@ -4,34 +4,34 @@
 - load i18n
 
 - block breadcrumbs_app
-    {% trans "Teams and skills" %}
+  {% trans "Teams and skills" %}
 
 - block content
-    %h1
-        {% trans "Team management" %}
+  %h1
+    {% trans "Team management" %}
 
-    %table
-        %tr
-            %th
-                %a{href: "{% url 'team:person_list' %}"}
-                    {% trans "Persons" %}
-            %td
-                %a{href: "{% url 'team:person_new' %}"}
-                    {% trans "Add" %}
-        %tr
-            %th
-                %a{href: "{% url 'team:team_list' %}"}
-                    {% trans "Teams" %}
-             %td
-                %a{href: "{% url 'team:team_new' %}"}
-                    {% trans "Add" %}
-        %tr
-            %th
-                %a{href: "{% url 'team:skill_subject_list' %}"}
-                    {% trans "Skill categories" %}
-            %td
-                %a{href: "{% url 'team:skill_category_new' %}"}
-                    {% trans "Add a category" %}
-                \-
-                %a{href: "{% url 'team:skill_subject_new' %}"}
-                    {% trans "Add a skill subject" %}
+  %table
+    %tr
+      %th
+        %a{href: "{% url 'team:person_list' %}"}
+          {% trans "Persons" %}
+      %td
+        %a{href: "{% url 'team:person_new' %}"}
+          {% trans "Add" %}
+    %tr
+      %th
+        %a{href: "{% url 'team:team_list' %}"}
+          {% trans "Teams" %}
+       %td
+        %a{href: "{% url 'team:team_new' %}"}
+          {% trans "Add" %}
+    %tr
+      %th
+        %a{href: "{% url 'team:skill_subject_list' %}"}
+          {% trans "Skill categories" %}
+      %td
+        %a{href: "{% url 'team:skill_category_new' %}"}
+          {% trans "Add a category" %}
+        \-
+        %a{href: "{% url 'team:skill_subject_new' %}"}
+          {% trans "Add a skill subject" %}
