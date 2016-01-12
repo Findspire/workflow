@@ -16,11 +16,14 @@ $(function() {
     $("table #sortable").sortable({
             items: '.item_list',
             stop: function (event, ui) { onDragStop(event, ui, '/api/drag-item/')}
-        }).disableSelection();
+    }).disableSelection();
     $(".workflow_list").sortable({
         items: '.item',
         stop: function (event, ui) {onDragStop(event, ui, '/api/drag-workflow/')},
     }).disableSelection(); 
+    $("#items").sortable({
+        stop: function (event, ui) { onDragStop(event, ui, '/api/drag-category/')}
+    }).disableSelection();
     $(".tooltip").tooltip({
         position: { my: "left+15 center", at: "right center" }
     });

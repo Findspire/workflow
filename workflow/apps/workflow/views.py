@@ -137,7 +137,7 @@ def workflow_show(request, workflow_pk, which_display):
         raise PermissionDenied
 
     items = set(workflow.get_items(which_display, request_person))
-    categories = workflow.categories.all()
+    categories = sorted(workflow.categories.all(), key=lambda x: x.position)
     items_by_category = []
     for category in categories:
         cat_items = [item for item in items if item.category_id == category.id]
@@ -218,6 +218,12 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
         # if creating a category from a workflow
         if 'workflow_pk' in self.kwargs: # todo: check permissions in team or superuser
             workflow = get_object_or_404(Workflow, pk=self.kwargs['workflow_pk'])
+            if workflow.categories.all():
+                last = sorted(workflow.categories.all(), key=lambda x: x.position)[-1]
+                form.instance.position = last.position + 1 if last else 0
+            else:
+                form.instance.position = 0
+            form.instance.save()
             workflow.categories.add(form.instance)
         return ret
 

@@ -8,8 +8,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from workflow.apps.API import serializers
-from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel, Project
-from workflow.apps.workflow.models import update_workflow_position, update_item_position
+from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel, Project, ItemCategory
+from workflow.apps.workflow.models import update_workflow_position, update_item_position, update_category_position
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -216,4 +216,21 @@ class ItemDragPosition(APIView):
             update_item_position(item, related_item)
         else:
             update_item_position(item)
+        return Response(status=status.HTTP_200_OK)
+
+
+class CategoryDragPosition(APIView):
+    """
+    Update category position with drag and drop
+    """
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    def post(self, request, category_pk, related_pk=None):
+        category = get_object_or_404(ItemCategory, pk=category_pk)
+        workflow = category.workflow_set.all()[0]
+        if related_pk is not None:
+            related_item = ItemCategory.objects.get(pk=related_pk)
+            update_category_position(workflow, category, related_item)
+        else:
+            update_category_position(workflow, category)
         return Response(status=status.HTTP_200_OK)

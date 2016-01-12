@@ -11,5 +11,6 @@ urlpatterns = patterns('workflow.apps.API',
     url(r'^projects/$', views.ProjectList.as_view(), name='projects-list'),
     url(r'^projects/(?P<project_pk>[0-9]+)/workflows/$', views.ProjectWorkflowList.as_view(), name='project-workflows'),
     url(r'^drag-workflow/(?P<workflow_pk>[0-9]+)(?:/(?P<related_pk>[0-9]+))?/$', views.WorkflowDragPosition.as_view(), name='drag_workflow'),
-    url(r'^drag-item/(?P<item_pk>[0-9]+)(?:/(?P<related_pk>[0-9]+))?/$', views.ItemDragPosition.as_view(), name="drag-item")
+    url(r'^drag-item/(?P<item_pk>[0-9]+)(?:/(?P<related_pk>[0-9]+))?/$', views.ItemDragPosition.as_view(), name="drag-item"),
+    url(r'^drag-category/(?P<category_pk>[0-9]+)(?:/(?P<related_pk>[0-9]+))?/$', views.CategoryDragPosition.as_view(), name="drag-category")
 )

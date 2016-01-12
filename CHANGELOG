@@ -8,6 +8,8 @@ Updates sinces v1.0.7
   * Add choice workflow model on create new
   * Update workflow, project new and edit templates
   * Fix bug on item category creation
+  * Remove "Show workflow" in title of workflow show view
+  * Add drag and drop cross categories in workflow
 
 =============================
 Workflow v1.0.7 Release Notes

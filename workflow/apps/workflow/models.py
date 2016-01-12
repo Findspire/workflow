@@ -29,12 +29,27 @@ from workflow.apps.team.models import Person, Team
 
 class ItemCategory(models.Model):
     name = models.CharField(max_length=64, verbose_name=_('Name'))
+    position = models.IntegerField(null=True, editable=False)
+
+    class Meta:
+        ordering = ['position']
 
     def __unicode__(self):
         return '%s' % (self.name)
 
     def get_items(self):
         return self.item_set.all()
+
+
+def update_category_position(workflow, category, related_category=None):
+    if related_category is not None:
+        category.position = related_category.position
+        categories = workflow.categories.all().filter(position__gte=category.position)\
+                                              .update(position=F('position') + 1)
+    else:
+        related_category = workflow.categories.all().last()             
+        category.position = related_category.position + 1 if related_category.position else 0
+    category.save()
 
 
 class ItemModel(models.Model):

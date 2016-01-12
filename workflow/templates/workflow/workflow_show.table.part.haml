@@ -37,7 +37,7 @@
 
 
 - for category, items in categories
-  %table{data-person-pk: "{{ user.person.pk }}", data-username: "{{ user.username }}"}
+  %table{data-person-pk: "{{ user.person.pk }}", data-username: "{{ user.username }}", data-item-pk: "{{ category.pk }}", data-workflow-pk: "{{ workflow.pk }}"}
     %thead
       %tr.category
         %th{:style => "width: 65%;"}
