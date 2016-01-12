@@ -101,7 +101,6 @@ def workflow_create(request, project_pk=None):
 @login_required
 def workflow_edit(request, workflow_pk=None):
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
-    print(workflow.project)
     if request.method == 'POST':
         workflow.project = get_object_or_404(Project, pk=request.POST.get('project'))
         workflow.name = request.POST.get('name')
