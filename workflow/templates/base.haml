@@ -13,6 +13,7 @@
         Workflow
     %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/base_all.css" %}'}
     %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/bootstrap.min.css" %}'}
+    %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/font-awesome.min.css" %}'}
     %link{rel: "icon", href: '{% static "workflow/img/favicon.ico" %}'}
     %script{type: "text/javascript", src: '{% static "workflow/js/jquery-1.9.1.js" %}'}
     %script{type: "text/javascript", src: '{% static "workflow/js/jquery-ui.min.js" %}'}
@@ -61,6 +62,19 @@
                         %a{:href => "{% url 'workflow:workflow_new' %}"}
                           %span.glyphicon.glyphicon-plus
                           {% trans 'New Workflow' %}
+                  - if request.user.is_superuser
+                    %li.dropdown
+                      %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false", :title => "Administration"}
+                        %span.glyphicon.glyphicon-wrench
+                      %ul.dropdown-menu
+                        %li
+                          %a{:href => "{% url 'team:index' %}"}
+                            %i.fa.fa-users
+                            {% trans 'Team and skills' %}
+                        %li
+                          %a{:href => "{% url 'admin:index' %}"}
+                            %i.fa.fa-cogs
+                            {% trans 'Administration' %}
                   %li.dropdown
                     %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false", :title => "User"}
                       %span.glyphicon.glyphicon-user

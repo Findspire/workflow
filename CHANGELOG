@@ -10,6 +10,7 @@ Updates sinces v1.0.7
   * Fix bug on item category creation
   * Remove "Show workflow" in title of workflow show view
   * Add drag and drop cross categories in workflow
+  * Add dropdown menu for superuser administration
 
 =============================
 Workflow v1.0.7 Release Notes
