@@ -194,6 +194,9 @@ class WorkflowDragPosition(APIView):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     def post(self, request, workflow_pk, related_pk=None):
+        """
+        Update workflow position with drag and drop
+        """
         workflow = get_object_or_404(Workflow, pk=workflow_pk)
         if related_pk is not None:
             related_item = Workflow.objects.get(pk=related_pk)
@@ -205,11 +208,14 @@ class WorkflowDragPosition(APIView):
 
 class ItemDragPosition(APIView):
     """
-    Update workflow position with drag and drop
+    Update item position with drag and drop
     """
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     def post(self, request, item_pk, related_pk=None):
+        """
+        Update item position with drag and drop
+        """
         item = get_object_or_404(Item, pk=item_pk)
         if related_pk is not None:
             related_item = Item.objects.get(pk=related_pk)
@@ -226,6 +232,9 @@ class CategoryDragPosition(APIView):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     def post(self, request, category_pk, related_pk=None):
+        """
+        Update category position with drag and drop
+        """
         category = get_object_or_404(ItemCategory, pk=category_pk)
         workflow = category.workflow_set.all()[0]
         if related_pk is not None:
