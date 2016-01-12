@@ -14,16 +14,22 @@
     .panel.panel-default
       .panel-heading
         %h3.panel-title
-          {% trans "New workflow" %}
+          - if workflow
+            {% trans "Workflow edit" %}
+          - else
+            {% trans "New workflow" %}
       .panel-body
-        %form.workflow-new-form{:action => "{% url 'workflow:workflow_new' %}", :method => "post"}
+        %form.workflow-new-form{:action => "{{ url }}", :method => "post"}
           - csrf_token
           .form-group
             %label{:for => "project"}
               {% trans 'Project' %}
             %select.form-control{:name => "project"}
               - for project, _ in projects
-                - if project.pk == project_pk
+                - if project_pk and project.pk == project_pk
+                  %option{:value => "{{ project.pk }}", :selected => "selected"}
+                    {{ project.name }}
+                - if workflow and project == workflow.project
                   %option{:value => "{{ project.pk }}", :selected => "selected"}
                     {{ project.name }}
                 - else
@@ -32,18 +38,22 @@
           .form-group
             %label{:for => "name"}
               {% trans 'Name' %}
-            %input.form-control{:type => "text", :name => "name", :required => "required"}/
-          .checkbox
-            %label
-              %input{:type => "checkbox", :name => "clone"}/
-              {% trans 'Workflow clone ?' %}
-          .form-group
-            %select.form-control.workflow-model{:name => "workflow_model", :style => "display:none;"}
-              - for project, workflows in projects
-                %optgroup{:label => "{{ project.name }}"}
-                  - for workflow in workflows
-                      %option{:value => "{{ workflow.id }}"}
-                        {{ workflow.name }}
+            - if workflow 
+              %input.form-control{:type => "text", :name => "name", :required => "required", :value => "{{ workflow.name }}"}/
+            - else
+              %input.form-control{:type => "text", :name => "name", :required => "required"}/
+          - if not workflow
+            .checkbox
+              %label
+                %input{:type => "checkbox", :name => "clone"}/
+                {% trans 'Workflow clone ?' %}
+            .form-group
+              %select.form-control.workflow-model{:name => "workflow_model", :style => "display:none;"}
+                - for project, workflows in projects
+                  %optgroup{:label => "{{ project.name }}"}
+                    - for workflow in workflows
+                        %option{:value => "{{ workflow.id }}"}
+                          {{ workflow.name }}
 
           %button.btn.btn-success{:type => "submit"}
             {% trans 'Save' %}

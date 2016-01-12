@@ -6,7 +6,8 @@ Updates sinces v1.0.7
 ---------------------
   * Add Project, Workflow and Home button on navbar
   * Add choice workflow model on create new
-  * Update workflow new, project new and edit templates
+  * Update workflow, project new and edit templates
+  * Fix bug on item category creation
 
 =============================
 Workflow v1.0.7 Release Notes

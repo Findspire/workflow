@@ -73,12 +73,6 @@ def project_list(request):
     return render(request, 'workflow/project_list.haml', {'projects': projects})
 
 
-class WorkflowFormView(LoginRequiredMixin, CreateUpdateView):
-    model = Workflow
-    form_class = WorkflowNewForm
-    template_name = 'utils/workflow_generic_views_form.haml'
-
-
 @login_required
 def workflow_create(request, project_pk=None):
     if request.method == 'POST':
@@ -98,7 +92,25 @@ def workflow_create(request, project_pk=None):
         workflow.save()
         return redirect('workflow:project_list')
     projects = [(project, [workflow for workflow in Workflow.objects.filter(project=project, archived=False)]) for project in Project.objects.all()]
-    return render(request, 'workflow/workflow_new.haml', {'projects': projects, 'project_pk': int(project_pk) if project_pk else None})
+    return render(request, 'workflow/workflow_new.haml', {'projects': projects,
+                                                          'project_pk': int(project_pk) if project_pk else None,
+                                                          'url': reverse('workflow:workflow_new')
+                                                          })
+
+
+@login_required
+def workflow_edit(request, workflow_pk=None):
+    workflow = get_object_or_404(Workflow, pk=workflow_pk)
+    print(workflow.project)
+    if request.method == 'POST':
+        workflow.project = get_object_or_404(Project, pk=request.POST.get('project'))
+        workflow.name = request.POST.get('name')
+        workflow.save()
+        return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': int(workflow_pk), 'which_display': "all"}))
+    projects = [(project, None) for project in Project.objects.all()]
+    return render(request, 'workflow/workflow_new.haml', {'projects': projects, 
+                                                          'workflow': workflow,
+                                                          'url': reverse('workflow:workflow_edit', kwargs={'workflow_pk': workflow_pk})})
 
 
 @login_required
@@ -122,7 +134,6 @@ def workflow_show(request, workflow_pk, which_display):
     request_person = request.user.person
     workflow = get_object_or_404(Workflow, pk=workflow_pk)
     team = workflow.project.team
-
     if request_person not in team.members.all() and not request.user.is_superuser:
         raise PermissionDenied
 
@@ -209,7 +220,6 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
         if 'workflow_pk' in self.kwargs: # todo: check permissions in team or superuser
             workflow = get_object_or_404(Workflow, pk=self.kwargs['workflow_pk'])
             workflow.categories.add(form.instance)
-            get_object_or_404(Project, pk=workflow.project.pk).categories.add(form.instance)
         return ret
 
 
