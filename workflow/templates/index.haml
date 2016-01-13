@@ -40,3 +40,6 @@
                       Add dropdown menu for superuser administration
                   %small 
                     Note : Home button on navbar return on project list
+      %a.col-md-offset-5{:href => "{% url 'workflow:project_list' %}"}
+        %button.btn.btn-success.btn-lg
+          {% trans 'See project list' %}
