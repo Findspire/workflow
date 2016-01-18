@@ -29,15 +29,15 @@
 
   %hr
   .progress
-    .progress-bar.progress-bar-success{style: 'width: {{ workflow|percent:"success"|floatformat:"0" }}%;'}
-      {{ workflow|percent:"success"|floatformat:"0"}}%
-    .progress-bar.progress-bar-untested{style: 'width: {{ workflow|percent:"untested"|floatformat:"0" }}%;'}
-      {{ workflow|percent:"untested"|floatformat:"0"}}%
-    .progress-bar.progress-bar-danger{style: 'width: {{ workflow|percent:"failed"|floatformat:"0"}}%;'}
-      {{ workflow|percent:"failed"|floatformat:"0"}}%
-    .progress-bar.progress-bar-disabled{style: 'width: {{ workflow|percent:"disabled"|floatformat:"0"}}%;'}
+    .progress-bar.progress-bar-success{style: 'width: {{ workflow|percent:"success"|to_dot }}%;'}
+      {{ workflow|percent:"success"|floatformat:"0"|to_dot }}%
+    .progress-bar.progress-bar-untested{style: 'width: {{ workflow|percent:"untested"|to_dot }}%;'}
+      {{ workflow|percent:"untested"|floatformat:"0"|to_dot}}%
+    .progress-bar.progress-bar-danger{style: 'width: {{ workflow|percent:"failed"|to_dot}}%;'}
+      {{ workflow|percent:"failed"|floatformat:"0"|to_dot}}%
+    .progress-bar.progress-bar-disabled{style: 'width: {{ workflow|percent:"disabled"|to_dot}}%;'}
       - if workflow|percent:"disabled" != 0
-        {{ workflow|percent:"disabled"|floatformat:"0"}}%
+        {{ workflow|percent:"disabled"|floatformat:"0"|to_dot}}%
   .col-md-6.col-md-offset-4
     %div
       %ul

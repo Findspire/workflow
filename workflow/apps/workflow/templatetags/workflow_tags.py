@@ -24,7 +24,15 @@ def get_count(workflow, param):
 
 @register.filter
 def percent(workflow, value):
-    return (getattr(workflow, value) * 100.0) / workflow.total if workflow.total != 0 else 100
+    value_percent = (getattr(workflow, value) * 100.0) / workflow.total if workflow.total != 0 else 100
+    return round(value_percent, 3)
+
+
+@register.filter
+def to_dot(value):
+    if not isinstance(value, str):
+        value = str(value)
+    return value.replace(',', '.')
 
 
 @register.filter
