@@ -8,7 +8,7 @@ Updates sinces v1.0.8
   * Add CHANGELOG parser custom command 
   * Add CHANGELOG model 
   * Add delete function in CommentList view in API
-  * Now you can delete comment
+  * Add delete option for comments
 
 =============================
 Workflow v1.0.8 Release Notes
