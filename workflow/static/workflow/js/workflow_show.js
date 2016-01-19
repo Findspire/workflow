@@ -41,7 +41,8 @@ $(function() {
            $('.workflow-new-form .workflow-model').hide(); 
         }
     });
-
+    wf.utils = {}
+    wf.utils.username = $('body').attr('data-username');
     wf.templates = {};
     wf.templates.itemNameEditForm = $('#template_form_item');
     wf.templates.itemCommentModal = $('#template_modal_comment');
@@ -201,17 +202,18 @@ function showModalComment(elem) {
     var $modal = $(wf.templates.itemCommentModal.html().trim()).modal(),
         url = $(elem.currentTarget).closest('tr').data('url'),
         itemPk = $(elem.currentTarget).closest('tr').data('item-pk');
-    $modal.find('button[type="submit"]').on('click', function() {
+    $modal.find('button[type="submit"]').on('click', function(e) {
+        e.preventDefault();
         addNewComment($modal, itemPk);
     });
     $.getJSON(url, function(data) {
         $.each(data, function(key, val){
-            addCommentToModal($modal, val.username, val.date, val.text);
+            addCommentToModal($modal, val.id, val.username, val.date, val.text);
         });
     });
 }
 
-function addCommentToModal($modal, username, date, comment) {
+function addCommentToModal($modal, id, username, date, comment) {
     if(typeof username !== 'undefined' && typeof comment !== 'undefined') {
         var $tpl = $(wf.templates.itemComment.html().trim());
         var words = comment.split(' ');
@@ -229,11 +231,24 @@ function addCommentToModal($modal, username, date, comment) {
             }
          }
         comment = words.join(' ');
+        $tpl.find('section').attr('data-comment-pk', id);
         $tpl.find('aside .username').text(username);
         $tpl.find('aside .date').text($.datepicker.formatDate('dd/mm', new Date(date)));
         $tpl.find('section').append(comment);
         $modal.find('.modal-body .col-md-12').prepend($tpl);
+        if (wf.utils.username == username) {
+            $tpl.find('.action a').show().on('click', function() {
+                removeComment($modal, id);
+            });
+        }
     }
+}
+
+function removeComment($modal, commentPk) {
+    var url = '/api/comments/' + commentPk + '/',
+        comment = $modal.find('[data-comment-pk=' + commentPk + ']').closest('article');
+    wf.ajax.delete(url, null);
+    comment.hide();
 }
 
 function addNewComment($modal, itemPk) {
@@ -243,7 +258,7 @@ function addNewComment($modal, itemPk) {
         username = $modal.find('.modal-dialog').data('username');
     wf.ajax.post(url, {person: personPk, text: comment})
            .done(function(data) {
-                addCommentToModal($modal, username, data.date, comment);
+                addCommentToModal($modal, data.id, username, data.date, comment);
                 $modal.find('input').val('');
            });
 }

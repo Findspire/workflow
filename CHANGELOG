@@ -7,6 +7,8 @@ Updates sinces v1.0.8
   * Fix render bug on progress bar in workflow show view
   * Add CHANGELOG parser custom command 
   * Add CHANGELOG model 
+  * Add delete function in CommentList view in API
+  * Now you can delete comment
 
 =============================
 Workflow v1.0.8 Release Notes

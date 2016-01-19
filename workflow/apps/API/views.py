@@ -126,6 +126,16 @@ class CommentList(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, item_pk, format=None):
+        """
+        Delete selected comment
+        ---
+        request_serializer: serializers.CommentSerializer
+        """
+        comment = get_object_or_404(Comment, pk=item_pk)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class ItemDetails(APIView):
     """

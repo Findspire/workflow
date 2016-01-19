@@ -21,7 +21,7 @@
     %script{type: "text/javascript", src: '{% static "workflow/js/moment.js" %}'}
     %script{type: "text/javascript", src: '{% static "workflow/js/workflow_show.js" %}'}
 
-  %body
+  %body{"data-username" => "{{ request.user }}"}
     - block nav
       %nav
         .navbar.navbar-inverse.navbar-fixed-top
