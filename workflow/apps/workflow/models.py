@@ -27,6 +27,20 @@ from django.utils.translation import ugettext_lazy  as _
 from workflow.apps.team.models import Person, Team
 
 
+class Changelog(models.Model):
+    title = models.CharField(default=_("Title"), max_length=50)
+    text = models.TextField()
+    created_at = models.DateTimeField(null=True, editable=False)
+
+    class Meta:
+        verbose_name = "Changelog"
+        verbose_name_plural = "Changelog"
+        ordering = ['created_at']
+
+    def __str__(self):
+        return self.title
+    
+
 class ItemCategory(models.Model):
     name = models.CharField(max_length=64, verbose_name=_('Name'))
     position = models.IntegerField(null=True, editable=False)
@@ -196,12 +210,14 @@ def updated_at_handler(sender, instance=None, **kwargs):
     instance.updated_at = timezone.now()
 
 
+@receiver(pre_save, sender=Changelog)
 @receiver(pre_save, sender=Item)
 def created_at_handler(sender, instance=None, **kwargs):
     if instance.created_at is None:
         instance.created_at = timezone.now()
-        instance.workflow.total += 1
-        instance.workflow.save()
+        if hasattr(instance, 'workflow'):
+            instance.workflow.total += 1
+            instance.workflow.save()
 
 
 @receiver(post_delete, sender=Item)

@@ -11,7 +11,9 @@ from django.shortcuts import render
 
 @login_required
 def index(request):
-    return render(request, 'index.haml')
+    from workflow.apps.workflow.models import Changelog
+    posts = Changelog.objects.all()
+    return render(request, 'index.haml', {'posts': posts})
 
 
 urlpatterns = [
@@ -23,4 +25,3 @@ urlpatterns = [
     url(r'^team/', include('workflow.apps.team.urls', namespace='team')),
     url(r'^api/', include('workflow.apps.API.urls', namespace='api')),
 ]
-
