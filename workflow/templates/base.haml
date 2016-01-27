@@ -20,8 +20,10 @@
     %script{type: "text/javascript", src: '{% static "workflow/js/bootstrap.min.js" %}'}
     %script{type: "text/javascript", src: '{% static "workflow/js/underscore-min.js" %}'}
     %script{type: "text/javascript", src: '{% static "workflow/js/moment.js" %}'}
+    %script{type: "text/javascript", src: '{% static "workflow/js/alertify.js" %}'}
     %script{type: "text/javascript", src: '{% static "workflow/js/workflow_show.js" %}'}
-
+    - block extra
+    - include "dashboard/templates.haml"
   %body{"data-username" => "{{ request.user }}"}
     - block nav
       %nav
@@ -32,7 +34,7 @@
                 %a{:href => "/"}
                   %img{:src => "{% static 'workflow/img/logo.png' %}", :alt => ""}/
                 .version
-                  1.0.8
+                  1.0.9
             .navbar-collapse.collapse
               - if request.user.is_active
                 %ul.nav.navbar-nav.navbar-right
@@ -40,6 +42,10 @@
                     %a{:href => "{% url 'workflow:project_list' %}", :title => "Projects list", :title => "{% trans 'Home' %}"}
                       %span
                         .glyphicon.glyphicon-home
+                  %li
+                    %a{:href => "{% url 'dashboard:index' %}" }
+                      %span
+                        %i.fa.fa-tachometer
                   %li.dropdown
                     %a.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false", :title => "Project"}
                       %span
@@ -96,8 +102,8 @@
       - block breadcrumbs
 
     #content
-      - block content
-
-      - block optional_script
+      .container-fluid
+        - block content
+    - block optional_script
       %script{type: "text/javascript"}
         $('#warning_js').hide();

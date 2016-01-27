@@ -1,0 +1,43 @@
+%script#template_workflow_panel{type: "text/template"}
+  %article{data-workflow-pk: '<%= id %>'}
+    .name.col-md-5
+      <%= name %>
+    .bar.col-md-3
+      .progress{style: 'height: 15px; margin-bottom: 0;'}
+        .progress-bar.progress-bar-success{style: 'width: <%= success_percent %>%;', role:"progressbar"}
+          <%= success_percent %>%
+    .status.col-md-4
+      %span.badge.success.col-md-2.col-md-offset-1
+        <%= success %>
+      %span.badge.untested.col-md-2.col-md-offset-1
+        <%= untested %>
+      %span.badge.disabled.col-md-2.col-md-offset-1
+        <%= disabled %>
+      %span.badge.failed.col-md-2.col-md-offset-1
+        <%= failed %>
+
+
+
+%script#template_panel_details{type: "text/template"}
+  %section
+    header
+    .name.col-md-10
+      <%= name %>
+
+%script#template_users_items_details{type: "text/template"}
+  %article
+    .container-fluid
+      .name.col-md-11
+          <%= name %>
+      .status.col-md-1
+        <% if (validation == 0) { %>
+          <span class="glyphicon glyphicon-question-sign untested"></span>
+        <% } else if (validation == 1) { %>
+          <span class="glyphicon glyphicon-ok-sign success validated"></span>
+        <% } else if (validation == 2) { %>
+          <span class="glyphicon glyphicon-remove-sign failed"></span>
+        <% } else if (validation == 3) { %>
+          <span class="glyphicon glyphicon-ban-circle disabled"></span>
+        <% } else { %>
+          <span class="glyphicon glyphicon-question-sign untested"></span>
+        <% } %>

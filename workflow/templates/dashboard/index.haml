@@ -1,0 +1,36 @@
+- extends "base.haml"
+
+- load static
+- load i18n
+
+- block breadcrumbs_app
+  {% trans "Dashboard" %}
+
+- block extra
+  %link{:rel => "stylesheet", :href => '{% static "workflow/css/dashboard.css" %}'}/
+  %script{type: "text/javascript", src: '{% static "workflow/js/dashboard.js" %}'}
+
+- block content
+  - block sidebar
+    .sidebar.col-md-1
+      %ul
+        %li
+          %a.users-link
+            %button.btn.btn-lg
+              %span.glyphicon.glyphicon-user
+        %li
+          %a.projects-link
+            %button.btn.btn-lg
+              %span.glyphicon.glyphicon-folder-open
+        %li
+          %a.ideas-link
+            %button.btn.btn-lg
+              %i.fa.fa-lightbulb-o
+
+  - block dashboard
+    .row.col-md-offset-1.filters
+      .container
+        .col-md-6
+          %select.form-control{:name => "filters"}
+    .row.col-md-offset-1.dashboard
+      .container

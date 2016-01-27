@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from workflow.apps.API import serializers
+from workflow.apps.team.models import Person, Team
 from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel, Project, ItemCategory
 from workflow.apps.workflow.models import update_workflow_position, update_item_position, update_category_position
 
@@ -16,6 +17,36 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
     def enforce_csrf(self, request):
         return  # To not perform the csrf check previously happening
+
+
+class PersonList(APIView):
+    """
+    List all person
+    """
+    def get(self, request, format=None):
+        """
+        List all person
+        ---
+        response_serializer: serializers.PersonSerializer
+        """
+        person = Person.objects.all()
+        serializer = serializers.PersonSerializer(person, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class TeamList(APIView):
+    """
+    List all team
+    """
+    def get(self, request, format=None):
+        """
+        List all person
+        ---
+        response_serializer: serializers.TeamSerializer
+        """
+        teams = Team.objects.all()
+        serializer = serializers.TeamSerializer(teams, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProjectList(APIView):
@@ -74,6 +105,43 @@ class WorkflowList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UsersWorkflowList(APIView):
+    """
+    Display workflow with selected filter
+    """
+    def get(self, request, person_pk, format=None):
+        """
+        Display workflow with selected filter
+        ---
+        response_serializer: serializers.WorkflowSerializer
+        """
+        person = get_object_or_404(Person, pk=person_pk)
+        workflows = Workflow.objects.filter(archived=False)
+        workflows_list = set()
+        for workflow in workflows:
+            if workflow.get_items('mine', person=person):
+                workflows_list.add(workflow)
+                continue
+        serializer = serializers.WorkflowSerializer(workflows_list, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class WorkflowDetailsFilter(APIView):
+    """
+    Display workflow details from selecte filter
+    """
+    def get(self, request, display, person_pk, workflow_pk):
+        """
+        Display workflow details for selected person
+        """
+        person = get_object_or_404(Person, pk=person_pk)
+        workflow = get_object_or_404(Workflow, pk=workflow_pk)
+
+        items = workflow.get_items('mine', person=person)
+        serializer = serializers.ItemSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProjectWorkflowList(APIView):

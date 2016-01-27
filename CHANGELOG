@@ -9,6 +9,11 @@ Updates sinces v1.0.8
   * Add CHANGELOG model 
   * Add delete function in CommentList view in API
   * Add delete option for comments
+  * Add Dashboard app
+  * On Dashboard add users views details
+  * Add alertify.js library 
+  * Add UsersWorkflowList, WorkflowDetailsFilter, PersonList, TeamList
+  * Add PersonSerializer, TeamSerializer
 
 =============================
 Workflow v1.0.8 Release Notes

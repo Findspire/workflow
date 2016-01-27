@@ -6,14 +6,12 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 @login_required
 def index(request):
-    from workflow.apps.workflow.models import Changelog
-    posts = Changelog.objects.all()
-    return render(request, 'index.haml', {'posts': posts})
+    return redirect('dashboard:index')
 
 
 urlpatterns = [
@@ -21,6 +19,7 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
     url(r'^$', index),
+    url(r'^dashboard/', include('workflow.apps.dashboard.urls', namespace='dashboard')),
     url(r'^workflow/', include('workflow.apps.workflow.urls', namespace='workflow')),
     url(r'^team/', include('workflow.apps.team.urls', namespace='team')),
     url(r'^api/', include('workflow.apps.API.urls', namespace='api')),

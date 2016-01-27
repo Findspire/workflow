@@ -1,0 +1,155 @@
+/*!
+ * Findspire - Dashboard
+ * Code licensed under the MIT License (MIT)
+ */
+
+/* Global  */
+$findspire: #00b6e5;
+$success: #5ac200;
+$untested: #f0ad4e;
+$disabled: #333333;
+$failed: #ff0f13;
+
+/* Utils */
+.opacity-hover{
+    transition: all 200ms ease-in-out;
+    &:hover{
+        opacity: 0.7;
+    }
+}
+/* Sidebar */
+.sidebar{
+    background-color: #222;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 72px;
+    ul{
+        
+        padding: 0;
+        text-align: center;
+        li{
+            list-style-type: none;
+            margin-top: 10px;
+            .btn{
+                background-color: #222;
+                border-color: $findspire;
+                color: #fff;
+                transition: all 200ms ease-in-out;
+                width: 52px;
+                &:hover, &:focus, &.active{
+                    outline: none;
+                    background-color: #fff;
+                    box-shadow: inset 0px 0px 2px 1px rgba(34, 34, 34, 0.75);
+                    -moz-box-shadow: inset 0px 0px 2px 1px rgba(34, 34, 34, 0.75);
+                    -webkit-box-shadow: inset 0px 0px 2px 1px rgba(34, 34, 34, 0.75);
+                    color: #333;
+                }
+            }
+        }
+    }
+}
+
+/* Filters */
+.filters {
+    background-color: #efefef;
+    border-bottom: 1px solid #d4d4d4;
+    height: 50px;
+    left: 0;
+    margin-bottom: 20px;
+    padding: 10px;
+    position: fixed;
+    top: 72px;
+    z-index: 1000;
+}
+
+/* Dashboard */
+.dashboard {
+    margin-top: 50px;
+}
+/* Panel */
+.panel{
+    border-radius: 0;
+}
+.panel .panel-heading {
+    line-height: 40px;
+    padding: 5px 10px;
+}
+.panel .panel-heading span, .panel .panel-heading i{
+    width: 30px;
+}
+.panel .panel-heading h2{
+    display: inline-block;
+    font-size: 12px;
+    margin: 0;
+    text-transform: uppercase;
+}
+.panel .panel-body{
+    padding: 0;
+}
+
+/* Panel Workflow */
+.workflow{
+    font-size: 11px;
+    .panel-heading{
+        .select{
+            float: right;
+        }
+        .filter-select{
+            display: none;
+        }
+    }
+    .panel-body{
+        max-height: 75vh;
+        overflow-y: auto;
+        article{
+            @extend .opacity-hover;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ddd;
+            min-height: 30px;
+            padding: 5px;
+            width: 100%;
+            &:nth-child(even){
+                background-color: #fafafa;
+            }
+            &:hover{
+                cursor: pointer;
+            }
+            .progress-bar{
+                font-size: 10px;
+                line-height: 1.5;
+            }
+            .status{
+                float: right;
+               .badge{
+                    padding: 3px 2px;
+                    &.success{
+                        background-color: $success;
+                    }
+                    &.untested{
+                       background-color: $untested; 
+                    }
+                    &.disabled{
+                        background-color: $disabled;
+                    }
+                    &.failed{ 
+                        background-color: $failed;
+                    } 
+                }   
+            }
+        } 
+    }
+}
+
+.tasks-details{
+    margin-bottom: 0;
+    .panel-body{
+        max-height: 60vh;
+        overflow-y: scroll;
+        article{
+            border-bottom: 1px solid #ddd;
+            min-height: 30px;
+            width: 100%;
+        }
+    }
+}

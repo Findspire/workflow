@@ -27,7 +27,6 @@ $findspire_color: #00b6e5;
 }
 
 #content{
-    width: 1000px;
     margin: 10px auto;
     margin-top: 80px;
     margin-bottom: 50px;
@@ -243,6 +242,7 @@ li label {
         font-size: 9px;
         height: 12px;
         position: relative;
+        margin: auto;
         width: 100px;
         p{
             left: 44%;
