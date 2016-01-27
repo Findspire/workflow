@@ -100,7 +100,7 @@ $failed: #ff0f13;
         }
     }
     .panel-body{
-        max-height: 75vh;
+        height: 70vh;
         overflow-y: auto;
         article{
             @extend .opacity-hover;
