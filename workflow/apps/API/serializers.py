@@ -23,11 +23,6 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
 
 
-class ItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Item
-
-
 class WorkflowSerializer(serializers.ModelSerializer):
     success_percent = serializers.FloatField(source='get_success_percent')
 
@@ -43,3 +38,10 @@ class ProjectSerializer(serializers.ModelSerializer):
 class ItemCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemCategory
+
+
+class ItemSerializer(serializers.ModelSerializer):
+    category = ItemCategorySerializer()
+
+    class Meta:
+        model = Item

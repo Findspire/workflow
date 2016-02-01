@@ -10,6 +10,7 @@ $(function() {
   dsb.templates = {};
   dsb.templates.workflowPanel = $('#template_workflow_panel');
   dsb.templates.itemsDetailsPanel = $('#template_users_items_details');
+  dsb.templates.categoryDetailsPanel = $('#template_users_categories_details');
   $('.filters select').on('change', filtersUsersChange);
   $.each(dsb.dom.sidebar.btnLink, function(i, value) {
     $(value).on('click', function(e){sidebarEvent(e)})
@@ -60,6 +61,8 @@ function sidebarEvent(e) {
     alertify.delay(4000).error("Project view : Comming soon !");
   } else if ($elem.hasClass('ideas-link')) {
     alertify.delay(4000).error("Ideas Box : Comming soon !");
+  } else if ($elem.hasClass('question-link')) {
+    displayQuestionPage();
   } else {
     displayUsersPage();
   }
@@ -67,6 +70,7 @@ function sidebarEvent(e) {
 
 function displayUsersPage() {
   var url = '/api/persons/';
+  $('.filters').show();
   $('.users-link .btn').addClass('active')
   workflowPanelFilterSelect(url, 'username');
   $('.dashboard .container').load('/dashboard/users/');
@@ -79,6 +83,11 @@ function displayProjectsPage() {
   $('.dashboard .container').load('/dashboard/projects/');
 }
 
+function displayQuestionPage() {
+  $('.filters').hide();
+  $('.question-link .btn').addClass('active');
+  $('.dashboard .container').load('/dashboard/changelog/');
+}
 function workflowPanelFilterSelect(url, attr) {
   dsb.ajax.get(url, null)
       .done(function(data){
@@ -99,7 +108,7 @@ function workflowAppendPanel(data) {;
 
 function filtersUsersChange() {
   var val = $(this).val(),
-      url = '/api/persons/' + val + '/workflow/'
+      url = '/api/persons/' + val + '/workflow/',
       dfd = dsb.ajax.get(url, null),
       panel = $('.workflow .panel-body').empty();
   $('.tasks-details .panel-body').empty();
@@ -119,10 +128,24 @@ function displayWorkflowDetails(workflowPk) {
       dfd = dsb.ajax.get(url, null);
   dfd.done(function(data){
     $('.tasks-details .panel-body').empty();
+    var items = [];
     $.each(data, function(i, value) {
-      appendItemToDetails(value);
+      items.push(value);
+    });
+    items = _.groupBy(items, function(item) { return item.category.name });
+    $.each(items, function(i, category) {
+      appendCategoryToDetails({'name':i });
+      $.each(category, function(i, item){
+        appendItemToDetails(item);
+      });
     });
   });
+}
+
+function appendCategoryToDetails(data) {
+  var categoryTpl = _.template(dsb.templates.categoryDetailsPanel.html().trim()),
+      parsedTpl = categoryTpl(data);
+  $('.tasks-details .panel-body').append(parsedTpl);
 }
 
 function appendItemToDetails(data) {

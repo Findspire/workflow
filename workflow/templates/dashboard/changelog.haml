@@ -1,0 +1,20 @@
+- load i18n
+.container-fluid
+  - for post in posts
+    .panel.panel-primary.changelog
+      .panel-heading
+        %h3.panel-title
+          %i.fa.fa-smile-o 
+          {{ post.title }}
+          %small
+            {{ post.created_at }}
+      .panel-body
+        .row
+          %article
+            .col-md-6.col-md-offset-1
+              %header
+                %h4
+                  CHANGELOG
+                  %hr{:style => "margin-bottom: 0"}/
+              %section
+                {{ post.text|linebreaksbr }}

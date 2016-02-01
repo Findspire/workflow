@@ -123,7 +123,6 @@ class UsersWorkflowList(APIView):
         for workflow in workflows:
             if workflow.get_items('mine', person=person):
                 workflows_list.add(workflow)
-                continue
         serializer = serializers.WorkflowSerializer(workflows_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -135,6 +134,8 @@ class WorkflowDetailsFilter(APIView):
     def get(self, request, display, person_pk, workflow_pk):
         """
         Display workflow details for selected person
+        ---
+        response_serializer: serializers.ItemSerializer
         """
         person = get_object_or_404(Person, pk=person_pk)
         workflow = get_object_or_404(Workflow, pk=workflow_pk)

@@ -8,4 +8,5 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns('workflow.apps.dashboard',
     url(r'^$', 'views.index', name='index'),
     url(r'^users/', 'views.users', name='users'),
+    url(r'^changelog/', 'views.changelog', name='changelog')
 )

@@ -87,6 +87,11 @@ $failed: #ff0f13;
 .panel .panel-body{
     padding: 0;
 }
+.changelog{
+    .panel-heading{
+        border-radius: 0;
+    }
+}
 
 /* Panel Workflow */
 .workflow{
@@ -146,7 +151,21 @@ $failed: #ff0f13;
     .panel-body{
         max-height: 60vh;
         overflow-y: scroll;
+        .category{
+            .category-title{
+                background-color: $findspire;
+                color: #fff;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                text-transform: uppercase;
+                vertical-align: middle;
+            }
+        }
         article{
+            &:nth-child(even){
+                background-color: #fafafa;
+            }
             border-bottom: 1px solid #ddd;
             min-height: 30px;
             width: 100%;

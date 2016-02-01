@@ -142,12 +142,12 @@ class ChangelogParser(object):
 if __name__ == '__main__':
     # Exemple of Parser use
     parser = ChangelogParser(
-        changelog_path=os.path.join(os.path.dirname(__file__), '..', 'CHANGELOG'),
+        changelog_path=os.path.join(os.path.dirname(__file__), '../../../../../.', 'CHANGELOG'),
         block_title='Update',
         block_start='--',
         block_stop='=='
     )
     for block in parser.blocks():
-        print(block.title)
+        print(block)
         for item in block.items():
             print(item)
