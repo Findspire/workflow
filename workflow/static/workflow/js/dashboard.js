@@ -58,9 +58,9 @@ function sidebarEvent(e) {
   if($elem.hasClass('users-link')) {
     displayUsersPage();
   } else if ($elem.hasClass('projects-link')) {
-    alertify.delay(4000).error("Project view : Comming soon !");
+    alertify.delay(4000).error("Project view : Coming soon !");
   } else if ($elem.hasClass('ideas-link')) {
-    alertify.delay(4000).error("Ideas Box : Comming soon !");
+    alertify.delay(4000).error("Ideas Box : Coming soon !");
   } else if ($elem.hasClass('question-link')) {
     displayQuestionPage();
   } else {
