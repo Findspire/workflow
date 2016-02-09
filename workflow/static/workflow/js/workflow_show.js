@@ -289,9 +289,9 @@ function editItemName() {
         edit = $item.find('.item'),
         editVal = edit.text().trim(),
         $form = $(wf.templates.itemNameEditForm.html().trim());
-    edit.find('a:first').hide();
+    edit.find('span').hide();
     edit.find('form').remove();
-    $form.find('input:first').val(edit.find('a:first').text().trim());
+    $form.find('input:first').val(edit.find('span').text().trim());
     edit.append($form);
     $form.show();
     $form.on('submit', function(e) {
@@ -308,9 +308,9 @@ function changeItemName(elem, item_pk){
 
     wf.ajax.patch(url, {name: newName})
         .done(function(){
-            $(elem).find('.item a:first').text(newName);
+            $(elem).find('.item span').text(newName);
             $(elem).find('.item form').hide();
-            $(elem).find('.item a:first').show();
+            $(elem).find('.item span').show();
         }); 
     return false
 }
