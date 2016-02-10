@@ -221,6 +221,10 @@ class ItemDetails(APIView):
         """
         item = get_object_or_404(Item, pk=item_pk)
         serializer = serializers.ItemSerializer(item, data=request.data, partial=True)
+        if 'name' in request.data: # If name of 'Item' change, change ItemModel name to.
+            item_model = item.item_model
+            item_model.name = request.data['name']
+            item_model.save()
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
