@@ -3,13 +3,10 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from django.shortcuts import get_object_or_404, redirect
-from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from django.utils import timezone
+from django.shortcuts import get_object_or_404
 from workflow.apps.API import serializers
 from workflow.apps.team.models import Person, Team
-from workflow.apps.workflow.models import Item, Comment, Workflow, ItemModel, Project, ItemCategory
+from workflow.apps.workflow.models import Item, Comment, Workflow, Project, ItemCategory
 from workflow.apps.workflow.models import update_workflow_position, update_item_position, update_category_position
 
 
@@ -99,7 +96,7 @@ class WorkflowList(APIView):
         request_serializer: serializers.WorkflowSerializer
         response_serializer: serializers.WorkflowSerializer
         """
-        serializer = serializer.WorkflowSerializer(data=request.data)
+        serializer = serializers.WorkflowSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -206,6 +203,35 @@ class CommentList(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class ItemCategoryDetails(APIView):
+    """
+    Retrieve, update or delete details of selected item category
+    """
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    def patch(self, request, category_pk, format=None):
+        """
+        Update partial details of selected item category
+        ---
+        request_serializer: serializers.ItemCategorySerializer
+        response_serializer: serializers.ItemCategorySerializer
+        """
+        category = get_object_or_404(ItemCategory, pk=category_pk)
+        serializer = serializers.ItemCategorySerializer(category, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+    def delete(selft, request, category_pk, format=None):
+        """
+        Delete selected item category
+        """
+        category = get_object_or_404(ItemCategory, pk=category_pk)
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 class ItemDetails(APIView):
     """
     Retrieve or update details of selected item
@@ -221,7 +247,7 @@ class ItemDetails(APIView):
         """
         item = get_object_or_404(Item, pk=item_pk)
         serializer = serializers.ItemSerializer(item, data=request.data, partial=True)
-        if 'name' in request.data: # If name of 'Item' change, change ItemModel name to.
+        if 'name' in request.data:  # If name of 'Item' change, change ItemModel name to.
             item_model = item.item_model
             item_model.name = request.data['name']
             item_model.save()
