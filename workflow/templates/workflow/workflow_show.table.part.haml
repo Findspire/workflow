@@ -40,13 +40,19 @@
 
 
 - for category, items in categories
-  %table{data-person-pk: "{{ user.person.pk }}", data-username: "{{ user.username }}", data-item-pk: "{{ category.pk }}", data-workflow-pk: "{{ workflow.pk }}"}
+  %table{data-person-pk: "{{ user.person.pk }}", data-username: "{{ user.username }}", data-category-pk: "{{ category.pk }}", data-workflow-pk: "{{ workflow.pk }}"}
     %thead
       %tr.category
         %th{:style => "width: 65%;"}
-          {{ category.name }}
+          %input{:type => "text", :style => "display: none"}/
+          %span.title
+            {{ category.name }}
           %a.controls{href: "{% url 'workflow:item_model_add_to_workcat' workflow.pk category.pk %}"}
             %span.glyphicon.glyphicon-plus.success{:title => "{% trans 'Add an item '%}"}
+          %a.controls
+            %span.glyphicon.glyphicon-edit
+          %a.controls.close{:href => "{% url 'workflow:item_category_delete' workflow.pk category.pk %}"}
+            %span.glyphicon.glyphicon-remove
         %th
         %th.take_untake_category{:style => "width: 120px;"}
           %span{class: "take"}

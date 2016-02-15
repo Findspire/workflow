@@ -55,8 +55,8 @@ def project_edit(request, project_pk):
         project.team = Team.objects.get(pk=request.POST.get('team'))
         project.save()
         return redirect('workflow:project_list')
-    return render(request, 'workflow/project_new.haml', {'project': project, 
-                                                         'teams': Team.objects.all(), 
+    return render(request, 'workflow/project_new.haml', {'project': project,
+                                                         'teams': Team.objects.all(),
                                                          'url': reverse('workflow:project_edit', kwargs={'project_pk': project.pk})})
 
 
@@ -88,7 +88,7 @@ def workflow_create(request, project_pk=None):
             for category in workflow_model.categories.all():
                 workflow.categories.add(category)
                 for item in ItemModel.objects.filter(category=category):
-                    Item.objects.create(item_model=item, workflow=workflow)
+                    Item.objects.create(item_model=item, workflow=workflow, name=item.name)
         workflow.save()
         return redirect('workflow:project_list')
     projects = [(project, [workflow for workflow in Workflow.objects.filter(project=project, archived=False)]) for project in Project.objects.all()]
@@ -107,7 +107,7 @@ def workflow_edit(request, workflow_pk=None):
         workflow.save()
         return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': int(workflow_pk), 'which_display': "all"}))
     projects = [(project, None) for project in Project.objects.all()]
-    return render(request, 'workflow/workflow_new.haml', {'projects': projects, 
+    return render(request, 'workflow/workflow_new.haml', {'projects': projects,
                                                           'workflow': workflow,
                                                           'url': reverse('workflow:workflow_edit', kwargs={'workflow_pk': workflow_pk})})
 
@@ -118,7 +118,7 @@ def workflow_delete(request, workflow_pk):
     if request.user.person is workflow.project.team.leader or request.user.is_superuser:
         workflow.delete()
     else:
-        return HttpResponseForbidden(_('You are not allowed to delete this workflow. Contact %s :)' % 
+        return HttpResponseForbidden(_('You are not allowed to delete this workflow. Contact %s :)' %
                                      workflow.project.team.leader))
     return redirect('workflow:project_list')
 
@@ -216,7 +216,7 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
     def form_valid(self, form):
         ret = super(ItemCategoryFormView, self).form_valid(form)
         # if creating a category from a workflow
-        if 'workflow_pk' in self.kwargs: # todo: check permissions in team or superuser
+        if 'workflow_pk' in self.kwargs:  # todo: check permissions in team or superuser
             workflow = get_object_or_404(Workflow, pk=self.kwargs['workflow_pk'])
             if workflow.categories.all():
                 last = sorted(workflow.categories.all(), key=lambda x: x.position)[-1]
@@ -226,6 +226,12 @@ class ItemCategoryFormView(LoginRequiredMixin, CreateUpdateView):
             form.instance.save()
             workflow.categories.add(form.instance)
         return ret
+
+
+def item_category_delete(request, workflow_pk, category_pk):
+    category = get_object_or_404(ItemCategory, pk=category_pk)
+    category.delete()
+    return redirect(reverse('workflow:workflow_show', args=[workflow_pk, 'all']))
 
 
 @login_required
@@ -323,7 +329,7 @@ def update_item_validation(request, item_pk, action):
     item = get_object_or_404(Item, pk=item_pk)
     if item.assigned_to_name_cache != request.user.username:
         if item.assigned_to is not None:
-            return HttpResponseForbidden(_("%s is the owner of this task" \
+            return HttpResponseForbidden(_("%s is the owner of this task"
                                              % item.assigned_to))
         else:
             return HttpResponseForbidden(_("You must take the task before edit it"))
@@ -364,8 +370,7 @@ def take_items_category(request, workflow_pk, category_pk, action):
     elif action == 'untake':
         Item.objects.filter(category__pk=category_pk, assigned_to_name_cache=request.user.username,
                             validation=0, workflow__pk=workflow_pk)\
-                    .update(assigned_to=None, assigned_to_name_cache=None)                     
+                    .update(assigned_to=None, assigned_to_name_cache=None)
     else:
         raise Http404('Action %s does not exist' % action)
     return redirect(reverse('workflow:workflow_show', kwargs={'workflow_pk': workflow_pk, 'which_display': 'all'}))
-    

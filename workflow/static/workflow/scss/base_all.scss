@@ -59,6 +59,7 @@ li label {
         cursor: pointer;
     }
 }
+
 // NAVBAR
 .navbar{
     border-bottom: none !important;
@@ -277,6 +278,14 @@ li label {
                 }
                 .success{
                     transition: all 200ms ease-in-out;
+                    &:hover{
+                        opacity: 0.6;
+                    }
+                }
+                .close{
+                    font-size: 15px;
+                    margin: auto;
+                    opacity: 1;
                     &:hover{
                         opacity: 0.6;
                     }
