@@ -42,6 +42,7 @@ $(function() {
         }
     });
     $(".category .glyphicon-edit").on('click', editCategoryName);
+    $(".category").find(".controls.close").on('click', deleteCategory);
     wf.utils = {}
     wf.utils.username = $('body').attr('data-username');
     wf.templates = {};
@@ -339,6 +340,18 @@ function changeCategoryName($categoryContainer, categoryPk) {
           $categoryContainer.find('input').hide();
           $categoryContainer.find('.title, .controls').show();
         });
+}
+
+function deleteCategory() {
+    var $elem = $(this).closest('table'),
+        categoryPk = $elem.data('category-pk'),
+        url   = '/api/category/' + categoryPk + '/';
+    if(confirm('Delete selected category ?')) {
+        wf.ajax.delete(url, {category_pk: categoryPk})
+          .done(function() {
+            $elem.fadeOut();
+        });
+    }
 }
 
 function deleteItem() {
