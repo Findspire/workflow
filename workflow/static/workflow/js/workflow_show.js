@@ -358,10 +358,12 @@ function deleteItem() {
     var $elem = $(this).closest('.item_list'),
         itemPk = $elem.data('item-pk'),
         url = '/api/item/' + itemPk + '/';
-    wf.ajax.delete(url, {item_pk: itemPk})
-      .done(function(){
+    if(confirm('Delete selected item ?')) {
+        wf.ajax.delete(url, {item_pk: itemPk})
+          .done(function() {
             $elem.fadeOut();
-    });
+       });
+    }
 }
 
 function modal_onclick() {
