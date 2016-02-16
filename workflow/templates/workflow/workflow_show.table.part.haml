@@ -44,7 +44,6 @@
     %thead
       %tr.category
         %th{:style => "width: 65%;"}
-          %input{:type => "text", :style => "display: none"}/
           %span.title
             {{ category.name }}
           %a.controls{href: "{% url 'workflow:item_model_add_to_workcat' workflow.pk category.pk %}"}

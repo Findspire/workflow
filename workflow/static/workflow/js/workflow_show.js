@@ -41,6 +41,7 @@ $(function() {
            $('.workflow-new-form .workflow-model').hide(); 
         }
     });
+    $(".category .glyphicon-edit").on('click', editCategoryName);
     wf.utils = {}
     wf.utils.username = $('body').attr('data-username');
     wf.templates = {};
@@ -56,7 +57,6 @@ $(function() {
     wf.dom.failedBar = wf.dom.progressBar.find('.progress-bar-danger');
     wf.dom.disabledBar = wf.dom.progressBar.find('.progress-bar-disabled');
     wf.dom.items = $('.item');
-
 });
 
 function onDragStop(event, ui, url) {
@@ -64,7 +64,7 @@ function onDragStop(event, ui, url) {
     var related = $(ui.item).next().data("item-pk");
     if(related){
         url = url + item + "/" + related + "/";
-    }else{ 
+    } else{ 
         url = url + item + "/";
     }
     wf.ajax.post(url);
@@ -313,6 +313,32 @@ function changeItemName(elem, item_pk){
             $(elem).find('.item span').show();
         }); 
     return false
+}
+
+function editCategoryName() {
+    var $category = $(this).closest('table'),
+        $categoryContainer = $(this).closest('th'),
+        categoryPk = $category.data('category-pk'),
+        $categoryName = $categoryContainer.find('.title').val(),
+        $form = $(wf.templates.itemNameEditForm.html().trim());
+    
+    $categoryContainer.find('.controls, .title').hide();
+    $categoryContainer.append($form);
+    $form.show().on('submit', function(e) {
+        e.preventDefault();
+        changeCategoryName($categoryContainer, categoryPk);
+    });
+}
+
+function changeCategoryName($categoryContainer, categoryPk) {
+    var newName = $categoryContainer.find('input').val(),
+        url = '/api/category/' + categoryPk + '/';
+    wf.ajax.patch(url, {name: newName})
+        .done(function(data){
+          $categoryContainer.find('.title').text(data['name']);
+          $categoryContainer.find('input').hide();
+          $categoryContainer.find('.title, .controls').show();
+        });
 }
 
 function deleteItem() {
