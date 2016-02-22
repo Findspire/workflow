@@ -91,9 +91,8 @@
           %td.take_untake_item
             - if item.assigned_to_name_cache
               {{ item.assigned_to_name_cache }}
-              - if item.assigned_to_name_cache == user.username
-                %a.close{title: "Reset owner of item", data-status: "mine"}
-                  %span.glyphicon.glyphicon-remove
+              %a.close{title: "Reset owner of item", data-status: "mine"}
+                %span.glyphicon.glyphicon-remove
             - else
                %a.not-take{title: "Take item", data-status: "untaken"}
                 {% trans "Take" %}
