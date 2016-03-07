@@ -15,7 +15,6 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 from django.forms.models import model_to_dict, modelformset_factory
-from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext  as _
