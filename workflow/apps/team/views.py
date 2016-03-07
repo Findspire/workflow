@@ -15,6 +15,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 from django.forms.models import model_to_dict, modelformset_factory
+from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext  as _
@@ -212,12 +213,18 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-                return redirect('dashboard:index')
+                if Person.objects.filter(user=user):
+                    return redirect('dashboard:index')
+                else:
+                    messages.add_message(request, messages.WARNING, _('Your \
+                    account has not an related Person object. Please contact \
+                    an administrator.'))
+                    return redirect('team:logout')
             else:
                 messages.add_message(request, messages.WARNING, _('Your account has been disabled'))
                 return render(request, 'team/login.haml')
         else:
-            messages.add_message(request, messages.ERROR, _('Account %s does not exist or incorrect password'
+            messages.add_message(request, messages.ERROR, _('Account "%s" does not exist or incorrect password'
                                                             % username))
             return render(request, 'team/login.haml')
     else:

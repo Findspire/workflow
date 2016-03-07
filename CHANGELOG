@@ -4,6 +4,7 @@ Workflow v1.0.9 Release Notes
 
 Updates sinces v1.0.8
 ---------------------
+  * Update messages with Bootstrap3 alert
   * Fix render bug on progress bar in workflow show view
   * Add CHANGELOG parser custom command 
   * Add CHANGELOG model 
