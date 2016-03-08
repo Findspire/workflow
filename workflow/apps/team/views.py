@@ -211,14 +211,14 @@ def login(request):
 
         if user is not None:
             if user.is_active:
-                auth_login(request, user)
                 if Person.objects.filter(user=user):
+                    auth_login(request, user)
                     return redirect('dashboard:index')
                 else:
                     messages.add_message(request, messages.WARNING, _('Your \
                     account has not an related Person object. Please contact \
                     an administrator.'))
-                    return redirect('team:logout')
+                    return redirect('team:login')
             else:
                 messages.add_message(request, messages.WARNING, _('Your account has been disabled'))
                 return render(request, 'team/login.haml')
