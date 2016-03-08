@@ -83,37 +83,11 @@ li label {
         }
     }
 }
-// LOGIN PAGE
+
+/* LOGIN PAGE */
 .login{
-    position: relative;
-    text-align: center;
-    .form-control{
-        width: 10%;
-    }
-    button{
-        background-color: $findspire_color; 
-        border: 1px solid $findspire_color;
-        color: #fff;
-        margin-top: 15px;
-        padding: 5px;
-        transition: all 200ms ease-in-out;
-        &:hover{
-            background-color: #fff;
-            color: #00b6e5;
-            cursor: pointer;
-        }
-    }
-    .messages{
-        margin-top: 30px;
-        li{
-            list-style-type: none;
-        }
-        .warning{
-            color: $warning_color;
-        }
-        .error{
-            color: $failed_color;
-        }
+    [class*='col-'] {
+        padding: 10px;
     }
 }
 
