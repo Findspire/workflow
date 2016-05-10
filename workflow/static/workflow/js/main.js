@@ -5,8 +5,8 @@ require.config({
         'backbone': 'components/backbone/backbone-min',
         'underscore': 'components/underscore/underscore-min',
         'jquery': 'components/jquery/dist/jquery.min',
-        'jqueryUi': 'components/jquery-ui/jquery-ui.min',
-        'alertify': 'components/alertify/alertify.min',
+        'jquery-ui': 'components/jquery-ui/jquery-ui.min',
+        'alertifyjs': 'components/alertify.js/dist/js/alertify',
         'bootstrap': 'components/bootstrap/dist/js/bootstrap.min',
         'moment': 'components/moment/min/moment.min',
         'workflow': 'workflow/js/workflow',
@@ -14,26 +14,23 @@ require.config({
     },
 
     shim: {
-        backbone: {
+        'backbone': {
             deps: ['jquery', 'underscore'],
             exports: 'Backbone'
         },
-        undescore: {
+        'undescore': {
             exports: '_'
         },
-        jquery: {
+        'jquery': {
             exports: '$'
         },
-        jqueryUi: {
-            deps: ['jquery']
+        'jquery-ui': {
+            deps: ['jquery'],
+            exports: '$' 
         },
-        bootstrap: {
-            deps: ['jquery']
-        },
-        workflow: {
-            deps: ['jquery']
-        }
-    }
+
+        'bootstrap': ['jquery'],
+    },
 });
 
-require(['workflow', 'dashboard']);
+require(['bootstrap', 'workflow', 'dashboard']);

@@ -1,11 +1,11 @@
-require(['jquery', 'underscore'], 
-function() {
-    var dsb = {}
-
+define(['jquery', 'underscore', 'alertifyjs'], 
+function($, _, alertify) {
+    var dsb = {};
+    
     $(function() {
-      dsb.path = window.location.pathname
+      dsb.path = window.location.pathname;
       dsb.dom = {};
-      dsb.dom.sidebar = {}
+      dsb.dom.sidebar = {};
       dsb.dom.sidebar.btnLink = $('.sidebar li a');
       dsb.dom.filterSelect = $('.filters select');
       dsb.dom.workflowPanel = $('.workflow .panel-body');
@@ -60,9 +60,9 @@ function() {
       if($elem.hasClass('users-link')) {
         displayUsersPage();
       } else if ($elem.hasClass('projects-link')) {
-        alertify.delay(4000).error("Project view : Coming soon !");
+        alertify.error("Project view : Coming soon !");
       } else if ($elem.hasClass('ideas-link')) {
-        alertify.delay(4000).error("Ideas Box : Coming soon !");
+        alertify.error("Ideas Box : Coming soon !");
       } else if ($elem.hasClass('question-link')) {
         displayQuestionPage();
       } else {

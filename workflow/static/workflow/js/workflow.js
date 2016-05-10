@@ -1,5 +1,5 @@
-require(['jquery', 'jqueryUi', 'underscore', 'moment', 'alertify'],
-function() {
+define(['jquery', 'underscore', 'moment', 'jquery-ui'],
+function($, _, moment) {
     var wf = {};
 
     $(function() {
