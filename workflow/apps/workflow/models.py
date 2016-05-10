@@ -39,7 +39,6 @@ class Changelog(models.Model):
 
     def __str__(self):
         return self.title
-    
 
 class ItemCategory(models.Model):
     name = models.CharField(max_length=64, verbose_name=_('Name'))
@@ -61,7 +60,7 @@ def update_category_position(workflow, category, related_category=None):
         categories = workflow.categories.all().filter(position__gte=category.position)\
                                               .update(position=F('position') + 1)
     else:
-        related_category = workflow.categories.all().last()             
+        related_category = workflow.categories.all().last()
         category.position = related_category.position + 1 if related_category.position else 0
     category.save()
 
@@ -145,7 +144,7 @@ def update_workflow_position(item, related_item=None):
     if related_item is not None:
         item.position = related_item.position
         Workflow.objects.filter(
-                project=item.project, 
+                project=item.project,
                 archived=False)\
             .update(position=F('position') + 1)
     else:
@@ -154,7 +153,7 @@ def update_workflow_position(item, related_item=None):
                                        .last()
         item.position = related_item.position + 1 if related_item else 0
     item.save()
- 
+
 
 class Item(models.Model):
     VALIDATION_UNTESTED = 0
@@ -170,7 +169,7 @@ class Item(models.Model):
     )
 
     item_model = models.ForeignKey(ItemModel, verbose_name=_('Item model'))
-    name = models.CharField(null=True, blank=True, max_length=100)
+    name = models.CharField(null=True, blank=True, max_length=255)
     workflow = models.ForeignKey(Workflow, verbose_name=_('Workflow'))
     category = models.ForeignKey(ItemCategory, null=True, blank=True, verbose_name=_('Category'))
     assigned_to = models.ForeignKey(Person, null=True, blank=True, verbose_name=_('Assigned to'))
@@ -197,7 +196,7 @@ class Item(models.Model):
         if self.position is None:
             last_item = Item.objects.filter(workflow=self.workflow).order_by('position').last()
             if last_item is not None and last_item.position is not None:
-                self.position = last_item.position + 1 
+                self.position = last_item.position + 1
             else:
                 self.position = 0
         if self.name is None:
@@ -256,8 +255,8 @@ def update_item_position(item, related_item=None):
     if related_item is not None:
         item.position = related_item.position
         Item.objects.filter(
-                workflow=related_item.workflow, 
-                item_model__category=related_item.item_model.category, 
+                workflow=related_item.workflow,
+                item_model__category=related_item.item_model.category,
                 position__gte=related_item.position)\
             .update(position=F('position') + 1)
     else:
