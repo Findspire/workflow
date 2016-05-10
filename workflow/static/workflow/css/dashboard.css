@@ -101,6 +101,7 @@
       .workflow .panel-body article .status {
         float: right; }
         .workflow .panel-body article .status .badge {
+          color: #fff;
           padding: 3px 2px; }
           .workflow .panel-body article .status .badge.success {
             background-color: #5ac200; }

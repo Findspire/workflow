@@ -127,6 +127,7 @@ $failed: #ff0f13;
             .status{
                 float: right;
                .badge{
+                    color: #fff; 
                     padding: 3px 2px;
                     &.success{
                         background-color: $success;
