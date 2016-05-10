@@ -11,17 +11,14 @@
     %title
       - block title
         Workflow
-    %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/base_all.css" %}'}
-    %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/bootstrap.min.css" %}'}
-    %link{type: "text/css", rel: "stylesheet", href: '{% static "workflow/css/font-awesome.min.css" %}'}
-    %link{rel: "icon", href: '{% static "workflow/img/favicon.ico" %}'}
-    %script{type: "text/javascript", src: '{% static "workflow/js/jquery-1.9.1.js" %}'}
-    %script{type: "text/javascript", src: '{% static "workflow/js/jquery-ui.min.js" %}'}
-    %script{type: "text/javascript", src: '{% static "workflow/js/bootstrap.min.js" %}'}
-    %script{type: "text/javascript", src: '{% static "workflow/js/underscore-min.js" %}'}
-    %script{type: "text/javascript", src: '{% static "workflow/js/moment.js" %}'}
-    %script{type: "text/javascript", src: '{% static "workflow/js/alertify.js" %}'}
-    %script{type: "text/javascript", src: '{% static "workflow/js/workflow_show.js" %}'}
+
+    %link{rel: 'icon', href: '{% static "workflow/img/favicon.ico" %}'}
+    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "components/bootstrap/dist/css/bootstrap.min.css" %}'}
+    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "components/font-awesome/css/font-awesome.min.css" %}'}
+    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "workflow/css/base_all.css" %}'}
+    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "workflow/css/dashboard.css" %}'}
+    %script{type: 'text/javascript', src: '{% static "components/requirejs/require.js" %}'}
+    %script{type: 'text/javascript', src: '{% static "workflow/js/main.js" %}'}
     - block extra
     - include "dashboard/templates.haml"
   %body{"data-username" => "{{ request.user }}"}
@@ -91,9 +88,6 @@
                           %span.glyphicon.glyphicon-log-out
                           {% trans 'Logout' %}
                 
-    #warning_js
-      {% trans "Your JavaScript seem to be disabled. Some functionalities needs it and we advise you to enable it." %}
-
     .breadcrumbs
       %a{href: "/"}
         {% trans "Home" %}
@@ -104,6 +98,3 @@
     #content
       .container-fluid
         - block content
-    - block optional_script
-      %script{type: "text/javascript"}
-        $('#warning_js').hide();

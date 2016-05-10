@@ -10,6 +10,6 @@ htmlcov
 
 #STATICFILES
 /static/
-
+components/
 # OSX
 .DS_Store

@@ -1,0 +1,30 @@
+{
+  "name": "workflow",
+  "homepage": "https://github.com/Findspire/workflow",
+  "authors": [
+    "Findspire <contact@findspire.com>"
+  ],
+  "description": "Small internship project to keep a list of items to check when a new release is beeing tested",
+  "main": "",
+  "keywords": [
+    "workflow"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "bootstrap": "^3.3.6",
+    "moment": "^2.13.0",
+    "backbone": "^1.3.3",
+    "alertify": "^0.3.10",
+    "font-awesome": "^4.6.2",
+    "requirejs": "^2.2.0",
+    "jquery-ui": "^1.11.4"
+  }
+}

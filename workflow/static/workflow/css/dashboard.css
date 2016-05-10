@@ -1,4 +1,134 @@
 /*!
  * Findspire - Dashboard
  * Code licensed under the MIT License (MIT)
- */.opacity-hover,.workflow .panel-body article{transition:all 200ms ease-in-out}.opacity-hover:hover,.workflow .panel-body article:hover{opacity:0.7}.sidebar{background-color:#222;height:100%;left:0;position:fixed;top:72px}.sidebar ul{padding:0;text-align:center}.sidebar ul li{list-style-type:none;margin-top:10px}.sidebar ul li .btn{background-color:#222;border-color:#00b6e5;color:#fff;transition:all 200ms ease-in-out;width:52px}.sidebar ul li .btn:hover,.sidebar ul li .btn:focus,.sidebar ul li .btn.active{outline:none;background-color:#fff;box-shadow:inset 0px 0px 2px 1px rgba(34,34,34,0.75);-moz-box-shadow:inset 0px 0px 2px 1px rgba(34,34,34,0.75);-webkit-box-shadow:inset 0px 0px 2px 1px rgba(34,34,34,0.75);color:#333}.filters{background-color:#efefef;border-bottom:1px solid #d4d4d4;height:50px;left:0;margin-bottom:20px;padding:10px;position:fixed;top:72px;z-index:1000}.dashboard{margin-top:50px}.panel{border-radius:0}.panel .panel-heading{line-height:40px;padding:5px 10px}.panel .panel-heading span,.panel .panel-heading i{width:30px}.panel .panel-heading h2{display:inline-block;font-size:12px;margin:0;text-transform:uppercase}.panel .panel-body{padding:0}.changelog .panel-heading{border-radius:0}.workflow{font-size:11px}.workflow .panel-heading .select{float:right}.workflow .panel-heading .filter-select{display:none}.workflow .panel-body{height:70vh;overflow-y:auto}.workflow .panel-body article{background-color:#f0f0f0;border-bottom:1px solid #ddd;min-height:30px;padding:5px;width:100%}.workflow .panel-body article:nth-child(even){background-color:#fafafa}.workflow .panel-body article:hover{cursor:pointer}.workflow .panel-body article .progress-bar{font-size:10px;line-height:1.5}.workflow .panel-body article .status{float:right}.workflow .panel-body article .status .badge{padding:3px 2px}.workflow .panel-body article .status .badge.success{background-color:#5ac200}.workflow .panel-body article .status .badge.untested{background-color:#f0ad4e}.workflow .panel-body article .status .badge.disabled{background-color:#333}.workflow .panel-body article .status .badge.failed{background-color:#ff0f13}.tasks-details{margin-bottom:0}.tasks-details .panel-body{max-height:60vh;overflow-y:scroll}.tasks-details .panel-body .category .category-title{background-color:#00b6e5;color:#fff;height:50px;line-height:50px;text-align:center;text-transform:uppercase;vertical-align:middle}.tasks-details .panel-body article{border-bottom:1px solid #ddd;min-height:30px;width:100%}.tasks-details .panel-body article:nth-child(even){background-color:#fafafa}
+ */
+/* Global  */
+/* Utils */
+.opacity-hover, .workflow .panel-body article {
+  transition: all 200ms ease-in-out; }
+  .opacity-hover:hover, .workflow .panel-body article:hover {
+    opacity: 0.7; }
+
+/* Sidebar */
+.sidebar {
+  background-color: #222;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 72px; }
+  .sidebar ul {
+    padding: 0;
+    text-align: center; }
+    .sidebar ul li {
+      list-style-type: none;
+      margin-top: 10px; }
+      .sidebar ul li .btn {
+        background-color: #222;
+        border-color: #00b6e5;
+        color: #fff;
+        transition: all 200ms ease-in-out;
+        width: 52px; }
+        .sidebar ul li .btn:hover, .sidebar ul li .btn:focus, .sidebar ul li .btn.active {
+          outline: none;
+          background-color: #fff;
+          box-shadow: inset 0px 0px 2px 1px rgba(34, 34, 34, 0.75);
+          -moz-box-shadow: inset 0px 0px 2px 1px rgba(34, 34, 34, 0.75);
+          -webkit-box-shadow: inset 0px 0px 2px 1px rgba(34, 34, 34, 0.75);
+          color: #333; }
+
+/* Filters */
+.filters {
+  background-color: #efefef;
+  border-bottom: 1px solid #d4d4d4;
+  height: 50px;
+  left: 0;
+  margin-bottom: 20px;
+  padding: 10px;
+  position: fixed;
+  top: 72px;
+  z-index: 1000; }
+
+/* Dashboard */
+.dashboard {
+  margin-top: 50px; }
+
+/* Panel */
+.panel {
+  border-radius: 0; }
+
+.panel .panel-heading {
+  line-height: 40px;
+  padding: 5px 10px; }
+
+.panel .panel-heading span, .panel .panel-heading i {
+  width: 30px; }
+
+.panel .panel-heading h2 {
+  display: inline-block;
+  font-size: 12px;
+  margin: 0;
+  text-transform: uppercase; }
+
+.panel .panel-body {
+  padding: 0; }
+
+.changelog .panel-heading {
+  border-radius: 0; }
+
+/* Panel Workflow */
+.workflow {
+  font-size: 11px; }
+  .workflow .panel-heading .select {
+    float: right; }
+  .workflow .panel-heading .filter-select {
+    display: none; }
+  .workflow .panel-body {
+    height: 70vh;
+    overflow-y: auto; }
+    .workflow .panel-body article {
+      background-color: #f0f0f0;
+      border-bottom: 1px solid #ddd;
+      min-height: 30px;
+      padding: 5px;
+      width: 100%; }
+      .workflow .panel-body article:nth-child(even) {
+        background-color: #fafafa; }
+      .workflow .panel-body article:hover {
+        cursor: pointer; }
+      .workflow .panel-body article .progress-bar {
+        font-size: 10px;
+        line-height: 1.5; }
+      .workflow .panel-body article .status {
+        float: right; }
+        .workflow .panel-body article .status .badge {
+          padding: 3px 2px; }
+          .workflow .panel-body article .status .badge.success {
+            background-color: #5ac200; }
+          .workflow .panel-body article .status .badge.untested {
+            background-color: #f0ad4e; }
+          .workflow .panel-body article .status .badge.disabled {
+            background-color: #333333; }
+          .workflow .panel-body article .status .badge.failed {
+            background-color: #ff0f13; }
+
+.tasks-details {
+  margin-bottom: 0; }
+  .tasks-details .panel-body {
+    max-height: 60vh;
+    overflow-y: scroll; }
+    .tasks-details .panel-body .category .category-title {
+      background-color: #00b6e5;
+      color: #fff;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      text-transform: uppercase;
+      vertical-align: middle; }
+    .tasks-details .panel-body article {
+      border-bottom: 1px solid #ddd;
+      min-height: 30px;
+      width: 100%; }
+      .tasks-details .panel-body article:nth-child(even) {
+        background-color: #fafafa; }
+
+/*# sourceMappingURL=dashboard.css.map */
