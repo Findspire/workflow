@@ -41,6 +41,7 @@
                   %td{:style => "width: 55%"}
                     %a{href: "{% url 'workflow:workflow_show' workflow.pk 'all' %}"}
                       {{ workflow.name }}
+
                   %td
                     .progress_bar
                       %span.success{:style => 'width:{{ workflow.get_success_percent }}%;'}
@@ -63,7 +64,8 @@
 
                   %td
                     %a.close{data-workflow: "{{workflow.pk}}"}
-                      %img{:src => "{% static 'workflow/img/untake.png' %}", :alt => ""}/
+                      %img{:src => "{% static 'img/untake.png' %}", :alt => ""}/
+
           - else
             %p
               %em

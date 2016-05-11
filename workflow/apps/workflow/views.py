@@ -24,7 +24,7 @@ from braces.views import LoginRequiredMixin
 from workflow.utils.generic_views import CreateUpdateView, MyListView
 from workflow.apps.workflow.models import Comment, Item, ItemModel, ItemCategory, Project, Workflow
 from workflow.apps.workflow.forms import CommentNewForm, ItemDetailForm, WorkflowNewForm, ItemCreateForm
-from workflow.apps.workflow.models import update_item_position
+from workflow.apps.workflow.models import update_item_position, reset_workflow_items_count
 from workflow.apps.team.models import Team
 
 
@@ -352,6 +352,15 @@ def update_item_validation(request, item_pk, action):
             'updated_at': item.updated_at,
         }
         return JsonResponse(data)
+
+@login_required
+def reset_item_validation(request, workflow_pk):
+    workflow = get_object_or_404(Workflow, pk=workflow_pk)
+    reset_workflow_items_count(workflow)
+    return redirect(reverse('workflow:workflow_show', kwargs={
+        'workflow_pk': workflow_pk,
+        'which_display': 'all'}))
+
 
 
 @login_required

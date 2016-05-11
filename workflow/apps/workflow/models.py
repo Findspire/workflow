@@ -53,6 +53,10 @@ class ItemCategory(models.Model):
     def get_items(self):
         return self.item_set.all()
 
+@receiver(post_delete, sender=ItemCategory)
+def delete_items_category(sender, instance=None, **kwargs):
+    for item in instance.get_items():
+        item.delete()
 
 def update_category_position(workflow, category, related_category=None):
     if related_category is not None:
@@ -139,6 +143,21 @@ def worklow_position_handler(sender, instance=None, **kwargs):
         else:
             instance.position = 0
 
+def reset_workflow_items_count(workflow):
+    items = workflow.get_items('all')
+    d = {
+        Item.VALIDATION_UNTESTED: 'untested',
+        Item.VALIDATION_SUCCESS: 'success',
+        Item.VALIDATION_FAILED: 'failed',
+        Item.VALIDATION_DISABLED: 'disabled'
+    }
+    for k, v in d.items():
+        setattr(workflow, v, 0)
+    for item in items:
+        setattr(workflow, d[item.validation], getattr(workflow,
+            d[item.validation]) + 1)
+    workflow.save()
+
 
 def update_workflow_position(item, related_item=None):
     if related_item is not None:
@@ -224,7 +243,6 @@ def delete_item_handler(sender, instance=None, **kwargs):
     instance.workflow.total -= 1
     instance.workflow.save()
 
-
 @receiver(pre_save, sender=Item)
 def workflow_counts_handler(sender, instance=None, **kwargs):
     if instance.pk is not None:
@@ -250,6 +268,18 @@ def workflow_counts_handler(sender, instance=None, **kwargs):
         setattr(workflow, attr, getattr(workflow, attr) + 1)
     workflow.save()
 
+@receiver(post_delete, sender=Item)
+def workflow_counts_delete_items(sender, instance=None, **kwargs):
+    workflow = instance.workflow
+    d = {
+        Item.VALIDATION_UNTESTED: 'untested',
+        Item.VALIDATION_SUCCESS: 'success',
+        Item.VALIDATION_FAILED: 'failed',
+        Item.VALIDATION_DISABLED: 'disabled'
+    }
+    attr = d[instance.validation]
+    setattr(workflow, attr, getattr(workflow, attr) - 1)
+    workflow.save()
 
 def update_item_position(item, related_item=None):
     if related_item is not None:
