@@ -4,7 +4,6 @@ function(Backbone, WorkflowShowView) {
     var WorkflowRouter = Backbone.Router.extend({
         routes: {
             "workflow/workflow/show/:id/:display/": "workflowShow",
-            "dashboard/": "workflowShow"
         },
 
         workflowShow: function() {

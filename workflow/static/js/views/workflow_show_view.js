@@ -5,22 +5,14 @@ function(Backbone) {
         username: document.getElementsByTagName('body')[0].getAttribute('data-username'),
         
         events: {
-            'click .take a': 'takeAllItems',
-            'click .untake a': 'untakeAllItems'
+            'click .take a': '',
+            'click .untake a': ''
         },
         
         initialize: function() {
         },
 
         takeAllItems: function(e) {
-            e.preventDefault();
-            $.get(e.target.href)
-             .success(function() {
-                 console.log('Test');
-                var $elemId = $(e.currentTarget).closest('table'); 
-                $elemId.css('backgroundColor', 'red');
-                //window.location.href = document.URL + elemId;
-             });
         }
     });
 
