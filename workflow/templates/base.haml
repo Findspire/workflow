@@ -12,13 +12,12 @@
       - block title
         Workflow
 
-    %link{rel: 'icon', href: '{% static "workflow/img/favicon.ico" %}'}
+    %link{rel: 'icon', href: '{% static "img/favicon.ico" %}'}
     %link{type: 'text/css', rel: 'stylesheet', href: '{% static "components/bootstrap/dist/css/bootstrap.min.css" %}'}
     %link{type: 'text/css', rel: 'stylesheet', href: '{% static "components/font-awesome/css/font-awesome.min.css" %}'}
-    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "workflow/css/base_all.css" %}'}
-    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "workflow/css/dashboard.css" %}'}
-    %script{type: 'text/javascript', src: '{% static "components/requirejs/require.js" %}'}
-    %script{type: 'text/javascript', src: '{% static "workflow/js/main.js" %}'}
+    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "css/base_all.css" %}'}
+    %link{type: 'text/css', rel: 'stylesheet', href: '{% static "css/dashboard.css" %}'}
+    %script{type: 'text/javascript', data-main: '{% static "js/main" %}', src: '{% static "components/requirejs/require.js" %}'}
     - block extra
     - include "dashboard/templates.haml"
   %body{"data-username" => "{{ request.user }}"}
@@ -29,7 +28,7 @@
             .navbar-header
               .navbar-brand
                 %a{:href => "/"}
-                  %img{:src => "{% static 'workflow/img/logo.png' %}", :alt => ""}/
+                  %img{:src => "{% static 'img/logo.png' %}", :alt => ""}/
                 .version
                   1.0.9
             .navbar-collapse.collapse
