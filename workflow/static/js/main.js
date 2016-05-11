@@ -1,5 +1,5 @@
-require.config({
-    baseUrl: '/static',
+requirejs.config({
+    baseUrl: '/static/',
 
     paths: {
         'backbone': 'components/backbone/backbone-min',
@@ -9,8 +9,8 @@ require.config({
         'alertifyjs': 'components/alertify.js/dist/js/alertify',
         'bootstrap': 'components/bootstrap/dist/js/bootstrap.min',
         'moment': 'components/moment/min/moment.min',
-        'workflow': 'workflow/js/workflow',
-        'dashboard': 'workflow/js/dashboard'
+        'workflow': 'js/workflow',
+        'dashboard': 'js/dashboard'
     },
 
     shim: {
@@ -33,4 +33,11 @@ require.config({
     },
 });
 
-require(['bootstrap', 'workflow', 'dashboard']);
+require(['bootstrap',
+         'workflow',
+         'dashboard',
+         'js/router/workflow_workspace'],
+function(bootstrap, workflow, dashboard, WorkflowRouter){
+    new WorkflowRouter();       
+    Backbone.history.start({pushState: true});
+});

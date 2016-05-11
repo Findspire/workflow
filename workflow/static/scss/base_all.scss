@@ -16,14 +16,11 @@ $findspire_color: #00b6e5;
     background-color: red;
     position: absolute;
 }
-.glyphicon-remove{
+.red{
     color: red;
 }
-#warning_js
-{
-    padding: 10px;
-    text-align: center;
-    background-color: #FF4136;
+a {
+    text-decoration: none !important;
 }
 
 #content{
@@ -188,7 +185,7 @@ li label {
             font-size: 10px;
 
         }
-        .close{
+        .controls a{
             opacity: 0;
         }
     }
@@ -289,6 +286,7 @@ li label {
                 color: #4586bd;
                 cursor: pointer;
                 padding-left: 10px;
+
             }
             .validate{
                 text-align: center;

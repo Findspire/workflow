@@ -36,13 +36,11 @@
   background-color: red;
   position: absolute; }
 
-.glyphicon-remove {
+.red {
   color: red; }
 
-#warning_js {
-  padding: 10px;
-  text-align: center;
-  background-color: #FF4136; }
+a {
+  text-decoration: none !important; }
 
 #content {
   margin: 10px auto;
@@ -175,7 +173,7 @@ li label {
     text-align: left; }
 .workflow_list tr th {
   font-size: 10px; }
-.workflow_list tr .close {
+.workflow_list tr .controls a {
   opacity: 0; }
 .workflow_list .item a {
   transition: all 200ms ease-in-out;
