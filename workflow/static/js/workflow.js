@@ -17,14 +17,15 @@ function($, _, moment) {
         $(".item_list .action.close").click(deleteItem);
         $("table #sortable").sortable({
                 items: '.item_list',
-                stop: function (event, ui) { onDragStop(event, ui, '/api/drag-item/')}
+                stop: function (event, ui) { onDragStop(event, ui, '/api/drag-item/', 'itemPk')}
         }).disableSelection();
         $(".workflow_list").sortable({
             items: '.item',
             stop: function (event, ui) {onDragStop(event, ui, '/api/drag-workflow/')},
         }).disableSelection(); 
         $("#items").sortable({
-            stop: function (event, ui) { onDragStop(event, ui, '/api/drag-category/')}
+            items: 'table',
+            stop: function (event, ui) { onDragStop(event, ui, '/api/drag-category/', 'categoryPk')}
         }).disableSelection();
         $(".tooltip").tooltip({
             position: { my: "left+15 center", at: "right center" }
@@ -62,9 +63,9 @@ function($, _, moment) {
         wf.dom.items = $('.item');
     });
 
-    function onDragStop(event, ui, url) {
-        var item = $(ui.item).data("item-pk");
-        var related = $(ui.item).next().data("item-pk");
+    function onDragStop(event, ui, url, dataPk) {
+        var item = $(ui.item).data(dataPk),
+            related = $(ui.item).next().data(dataPk);
         if(related){
             url = url + item + "/" + related + "/";
         } else{ 
