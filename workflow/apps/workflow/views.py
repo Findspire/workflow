@@ -290,7 +290,7 @@ def update(request, which_display, action, model, pk, pk_other=None):
                 item.assigned_to = None
                 item.assigned_to_name_cache = None
             else:
-                return HttpResponseForbidden(_("You need to put this this task has untested '?' before untake it"))
+                return HttpResponseForbidden(_("You need to put this task has untested '?' before untake it"))
         else:
             raise Http404('Unexpected action "%s"' % action)
         item.save()
