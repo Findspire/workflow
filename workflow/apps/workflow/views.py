@@ -87,8 +87,12 @@ def workflow_create(request, project_pk=None):
             workflow_model = Workflow.objects.get(id=request.POST.get('workflow_model'))
             for category in workflow_model.categories.all():
                 workflow.categories.add(category)
-                for item in ItemModel.objects.filter(category=category):
-                    Item.objects.create(item_model=item, workflow=workflow, name=item.name)
+                for item in Item.objects.filter(category=category,
+                                                workflow=workflow_model):
+                    Item.objects.create(workflow=workflow,
+                                        item_model=item.item_model,
+                                        name=item.name,
+                                        category=category)
         workflow.save()
         return redirect('workflow:project_list')
     projects = [(project, [workflow for workflow in Workflow.objects.filter(project=project, archived=False)]) for project in Project.objects.all()]
@@ -360,8 +364,6 @@ def reset_item_validation(request, workflow_pk):
     return redirect(reverse('workflow:workflow_show', kwargs={
         'workflow_pk': workflow_pk,
         'which_display': 'all'}))
-
-
 
 @login_required
 def itemmodel_list(request):
