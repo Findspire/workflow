@@ -184,7 +184,7 @@ class CommentList(APIView):
         data = dict(request.data)
         data['item'] = item_pk
         data['person'] = int(request.data['person'])
-        data['text'] = str(request.data['text'])
+        data['text'] = request.data['text']
         serializer = serializers.CommentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
