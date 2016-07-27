@@ -31,13 +31,16 @@
       top: 0;
       width: 0; }
 
+/*!
+ * _colors.scss
+ */
+.red {
+  color: red; }
+
 /* TEMPLATE */
 .pop-up-comment {
   background-color: red;
   position: absolute; }
-
-.red {
-  color: red; }
 
 a {
   text-decoration: none !important; }
@@ -50,7 +53,7 @@ a {
 .breadcrumbs {
   background: #222 !important;
   border: none !important;
-  border-top: 1px solid #00b6e5 !important;
+  border-top: 1px solid #345cc0 !important;
   position: fixed;
   top: 52px;
   width: 100%;
@@ -269,7 +272,7 @@ li label {
       #items table .item_list .validate a .disabled:hover, #items table .item_list .validate a .disabled.validated {
         color: #000 !important; }
   #items table .item_list .comment .comment {
-    color: #00b6e5;
+    color: #345cc0;
     font-size: 20px;
     transition: all 200ms ease-in-out; }
     #items table .item_list .comment .comment:hover {

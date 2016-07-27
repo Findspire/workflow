@@ -10,15 +10,14 @@ $untested_color: #54534f;
 $findspire_color: #00b6e5;
 
 @import 'templates';
+@import 'colors';
 
 /* TEMPLATE */
 .pop-up-comment {
     background-color: red;
     position: absolute;
 }
-.red{
-    color: red;
-}
+
 a {
     text-decoration: none !important;
 }
