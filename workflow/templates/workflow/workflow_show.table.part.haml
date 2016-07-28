@@ -50,8 +50,8 @@
             %span.glyphicon.glyphicon-plus.success{:title => "{% trans 'Add an item '%}"}
           %a.controls
             %span.glyphicon.glyphicon-edit
-          %a.controls.close.red
-            %span.glyphicon.glyphicon-remove
+          %a.controls.pull-right
+            %span.glyphicon.glyphicon-remove.red.opacity-hover
         %th
         %th.take_untake_category{:style => "width: 120px;"}
           %span{class: "take"}
@@ -134,6 +134,6 @@
               %span.last_modification= item.updated_at|date:"d/m/Y H:i"
 
           %td
-            %a.action.close
-              %span.glyphicon.glyphicon-remove
+            %a.action
+              %span.glyphicon.glyphicon-remove.red.opacity-hover
 

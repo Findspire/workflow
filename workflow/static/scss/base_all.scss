@@ -3,14 +3,10 @@
     Global
 */
 
-$success_color: #5ac200;
-$warning_color: #ffd738;
-$failed_color: #ff0f13;
-$untested_color: #54534f;
-$findspire_color: #00b6e5;
-
-@import 'templates';
 @import 'colors';
+@import 'utils';
+@import 'customs';
+@import 'templates';
 
 /* TEMPLATE */
 .pop-up-comment {
@@ -27,6 +23,7 @@ a {
     margin-top: 80px;
     margin-bottom: 50px;
 }
+
 .breadcrumbs{
     background: #222 !important;
     border: none !important;
@@ -39,10 +36,7 @@ a {
         color: #fff;
     }
 }
-.btn-custom{
-    font-size: 10px !important;
-    margin-bottom: 10px !important;
-}
+
 label {
     display: block;
 }

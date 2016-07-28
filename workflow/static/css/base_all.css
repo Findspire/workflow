@@ -1,6 +1,46 @@
 /*
     Global
 */
+/*!
+ * _colors.scss
+ */
+.red {
+  color: red; }
+
+/*
+ * _utils.scss
+ */
+.tac {
+  text-align: center; }
+
+.opacity-hover {
+  transition: all 200ms ease-in-out; }
+  .opacity-hover:hover {
+    cursor: pointer;
+    opacity: 0.6; }
+
+/*!
+ * _customs.scss
+ */
+.panel-project, .panel-project .panel-heading {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important; }
+.panel-project .panel-heading {
+  background-color: #fff;
+  color: #57595d;
+  font-variant: small-caps;
+  font-size: 1.3em;
+  font-weight: bold;
+  letter-spacing: 0.7px; }
+  .panel-project .panel-heading .controls > a:last-child {
+    margin-right: 10px; }
+.panel-project .panel-body {
+  border: 0 !important; }
+
+.btn-custom {
+  font-size: 10px !important;
+  margin-bottom: 10px !important; }
+
 /* MODAL COMMENT */
 .commentModal .modal-header {
   background-color: #222222;
@@ -17,25 +57,19 @@
     padding-top: 3px;
     font-weight: 300; }
   .commentModal .modal-body article section {
-    background-color: #00b6e5;
+    background-color: #345cc0;
     color: #fff;
     margin-bottom: 10px;
     padding: 20px; }
     .commentModal .modal-body article section .triangle {
       border-top: 15px solid transparent;
-      border-right: 27px solid #00b6e5;
+      border-right: 27px solid #345cc0;
       border-bottom: 15px solid transparent;
       height: 0;
       left: -27px;
       position: absolute;
       top: 0;
       width: 0; }
-
-/*!
- * _colors.scss
- */
-.red {
-  color: red; }
 
 /* TEMPLATE */
 .pop-up-comment {
@@ -60,10 +94,6 @@ a {
   z-index: 1001; }
   .breadcrumbs a {
     color: #fff; }
-
-.btn-custom {
-  font-size: 10px !important;
-  margin-bottom: 10px !important; }
 
 label {
   display: block; }

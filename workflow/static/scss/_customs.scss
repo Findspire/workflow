@@ -1,0 +1,35 @@
+/*!
+ * _customs.scss
+ */
+
+.panel-project {
+    &, .panel-heading {
+        border-top-left-radius: 8px !important;
+        border-top-right-radius: 8px !important;
+    }
+
+    .panel-heading {
+        background-color: #fff;
+        color: $font-title-color;
+        font-variant: small-caps;
+        font-size: 1.3em;
+        font-weight: bold;
+        letter-spacing: 0.7px;
+
+        .controls > a:last-child {
+           margin-right: 10px;
+        }
+    }
+
+    .panel-body {
+        border: 0 !important;
+        .workflow-list {
+
+        }
+    }
+}
+
+.btn-custom{
+    font-size: 10px !important;
+    margin-bottom: 10px !important;
+}

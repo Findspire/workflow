@@ -1,0 +1,16 @@
+/*
+ * _utils.scss
+ */
+
+.tac {
+    text-align: center;
+}
+
+.opacity-hover {
+    transition: all 200ms ease-in-out;
+    &:hover{
+        cursor: pointer;
+        opacity: 0.6;
+    }
+}
+
