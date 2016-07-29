@@ -1,4 +1,15 @@
 =============================
+Workflow v1.1.0 Release Notes
+============================
+
+Updates sinces v1.0.9
+---------------------
+  * Added Bower and RequireJS
+  * Fix drag and drop on workflow show view
+  * Fix workflow clone
+  * Refactor SCSS
+
+=============================
 Workflow v1.0.9 Release Notes
 =============================
 
