@@ -7,6 +7,15 @@
 .red {
   color: red; }
 
+.success {
+  color: #5ac200; }
+
+.failed {
+  color: #ff0f13; }
+
+.untested {
+  color: #54534f; }
+
 /*
  * _utils.scss
  */
@@ -177,24 +186,9 @@ li label {
 /*
     Workflow detail
 */
-.success {
-  color: #5ac200; }
-
-.failed {
-  color: #ff0f13; }
-
-.untested {
-  color: #54534f; }
-
 .controls {
   font-size: 12px;
   font-weight: 300; }
-
-.opacity-hover {
-  transition: all 200ms ease-in-out; }
-  .opacity-hover:hover {
-    cursor: pointer;
-    opacity: 0.6; }
 
 .workflow_list tr:nth-child(even) {
   background-color: #fafafa; }

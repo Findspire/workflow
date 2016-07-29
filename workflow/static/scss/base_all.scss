@@ -138,25 +138,9 @@ li label {
 /*
     Workflow detail
 */
-.success{
-    color: $success_color;
-}
-.failed{
-    color: $failed_color;
-}
-.untested{
-    color: $untested_color;
-}
 .controls{
     font-size: 12px;
     font-weight: 300;
-}
-.opacity-hover{
-    transition: all 200ms ease-in-out;
-    &:hover{
-        cursor: pointer;
-        opacity: 0.6;
-    }
 }
 
 .workflow_list{

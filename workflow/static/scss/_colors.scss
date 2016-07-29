@@ -16,3 +16,15 @@ $findspire_color: #345cc0;
 .red {
     color: red;
 }
+
+.success {
+    color: $success_color;
+}
+
+.failed {
+    color: $failed_color;
+}
+
+.untested {
+    color: $untested_color;
+}
